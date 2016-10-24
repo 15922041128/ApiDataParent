@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pbccrc.api.core.mapper.ZhPersonMapper">
+	
+	<select id="query" parameterType="java.lang.String" resultType="java.util.HashMap">
+		select 
+			p.id,
+			p.insideCode,
+			ddg.genderName as gender,
+			p.birthday,
+			ddm.marriageName as marriage,
+			ddedul.eduLevelName as eduLevel,
+			ddedud.degreeName as eduDegree,
+			p.homeTel,
+			p.mobileTel,
+			p.officeTel,
+			p.email,
+			p.address,
+			p.zip
+			from zh_person p 
+		LEFT JOIN zh_dd_gender ddg on p.gender = ddg.genderCode
+		LEFT JOIN zh_dd_marriage ddm on p.marriage = ddm.marriageCode
+		LEFT JOIN zh_dd_edulevel ddedul on p.eduLevel = ddedul.eduLevelCode
+		LEFT JOIN zh_dd_edudegree ddedud on p.eduDegree = ddedud.degreeCode
+		where insideCode = #{insideCode}
+	</select>
+	
+</mapper>

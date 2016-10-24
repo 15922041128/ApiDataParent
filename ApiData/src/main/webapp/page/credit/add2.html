@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0069)https://ipcrs.pbccrc.org.cn/setSafetyLevel.do?method=index&isnew=true -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>信贷信息服务平台</title>
+
+<link type="text/css" href="/ApiData/css/public.css" rel="stylesheet">
+<link type="text/css" href="/ApiData/css/page.css" rel="stylesheet">
+<link type="text/css" href="/ApiData/css/new.css" rel="stylesheet">
+<link type="text/css" href="/ApiData/css/sweetalert/sweetalert.css" rel="stylesheet">
+<script type="text/javascript" src="/ApiData/js/libs/jquery/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="/ApiData/js/libs/sweetalert/sweetalert.min.js"></script>
+<script type="text/javascript" src="/ApiData/js/util.js"></script>
+<script type="text/javascript" src="/ApiData/js/libs/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+function toSubmit(){
+	var contactDate = $("#contactDate").val();
+	var hireDate = $("#hireDate").val();
+	var expireDate = $("#expireDate").val();
+	var type = $("#type").val();
+	var loanUsed = $("#loanUsed").val();
+	var totalAmount = $("#totalAmount").val();
+	var balance = $("#balance").val();
+	var status = $("#status").val();
+	
+	var personID = getUrlValue('personID');
+	
+	if (personID == '-1') {
+		swal("获取参数失败!");
+		return false;
+	}
+	
+	if (contactDate == '') {
+		swal("请填写合同日期!");
+		return false;
+	}
+	
+	if (hireDate == '') {
+		swal("请填写起租日!");
+		return false;
+	}
+	
+	if (contactDate > hireDate) {
+		swal("合同日期应小于等于起租日!");
+		return false;
+	}
+	
+	if (expireDate == '') {
+		swal("请填写到期日!");
+		return false;
+	}
+	
+	if (hireDate > expireDate) {
+		swal("起租日应小于等于到期日!");
+		return false;
+	}
+	
+	if (loanUsed == '') {
+		swal("请填写贷款用途!");
+		return false;
+	}
+	
+	if (totalAmount == '') {
+		swal("请填写总金额!");
+		return false;
+	} else {
+		var reg = new RegExp("^[0-9]*$");
+		if(!reg.test(totalAmount)){  
+			swal("总金额请输入数字!");
+			return false;
+	    }
+	}
+	
+	if (balance == '') {
+		swal("请填写余额!");
+		return false;
+	} else {
+		if(!reg.test(balance)){  
+			swal("余额请输入数字!");
+			return false;
+	    }
+	}
+	
+	if (parseInt(balance) > parseInt(totalAmount)) {
+		swal("余额应小于等于总金额!");
+		return false;
+	}
+	
+	var params = {"contactDate" : contactDate, "hireDate" : hireDate, "expireDate" : expireDate, "type" : type, 
+			"loanUsed" : loanUsed, "totalAmount" : totalAmount, "balance" : balance, "status" : status, "personID" : personID};
+	
+	$.ajax({
+        async:false,
+        type: "GET",  
+        url: getLocation() + "/r/person/add2", 
+        data: params,
+        success: function(msg){  
+        	if ('Y' == msg) {
+        		alert("报送成功");
+        		window.location.href = getLocation() + "/page/credit/add.html"; 
+        	} else {
+        		swal("报送失败!请重新填写!");
+        	}
+        }  
+    });  
+}
+
+</script>
+</head>
+<body marginwidth="1" marginheight="1">
+<div class="con_right">
+	<ul class="padding_left_40">
+		<li style="padding-left:200px; padding-top: 30px; padding-bottom: 20px;" ">
+			<font class="regist_text span-14"><h2 style="color: #6b6b6b"> 填写详细信息</h2></font><br/>
+		</li>
+		<li class=" margin_top_20 height32">
+			<font class="regist_text span-14"><label class="span-red">
+					*
+			</label> 合同日期：</font>
+			<input maxlength="30" id="contactDate" type="text" class="login_input" onClick="WdatePicker()">
+		</li>
+		<li class=" margin_top_20 height32">
+			<font class="regist_text span-14"><label class="span-red">
+					*
+			</label> 起租日：</font>
+			<input maxlength="30" id="hireDate" type="text" class="login_input" onClick="WdatePicker()">
+		</li>
+		<li class=" margin_top_20 height32">
+			<font class="regist_text span-14"><label class="span-red">
+					*
+			</label> 到期日：</font>
+			<input maxlength="30" id="expireDate" type="text" class="login_input" onClick="WdatePicker()">
+		</li>
+		<li class=" margin_top_20 height32">
+			<font class="regist_text span-14"><label class="span-red">
+					*
+			</label> 业务类型：</font>
+			<select id="type" class="open_select_box">
+				<option value="贷款">贷款</option>
+				<option value="融资">融资</option>
+			</select>
+		</li>
+		<li class=" margin_top_20 height32">
+			<font class="regist_text span-14"><label class="span-red">
+					*
+			</label> 用途：</font>
+			<input maxlength="30" id="loanUsed" type="text" class="login_input">
+		</li>
+		<li class=" margin_top_20 height32">
+			<font class="regist_text span-14"><label class="span-red">
+					*
+			</label> 总金额：</font>
+			<input maxlength="60" id="totalAmount" type="text" class="login_input">
+		</li>
+		<li class=" margin_top_20 height32">
+			<font class="regist_text span-14"><label class="span-red">
+					*
+			</label> 余额：</font>
+			<input maxlength="60" id="balance" type="text" class="login_input">
+		</li>
+		<li class=" margin_top_20 height32">
+			<font class="regist_text span-14"><label class="span-red">
+					*
+			</label> 状态：</font>
+			<select id="status" class="open_select_box">
+				<option value="正常">正常</option>
+				<option value="逾期">逾期</option>
+				<option value="结清">结清</option>
+				<option value="呆账">呆账</option>
+			</select>
+		</li>
+		
+		<li class="padding_top_30">
+			<font class="regist_text"></font>
+			<input type="button" class="inputBtn btn2" value="提交 " onclick="toSubmit()">
+		</li>
+	</ul>
+</div> 
+</body>
+</html>

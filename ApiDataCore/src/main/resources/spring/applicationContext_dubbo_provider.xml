@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans.xsd
+ http://code.alibabatech.com/schema/dubbo
+ http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+ http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <dubbo:application name="ApiDataCore"/>
+
+    <!-- 直连使用, 不需要注册中心  -->
+<!--     <dubbo:registry address="127.0.0.1:8088" register="false" /> -->
+<!--     <dubbo:registry address="N/A"/>  -->
+    <!-- 多播使用, 不需要注册中心 -->
+    <!--   <dubbo:registry address="multicast://224.5.6.7:1234?unicast=false" />-->
+    <!-- 使用注册中心-->
+    <context:property-placeholder location="classpath:zookeeper.properties" ignore-unresolvable="true"/>
+    <dubbo:registry protocol="zookeeper" address="${dubbo.registry}"/>
+    <dubbo:provider timeout="300000"/> 
+
+
+    <!-- 服务配置, 指定端口 -->
+<!--     <dubbo:protocol name="dubbo" port="20881"/> -->
+    <!-- 服务配置, 不指定端口 -->
+    <dubbo:protocol name="dubbo" port="-1"/>
+
+    <dubbo:service interface="org.pbccrc.api.base.service.QueryApiService" ref="queryApiServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.CostService" ref="costServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.SystemLogService" ref="systemLogServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.LocalApiService" ref="localApiServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.DBOperatorService" ref="dbOperatorService"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.ApiUserService" ref="apiUserServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.RelationService" ref="relationServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.QueryApi" ref="queryApiSingle"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.QueryApi" ref="queryApiMultiple"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.ComplexService" ref="complexServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.LocalDBService" ref="localDBServiceImpl"/>
+</beans>

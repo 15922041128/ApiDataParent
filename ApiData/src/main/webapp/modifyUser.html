@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0038)https://ipcrs.pbccrc.org.cn/userReg.do -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>欢迎使用个人信用信息服务平台</title>
+<link rel="stylesheet" type="text/css" href="css/public.css"/>
+<link rel="stylesheet" type="text/css" href="css/new.css"/>
+<link rel="stylesheet" type="text/css" href="css/page.css"/>
+<link rel="stylesheet" type="text/css" href="css/sweetalert/sweetalert.css">
+<script type="text/javascript" src="js/pe.js"></script>
+<script type="text/javascript" src="js/libs/jquery/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/input_notice.js"></script>
+<script type="text/javascript" src="js/vcode.js"></script>
+<script type="text/javascript" src="js/util.js"></script>
+<script type="text/javascript" src="js/libs/sweetalert/sweetalert.min.js"></script>
+<script>
+$(document).ready(function() {
+	$.ajax({  
+        url: getLocation() + "/r/user/getUser",  
+        type: 'GET',  
+        success: function (data) {  
+        	$('#compName').val(data.compName);
+        	$('#compTel').val(data.compTel);
+        	$('#contactName').val(data.contactName);
+        	$('#contactTel').val(data.contactTel);
+        } 
+   });
+    
+});
+</script>
+<script>
+function toResetPassword() {
+	var compName = $('#compName').val();
+	var compTel= $('#compTel').val();
+	var contactName = $('#contactName').val();
+	var contactTel = $('#contactTel').val();
+	
+	if (compName=='') {
+		swal("公司名称不能为空");
+		return false;
+	}
+	
+	if (compTel=='') {
+		swal("公司电话不能为空");
+		return false;
+	}
+	
+	if (contactName=='') {
+		swal("联系人姓名不能为空");
+		return false;
+	}
+	
+	if (contactTel=='') {
+		swal("联系人电话不能为空");
+		return false;
+	}
+	
+	var params = {
+			"compName" : compName,
+			"compTel" : compTel,
+			"contactName" : contactName,
+			"contactTel" : contactTel};
+	
+	$.ajax({  
+        url: getLocation() + "/r/user/modifyUser",  
+        type: 'GET',  
+        data: params,  
+        success: function (data) {  
+        	alert("个人信息修改成功");
+        	window.location.href = "welcome.html";
+        } 
+   });
+}
+</script>
+<script type="text/javascript">
+function displayYesCurrent(obj){
+	if($("#errMsg").css("display")=='none') {
+		var input = document.getElementById(obj.id);
+		input.parentNode.getElementsByTagName("span")[0].style.display = "inline";
+		input.parentNode.getElementsByTagName("span")[1].style.display = "none";
+	 }
+}
+</script>
+</head>
+<body marginwidth="1" marginheight="1">
+<div class="gray-bk">
+	<div class="white-con">
+		<div class="title-1">
+			<span>修改个人信息</span>
+		</div>
+
+
+			<form>
+				<div class="table-con" style="width:750px;">
+					<ul class="padding_left_40">
+						<li class="margin_top_20 height32">
+							<font class="regist_text span-14"><label class="span-red">
+									*
+							</label> 注册公司 ：</font>
+							<input maxlength="18" id="compName" type="text" class="login_input" onfocus="displayYes(this)" onblur="displayNo(this);" autocomplete="off">
+							<span class="notice1 span-grey">请填写注册机构名</span>
+							<span></span>
+						</li>
+						<li class="margin_top_20 height32">
+							<font class="regist_text span-14"><label class="span-red">
+									*
+							</label> 注册公司电话 ：</font>
+							<input maxlength="18" id="compTel" type="text" class="login_input" onfocus="displayYes(this)" onblur="displayNo(this);" autocomplete="off">
+							<span class="notice1 span-grey">请填写注册机构电话</span>
+							<span></span>
+						</li>
+						<li class="margin_top_20 height32">
+							<font class="regist_text span-14"><label class="span-red">
+									*
+							</label> 联系人 ：</font>
+							<input maxlength="18" id="contactName" type="text" class="login_input" onfocus="displayYes(this)" onblur="displayNo(this);" autocomplete="off">
+							<span class="notice1 span-grey">请填联系人姓名</span>
+							<span></span>
+						</li>
+						<li class="margin_top_20 height32">
+							<font class="regist_text span-14"><label class="span-red">
+									*
+							</label> 联系人电话 ：</font>
+							<input maxlength="18" id="contactTel" type="text" class="login_input" onfocus="displayYes(this)" onblur="displayNo(this);" autocomplete="off">
+							<span class="notice1 span-grey">请填联系人电话</span>
+							<span></span>
+						</li>
+						
+						<li class="padding_top_30">
+							<font class="regist_text">&nbsp;</font>
+							<input type="button" class="inputBtn btn2" id="btn" value="提交" onclick="toResetPassword();">
+						</li>
+					</ul>
+				</div>
+			</form>
+			
+		</div>
+	</div>
+	
+
+
+<script src="js/inputAutoCompleteOff.js" type="text/javascript"></script>
+</body></html>

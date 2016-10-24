@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pbccrc.api.core.mapper.ZhLoanMapper">
+	
+	<select id="query" parameterType="java.lang.String" resultType="java.util.HashMap">
+			select
+			ID,
+			insideCode,
+			settled_account_num,
+			unsettled_account_num,
+			org_num,
+			area_num,
+			loan_type_num,
+			housing_loan_num,
+			car_loan_num,
+			personal_biz_loan_num,
+			nor_num,
+			overdue_num,
+			max_gran_limit,
+			max_loan_limit,
+			settled_limit,
+			unsettled_limit,
+			overdue_180_principal,
+			overdue_180_unpaid,
+			overdue_180_single_principal,
+			overdue_180_single_unpaid,
+			total_overdue_num,
+			single_overdue_max,
+			five_category_most_type,
+			ear_loan_time,
+			latest_repay_time
+		from zh_loan where insideCode = #{insideCode}
+	</select>
+	
+</mapper>

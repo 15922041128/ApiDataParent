@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pbccrc.api.core.mapper.ZhGuaranteeMapper">
+	
+	<select id="query" parameterType="java.lang.String" resultType="java.util.HashMap">
+		select
+			g.id,
+			g.insideCode,
+			g.guaranteeSum,
+			ddgs.statName as guaranteeStat,
+			ddgw.guaranteeWayName as guaranteeWay,
+			ddf.corporateName as finance,
+			g.occurpyTime,
+			g.forInnerID
+		from zh_guarantee g
+		LEFT JOIN zh_dd_guaranteestat ddgs on g.guaranteeStat = ddgs.statCode
+		LEFT JOIN zh_dd_guaranteeway ddgw on g.guaranteeWay = ddgw.guaranteeWayCode
+		LEFT JOIN zh_dd_financeorg ddf on g.financeCode = ddf.financeCode
+		where g.insideCode = #{insideCode}
+	</select>
+	
+</mapper>

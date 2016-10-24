@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0035)https://ipcrs.pbccrc.org.cn/menu.do -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="js/pe.js" type="text/javascript"></script>
+<title>欢迎使用信用风险信息服务平台</title>
+<link rel="stylesheet" type="text/css" href="css/public.css">
+<link rel="stylesheet" type="text/css" href="css/page.css">
+<script type="text/javascript" src="js/libs/jquery/jquery-2.1.1.min.js"></script>
+<script src="js/left-menu.js" type="text/javascript"></script>
+<style type="text/css">
+.new1{ width:22px; height:14px; background:url(images/img/new.gif) no-repeat; position:absolute; left:130px; top:15px;}
+</style>
+		
+<script type="text/javascript">
+function modifyPassword(){
+	parent.document.getElementById("mainFrame").src = "resetPassword.html";
+}
+
+function modifyBaseInfo(){
+	parent.document.getElementById("mainFrame").src = "modifyUser.html";
+}
+
+function toPush(){
+	parent.document.getElementById("mainFrame").src = "page/credit/add.html";
+}
+
+function toQuery(){
+	parent.document.getElementById("mainFrame").src = "page/credit/query.html";
+}
+
+function toPushAll(){
+	parent.document.getElementById("mainFrame").src = "page/credit/addAll.html";
+}
+
+function toQueryAll(){
+	parent.document.getElementById("mainFrame").src = "page/credit/queryAll.html";
+}
+</script>
+</head>
+	
+	
+	<body marginwidth="1" marginheight="1">
+	<div class="con_left">
+	  <ul id="menu">
+	  	 <li>
+	      <a class="m3 margin_left_20" href="#" onfocus="this.blur()" style="color: rgb(102, 102, 102);"><span>用户管理 &gt;</span></a>
+	      <ul style="width: 170px; margin-left: 15px; padding-bottom: 18px; display: none;">
+	      	<li><a href="#" style="color: rgb(102, 102, 102);" onclick="modifyPassword();" >密码修改</a></li>
+	        <li><a href="#" style="color: rgb(102, 102, 102);" onclick="modifyBaseInfo();" >基本信息修改</a></li>
+	      </ul>
+	    </li>
+	   
+	    <li>
+	      <a class="m2 margin_left_20" href="#" onfocus="this.blur()" style="color: rgb(102, 102, 102);"><span>信息服务 &gt;</span><label id="reportno1"></label></a>
+	      <ul style="width: 170px; margin-left: 15px; padding-bottom: 18px; display: none;">
+	          <li><a href="#" style="color: rgb(102, 102, 102);" onclick="toPush()">信用风险信息报送</a></li>
+	          <li><a href="#" style="color: rgb(102, 102, 102);" onclick="toPushAll()">信用风险批量报送</a></li>
+	          <li><a href="#" style="color: rgb(102, 102, 102);" onclick="toQuery()">信用风险信息查询</a></li>
+	          <li><a href="#" style="color: rgb(102, 102, 102);" onclick="toQueryAll()">信用风险批量查询</a></li>
+	      </ul>
+	    </li>
+	    
+	  </ul>
+	</div><!--left end-->
+	
+
+</body></html>

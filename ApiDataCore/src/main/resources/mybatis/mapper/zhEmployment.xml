@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pbccrc.api.core.mapper.ZhEmploymentMapper">
+	
+	<select id="query" parameterType="java.lang.String" resultType="java.util.HashMap">
+		select 
+			e.id,
+			e.insideCode,
+			ddo.occupationName as occupation,
+			e.company,
+			ddi.industryName as industry,
+			e.occAddress,
+			e.occZIP,
+			e.startYear,
+			ddd.dutyName as duty,
+			ddc.casteName as caste,
+			e.annualIncome
+		from zh_employment e
+		LEFT JOIN zh_dd_occupation ddo on e.occupation = ddo.occupationCode
+		LEFT JOIN zh_dd_industry ddi on e.industry = ddi.industryCode
+		LEFT JOIN zh_dd_duty ddd on e.duty = ddd.dutyCode
+		LEFT JOIN zh_dd_caste ddc on e.caste = ddc.casteCode
+		where insideCode = #{insideCode}
+	</select>
+	
+</mapper>

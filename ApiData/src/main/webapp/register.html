@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0038)https://ipcrs.pbccrc.org.cn/userReg.do -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>欢迎使用个人信用信息服务平台</title>
+<link rel="stylesheet" type="text/css" href="css/public.css"/>
+<link rel="stylesheet" type="text/css" href="css/new.css"/>
+<link rel="stylesheet" type="text/css" href="css/page.css"/>
+<link rel="stylesheet" type="text/css" href="css/sweetalert/sweetalert.css">
+<link rel="stylesheet" type="text/css" href="css/slide-unlock.css">
+<script type="text/javascript" src="js/pe.js"></script>
+<script type="text/javascript" src="js/libs/jquery/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/libs/jquery/jquery.slideunlock.js"></script>
+<script type="text/javascript" src="js/input_notice.js"></script>
+<script type="text/javascript" src="js/vcode.js"></script>
+<script type="text/javascript" src="js/libs/sweetalert/sweetalert.min.js"></script>
+<script type="text/javascript" src="js/validator.js"></script>
+<script>
+	onload = function () {
+		document.getElementById("btn").addEventListener("click", function () {
+			
+			var userName = $('#userName').val();
+			var password = $('#password').val();
+			var password_confirm = $('#password2').val();
+			var compName = $('#compName').val();
+			var compTel= $('#compTel').val();
+			var contactName = $('#contactName').val();
+			var contactTel = $('#contactTel').val();
+			
+			if (userName=='') {
+				swal("用户名不能为空");
+				return false;
+			}
+			
+			if (password=='') {
+				swal("密码不能为空");
+				return false;
+			}
+			
+			if (password!=password_confirm) {
+				swal("两次密码必须相同");
+				return false;
+			}
+			
+			if (compName=='') {
+				swal("公司名称不能为空");
+				return false;
+			}
+			
+			if (compTel=='') {
+				swal("公司电话不能为空");
+				return false;
+			}
+			
+			if (contactName=='') {
+				swal("联系人姓名不能为空");
+				return false;
+			}
+			
+			if (contactTel=='') {
+				swal("联系人电话不能为空");
+				return false;
+			}
+			
+			/*
+			var silderValue = $('#silderValue').val();
+			if (silderValue == 'n') {
+				swal("请拖动滑块进行验证");
+				return false;
+			}
+			*/
+			var vCode = $('#vCode').val();
+			var hiddenVCode = $('#hiddenVCode').val();
+			if (vCode != hiddenVCode) {
+				swal("验证码错误,请重新获取");
+				return false;
+			}
+			
+			var params = {
+							"userName" : userName, 
+							"password" : password, 
+							"compName" : compName,
+							"compTel" : compTel,
+							"contactName" : contactName,
+							"contactTel" : contactTel};
+			
+			 $.ajax({
+                async:false,
+                type: "GET",  
+                url: "r/user/register",  
+                data: params,
+                success: function(msg){
+                	alert("注册成功");
+                	parent.$("#conFrame").attr("src", "login.html"); 
+                }  
+            });
+				
+			
+		}, false);
+	};
+	
+	function isExist() {
+		
+		var userName = $('#userName').val();
+		
+		var params = {"userName" : userName};
+		
+		$.ajax({
+               async:false,
+               type: "GET",  
+               url: "r/user/isExist",  
+               data: params,
+               success: function(msg){
+               	if ("Y"==msg) {
+               		$("#errMsg").css('display','inline');
+               		$('#btn').attr("disabled", true);
+               		$('#btn').attr("class", "disableBtn btn2");
+               	} else {
+               		$("#errMsg").css('display','none');
+               		$('#btn').attr("disabled", false);
+               		$('#btn').attr("class", "inputBtn btn2");
+               	}
+               }  
+           });
+	}
+</script>
+<script type="text/javascript">
+function displayYesCurrent(obj){
+	if($("#errMsg").css("display")=='none') {
+		var input = document.getElementById(obj.id);
+		input.parentNode.getElementsByTagName("span")[0].style.display = "inline";
+		input.parentNode.getElementsByTagName("span")[1].style.display = "none";
+	 }
+}
+</script>
+<script>
+function sendVCode(obj) {
+	
+	var contactTel = $('#contactTel').val();
+	if (contactTel=='') {
+		swal("联系人电话不能为空");
+		return false;
+	}
+	var res = vaildPhoneNo(contactTel);
+	if (!res) {
+		swal("联系人电话格式错误");
+		return false;	
+	}
+	
+	var params = {"phoneNo" : contactTel};
+	
+	$.ajax({
+        async:false,
+        type: "GET",  
+        url: "r/SMS/getVCode",
+        data: params,
+        success: function(vCode){
+        	$('#hiddenVCode').val(vCode);
+        }  
+    });
+	
+	settime(obj);
+}
+</script>
+</head>
+<body marginwidth="1" marginheight="1">
+<div class="gray-bk">
+	<div class="white-con">
+		<div class="title-1">
+			<span>用户注册</span>
+		</div>
+
+
+			<form>
+				<div class="table-con" style="width:750px;">
+					<ul class="padding_left_40">
+						<li class=" height32">
+							<font class="regist_text span-14"><label class="span-red">
+									*
+							</label> 帐号：</font>
+							<input maxlength="30" id="userName" type="text" class="login_input" onfocus="displayYesCurrent(this)" onblur="displayNo(this);isExist()" autocomplete="off">
+							<span class="notice1 span-grey">请输入您的访问帐号</span>
+							<span></span>
+							<span class="notice1 span-grey" id="errMsg">当前用户已存在</span>
+						</li>
+						<li class="margin_top_20 height32">
+							<font class="regist_text span-14"><label class="span-red">
+									*
+							</label> 密码：</font>
+							<input maxlength="18" id="password" type="password" class="login_input" onfocus="displayYes(this)" onblur="displayNo(this);" autocomplete="off">
+							<span class="notice1 span-grey">请输入您的密码</span>
+							<span></span>
+						</li>
+						<li class="margin_top_20 height32">
+							<font class="regist_text span-14"><label class="span-red">
+									*
+							</label> 密码确认：</font>
+							<input maxlength="18" id="password2" type="password" class="login_input" onfocus="displayYes(this)" onblur="displayNo(this);" autocomplete="off">
+							<span class="notice1 span-grey">请再次输入您的密码</span>
+							<span></span>
+						</li>
+						<li class="margin_top_20 height32">
+							<font class="regist_text span-14"><label class="span-red">
+									*
+							</label> 注册公司 ：</font>
+							<input maxlength="18" id="compName" type="text" class="login_input" onfocus="displayYes(this)" onblur="displayNo(this);" autocomplete="off">
+							<span class="notice1 span-grey">请填写注册机构名</span>
+							<span></span>
+						</li>
+						<li class="margin_top_20 height32">
+							<font class="regist_text span-14"><label class="span-red">
+									*
+							</label> 注册公司电话 ：</font>
+							<input maxlength="18" id="compTel" type="text" class="login_input" onfocus="displayYes(this)" onblur="displayNo(this);" autocomplete="off">
+							<span class="notice1 span-grey">请填写注册机构电话</span>
+							<span></span>
+						</li>
+						<li class="margin_top_20 height32">
+							<font class="regist_text span-14"><label class="span-red">
+									*
+							</label> 联系人 ：</font>
+							<input maxlength="18" id="contactName" type="text" class="login_input" onfocus="displayYes(this)" onblur="displayNo(this);" autocomplete="off">
+							<span class="notice1 span-grey">请填联系人姓名</span>
+							<span></span>
+						</li>
+						<li class="margin_top_20 height32">
+							<font class="regist_text span-14"><label class="span-red">
+									*
+							</label> 联系人电话 ：</font>
+							<input maxlength="18" id="contactTel" type="text" class="login_input" onfocus="displayYes(this)" onblur="displayNo(this);" autocomplete="off">
+							<span class="notice1 span-grey">请填联系人电话</span>
+							<span></span>
+						</li>
+						
+						<!--  
+						<li class="margin_top_20 height32">
+							<font class="regist_text span-14"><label class="span-red">
+									*
+							</label> 验证码 ：</font>
+							<div id="demo">
+							<div id="slider">
+							    <div id="slider_bg"></div>
+							    <span id="label">>></span> <span id="labelTip">拖动滑块验证</span> </div>
+								  <script>
+								    $(function () {
+								        var slider = new SliderUnlock("#slider",{
+												successLabelTip : "验证成功"	
+											},function(){
+												$('#silderValue').val('y');
+								        	});
+								        slider.init();
+								    })
+								</script> 
+							</div>
+						</li>
+						-->
+						
+						<li class="margin_top_20 height32">
+							<font class="regist_text span-14"><label class="span-red">
+									*
+							</label> 验证码 ：</font>
+							<input maxlength="18" id="vCode" type="text" class="vCode_text">
+							<!--  
+							<input type="button" class="inputBtn btn4" id="vCodeBtn" value="获取验证码" onclick="settime(this);sendVCode();">
+							-->
+							<input type="button" class="inputBtn btn4" id="vCodeBtn" value="获取验证码" onclick="sendVCode(this);">
+							<script type="text/javascript"> 
+								var countdown = 20; 
+								function settime(val) { 
+									if (countdown == 0) { 
+										val.removeAttribute("disabled"); 
+										$('#vCodeBtn').attr("class", "inputBtn btn4");
+										val.value="获取验证码"; 
+										countdown = 20; 
+									} else { 
+										val.setAttribute("disabled", true); 
+										$('#vCodeBtn').attr("class", "disableBtn btn4");
+										val.value="重新发送(" + countdown + ")"; 
+										countdown--; 
+									} 
+									setTimeout(function() {
+										if (countdown == 20) {
+											return false;
+										}
+										settime(val) 
+									},1000) 
+								} 
+							</script> 
+							<input id="hiddenVCode" type="hidden">
+						</li>
+						
+						<li class="padding_top_30">
+							<font class="regist_text">&nbsp;</font>
+							<input type="hidden" id="silderValue" value="n">
+							<input type="button" class="inputBtn btn2" id="btn" value="注册" disabled="disabled">
+						</li>
+					</ul>
+				</div>
+			</form>
+			
+		</div>
+	</div>
+	
+
+
+<script src="js/inputAutoCompleteOff.js" type="text/javascript"></script>
+</body></html>

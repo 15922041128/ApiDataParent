@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pbccrc.api.core.mapper.ZhCreditCardMapper">
+	
+	<select id="query" parameterType="java.lang.String" resultType="java.util.HashMap">
+		select
+			id,
+			insideCode,
+			nor_num,
+			inactive_num,
+			close_num,
+			abnor_num,
+			nor_foreign_num,
+			close_foreign_num,
+			abnor_foreign_num,
+			org_num,
+			gran_inuse_total,
+			gran_cloes_total,
+			gran_abnor_total,
+			gran_inact_total,
+			gran_nor_max,
+			gran_close_max,
+			gran_abnor_max,
+			gran_inact_max,
+			gran_nor_min,
+			gran_close_min,
+			gran_abnor_min,
+			gran_inact_min,
+			use_nor_max,
+			use_close_max,
+			use_nor_for_max,
+			use_close_for_max,
+			overdue_total_times,
+			overdue_max_times,
+			overdue_180_max,
+			overdue_180_total,
+			ear_his_time,
+			ear_inuse_time
+		from zh_creditcard where insideCode = #{insideCode}
+	</select>
+	
+</mapper>

@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0069)https://ipcrs.pbccrc.org.cn/setSafetyLevel.do?method=index&isnew=true -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>信贷信息服务平台</title>
+
+<link type="text/css" href="/ApiData/css/public.css" rel="stylesheet">
+<link type="text/css" href="/ApiData/css/page.css" rel="stylesheet">
+<link type="text/css" href="/ApiData/css/new.css" rel="stylesheet">
+<link type="text/css" href="/ApiData/css/table.css" rel="stylesheet">
+<link type="text/css" href="/ApiData/css/sweetalert/sweetalert.css" rel="stylesheet">
+<script type="text/javascript" src="/ApiData/js/libs/jquery/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="/ApiData/js/util.js"></script>
+<script type="text/javascript" src="/ApiData/js/libs/sweetalert/sweetalert.min.js"></script>
+<style>
+.tr1{
+font-family : 华文彩云;
+background: red none repeat scroll 0% 0% !important;
+}
+.tr2{font-family : 黑体;}
+.tr3{font-family : fantasy;}
+.tr4{font-family : sans-serif;}
+</style>
+<script type="text/javascript">
+$(function() {
+    $("table tr:nth-child(odd)").addClass("odd-row");
+	$("table td:first-child, table th:first-child").addClass("first");
+	$("table td:last-child, table th:last-child").addClass("last");
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	var name = getUrlValue('name');
+	var idCardNo = getUrlValue('idCardNo');
+	
+	var params = {"name" : name, "idCardNo" : idCardNo};
+	 
+	 $.ajax({
+	        async:false,
+	        type: "POST",  
+	        url: getLocation() + "/r/person/query?name="+name+"&idCardNo="+idCardNo, 
+	        // data: params,
+	        success: function(datas){
+	        	var status = datas.status;
+	        	
+	        	if ('error' == status) {
+	        		insertNullTable();
+	        		swal('查询失败');
+	        		return false;
+	        	}
+	        	
+	        	// 基本信息
+	        	var person = datas.person;
+	        	var pBaseInfo = datas.pBaseInfo;
+	        	if (pBaseInfo == null) {
+	        		var pp_name = '';
+		        	var pp_idCardNo = '';
+		        	var pbi_tel = '';
+		        	var pbi_address = '';
+		        	$("#pp_idCardNo").html(idCardNo);
+		        	$("#pp_name").html(name);
+		        	$("#pbi_tel").html(pbi_tel);
+		        	$("#pbi_address").html(pbi_address);
+	        	} else {
+	        		var pp_name = person.name;
+		        	var pp_idCardNo = person.idCardNo;
+		        	var pbi_tel = pBaseInfo.tel;
+		        	var pbi_address = pBaseInfo.address;
+		        	var pbi_photo = pBaseInfo.photo;
+		        	pbi_photo = pbi_photo.substr(pbi_photo.indexOf('\ApiData'));
+		        	pbi_photo = pbi_photo.replace(/\\/g, "/");
+		        	$("#pp_idCardNo").html(pp_idCardNo);
+		        	$("#pp_name").html(pp_name);
+		        	$("#pbi_tel").html(pbi_tel);
+		        	$("#pbi_address").html(pbi_address);
+		        	$("#pbi_photo").attr('src', '/' + pbi_photo); 
+	        	}
+	        	
+	        	// 信用评分
+	        	var score = datas.score;
+	        	$("#score").html(score);
+	        	
+	        	// 信贷信息
+	        	var reditList = datas.reditList;
+	        	var reditTable = $("#reditTable");
+	        	$.each(reditList, function (i, data) {
+	        		var tr = "<tr>";
+	                var tr = tr + "<td>" + data.contactDate + "</td>"
+                	+ " <td>" + data.hireDate + "</td>"
+                	+ " <td>" + data.expireDate + "</td>"
+                	+ " <td>" + data.loanUsed + "</td>"
+                	+ " <td>" + data.totalAmount + "</td>"
+                	+ " <td>" + data.balance + "</td>"
+                	+ " <td>" + data.status + "</td>"
+                	+ " <td>" + data.bizOccurOrg + "</td>"
+                	+ " <td>" + data.createTime + "</td>";
+                	tr = tr + "</tr>"
+                	reditTable.append(tr);
+	            });
+	        	
+	        	// 失信人被执行信息
+	        	var dishonestList = datas.dishonestList;
+	        	var dishonestTable = $("#dishonestTable");
+	        	if (0 == dishonestList.length) {
+	        		insertNullTable();
+	        	} else {
+	        		$.each(dishonestList, function (i, data) {
+		        		var tr1 = "<tr class='odd-row'>";
+		        		tr1 = tr1 + "<th class='first'>" + "<b>被执行人姓名</b>：" + data.INAME + "</th>";
+		        		tr1 = tr1 + "<th style='text-align:left;line-height:20px'>" + "被执行人身份证号码：" + data.CARDNUM  + "</th>";
+		        		tr1 = tr1 + "<th style='text-align:left'>" + "省份：" + data.AREA_NAME + "</th>";
+		        		tr1 = tr1 + "<th>" + "发布时间：" + data.REG_DATE  + "</th>";
+		        		tr1 = tr1 + "</tr>"
+		        		dishonestTable.append(tr1);
+		        		
+		        		var tr2 = "<tr>";
+		        		tr2 = tr2 + "<td style='text-align:left;line-height:20px'>" + "<b>执行依据号：</b>" + data.GIST_CID + "</td>";
+		        		tr2 = tr2 + "<td style='text-align:left'>" + "<b>被执行人的履行情况：</b>" + data.PERFORMANCE + "</td>";
+		        		tr2 = tr2 + "<td colspan='2' style='text-align:left'>" + "<b>执行法院：</b>" + data.COURT_NAME + "</td>";
+		        		tr2 = tr2 + "</tr>";
+		        		dishonestTable.append(tr2);
+		        		
+		        		var tr3 = "<tr>";
+		        		tr3 = tr3 + "<td colspan='4' style='text-align:left;line-height:20px'>" + "<b>生效法律文书确定的义务：</b>" + data.DUTY + "</td>";
+		        		tr3 = tr3 + "</tr>";
+		        		dishonestTable.append(tr3);
+		        		
+		        		var tr4 = "<tr>";
+		        		tr4 = tr4 + "<td colspan='4' style='text-align:left;line-height:20px'>" + "<b>失信被执行人行为具体情形：</b>" + data.DISREPUT_TYPE_NAME + "</td>";
+		        		tr4 = tr4 + "</tr>";
+		        		dishonestTable.append(tr4);
+		        		
+		        		dishonestTable.append("<tr><td colspan='4'></td></tr>");
+		        	});
+	        	}
+	        }  
+	    });
+});
+
+function insertNullTable(){
+	var dishonestTable = $("#dishonestTable");
+	var tr1 = "<tr class='odd-row'>";
+	tr1 = tr1 + "<th class='first'>" + "<b>被执行人姓名</b>：" + '' + "</th>";
+	tr1 = tr1 + "<th style='text-align:left;line-height:20px'>" + "被执行人身份证号码：" + '' + "</th>";
+	tr1 = tr1 + "<th style='text-align:left'>" + "省份：" + '' + "</th>";
+	tr1 = tr1 + "<th>" + "发布时间：" + ''  + "</th>";
+	tr1 = tr1 + "</tr>"
+	dishonestTable.append(tr1);
+	
+	var tr2 = "<tr>";
+	tr2 = tr2 + "<td style='text-align:left;line-height:20px'>" + "<b>执行依据号：</b>" + '' + "</td>";
+	tr2 = tr2 + "<td style='text-align:left'>" + "<b>被执行人的履行情况：</b>" + '' + "</td>";
+	tr2 = tr2 + "<td colspan='2' style='text-align:left'>" + "<b>执行法院：</b>" + '' + "</td>";
+	tr2 = tr2 + "</tr>";
+	dishonestTable.append(tr2);
+	
+	var tr3 = "<tr>";
+	tr3 = tr3 + "<td colspan='4' style='text-align:left;line-height:20px'>" + "<b>生效法律文书确定的义务：</b>" + '' + "</td>";
+	tr3 = tr3 + "</tr>";
+	dishonestTable.append(tr3);
+	
+	var tr4 = "<tr>";
+	tr4 = tr4 + "<td colspan='4' style='text-align:left;line-height:20px'>" + "<b>失信被执行人行为具体情形：</b>" + '' + "</td>";
+	tr4 = tr4 + "</tr>";
+	dishonestTable.append(tr4);
+	
+	dishonestTable.append("<tr><td colspan='4'></td></tr>");
+}
+</script>
+</head>
+<body>
+<div style="margin-top: 30px;"><h1 style ="font-size:30px">信贷信息查询结果</h1></div>
+<div style="margin-top: 30px;">
+	<div align="center" style="margin-top: 10px;"><font><b>基本信息</b></font></div>
+	<table cellspacing="0" class="tbl">
+		<tr>
+			<td>
+				姓名：<label id="pp_name"></label>
+			</td>
+			<td style="text-align:left">
+				身份证号：<label id="pp_idCardNo"></label>
+			</td>
+			<td>
+				信用评分：<label id="score"></label>
+			</td>
+			<td rowspan="2" style="width:100px">
+				<img src="" height="100" width="80" id="pbi_photo" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				手机号：<label id="pbi_tel"></label>
+			</td>
+			<td colspan="2" style="text-align:left">
+				地址：<label id="pbi_address"></label>
+			</td>
+		</tr>
+	</table>
+	
+	<div align="center" style="margin-top: 10px;"><font><b>信用信息</b></font></div>
+	<table cellspacing="0" id="reditTable">
+		<tr nowrap>
+			<th>
+				合同日期
+			</th>
+			<th>
+				起租日
+			</th>
+			<th>
+				到期日
+			</th>
+			<th>
+				贷款用途
+			</th>
+			<th>
+				总金额
+			</th>
+			<th>
+				余额
+			</th>
+			<th>
+				状态
+			</th>
+			<th>
+				业务发生机构
+			</th>
+			<th>
+				日期时间
+			</th>
+		</tr>
+	</table>
+	<div align="center" style="margin-top: 10px;"><font><b>失信人被执行信息</b></font></div>
+	<table cellspacing="0" id="dishonestTable"></table>
+</div> 
+</body>
+</html>

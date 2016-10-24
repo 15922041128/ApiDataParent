@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0069)https://ipcrs.pbccrc.org.cn/setSafetyLevel.do?method=index&isnew=true -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>信贷信息服务平台</title>
+<link type="text/css" href="/ApiData/css/public.css" rel="stylesheet">
+<link type="text/css" href="/ApiData/css/page.css" rel="stylesheet">
+<link type="text/css" href="/ApiData/css/new.css" rel="stylesheet">
+<link type="text/css" href="/ApiData/css/sweetalert/sweetalert.css" rel="stylesheet">
+<script type="text/javascript" src="/ApiData/js/libs/jquery/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="/ApiData/js/util.js"></script>
+<script type="text/javascript" src="/ApiData/js/picview.js"></script>
+<script type="text/javascript" src="/ApiData/js/libs/sweetalert/sweetalert.min.js"></script>
+<style type="text/css">  
+#parent{width:450px; height:15px; border:2px solid #2894FF;}  
+#son {width:0; height:100%; background-color:#2894FF; text-align:center; line-height:15px; font-size:20px; font-weight:bold;}  
+</style>
+<script type="text/javascript">
+var result;
+function doSubmit(){
+	
+	// 验证文件格式
+	var inputFile = $("#inputFile").val();
+	if (inputFile == "" || inputFile == null) {
+		swal("请选择文件");
+		return false;
+	}
+	var strs = inputFile.split('.');
+    var suffix = strs[strs .length - 1];
+    if (suffix != 'xlsx') {
+    	swal("请选择正确的模板文件");
+		return false;
+    }
+
+	var formData = new FormData($("#pushForm")[0]);
+	
+	 $.ajax({
+	       type: "POST",
+	       url: getLocation() + "/r/person/queryAll",  
+	       data: formData ,
+	       processData : false,  
+	       contentType : false , 
+	       xhr: function(data){
+		       var xhr = $.ajaxSettings.xhr();
+		       if(onprogress && xhr.upload) {
+		    	  var jsonStr = JSON.stringify(xhr);
+		          xhr.upload.addEventListener("progress" , onprogress, false);
+		          xhr.upload.addEventListener("load", uploadComplete, false);
+		          return xhr;
+		       }
+	      },
+	      success:function(data) {
+	    	  result = data;
+	      }
+	});
+}
+function onprogress(evt) {
+	// 已经上传大小情况
+    var loaded = evt.loaded;
+  	// 附件总大小 
+    var tot = evt.total;
+  	// 已经上传的百分比
+    var per = Math.floor(100 * loaded / tot);	  	
+    $("#son").html(per + "%");
+    $("#son").css("width", per +"%");
+}
+function uploadComplete() {
+	swal({   
+			title: "上传成功！",   
+			type: "success",   
+			showCancelButton: true,   
+			confirmButtonText: "下载查询结果",
+			cancelButtonText: "直接关闭",
+			closeOnConfirm: false 
+		}, 
+		function(){
+			var downLink = document.createElement("a");
+			document.body.appendChild(downLink);
+			downLink.href = result.filePath;
+			downLink.click();
+		});
+}
+</script>
+</head>
+<body marginwidth="1" marginheight="1">
+<div class="con_right">
+	<form id="pushForm"  name="ajform" enctype="multipart/form-data" method="post">
+	<ul class="padding_left_40">
+		<li style="padding-left:200px; padding-top: 30px; padding-bottom: 20px;" " >
+			<font class="regist_text span-14"><h2 style="color: #6b6b6b"> 信用风险批量查询</h2></font>
+			<br/>
+		</li>
+		<li class=" margin_top_20 height32">
+			<font class="regist_text span-14"><label class="span-red">
+					*
+			</label> 请选择模板文件：</font>
+			<input maxlength="30" name="inputFile" id="inputFile" fileindex="1" type="file"><br><br>
+			<div id="parent"><div id="son"></div></div>
+		</li>
+		
+		<li class="padding_top_30">
+			<font class="regist_text"></font>
+			<input type="button" class="inputBtn btn2" value="上传" onclick="doSubmit()">
+		</li>
+	</ul>
+	</form>
+</div>
+</body>
+</html>

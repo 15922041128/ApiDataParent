@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pbccrc.api.core.mapper.ZhAddressMapper">
+	
+	<select id="query" parameterType="java.lang.String" resultType="java.util.HashMap">
+		select 
+			a.id,
+			a.insideCode,
+			a.residence,
+			a.resZip,
+			ddr.resName as resCondition,
+			a.recID
+		from zh_address a 
+		LEFT JOIN zh_dd_residence ddr on a.resCondition = ddr.resCode
+		where a.insideCode = #{insideCode}
+	</select>
+	
+</mapper>

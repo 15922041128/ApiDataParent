@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0069)https://ipcrs.pbccrc.org.cn/setSafetyLevel.do?method=index&isnew=true -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>个人信用信息服务平台</title>
+
+<link type="text/css" href="/ApiData/css/public.css" rel="stylesheet">
+<link type="text/css" href="/ApiData/css/page.css" rel="stylesheet">
+<link type="text/css" href="/ApiData/css/new.css" rel="stylesheet">
+<script type="text/javascript" src="/ApiData/js/util.js"></script>
+<script type="text/javascript" src="/ApiData/js/libs/jquery/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+function doQuery(){
+	var name = $("#name").val();
+	var idCardNo = $("#idCardNo").val();
+	/*
+	var paramNames = new Array();
+	paramNames[0] = "name";
+	paramNames[1] = "idCardNo";
+	var paramValues = new Array();
+	paramValues[0] = name;
+	paramValues[1] = idCardNo;
+	openNewPageWithPostData("queryResult.html", "", paramNames, paramValues);
+	*/
+	window.open("queryResult.html?name=" + name + "&idCardNo=" + idCardNo);
+}
+</script>
+</head>
+<body marginwidth="1" marginheight="1">
+<form id="postForm"></form>
+<div class="con_right">
+	<ul class="padding_left_40">
+		<li style="padding-left:180px; padding-top: 30px; padding-bottom: 20px;" >
+			<font class="regist_text span-14"> <h2 style="color: #6b6b6b">填写查询信息</h2></font><br/>
+		</li>
+		<li class=" margin_top_20 height32">
+			<font class="regist_text span-14"><label class="span-red">
+					*
+			</label> 姓名：</font>
+			<input maxlength="30" id="name" type="text" class="login_input">
+		</li>
+		<li class=" margin_top_20 height32">
+			<font class="regist_text span-14"><label class="span-red">
+					*
+			</label> 身份证号：</font>
+			<input maxlength="30" id="idCardNo" type="text" class="login_input">
+		</li>
+		
+		<li class="padding_top_30">
+			<font class="regist_text"></font>
+			<input type="button" class="inputBtn btn2" value="查询" onclick="doQuery()">
+		</li>
+	</ul>
+</div> 
+</body>
+</html>

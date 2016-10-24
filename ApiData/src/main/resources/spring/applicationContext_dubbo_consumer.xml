@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans.xsd
+ http://code.alibabatech.com/schema/dubbo
+ http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+ http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <dubbo:application name="ApiData"/>
+
+    <!-- 直连使用, 不需要注册中心  -->
+<!--     <dubbo:reference id="userInterf" interface="com.durbar.JavaServerArch.RpcServerDemo.api.User.UserInterf" check="false" url="127.0.0.1:20881"/> -->
+    <!-- <dubbo:registry address="N/A"/> -->
+    <!-- 多播使用, 不需要注册中心 -->
+    <!--   <dubbo:registry address="multicast://224.5.6.7:1234?unicast=false" />-->
+    <!-- 使用注册中心 -->
+    <context:property-placeholder location="classpath:zookeeper.properties" ignore-unresolvable="true"/>
+    <dubbo:registry protocol="zookeeper" address="${dubbo.registry}"/>
+    <dubbo:consumer timeout="300000"/>
+
+    <!-- 服务配置, 指定端口 -->
+    <!--<dubbo:protocol name="dubbo" port="20881"/>-->
+    <!-- 服务配置, 不指定端口 -->
+    <!--<dubbo:protocol name="dubbo" port="-1"/>-->
+
+    <dubbo:reference id="queryApiService" interface="org.pbccrc.api.base.service.QueryApiService" lazy="false" check="false"/>
+    <dubbo:reference id="costService" interface="org.pbccrc.api.base.service.CostService" lazy="false" check="false"/>
+    <dubbo:reference id="systemLogService" interface="org.pbccrc.api.base.service.SystemLogService" lazy="false" check="false"/>
+    <dubbo:reference id="localApiService" interface="org.pbccrc.api.base.service.LocalApiService" lazy="false" check="false"/>
+    <dubbo:reference id="dbOperatorService" interface="org.pbccrc.api.base.service.DBOperatorService" lazy="false" check="false"/>
+    <dubbo:reference id="apiUserService" interface="org.pbccrc.api.base.service.ApiUserService" lazy="false" check="false"/>
+    <dubbo:reference id="relationService" interface="org.pbccrc.api.base.service.RelationService" lazy="false" check="false"/>
+    <dubbo:reference id="queryApiSingle" interface="org.pbccrc.api.base.service.QueryApi" lazy="false" check="false"/>
+    <dubbo:reference id="queryApiMultiple" interface="org.pbccrc.api.base.service.QueryApi" lazy="false" check="false"/>
+    <dubbo:reference id="complexService" interface="org.pbccrc.api.base.service.ComplexService" lazy="false" check="false"/>
+    <dubbo:reference id="localDBService" interface="org.pbccrc.api.base.service.LocalDBService" lazy="false" check="false"/>
+</beans>
+

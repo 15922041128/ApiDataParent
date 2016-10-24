@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pbccrc.api.core.mapper.DBOperatorMapper">
+	
+	<insert id="insertData" parameterType="org.pbccrc.api.base.bean.DBEntity">
+		insert into ${tableName}
+			<foreach collection="fields" item="item" open="(" separator="," close=")">  
+	            `${item}`
+	        </foreach>
+		values 
+			<foreach collection="values" item="item" open="(" separator="," close=")">  
+	            #{item}
+	        </foreach>
+	</insert>
+	
+	<select id="queryData" parameterType="org.pbccrc.api.base.bean.DBEntity" resultType="java.util.HashMap">
+		select 
+		<choose>
+            <when test="selectItems != null">
+                <foreach collection="selectItems" item="item" separator=",">  
+	            	 `${item}`
+	        	</foreach>
+            </when>
+            <otherwise>
+                   *
+            </otherwise>
+         </choose>
+		from ${tableName} t where 1 = 1 ${sql}
+	</select>
+	
+	<select id="queryDatas" parameterType="org.pbccrc.api.base.bean.DBEntity" resultType="java.util.HashMap">
+		select 
+		<choose>
+            <when test="selectItems != null">
+                <foreach collection="selectItems" item="item" separator=",">  
+	            	 `${item}`
+	        	</foreach>
+            </when>
+            <otherwise>
+                   *
+            </otherwise>
+         </choose>
+		from ${tableName} t where 1 = 1 ${sql}
+	</select>
+
+	<update id="updateData" parameterType="org.pbccrc.api.base.bean.DBEntity">
+		update ${tableName} set ${sql}
+	</update>	
+	
+</mapper>
