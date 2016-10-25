@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
+@SuppressWarnings("restriction")
 @Service("idCardValidator")
 public class IDCardValidator {
     /*********************************** 身份证验证开始 ****************************************/

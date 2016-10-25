@@ -17,6 +17,7 @@ import org.pbccrc.api.core.dao.ZhGuaranteeDao;
 import org.pbccrc.api.core.dao.ZhInsideCodeDao;
 import org.pbccrc.api.core.dao.ZhLoanDao;
 import org.pbccrc.api.core.dao.ZhPersonDao;
+import org.pbccrc.api.core.dao.datasource.DynamicDataSourceHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -194,6 +195,7 @@ public class ComplexServiceImpl implements ComplexService{
 		for (String queryItem : queryItems) {
 			// 人员基本信息
 			if (Constants.ITEM_PERSON.equals(queryItem)) {
+//				DynamicDataSourceHolder.setDataSource("oracleDataSource");
 				Map<String, Object> personMap = zhPersonDao.query(insideCode);
 				if (null == personMap) {
 					personMap = new HashMap<String, Object>();

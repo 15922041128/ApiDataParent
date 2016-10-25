@@ -9,13 +9,13 @@
     <tx:annotation-driven transaction-manager="txManager" proxy-target-class="true"/>
 
 
-    <!-- DataSource -->
+    <!-- mysql DataSource -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
           destroy-method="close">
-        <property name="driverClass" value="${maindomain.jdbc.driverClassName}"/>
-        <property name="jdbcUrl" value="${maindomain.jdbc.url}"/>
-        <property name="user" value="${maindomain.jdbc.username}"/>
-        <property name="password" value="${maindomain.jdbc.password}"/>
+        <property name="driverClass" value="${mysql.jdbc.driverClassName}"/>
+        <property name="jdbcUrl" value="${mysql.jdbc.url}"/>
+        <property name="user" value="${mysql.jdbc.username}"/>
+        <property name="password" value="${mysql.jdbc.password}"/>
         <property name="initialPoolSize" value="15"/>
         <property name="minPoolSize" value="15"/>
         <property name="maxPoolSize" value="30"/>
@@ -23,8 +23,37 @@
         <property name="maxStatements" value="60"/>
         <property name="autoCommitOnClose" value="true"/>
     </bean>
-
-
+    
+    <!-- oracle DataSource -->
+     <!--  
+    <bean id="oracleDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close">
+        <property name="driverClass" value="${oracle.jdbc.driverClassName}"/>
+        <property name="jdbcUrl" value="${oracle.jdbc.url}"/>
+        <property name="user" value="${oracle.jdbc.username}"/>
+        <property name="password" value="${oracle.jdbc.password}"/>
+        <property name="initialPoolSize" value="15"/>
+        <property name="minPoolSize" value="15"/>
+        <property name="maxPoolSize" value="30"/>
+        <property name="maxIdleTime" value="600"/>
+        <property name="maxStatements" value="60"/>
+        <property name="autoCommitOnClose" value="true"/>
+    </bean>
+    -->
+    
+    <!-- dynamicDataSource -->
+    <!--  
+    <bean id="dataSource" class="org.pbccrc.api.core.dao.datasource.DynamicDataSource">  
+	    <property name="targetDataSources">  
+	        <map key-type="Java.lang.String">  
+	            <entry value-ref="mysqlDataSource" key="mysqlDataSource"></entry>  
+	            <entry value-ref="oracleDataSource" key="oracleDataSource"></entry>  
+	        </map>  
+	    </property>  
+	    <property name="defaultTargetDataSource" ref="mysqlDataSource"></property>     
+	</bean>
+	-->
+	
     <!-- a PlatformTransactionManager is still required -->
     <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
