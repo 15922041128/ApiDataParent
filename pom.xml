@@ -53,6 +53,8 @@
 		<jedis.version>2.5.0</jedis.version>
 
 		<oracle.version>11.2.0.4</oracle.version>
+		
+		<commons-io.version>2.2</commons-io.version>
 	</properties>
 
 	<dependencyManagement>
@@ -178,6 +180,12 @@
 				<artifactId>guava</artifactId>
 				<version>${com.google.guava.version}</version>
 			</dependency>
+			
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons-io.version}</version>
+			</dependency>
 
 			<!-- db -->
 			<dependency>
@@ -200,13 +208,11 @@
 				<artifactId>c3p0</artifactId>
 				<version>${c3p0.version}</version>
 			</dependency>
-			<!--  
 			<dependency>  
 			    <groupId>com.oracle</groupId>  
 			    <artifactId>ojdbc6</artifactId>  
 			    <version>${oracle.version}</version>  
 			</dependency>  
-			-->
 
 			<!-- dubbo -->
 			<dependency>

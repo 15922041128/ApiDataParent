@@ -131,12 +131,10 @@
 		</dependency>
 		
 		<!-- oracle -->
-		<!--  
 		<dependency>  
 		    <groupId>com.oracle</groupId>  
 		    <artifactId>ojdbc6</artifactId>  
 		</dependency>  
-		-->
 
 		<!-- dubbo start -->
 		<dependency>

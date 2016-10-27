@@ -36,22 +36,26 @@ function doQuery(){
 	});
 	
 	queryItem = queryItem.substring(0, queryItem.length - 1);
+	
 	$.ajax({
         async:false,
         type: "GET",  
-        url: getLocation() + "/r/complex/sxr?identifier=" + idCardNo + "&queryItem=" + queryItem, 
+        url: getLocation() + "/r/complex/validateSxr?identifier=" + idCardNo, 
         success: function(data){
-        	var isNull = data.isNull;
-        	if ("Y"==isNull) {
+        	if ("Y"==data) {
         		swal("您查询的用户系统中不存在");
         	} else {
         		var downLink = document.createElement("a");
-    			document.body.appendChild(downLink);
-    			downLink.href = data.filePath;
-    			downLink.click();
+        		var href = getLocation() + "/r/complex/sxr?identifier=" + idCardNo + "&queryItem=" + queryItem;
+        		document.body.appendChild(downLink);
+        		downLink.href = href;
+        		downLink.click();
         	}
-        }  
-    });  
+        },
+        error: function(){
+           
+        }
+    }); 
 }
 </script>
 </head>

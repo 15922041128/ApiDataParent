@@ -25,6 +25,13 @@ public interface ComplexService {
 	public Map<String, Object> getPdfCustom(String identifier, Map<String, Object> localApi) throws Exception;
 	
 	/**
+	 * 失信人查询验证
+	 * @param identifier
+	 * @return
+	 */
+	public String validateSxr(String identifier) throws Exception;
+	
+	/**
 	 * 失信人查询
 	 * @param identifier
 	 * @return
