@@ -6,7 +6,7 @@
 	<select id="query" parameterType="java.lang.String" resultType="java.util.HashMap">
 			select
 			ID,
-			insideCode,
+			innerID,
 			settled_account_num,
 			unsettled_account_num,
 			org_num,
@@ -30,7 +30,7 @@
 			five_category_most_type,
 			ear_loan_time,
 			latest_repay_time
-		from zh_loan where insideCode = #{insideCode}
+		from loan where innerID = #{innerID}
 	</select>
 	
 </mapper>

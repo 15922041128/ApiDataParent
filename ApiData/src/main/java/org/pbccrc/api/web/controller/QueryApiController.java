@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
-import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -55,13 +54,10 @@ public class QueryApiController {
 	private SystemLogService systemLogService;
 	
 	@GET
-	@RequestMapping("/get")
+	@RequestMapping(value="/get", produces={"application/json;charset=UTF-8"})
 	@ResponseBody
-	@Produces(MediaType.APPLICATION_JSON)
 	@SuppressWarnings("rawtypes")
 	public String query(String service, HttpServletRequest request) throws Exception {
-		
-		request.setCharacterEncoding("utf-8");
 		
 		String result = Constants.BLANK;
 		
@@ -213,7 +209,7 @@ public class QueryApiController {
 	}
 	
 	@GET
-	@Path("/score")
+	@RequestMapping(value="/score", produces={"application/json;charset=UTF-8"})
 	@Produces(MediaType.APPLICATION_JSON)
 	public String score(@Context HttpServletRequest request) throws Exception {
 		

@@ -13,8 +13,8 @@ public class ZhLoanDao {
 	@Resource
 	private ZhLoanMapper zhLoanMapper;
 	
-	public Map<String, Object> query(String insideCode){
-		return zhLoanMapper.query(insideCode);
+	public Map<String, Object> query(String innerID){
+		return zhLoanMapper.query(innerID);
 	}
 	
 }

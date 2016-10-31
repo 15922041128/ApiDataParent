@@ -6,7 +6,7 @@
 	<select id="query" parameterType="java.lang.String" resultType="java.util.HashMap">
 		select 
 			p.id,
-			p.insideCode,
+			p.innerID,
 			ddg.genderName as gender,
 			p.birthday,
 			ddm.marriageName as marriage,
@@ -18,12 +18,12 @@
 			p.email,
 			p.address,
 			p.zip
-			from zh_person p 
-		LEFT JOIN zh_dd_gender ddg on p.gender = ddg.genderCode
-		LEFT JOIN zh_dd_marriage ddm on p.marriage = ddm.marriageCode
-		LEFT JOIN zh_dd_edulevel ddedul on p.eduLevel = ddedul.eduLevelCode
-		LEFT JOIN zh_dd_edudegree ddedud on p.eduDegree = ddedud.degreeCode
-		where insideCode = #{insideCode}
+			from person p 
+		LEFT JOIN dd_gender ddg on p.gender = ddg.genderCode
+		LEFT JOIN dd_marriage ddm on p.marriage = ddm.marriageCode
+		LEFT JOIN dd_edulevel ddedul on p.eduLevel = ddedul.eduLevelCode
+		LEFT JOIN dd_edudegree ddedud on p.eduDegree = ddedud.degreeCode
+		where innerID = #{innerID}
 	</select>
 	
 </mapper>

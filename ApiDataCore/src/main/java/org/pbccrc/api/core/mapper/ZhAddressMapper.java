@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ZhAddressMapper {
 
-	Map<String, Object> query(String insideCode);
+	Map<String, Object> query(String innerID);
 }

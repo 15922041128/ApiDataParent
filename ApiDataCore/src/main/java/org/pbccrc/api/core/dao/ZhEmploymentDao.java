@@ -13,8 +13,8 @@ public class ZhEmploymentDao {
 	@Resource
 	private ZhEmploymentMapper zhEmploymentMapper;
 	
-	public Map<String, Object> query(String insideCode){
-		return zhEmploymentMapper.query(insideCode);
+	public Map<String, Object> query(String innerID){
+		return zhEmploymentMapper.query(innerID);
 	}
 	
 }

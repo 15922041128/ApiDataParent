@@ -14,8 +14,8 @@ public class ZhGuaranteeDao {
 	@Resource
 	private ZhGuaranteeMapper zhGuaranteeMapper;
 	
-	public List<Map<String, Object>> query(String insideCode){
-		return zhGuaranteeMapper.query(insideCode);
+	public List<Map<String, Object>> query(String innerID){
+		return zhGuaranteeMapper.query(innerID);
 	}
 	
 }

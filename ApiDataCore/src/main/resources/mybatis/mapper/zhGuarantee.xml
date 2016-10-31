@@ -6,18 +6,18 @@
 	<select id="query" parameterType="java.lang.String" resultType="java.util.HashMap">
 		select
 			g.id,
-			g.insideCode,
+			g.innerID,
 			g.guaranteeSum,
 			ddgs.statName as guaranteeStat,
 			ddgw.guaranteeWayName as guaranteeWay,
 			ddf.corporateName as finance,
 			g.occurpyTime,
 			g.forInnerID
-		from zh_guarantee g
-		LEFT JOIN zh_dd_guaranteestat ddgs on g.guaranteeStat = ddgs.statCode
-		LEFT JOIN zh_dd_guaranteeway ddgw on g.guaranteeWay = ddgw.guaranteeWayCode
-		LEFT JOIN zh_dd_financeorg ddf on g.financeCode = ddf.financeCode
-		where g.insideCode = #{insideCode}
+		from guarantee g
+		LEFT JOIN dd_guaranteestat ddgs on g.guaranteeStat = ddgs.statCode
+		LEFT JOIN dd_guaranteeway ddgw on g.guaranteeWay = ddgw.guaranteeWayCode
+		LEFT JOIN dd_financeorg ddf on g.financeCode = ddf.financeCode
+		where g.innerID = #{innerID}
 	</select>
 	
 </mapper>

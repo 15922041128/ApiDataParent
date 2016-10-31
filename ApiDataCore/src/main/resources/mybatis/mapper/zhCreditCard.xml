@@ -6,7 +6,7 @@
 	<select id="query" parameterType="java.lang.String" resultType="java.util.HashMap">
 		select
 			id,
-			insideCode,
+			innerID,
 			nor_num,
 			inactive_num,
 			close_num,
@@ -37,7 +37,7 @@
 			overdue_180_total,
 			ear_his_time,
 			ear_inuse_time
-		from zh_creditcard where insideCode = #{insideCode}
+		from creditcard where innerID = #{innerID}
 	</select>
 	
 </mapper>

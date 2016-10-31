@@ -6,14 +6,14 @@
 	<select id="query" parameterType="java.lang.String" resultType="java.util.HashMap">
 		select 
 			a.id,
-			a.insideCode,
+			a.innerID,
 			a.residence,
 			a.resZip,
 			ddr.resName as resCondition,
 			a.recID
-		from zh_address a 
-		LEFT JOIN zh_dd_residence ddr on a.resCondition = ddr.resCode
-		where a.insideCode = #{insideCode}
+		from address a 
+		LEFT JOIN dd_residence ddr on a.resCondition = ddr.resCode
+		where a.innerID = #{innerID}
 	</select>
 	
 </mapper>

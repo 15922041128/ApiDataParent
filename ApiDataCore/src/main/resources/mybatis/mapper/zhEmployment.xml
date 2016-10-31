@@ -6,7 +6,7 @@
 	<select id="query" parameterType="java.lang.String" resultType="java.util.HashMap">
 		select 
 			e.id,
-			e.insideCode,
+			e.innerID,
 			ddo.occupationName as occupation,
 			e.company,
 			ddi.industryName as industry,
@@ -16,12 +16,12 @@
 			ddd.dutyName as duty,
 			ddc.casteName as caste,
 			e.annualIncome
-		from zh_employment e
-		LEFT JOIN zh_dd_occupation ddo on e.occupation = ddo.occupationCode
-		LEFT JOIN zh_dd_industry ddi on e.industry = ddi.industryCode
-		LEFT JOIN zh_dd_duty ddd on e.duty = ddd.dutyCode
-		LEFT JOIN zh_dd_caste ddc on e.caste = ddc.casteCode
-		where insideCode = #{insideCode}
+		from employment e
+		LEFT JOIN dd_occupation ddo on e.occupation = ddo.occupationCode
+		LEFT JOIN dd_industry ddi on e.industry = ddi.industryCode
+		LEFT JOIN dd_duty ddd on e.duty = ddd.dutyCode
+		LEFT JOIN dd_caste ddc on e.caste = ddc.casteCode
+		where innerID = #{innerID}
 	</select>
 	
 </mapper>

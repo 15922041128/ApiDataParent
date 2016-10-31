@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ZhGuaranteeMapper {
 
-	List<Map<String, Object>> query(String insideCode);
+	List<Map<String, Object>> query(String innerID);
 }

@@ -37,4 +37,5 @@
     <dubbo:service interface="org.pbccrc.api.base.service.QueryApi" ref="queryApiMultiple"/>
     <dubbo:service interface="org.pbccrc.api.base.service.ComplexService" ref="complexServiceImpl"/>
     <dubbo:service interface="org.pbccrc.api.base.service.LocalDBService" ref="localDBServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.UserService" ref="userServiceImpl"/>
 </beans>

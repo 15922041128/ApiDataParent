@@ -5,7 +5,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ZhInsideCodeMapper {
+public interface ZhIdentificationMapper {
 
-	Map<String, Object> queryByIdentifier(String insideCode);
+	Map<String, Object> queryByIdentifier(String innerID);
 }

@@ -37,5 +37,6 @@
     <dubbo:reference id="queryApiMultiple" interface="org.pbccrc.api.base.service.QueryApi" lazy="false" check="false"/>
     <dubbo:reference id="complexService" interface="org.pbccrc.api.base.service.ComplexService" lazy="false" check="false"/>
     <dubbo:reference id="localDBService" interface="org.pbccrc.api.base.service.LocalDBService" lazy="false" check="false"/>
+    <dubbo:reference id="userService" interface="org.pbccrc.api.base.service.UserService" lazy="false" check="false"/>
 </beans>
 

@@ -13,8 +13,8 @@ public class ZhCreditCardDao {
 	@Resource
 	private ZhCreditCardMapper zhCreditCardMapper;
 	
-	public Map<String, Object> query(String insideCode){
-		return zhCreditCardMapper.query(insideCode);
+	public Map<String, Object> query(String innerID){
+		return zhCreditCardMapper.query(innerID);
 	}
 	
 }

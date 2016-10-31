@@ -13,8 +13,8 @@ public class ZhPersonDao {
 	@Resource
 	private ZhPersonMapper zhPersonMapper;
 	
-	public Map<String, Object> query(String insideCode){
-		return zhPersonMapper.query(insideCode);
+	public Map<String, Object> query(String innerID){
+		return zhPersonMapper.query(innerID);
 	}
 	
 }

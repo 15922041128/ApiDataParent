@@ -13,8 +13,8 @@ public class ZhAddressDao {
 	@Resource
 	private ZhAddressMapper zhAddressMapper;
 	
-	public Map<String, Object> query(String insideCode){
-		return zhAddressMapper.query(insideCode);
+	public Map<String, Object> query(String innerID){
+		return zhAddressMapper.query(innerID);
 	}
 	
 }

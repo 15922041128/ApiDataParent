@@ -4,17 +4,17 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.pbccrc.api.core.mapper.ZhInsideCodeMapper;
+import org.pbccrc.api.core.mapper.ZhIdentificationMapper;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ZhInsideCodeDao {
+public class ZhIdentificationDao {
 	
 	@Resource
-	private ZhInsideCodeMapper zhInsideCodeMapper;
+	private ZhIdentificationMapper zhIdentificationMapper;
 	
 	public Map<String, Object> queryByCode(String identifier){
-		return zhInsideCodeMapper.queryByIdentifier(identifier);
+		return zhIdentificationMapper.queryByIdentifier(identifier);
 	}
 	
 }

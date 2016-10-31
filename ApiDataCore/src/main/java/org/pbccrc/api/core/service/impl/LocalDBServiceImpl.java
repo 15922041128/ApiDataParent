@@ -10,7 +10,8 @@ import org.pbccrc.api.base.bean.DBEntity;
 import org.pbccrc.api.base.bean.ResultContent;
 import org.pbccrc.api.core.dao.DBOperatorDao;
 import org.pbccrc.api.core.dao.LdbApiDao;
-import org.pbccrc.api.core.dao.ZhInsideCodeDao;
+import org.pbccrc.api.core.dao.ZhIdentificationDao;
+import org.pbccrc.api.core.dao.datasource.DynamicDataSourceHolder;
 import org.pbccrc.api.base.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class LocalDBServiceImpl implements LocalDBService {
 	private LdbApiDao ldbApiDao;
 	
 	@Autowired
-	private ZhInsideCodeDao zhInsideCodeDao;
+	private ZhIdentificationDao zhIdentificationDao;
 	
 	/***
 	 * 根据身份证和姓名查询信贷信息
@@ -128,13 +129,15 @@ public class LocalDBServiceImpl implements LocalDBService {
 		returnMap.put("isNull", "N");
 		
 		// 根据身份证号获取内码信息
-		Map<String, Object> insideCodeMap = zhInsideCodeDao.queryByCode(idCardNo);
+		DynamicDataSourceHolder.change2oracle();
+		Map<String, Object> insideCodeMap = zhIdentificationDao.queryByCode(idCardNo);
+		DynamicDataSourceHolder.change2mysql();
 		if (null == insideCodeMap) {
 			returnMap.put("isNull", "Y");
 			return returnMap;
 		}
 		// 内码
-		String insideCode = String.valueOf(insideCodeMap.get("insideCode"));
+		String innerID = String.valueOf(insideCodeMap.get("INNERID"));
 		
 		// 获取api
 		Map<String, Object> api = ldbApiDao.queryByService(service);
@@ -147,7 +150,7 @@ public class LocalDBServiceImpl implements LocalDBService {
 		List<String> fields = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		fields.add("insideCode");
-		values.add(insideCode);
+		values.add(innerID);
 		entity.setFields(fields);
 		entity.setValues(values);
 		

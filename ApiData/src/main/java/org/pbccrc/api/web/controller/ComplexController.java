@@ -104,7 +104,7 @@ public class ComplexController {
 	 */
 	@GET
 	@ResponseBody
-	@RequestMapping("/getPdfItem")
+	@RequestMapping(value="/getPdfItem", produces={"application/json;charset=UTF-8"})
 	public String query(String service, String identifier, HttpServletRequest request) throws Exception {
 		
 		// 获取apiKey
@@ -176,7 +176,7 @@ public class ComplexController {
 	 */
 	@GET
 	@ResponseBody
-	@RequestMapping("/getPdfCustom")
+	@RequestMapping(value="/getPdfCustom", produces={"application/json;charset=UTF-8"})
 	public String queryCustom(String service, String identifier, HttpServletRequest request) throws Exception {
 		
 		// 获取apiKey
