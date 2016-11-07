@@ -103,8 +103,8 @@ public class ComplexServiceImpl implements ComplexService{
 		Map<String, Object> returnResult = new HashMap<String, Object>();
 		// 返回结果(List)
 		List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
-		// 返回结果(String)
-		String returnStr = Constants.BLANK;
+		// 返回结果
+		Object returnStr = null;
 		
 		// 判断查询类型
 		if (Constants.SERVICE_ZH_PERSON.equals(service)) {
@@ -116,7 +116,7 @@ public class ComplexServiceImpl implements ComplexService{
 			for (String key : returnParams) {
 				returnResult.put(key, queryResult.get(key.toUpperCase()));
 			}
-			returnStr = JSONObject.toJSONString(returnResult);
+			returnStr = JSONObject.toJSON(returnResult);
 		} else if (Constants.SERVICE_ZH_ADDRESS.equals(service)) {
 			// 居住信息
 			DynamicDataSourceHolder.change2oracle();
@@ -126,7 +126,7 @@ public class ComplexServiceImpl implements ComplexService{
 			for (String key : returnParams) {
 				returnResult.put(key, queryResult.get(key.toUpperCase()));
 			}
-			returnStr = JSONObject.toJSONString(returnResult);
+			returnStr = JSONObject.toJSON(returnResult);
 		} else if (Constants.SERVICE_ZH_EMPLOYMENT .equals(service)) {
 			// 职业信息
 			DynamicDataSourceHolder.change2oracle();
@@ -136,7 +136,7 @@ public class ComplexServiceImpl implements ComplexService{
 			for (String key : returnParams) {
 				returnResult.put(key, queryResult.get(key.toUpperCase()));
 			}
-			returnStr = JSONObject.toJSONString(returnResult);
+			returnStr = JSONObject.toJSON(returnResult);
 		} else if (Constants.SERVICE_ZH_CREDITCARD .equals(service)) {
 			// 信用卡信息
 			DynamicDataSourceHolder.change2oracle();
@@ -146,7 +146,7 @@ public class ComplexServiceImpl implements ComplexService{
 			for (String key : returnParams) {
 				returnResult.put(key, queryResult.get(key.toUpperCase()));
 			}
-			returnStr = JSONObject.toJSONString(returnResult);
+			returnStr = JSONObject.toJSON(returnResult);
 		} else if (Constants.SERVICE_ZH_LOAN.equals(service)) {
 			// 贷款信息
 			DynamicDataSourceHolder.change2oracle();
@@ -156,7 +156,7 @@ public class ComplexServiceImpl implements ComplexService{
 			for (String key : returnParams) {
 				returnResult.put(key, queryResult.get(key.toUpperCase()));
 			}
-			returnStr = JSONObject.toJSONString(returnResult);
+			returnStr = JSONObject.toJSON(returnResult);
 		} else if (Constants.SERVICE_ZH_GUARANTEE .equals(service)) {
 			// 担保信息
 			DynamicDataSourceHolder.change2oracle();
@@ -171,7 +171,7 @@ public class ComplexServiceImpl implements ComplexService{
 				jsonArray.add(returnResult);
 				returnResult = new HashMap<String, Object>();
 			}
-			returnStr = jsonArray.toJSONString();
+			returnStr = jsonArray;
 		} else {
 			// default nothing
 		}
@@ -446,6 +446,7 @@ public class ComplexServiceImpl implements ComplexService{
 			// 判断查询类型
 			if (Constants.SERVICE_ZH_PERSON.equals(service)) {
 				// 人员基本信息
+				returnResult = new HashMap<String, Object>();
 				DynamicDataSourceHolder.change2oracle();
 				queryResult = zhPersonDao.query(innerID);
 				DynamicDataSourceHolder.change2mysql();
@@ -458,6 +459,7 @@ public class ComplexServiceImpl implements ComplexService{
 				returnJson.put(service, returnResult);
 			} else if (Constants.SERVICE_ZH_ADDRESS.equals(service)) {
 				// 居住信息
+				returnResult = new HashMap<String, Object>();
 				DynamicDataSourceHolder.change2oracle();
 				queryResult = zhAddressDao.query(innerID);
 				DynamicDataSourceHolder.change2mysql();
@@ -470,6 +472,7 @@ public class ComplexServiceImpl implements ComplexService{
 				returnJson.put(service, returnResult);
 			} else if (Constants.SERVICE_ZH_EMPLOYMENT .equals(service)) {
 				// 职业信息
+				returnResult = new HashMap<String, Object>();
 				DynamicDataSourceHolder.change2oracle();
 				queryResult = zhEmploymentDao.query(innerID);
 				DynamicDataSourceHolder.change2mysql();
@@ -482,6 +485,7 @@ public class ComplexServiceImpl implements ComplexService{
 				returnJson.put(service, returnResult);
 			} else if (Constants.SERVICE_ZH_CREDITCARD .equals(service)) {
 				// 信用卡信息
+				returnResult = new HashMap<String, Object>();
 				DynamicDataSourceHolder.change2oracle();
 				queryResult = zhCreditCardDao.query(innerID);
 				DynamicDataSourceHolder.change2mysql();
@@ -494,6 +498,7 @@ public class ComplexServiceImpl implements ComplexService{
 				returnJson.put(service, returnResult);
 			} else if (Constants.SERVICE_ZH_LOAN.equals(service)) {
 				// 贷款信息
+				returnResult = new HashMap<String, Object>();
 				DynamicDataSourceHolder.change2oracle();
 				queryResult = zhLoanDao.query(innerID);
 				DynamicDataSourceHolder.change2mysql();
@@ -514,13 +519,13 @@ public class ComplexServiceImpl implements ComplexService{
 				JSONArray jsonArray = new JSONArray();
 				// 根据配置返回信息
 				for (Map<String, Object> map : returnList) {
+					Map<String, Object> guaranteeMap = new HashMap<String, Object>();
 					for (String key : returnParams) {
-						returnResult.put(key, map.get(key.toUpperCase()));
+						guaranteeMap.put(key, map.get(key.toUpperCase()));
 					}
-					jsonArray.add(returnResult);
-					returnResult = new HashMap<String, Object>();
+					jsonArray.add(guaranteeMap);
 				}
-				returnJson.put(service, jsonArray.toString());
+				returnJson.put(service, jsonArray);
 			} else {
 				// default nothing
 			}
@@ -528,7 +533,7 @@ public class ComplexServiceImpl implements ComplexService{
 		
 		returnResult.put("name", name);
 		returnResult.put("idCardNo", identifier);
-		returnMap.put("returnStr", returnJson.toString());
+		returnMap.put("returnStr", returnJson);
 		
 		return returnMap;
 	}

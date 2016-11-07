@@ -59,7 +59,7 @@ public class QueryApiController {
 	@SuppressWarnings("rawtypes")
 	public String query(String service, HttpServletRequest request) throws Exception {
 		
-		String result = Constants.BLANK;
+		Object result = Constants.BLANK;
 		
 		ResultContent resultContent = new ResultContent();
 		
@@ -73,7 +73,7 @@ public class QueryApiController {
 
 		// 验证service格式
 		if (StringUtil.isNull(service) || service.split(Constants.CONNECTOR_LINE).length != 2) {
-			resultContent.setErrNum(Constants.ERR_SERVICE);
+			resultContent.setCode(Constants.ERR_SERVICE);
 			resultContent.setRetMsg(Constants.RET_MSG_SERVICE);
 			return JSONObject.toJSONString(resultContent);
 		}
@@ -90,20 +90,19 @@ public class QueryApiController {
 		
 		// 验证本地是否有该api
 		if (null == localApi) {
-			resultContent.setErrNum(Constants.ERR_NO_SERVICE);
+			resultContent.setCode(Constants.ERR_NO_SERVICE);
 			resultContent.setRetMsg(Constants.RET_MSG_NO_SERVICE);
 			return JSONObject.toJSONString(resultContent);
 		}
 		
 		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, localApi, resultContent)) {
-			result = JSONObject.toJSONString(resultContent);
-			return result;
+		if (!validator.validateRequest(userID, apiKey, localApi, urlParams, resultContent)) {
+			return JSONObject.toJSONString(resultContent);
 		}
 		
 		Map<String, Object> map = queryApiService.query(service, urlParams);
-		result = String.valueOf(map.get("result"));
-		JSONObject resultJson = JSONObject.parseObject(result);
+		result = map.get("result");
+		JSONObject resultJson = (JSONObject) JSONObject.toJSON(result);
 		
 		// 计费
 		boolean isCost = true;
@@ -169,7 +168,7 @@ public class QueryApiController {
 				}
 			}
 			if (isCost) {
-				costService.cost(userID, apiKey, localApi);	
+				costService.cost(userID, apiKey, String.valueOf(localApi.get("ID")));	
 			}
 		}
 		
@@ -205,7 +204,7 @@ public class QueryApiController {
 		systemLog.setQueryDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 		systemLogService.addLog(systemLog);
 		
-		return result;
+		return JSONObject.toJSONString(result);
 	}
 	
 	@GET
@@ -214,7 +213,7 @@ public class QueryApiController {
 	public String score(@Context HttpServletRequest request) throws Exception {
 		
 		ResultContent content = new ResultContent();
-		content.setErrNum(Constants.CODE_ERR_SUCCESS);
+		content.setCode(Constants.CODE_ERR_SUCCESS);
 		content.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);
 		
 		String url = Constants.REMOTE_URL_SCORE;
@@ -228,7 +227,7 @@ public class QueryApiController {
 		JSONObject obj = JSONObject.parseObject(result);
 		String score = obj.getString("score");
 		if (StringUtil.isNull(score)) {
-			content.setErrNum(Constants.CODE_ERR_FAIL);
+			content.setCode(Constants.CODE_ERR_FAIL);
 			content.setRetMsg(Constants.CODE_ERR_FAIL_MSG);
 		} else {
 			content.setRetData(result);
@@ -237,4 +236,60 @@ public class QueryApiController {
 		return JSONObject.toJSONString(content);
 	}
 	
+	@GET
+	@RequestMapping(value="/querySfz", produces={"application/json;charset=UTF-8"})
+	@ResponseBody
+	public String querySfz(@Context HttpServletRequest request) throws Exception {
+		
+		String name = request.getParameter("name");
+		String idCardNo = request.getParameter("idCardNo");
+		
+		ResultContent resultContent = new ResultContent();
+		
+		Object result = null;
+		
+		// 获取apiKey
+		String apiKey = request.getHeader(Constants.HEAD_APIKEY);
+		// 获得用ID
+		String userID = request.getHeader(Constants.HEAD_USER_ID);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, "1", resultContent)) {
+			return JSONObject.toJSONString(resultContent);
+		}
+		
+		Map<String, Object> map = queryApiService.querySfz(name, idCardNo);
+		result = map.get("result");
+		JSONObject resultJson = (JSONObject) JSONObject.toJSON(result);
+		
+		// 判断是否计费
+		if(Constants.CODE_ERR_SUCCESS.equals(resultJson.getString("code"))) {
+			costService.cost(userID, apiKey, "1");
+		}
+		
+		// 记录日志
+		SystemLog systemLog = new SystemLog();
+		// ip地址
+		systemLog.setIpAddress(request.getRemoteAddr());
+		// apiKey
+		systemLog.setApiKey(apiKey);
+		// localApiID
+		systemLog.setLocalApiID("1");
+		// 参数
+		JSONObject params = new JSONObject();
+		params.put("name", name);
+		params.put("idCardNo", idCardNo);
+		systemLog.setParams(params.toJSONString());
+		// 用户ID
+		systemLog.setUserID(userID);
+		// 是否成功
+		systemLog.setIsSuccess(String.valueOf(map.get("isSuccess")));
+		// 是否计费
+		systemLog.setIsCount("true");
+		// 查询时间
+		systemLog.setQueryDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+		systemLogService.addLog(systemLog);
+		
+		return JSONObject.toJSONString(result);
+	}
 }

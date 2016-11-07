@@ -55,19 +55,21 @@
 		<oracle.version>11.2.0.4</oracle.version>
 		
 		<commons-io.version>2.2</commons-io.version>
+		
+		<spring.security.version>3.1.0.RELEASE</spring.security.version>
+		
+		<aspectj.version>1.8.9</aspectj.version>
 	</properties>
 
 	<dependencyManagement>
-		<!-- log -->
 		<dependencies>
-
 			<!-- servlet api -->
 			<dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>servlet-api</artifactId>
 				<version>${servlet.version}</version>
 			</dependency>
-
+			<!-- log -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
@@ -325,6 +327,46 @@
 				<artifactId>jedis</artifactId>
 				<version>${jedis.version}</version>
 			</dependency>
+			
+			<!--spring security-->
+	        <dependency>
+	            <groupId>org.springframework.security</groupId>
+	            <artifactId>spring-security-core</artifactId>
+	            <version>${spring.security.version}</version>
+	        </dependency>
+	        <dependency>
+            <groupId>org.springframework.security</groupId>
+	            <artifactId>spring-security-web</artifactId>
+	            <version>${spring.security.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.springframework.security</groupId>
+	            <artifactId>spring-security-taglibs</artifactId>
+	            <version>${spring.security.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.springframework.security</groupId>
+	            <artifactId>spring-security-acl</artifactId>
+	            <version>${spring.security.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.springframework.security</groupId>
+	            <artifactId>spring-security-crypto</artifactId>
+	            <version>${spring.security.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.springframework.security</groupId>
+	            <artifactId>spring-security-config</artifactId>
+	            <version>${spring.security.version}</version>
+	        </dependency>
+	        
+	        <!-- aspectj -->
+	        <dependency>
+			    <groupId>org.aspectj</groupId>
+			    <artifactId>aspectjweaver</artifactId>
+			    <version>${aspectj.version}</version>
+			</dependency>
+	        
 		</dependencies>
 	</dependencyManagement>
 

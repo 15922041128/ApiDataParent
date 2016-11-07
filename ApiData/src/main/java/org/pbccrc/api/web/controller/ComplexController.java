@@ -113,20 +113,20 @@ public class ComplexController {
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
 		ResultContent resultContent = new ResultContent();
-		resultContent.setErrNum(Constants.CODE_ERR_SUCCESS);
+		resultContent.setCode(Constants.CODE_ERR_SUCCESS);
 		resultContent.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);
 		
 		Map<String, Object> localApi = localApiService.queryByService(service);
 		
 		// 验证本地是否有该api
 		if (null == localApi) {
-			resultContent.setErrNum(Constants.ERR_NO_SERVICE);
+			resultContent.setCode(Constants.ERR_NO_SERVICE);
 			resultContent.setRetMsg(Constants.RET_MSG_NO_SERVICE);
 			return JSONObject.toJSONString(resultContent);
 		}
 		
 		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, localApi, resultContent)) {
+		if (!validator.validateRequest(userID, apiKey, String.valueOf(localApi.get("ID")), resultContent)) {
 			return JSONObject.toJSONString(resultContent);
 		}
 		
@@ -135,7 +135,7 @@ public class ComplexController {
 		String isNull = String.valueOf(returnMap.get("isNull"));
 		// 判断是否为空
 		if ("Y".equals(isNull)) {
-			resultContent.setErrNum(Constants.CODE_ERR_FAIL);
+			resultContent.setCode(Constants.CODE_ERR_FAIL);
 			resultContent.setRetMsg(Constants.CODE_ERR_FAIL_MSG);
 		} else {
 			resultContent.setRetData(returnMap.get("returnStr"));
@@ -163,7 +163,7 @@ public class ComplexController {
 		systemLog.setQueryDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 		systemLogService.addLog(systemLog);
 		
-		return resultContent.toString();
+		return JSONObject.toJSONString(resultContent);
 	}
 	
 	/**
@@ -185,20 +185,20 @@ public class ComplexController {
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
 		ResultContent resultContent = new ResultContent();
-		resultContent.setErrNum(Constants.CODE_ERR_SUCCESS);
+		resultContent.setCode(Constants.CODE_ERR_SUCCESS);
 		resultContent.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);
 		
 		Map<String, Object> localApi = localApiService.queryByService(service);
 		
 		// 验证本地是否有该api
 		if (null == localApi) {
-			resultContent.setErrNum(Constants.ERR_NO_SERVICE);
+			resultContent.setCode(Constants.ERR_NO_SERVICE);
 			resultContent.setRetMsg(Constants.RET_MSG_NO_SERVICE);
 			return JSONObject.toJSONString(resultContent);
 		}
 		
 		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, localApi, resultContent)) {
+		if (!validator.validateRequest(userID, apiKey, String.valueOf(localApi.get("ID")), resultContent)) {
 			return JSONObject.toJSONString(resultContent);
 		}
 		
@@ -207,7 +207,7 @@ public class ComplexController {
 		String isNull = String.valueOf(returnMap.get("isNull"));
 		// 判断是否为空
 		if ("Y".equals(isNull)) {
-			resultContent.setErrNum(Constants.CODE_ERR_FAIL);
+			resultContent.setCode(Constants.CODE_ERR_FAIL);
 			resultContent.setRetMsg(Constants.CODE_ERR_FAIL_MSG);
 		} else {
 			resultContent.setRetData(returnMap.get("returnStr"));
@@ -235,6 +235,6 @@ public class ComplexController {
 		systemLog.setQueryDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 		systemLogService.addLog(systemLog);
 		
-		return resultContent.toString();
+		return JSONObject.toJSONString(resultContent);
 	}
 }

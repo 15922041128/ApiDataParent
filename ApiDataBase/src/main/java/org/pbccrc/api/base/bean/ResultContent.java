@@ -7,25 +7,20 @@ public class ResultContent implements Serializable{
 	private static final long serialVersionUID = -5386256195485266333L;
 
 	/** 错误代码 */
-	private String errNum;
+	private String code;
 	
 	/** 返回信息 */
 	private String retMsg;
 
 	/** 返回数据 */
 	private Object retData;
-	
-	public String toString() {
-		
-		return "{'errNum' : '" + errNum + "', 'retMsg' : '" + retMsg + "', 'retData' :'" + retData + "'}";
+
+	public String getCode() {
+		return code;
 	}
 
-	public String getErrNum() {
-		return errNum;
-	}
-
-	public void setErrNum(String errNum) {
-		this.errNum = errNum;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getRetMsg() {
@@ -43,5 +38,4 @@ public class ResultContent implements Serializable{
 	public void setRetData(Object retData) {
 		this.retData = retData;
 	}
-	
 }

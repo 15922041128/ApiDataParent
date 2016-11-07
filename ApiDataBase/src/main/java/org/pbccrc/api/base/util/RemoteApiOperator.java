@@ -30,7 +30,12 @@ public class RemoteApiOperator {
 		
 		WebResource resource = client.resource(url);
 		
-		String result = resource.accept(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE).get(String.class);
+		String result = Constants.BLANK;
+		try {
+			result = resource.accept(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE).get(String.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return StringUtil.decodeUnicode(result);
 	}
@@ -42,35 +47,40 @@ public class RemoteApiOperator {
 		OutputStream outputStream = null;
 		InputStreamReader inputStreamReader = null;
 		BufferedReader bufferedReader2 = null;
-		String lineString = "";
+		String lineString = Constants.BLANK;
 		
-		String readLine = JSON.toJSONString(paramMap);
-		httpConnection = (HttpURLConnection) new URL(url).openConnection();
-		httpConnection.setRequestMethod("POST");
-		httpConnection.setDoOutput(true);
-		httpConnection.setDoInput(true);
-		httpConnection.setAllowUserInteraction(true);
-		httpConnection.setRequestProperty("Content-Type", "application/json");
-		outputStream = httpConnection.getOutputStream();
-		// 加密 填入给的key
-		byte[] mkey = key.getBytes();
-		byte[] encryption = DesUtils.encrypt(readLine.getBytes("utf-8"), mkey);
-		byte[] encodeBase64 = Base64.encode(encryption);
-		outputStream.write(encodeBase64);
-		inputStreamReader = new InputStreamReader(httpConnection.getInputStream(),"UTF-8");
-		bufferedReader2 = new BufferedReader(inputStreamReader);
-		StringBuffer sbOutput = new StringBuffer(1024);
-		while ((lineString = bufferedReader2.readLine()) != null) {
-			sbOutput.append(lineString);
-		}
+		try {
+			String readLine = JSON.toJSONString(paramMap);
+			httpConnection = (HttpURLConnection) new URL(url).openConnection();
+			httpConnection.setRequestMethod("POST");
+			httpConnection.setDoOutput(true);
+			httpConnection.setDoInput(true);
+			httpConnection.setAllowUserInteraction(true);
+			httpConnection.setRequestProperty("Content-Type", "application/json");
+			outputStream = httpConnection.getOutputStream();
+			// 加密 填入给的key
+			byte[] mkey = key.getBytes();
+			byte[] encryption = DesUtils.encrypt(readLine.getBytes("utf-8"), mkey);
+			byte[] encodeBase64 = Base64.encode(encryption);
+			outputStream.write(encodeBase64);
+			inputStreamReader = new InputStreamReader(httpConnection.getInputStream(),"UTF-8");
+			bufferedReader2 = new BufferedReader(inputStreamReader);
+			StringBuffer sbOutput = new StringBuffer(1024);
+			while ((lineString = bufferedReader2.readLine()) != null) {
+				sbOutput.append(lineString);
+			}
 
-		byte[] decodeBase64 = Base64.decode(sbOutput.toString().getBytes());
-		byte[] decrypt = DesUtils.decrypt(decodeBase64, mkey);
-		lineString = new String(decrypt, "utf-8");
-		outputStream.close();
-		bufferedReader2.close();
-		inputStreamReader.close();
-		httpConnection.disconnect();
+			byte[] decodeBase64 = Base64.decode(sbOutput.toString().getBytes());
+			byte[] decrypt = DesUtils.decrypt(decodeBase64, mkey);
+			lineString = new String(decrypt, "utf-8");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			outputStream.close();
+			bufferedReader2.close();
+			inputStreamReader.close();
+			httpConnection.disconnect();
+		}
 		
 		return lineString;
 	}

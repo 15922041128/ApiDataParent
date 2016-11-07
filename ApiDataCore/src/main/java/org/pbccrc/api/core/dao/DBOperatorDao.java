@@ -63,4 +63,9 @@ public class DBOperatorDao {
 	public void updateData(DBEntity entity) {
 		dbOperatorMapper.updateData(entity);
 	}
+	
+	public Map<String, Object> queryBySql(DBEntity entity) {
+		
+		return dbOperatorMapper.queryData(entity);
+	}
 }

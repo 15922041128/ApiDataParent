@@ -15,4 +15,5 @@ public interface DBOperatorService {
 	
 	void updateData(DBEntity entity);
 
+	public Map<String, Object> queryBySql(DBEntity entity);
 }

@@ -32,7 +32,7 @@ public class Validator {
 		
 		// 验证userID是否存在
 		if (StringUtil.isNull(userID)) {
-			resultContent.setErrNum(Constants.ERR_MISSING_USER_ID);
+			resultContent.setCode(Constants.ERR_MISSING_USER_ID);
 			resultContent.setRetMsg(Constants.RET_MSG_MISSING_USER_ID);
 			return false;
 		}
@@ -45,14 +45,14 @@ public class Validator {
 		
 		// 验证APIKEY是否存在
 		if (StringUtil.isNull(apiKey)) {
-			resultContent.setErrNum(Constants.ERR_MISSING_APIKEY);
+			resultContent.setCode(Constants.ERR_MISSING_APIKEY);
 			resultContent.setRetMsg(Constants.RET_MSG_MISSING_APIKEY);
 			return false;
 		}
 		
 		// 验证APIKEY是否有效
 		if (null == relation) {
-			resultContent.setErrNum(Constants.ERR_APIKEY_USER_INVALID);
+			resultContent.setCode(Constants.ERR_APIKEY_USER_INVALID);
 			resultContent.setRetMsg(Constants.RET_MSG_APIKEY_USER_INVALID);
 			return false;
 		}
@@ -65,7 +65,7 @@ public class Validator {
 			// 验证访问次数
 			int count = Integer.parseInt(String.valueOf(relation.get("count")));
 			if (count == 0) {
-				resultContent.setErrNum(Constants.ERR_CNT);
+				resultContent.setCode(Constants.ERR_CNT);
 				resultContent.setRetMsg(Constants.RET_MSG_CNT);
 				return false;
 			}
@@ -80,7 +80,7 @@ public class Validator {
 			// 获取用户价格
 			BigDecimal price = new BigDecimal(relation.getString("price"));
 			if (blance.compareTo(price) < 0) {
-				resultContent.setErrNum(Constants.ERR_BLANCE_NOT_ENOUGH);
+				resultContent.setCode(Constants.ERR_BLANCE_NOT_ENOUGH);
 				resultContent.setRetMsg(Constants.RET_MSG_BLANCE_NOT_ENOUGH);
 				return false;
 			}
@@ -91,7 +91,7 @@ public class Validator {
 		String dbAPIKEY = String.valueOf(relation.get(Constants.API_KEY));
 		
 		if (!apiKey.equals(dbAPIKEY)) {
-			resultContent.setErrNum(Constants.ERR_APIKEY_INVALID);
+			resultContent.setCode(Constants.ERR_APIKEY_INVALID);
 			resultContent.setRetMsg(Constants.RET_MSG_APIKEY_INVALID);
 			return false;
 		}
@@ -109,28 +109,28 @@ public class Validator {
 			
 			if (Constants.PARAM_TYPE_URL.equals(paramType) && Constants.PARAM_REQUIRED_Y.equals(notNull)) {
 				if (null == urlParams.get(paramName)) {
-					resultContent.setErrNum(Constants.ERR_URL_INVALID);
+					resultContent.setCode(Constants.ERR_URL_INVALID);
 					resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + paramName);
 					return false;
 				}
 			}
-			}
+		}
 		
 		return true;
 	}
 	
-	/**	api验证 (pdf)
+	/**	api验证
 	 * @param userID     		用户ID
 	 * @param apiKey     		apiKey
-	 * @param localApi     		本地api
+	 * @param localApiID     	本地apiID
 	 * @param resultContent     查询返回对象
 	 * @return           		是否通过验证
 	 */
-	public boolean validateRequest(String userID, String apiKey, Map<String, Object> localApi, ResultContent resultContent) {
+	public boolean validateRequest(String userID, String apiKey, String localApiID, ResultContent resultContent) {
 		
 		// 验证userID是否存在
 		if (StringUtil.isNull(userID)) {
-			resultContent.setErrNum(Constants.ERR_MISSING_USER_ID);
+			resultContent.setCode(Constants.ERR_MISSING_USER_ID);
 			resultContent.setRetMsg(Constants.RET_MSG_MISSING_USER_ID);
 			return false;
 		}
@@ -138,19 +138,19 @@ public class Validator {
 		StringBuilder relationKey = new StringBuilder("relation");
 		relationKey.append(Constants.UNDERLINE + userID);
 		relationKey.append(Constants.UNDERLINE + apiKey);
-		relationKey.append(Constants.UNDERLINE + String.valueOf(localApi.get("ID")));
+		relationKey.append(Constants.UNDERLINE + localApiID);
 		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get(relationKey.toString())));
 		
 		// 验证APIKEY是否存在
 		if (StringUtil.isNull(apiKey)) {
-			resultContent.setErrNum(Constants.ERR_MISSING_APIKEY);
+			resultContent.setCode(Constants.ERR_MISSING_APIKEY);
 			resultContent.setRetMsg(Constants.RET_MSG_MISSING_APIKEY);
 			return false;
 		}
 		
 		// 验证APIKEY是否有效
 		if (null == relation) {
-			resultContent.setErrNum(Constants.ERR_APIKEY_USER_INVALID);
+			resultContent.setCode(Constants.ERR_APIKEY_USER_INVALID);
 			resultContent.setRetMsg(Constants.RET_MSG_APIKEY_USER_INVALID);
 			return false;
 		}
@@ -158,7 +158,7 @@ public class Validator {
 		String dbAPIKEY = String.valueOf(relation.get(Constants.API_KEY));
 		
 		if (!apiKey.equals(dbAPIKEY)) {
-			resultContent.setErrNum(Constants.ERR_APIKEY_INVALID);
+			resultContent.setCode(Constants.ERR_APIKEY_INVALID);
 			resultContent.setRetMsg(Constants.RET_MSG_APIKEY_INVALID);
 			return false;
 		}

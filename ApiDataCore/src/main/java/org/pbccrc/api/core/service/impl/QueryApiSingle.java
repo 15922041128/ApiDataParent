@@ -8,10 +8,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.pbccrc.api.base.bean.DBEntity;
+import org.pbccrc.api.base.bean.ResultContent;
 import org.pbccrc.api.base.service.QueryApi;
 import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.base.util.RemoteApiOperator;
 import org.pbccrc.api.base.util.StringUtil;
+import org.pbccrc.api.core.dao.CodeDao;
 import org.pbccrc.api.core.dao.DBOperatorDao;
 import org.pbccrc.api.core.dao.RemoteApiDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class QueryApiSingle implements QueryApi {
 	
 	@Autowired
 	private DBOperatorDao dbOperatorDao;
+	
+	@Autowired
+	private CodeDao codeDao;
 
 	@Override
 	@SuppressWarnings("rawtypes")
@@ -262,6 +267,19 @@ public class QueryApiSingle implements QueryApi {
 		} else if (Constants.ENCRYPT_TYPE_QL.equals(encryptType)) {
 			// 全联加密
 			resultStr = remoteApiOperator.qlRemoteAccept(encryptKey, url, paramMap);
+		}
+		
+		// 如果返回字符串为空,则返回失败信息
+		if (StringUtil.isNull(resultStr)) {
+			// 返回
+			Map<String, Object> code = codeDao.queryByCode(Constants.CODE_ERR_FAIL);
+			ResultContent resultContent = new ResultContent();
+			resultContent.setCode(Constants.CODE_ERR_FAIL);
+			resultContent.setRetMsg(String.valueOf(code.get("codeValue")));
+			
+			map.put("result", resultContent);
+			map.put("isSuccess", false);
+			return map;
 		}
 		
 		// 解析返回结果

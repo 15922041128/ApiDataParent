@@ -42,12 +42,12 @@ public class QueryApiMultiple implements QueryApi {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		// 返回字符串
-		String resultStr = Constants.BLANK;
+		// 返回对象
+		Object resultStr = null;
 		
 		// 返回信息对象
 		ResultContent resultContent = new ResultContent();
-		resultContent.setErrNum(Constants.CODE_ERR_SUCCESS);
+		resultContent.setCode(Constants.CODE_ERR_SUCCESS);
 		resultContent.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);
 		
 		// 本地api请求参数
@@ -186,10 +186,10 @@ public class QueryApiMultiple implements QueryApi {
 						!Constants.PARAM_TYPE_APIKEY.equals(paramType)) {
 					// 必填参数
 					if (null == urlParams.get(paramName)) {
-						resultContent.setErrNum(Constants.ERR_URL_INVALID);
+						resultContent.setCode(Constants.ERR_URL_INVALID);
 						resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + paramName);
 						
-						map.put("result", resultContent.toString());
+						map.put("result", resultContent);
 						map.put("isSuccess", false);
 						return map;
 					}
@@ -297,14 +297,18 @@ public class QueryApiMultiple implements QueryApi {
 			
 			// 如果返回字符串为空,则返回失败信息
 			if (StringUtil.isNull(returnStr)) {
-				// 返回
-				Map<String, Object> code = codeDao.queryByCode(Constants.CODE_ERR_FAIL);
-				resultContent.setErrNum(Constants.CODE_ERR_FAIL);
-				resultContent.setRetMsg(String.valueOf(code.get("codeValue")));
-				
-				map.put("result", resultContent.toString());
-				map.put("isSuccess", false);
-				return map;
+				if (i == remoteApiList.size() - 1) {
+					// 返回
+					Map<String, Object> code = codeDao.queryByCode(Constants.CODE_ERR_FAIL);
+					resultContent.setCode(Constants.CODE_ERR_FAIL);
+					resultContent.setRetMsg(String.valueOf(code.get("codeValue")));
+					
+					map.put("result", resultContent);
+					map.put("isSuccess", false);
+					return map;
+				} else {
+					continue;
+				}
 			}
 			
 			
@@ -320,10 +324,10 @@ public class QueryApiMultiple implements QueryApi {
 				if (i == remoteApiList.size() - 1) {
 					// 返回
 					Map<String, Object> code = codeDao.queryByCode(Constants.CODE_ERR_FAIL);
-					resultContent.setErrNum(Constants.CODE_ERR_FAIL);
+					resultContent.setCode(Constants.CODE_ERR_FAIL);
 					resultContent.setRetMsg(String.valueOf(code.get("codeValue")));
 					
-					map.put("result", resultContent.toString());
+					map.put("result", resultContent);
 					map.put("isSuccess", false);
 					return map;
 				} else {
@@ -340,10 +344,10 @@ public class QueryApiMultiple implements QueryApi {
 				if (i == remoteApiList.size() - 1) {
 					// 返回
 					Map<String, Object> code = codeDao.queryByCode(Constants.CODE_ERR_FAIL);
-					resultContent.setErrNum(Constants.CODE_ERR_FAIL);
+					resultContent.setCode(Constants.CODE_ERR_FAIL);
 					resultContent.setRetMsg(String.valueOf(code.get("codeValue")));
 					
-					map.put("result", resultContent.toString());
+					map.put("result", resultContent);
 					map.put("isSuccess", false);
 					return map;
 				} else {
@@ -360,10 +364,10 @@ public class QueryApiMultiple implements QueryApi {
 				if (i == remoteApiList.size() - 1) {
 					// 返回
 					Map<String, Object> code = codeDao.queryByCode(Constants.CODE_ERR_FAIL);
-					resultContent.setErrNum(Constants.CODE_ERR_FAIL);
+					resultContent.setCode(Constants.CODE_ERR_FAIL);
 					resultContent.setRetMsg(String.valueOf(code.get("codeValue")));
 					
-					map.put("result", resultContent.toString());
+					map.put("result", resultContent);
 					map.put("isSuccess", false);
 					return map;
 				} else {
@@ -386,7 +390,7 @@ public class QueryApiMultiple implements QueryApi {
 						// insertDB
 						resultStr = insertDB(returnJson, localApi, localParamArray, urlParams, retParamRel, Constants.CODE_ERR_SUCCESS);
 						resultContent.setRetData(resultStr);
-						resultStr = resultContent.toString();
+						resultStr = resultContent;
 					} else {
 						// 插入条件不为空,则判断是否符合插入条件
 						String key = insertCondition.keySet().iterator().next();
@@ -414,14 +418,14 @@ public class QueryApiMultiple implements QueryApi {
 							// insertDB
 							resultStr = insertDB(returnJson, localApi, localParamArray, urlParams, retParamRel, Constants.CODE_ERR_SUCCESS);
 							resultContent.setRetData(resultStr);
-							resultStr = resultContent.toString();
+							resultStr = resultContent;
 						} else {
 							// 返回成功
 							Map<String, Object> code = codeDao.queryByCode(Constants.CODE_ERR_SUCCESS);
-							resultContent.setErrNum(localCode);
+							resultContent.setCode(localCode);
 							resultContent.setRetMsg(String.valueOf(code.get("codeValue")));
-							resultContent.setRetData(returnStr);
-							resultStr = resultContent.toString();
+							resultContent.setRetData(returnJson);
+							resultStr = resultContent;
 						}
 					}
 					isSuccess = true;
@@ -436,18 +440,18 @@ public class QueryApiMultiple implements QueryApi {
 						if (i == remoteApiList.size() - 1) {
 							// 返回
 							Map<String, Object> code = codeDao.queryByCode(localCode);
-							resultContent.setErrNum(localCode);
+							resultContent.setCode(localCode);
 							resultContent.setRetMsg(String.valueOf(code.get("codeValue")));
-							resultStr = resultContent.toString();
+							resultStr = resultContent;
 						} else {
 							continue;
 						}
 					} else {
 						// break 解析结果并返回
 						Map<String, Object> code = codeDao.queryByCode(localCode);
-						resultContent.setErrNum(localCode);
+						resultContent.setCode(localCode);
 						resultContent.setRetMsg(String.valueOf(code.get("codeValue")));
-						resultStr = resultContent.toString();
+						resultStr = resultContent;
 					}
 				}
 			}
@@ -461,7 +465,7 @@ public class QueryApiMultiple implements QueryApi {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	private String insertDB (JSONObject returnJson, Map<String, Object> localApi, 
+	private JSONObject insertDB (JSONObject returnJson, Map<String, Object> localApi, 
 			JSONArray localParamArray, Map urlParams, String retParamRel, String returnCode) {
 		
 		JSONObject retObj = new JSONObject();
@@ -582,7 +586,7 @@ public class QueryApiMultiple implements QueryApi {
 		dbEntity.setValues(values);
 		dbOperatorDao.insertData(dbEntity);
 		
-		return retObj.toJSONString();
+		return retObj;
 	}
 
 }

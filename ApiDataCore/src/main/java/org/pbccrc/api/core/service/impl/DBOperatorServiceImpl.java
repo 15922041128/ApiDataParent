@@ -30,5 +30,10 @@ public class DBOperatorServiceImpl implements DBOperatorService {
 	public void updateData(DBEntity entity) {
 		dbOperatorDao.updateData(entity);
 	}
+	
+	public Map<String, Object> queryBySql(DBEntity entity) {
+		
+		return dbOperatorDao.queryBySql(entity);
+	}
 
 }

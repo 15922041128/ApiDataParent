@@ -1,7 +1,6 @@
 package org.pbccrc.api.core.service.impl;
 
 import java.math.BigDecimal;
-import java.util.Map;
 
 import org.pbccrc.api.base.service.CostService;
 import org.pbccrc.api.base.util.Constants;
@@ -17,14 +16,14 @@ public class CostServiceImpl implements CostService {
 	 * 计费
 	 * @param userID
 	 * @param apiKey
-	 * @param localApi
+	 * @param localApiID
 	 */
-	public void cost(String userID, String apiKey, Map<String, Object> localApi) {
+	public void cost(String userID, String apiKey, String localApiID) {
 		
 		StringBuilder relationKey = new StringBuilder("relation");
 		relationKey.append(Constants.UNDERLINE + userID);
 		relationKey.append(Constants.UNDERLINE + apiKey);
-		relationKey.append(Constants.UNDERLINE + String.valueOf(localApi.get("ID")));
+		relationKey.append(Constants.UNDERLINE + localApiID);
 		
 		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get(relationKey.toString())));
 		String costType = relation.getString("costType");

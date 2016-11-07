@@ -52,7 +52,7 @@ public class LocalDBServiceImpl implements LocalDBService {
 		Map<String, Object> user = dbOperatorDao.queryData(entity);
 		if (null == user) {
 			ResultContent resultContent = new ResultContent();
-			resultContent.setErrNum(Constants.CODE_ERR_FAIL);
+			resultContent.setCode(Constants.CODE_ERR_FAIL);
 			resultContent.setRetMsg(Constants.CODE_ERR_FAIL_MSG);
 			return resultContent.toString();
 		}

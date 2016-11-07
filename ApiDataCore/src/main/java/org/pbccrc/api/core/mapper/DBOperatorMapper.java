@@ -16,4 +16,5 @@ public interface DBOperatorMapper {
 	List<Map<String, Object>> queryDatas(DBEntity entity);
 	
 	void updateData(DBEntity entity);
+	
 }
