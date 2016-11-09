@@ -43,7 +43,7 @@ public class QueryApiSingle implements QueryApi {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		String resultStr = Constants.BLANK;
+		String resultStr = null;
 		
 		// 数据来源
 		String dataFrom = Constants.BLANK;

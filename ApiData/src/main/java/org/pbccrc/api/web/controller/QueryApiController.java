@@ -66,8 +66,6 @@ public class QueryApiController {
 	@SuppressWarnings("rawtypes")
 	public String query(String service, HttpServletRequest request) throws Exception {
 		
-		Object result = Constants.BLANK;
-		
 		ResultContent resultContent = new ResultContent();
 		
 		// 获取apiKey
@@ -111,8 +109,18 @@ public class QueryApiController {
 		String uuid = StringUtil.createUUID();
 		
 		Map<String, Object> map = queryApiService.query(uuid, userID, service, urlParams);
-		result = map.get("result");
-		JSONObject resultJson = (JSONObject) JSONObject.toJSON(result);
+		
+		Object result = map.get("result");
+		
+		JSONObject resultJson = null;
+		
+		if (result instanceof String) {
+			// String
+			resultJson = JSONObject.parseObject(String.valueOf(result));
+		} else {
+			// Object
+			resultJson = (JSONObject) JSONObject.toJSON(result);
+		}
 		
 		// 计费
 		boolean isCost = true;
@@ -216,7 +224,7 @@ public class QueryApiController {
 		systemLog.setQueryDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 		systemLogService.addLog(systemLog);
 		
-		return JSONObject.toJSONString(result);
+		return resultJson.toJSONString();
 	}
 	
 	/**
