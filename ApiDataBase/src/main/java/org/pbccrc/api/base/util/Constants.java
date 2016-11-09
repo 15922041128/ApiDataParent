@@ -230,4 +230,32 @@ public class Constants {
 	// 失信人被执行信息
 	public static final String ITEM_SXR = "sxr";
 	
+	/** 参数相关 */
+	// 是否成功-是
+	public static final String IS_SUCCESS_TRUE = "true";
+	// 是否成功-否
+	public static final String IS_SUCCESS_FALSE = "false";
+	// 是否计费-是
+	public static final String IS_COST_TRUE = "true";
+	// 是否计费-否
+	public static final String IS_COST_FALSE = "false";
+	// 数据来源-本地
+	public static final String DATA_FROM_LOCAL = "local";
+	// 数据来源-qilingyz
+	public static final String DATA_FROM_QILINGYZ = "qilingyz";
+	// 数据来源-全连
+	public static final String DATA_FROM_QL = "ql";
+	
+	/** apiID */
+	// 身份证认证
+	public static final String API_ID_SFZRZ = "1";
+	// 页面pdf
+	public static final String API_ID_PAGE_PDF = "99999999999";
+	
+	/** remote访问接口 */
+	// 全联
+	public static final String REMOTE_URL_QL = "http://www.uniocredit.com/nuapi/UService.do"; 
+	// qilingyz
+	public static final String REMOTE_URL_QILINGYZ = "http://www.qilingyz.com/api.php";
+	
 }

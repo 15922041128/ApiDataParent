@@ -53,6 +53,13 @@ public class QueryApiController {
 	@Autowired
 	private SystemLogService systemLogService;
 	
+	/**
+	 * api查询
+	 * @param service
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
 	@GET
 	@RequestMapping(value="/get", produces={"application/json;charset=UTF-8"})
 	@ResponseBody
@@ -100,7 +107,10 @@ public class QueryApiController {
 			return JSONObject.toJSONString(resultContent);
 		}
 		
-		Map<String, Object> map = queryApiService.query(service, urlParams);
+		// 生成UUID
+		String uuid = StringUtil.createUUID();
+		
+		Map<String, Object> map = queryApiService.query(uuid, userID, service, urlParams);
 		result = map.get("result");
 		JSONObject resultJson = (JSONObject) JSONObject.toJSON(result);
 		
@@ -174,6 +184,8 @@ public class QueryApiController {
 		
 		// 记录日志
 		SystemLog systemLog = new SystemLog();
+		// uuid
+		systemLog.setUuid(uuid);
 		// ip地址
 		systemLog.setIpAddress(request.getRemoteAddr());
 		// apiKey
@@ -199,7 +211,7 @@ public class QueryApiController {
 		// 是否成功
 		systemLog.setIsSuccess(String.valueOf(map.get("isSuccess")));
 		// 是否计费
-		systemLog.setIsCount(String.valueOf(isCount));
+		systemLog.setIsCount(String.valueOf(isCost));
 		// 查询时间
 		systemLog.setQueryDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 		systemLogService.addLog(systemLog);
@@ -207,6 +219,12 @@ public class QueryApiController {
 		return JSONObject.toJSONString(result);
 	}
 	
+	/**
+	 * 个人信用分查询(不通过api直接访问)
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
 	@GET
 	@RequestMapping(value="/score", produces={"application/json;charset=UTF-8"})
 	@Produces(MediaType.APPLICATION_JSON)
@@ -226,6 +244,7 @@ public class QueryApiController {
 		
 		JSONObject obj = JSONObject.parseObject(result);
 		String score = obj.getString("score");
+		// 判断是否成功
 		if (StringUtil.isNull(score)) {
 			content.setCode(Constants.CODE_ERR_FAIL);
 			content.setRetMsg(Constants.CODE_ERR_FAIL_MSG);
@@ -236,6 +255,12 @@ public class QueryApiController {
 		return JSONObject.toJSONString(content);
 	}
 	
+	/**
+	 * 身份证认证
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
 	@GET
 	@RequestMapping(value="/querySfz", produces={"application/json;charset=UTF-8"})
 	@ResponseBody
@@ -258,7 +283,10 @@ public class QueryApiController {
 			return JSONObject.toJSONString(resultContent);
 		}
 		
-		Map<String, Object> map = queryApiService.querySfz(name, idCardNo);
+		// 生成UUID
+		String uuid = StringUtil.createUUID();
+		
+		Map<String, Object> map = queryApiService.querySfz(uuid, userID, name, idCardNo);
 		result = map.get("result");
 		JSONObject resultJson = (JSONObject) JSONObject.toJSON(result);
 		
@@ -269,12 +297,14 @@ public class QueryApiController {
 		
 		// 记录日志
 		SystemLog systemLog = new SystemLog();
+		// uuid
+		systemLog.setUuid(uuid);
 		// ip地址
 		systemLog.setIpAddress(request.getRemoteAddr());
 		// apiKey
 		systemLog.setApiKey(apiKey);
 		// localApiID
-		systemLog.setLocalApiID("1");
+		systemLog.setLocalApiID(Constants.API_ID_SFZRZ);
 		// 参数
 		JSONObject params = new JSONObject();
 		params.put("name", name);

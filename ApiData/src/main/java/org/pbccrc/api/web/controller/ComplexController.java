@@ -11,10 +11,12 @@ import javax.ws.rs.GET;
 import org.apache.commons.io.FileUtils;
 import org.pbccrc.api.base.bean.ResultContent;
 import org.pbccrc.api.base.bean.SystemLog;
+import org.pbccrc.api.base.bean.User;
 import org.pbccrc.api.base.service.ComplexService;
 import org.pbccrc.api.base.service.LocalApiService;
 import org.pbccrc.api.base.service.SystemLogService;
 import org.pbccrc.api.base.util.Constants;
+import org.pbccrc.api.base.util.StringUtil;
 import org.pbccrc.api.base.util.Validator;
 import org.pbccrc.api.base.util.pdf.PdfBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,9 +79,17 @@ public class ComplexController {
 		
 		String[] queryItems = queryItem.split(Constants.COMMA);
 		
+		// 获取当前用户并取得userID
+		User currentUser = (User) request.getSession().getAttribute(Constants.CURRENT_USER);
+		String userID = String.valueOf(currentUser.getID());
+		
+		// pdf路径
 		String path = Constants.FILE_DOWNLOAD_SXR_PDF;
 		
-		Map<String, Object> queryResult = complexService.querySxr(identifier, queryItems);
+		// 生成UUID
+		String uuid = StringUtil.createUUID();
+		
+		Map<String, Object> queryResult = complexService.querySxr(uuid, userID, identifier, queryItems);
 		
 		String fileName = pdfBuilder.getPDF(JSON.toJSONString(queryResult), queryItems, path, request);
 		
@@ -88,6 +98,34 @@ public class ComplexController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentDispositionFormData("attachment", fileName);   
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);   
+        
+ 		// 获取是否成功
+ 		String isNull = String.valueOf(queryResult.get("isNull"));
+ 		
+        // 记录日志
+ 		SystemLog systemLog = new SystemLog();
+ 		// uuid
+ 		systemLog.setUuid(uuid);
+ 		// ip地址
+ 		systemLog.setIpAddress(request.getRemoteAddr());
+ 		// apiKey
+ 		systemLog.setApiKey(Constants.BLANK);
+ 		// localApiID
+ 		systemLog.setLocalApiID(Constants.API_ID_PAGE_PDF);
+ 		// 参数
+ 		JSONObject params = new JSONObject();
+ 		params.put("identifier", identifier);
+ 		params.put("queryItems", queryItems);
+ 		systemLog.setParams(params.toJSONString());
+ 		// 用户ID
+ 		systemLog.setUserID(userID);
+ 		// 是否成功
+ 		systemLog.setIsSuccess(String.valueOf(!"Y".equals(isNull)));
+ 		// 是否计费
+ 		systemLog.setIsCount(String.valueOf(!"Y".equals(isNull)));
+ 		// 查询时间
+ 		systemLog.setQueryDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+ 		systemLogService.addLog(systemLog);
 		
 		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),    
                 headers, HttpStatus.CREATED);
@@ -130,7 +168,10 @@ public class ComplexController {
 			return JSONObject.toJSONString(resultContent);
 		}
 		
-		Map<String, Object> returnMap = complexService.getPdfItem(service, identifier, localApi);
+		// 生成UUID
+		String uuid = StringUtil.createUUID();
+		
+		Map<String, Object> returnMap = complexService.getPdfItem(uuid, userID, service, identifier, localApi);
 		
 		String isNull = String.valueOf(returnMap.get("isNull"));
 		// 判断是否为空
@@ -143,6 +184,8 @@ public class ComplexController {
 		
 		// 记录日志
 		SystemLog systemLog = new SystemLog();
+		// uuid
+		systemLog.setUuid(uuid);
 		// ip地址
 		systemLog.setIpAddress(request.getRemoteAddr());
 		// apiKey
@@ -202,7 +245,10 @@ public class ComplexController {
 			return JSONObject.toJSONString(resultContent);
 		}
 		
-		Map<String, Object> returnMap = complexService.getPdfCustom(identifier, localApi);
+		// 生成UUID
+		String uuid = StringUtil.createUUID();
+		
+		Map<String, Object> returnMap = complexService.getPdfCustom(uuid, userID, identifier, localApi);
 		
 		String isNull = String.valueOf(returnMap.get("isNull"));
 		// 判断是否为空
@@ -215,6 +261,8 @@ public class ComplexController {
 		
 		// 记录日志
 		SystemLog systemLog = new SystemLog();
+		// uuid
+		systemLog.setUuid(uuid);
 		// ip地址
 		systemLog.setIpAddress(request.getRemoteAddr());
 		// apiKey

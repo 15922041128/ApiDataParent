@@ -2,18 +2,16 @@ package org.pbccrc.api.base.bean;
 
 import java.io.Serializable;
 
-public class SystemLog implements Serializable{
-	
-	private static final long serialVersionUID = 6798031777223836704L;
+public class ApiLog implements Serializable{
+
+	/** serialVersionUID */
+	private static final long serialVersionUID = -608342296352201188L;
 
 	/** 主键 */
 	private int ID;
 	
-	/** 与apiLog关联用uuid */
+	/** 与systemLog关联用uuid */
 	private String uuid;
-	
-	/** ip地址 */
-	private String ipAddress;
 	
 	/** 用户ID */
 	private String userID;
@@ -24,30 +22,25 @@ public class SystemLog implements Serializable{
 	/** 查询参数 */
 	private String params;
 	
-	/** 查询apiKey */
-	private String apiKey;
+	/** 查询来源(本地/远程) */
+	private String dataFrom;
 	
-	/** 是否成功 */
+	/** 查询是否成功 */
 	private String isSuccess;
 	
-	/** 是否计费 */
-	private String isCount;
-	
-	/** 查询时间 */
+	/** 查询日期 */
 	private String queryDate;
-	
-	/** 查询开始时间 */
-	private String startDate;
-	
-	/** 查询结束时间 */
-	private String endDate;
-	
+
 	public int getID() {
 		return ID;
 	}
 
 	public void setID(int iD) {
 		ID = iD;
+	}
+
+	public String getUserID() {
+		return userID;
 	}
 	
 	public String getUuid() {
@@ -56,18 +49,6 @@ public class SystemLog implements Serializable{
 
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
-	}
-	
-	public String getIpAddress() {
-		return ipAddress;
-	}
-
-	public void setIpAddress(String ipAddress) {
-		this.ipAddress = ipAddress;
-	}
-
-	public String getUserID() {
-		return userID;
 	}
 
 	public void setUserID(String userID) {
@@ -81,7 +62,7 @@ public class SystemLog implements Serializable{
 	public void setLocalApiID(String localApiID) {
 		this.localApiID = localApiID;
 	}
-	
+
 	public String getParams() {
 		return params;
 	}
@@ -90,12 +71,12 @@ public class SystemLog implements Serializable{
 		this.params = params;
 	}
 
-	public String getApiKey() {
-		return apiKey;
+	public String getDataFrom() {
+		return dataFrom;
 	}
 
-	public void setApiKey(String apiKey) {
-		this.apiKey = apiKey;
+	public void setDataFrom(String dataFrom) {
+		this.dataFrom = dataFrom;
 	}
 
 	public String getIsSuccess() {
@@ -106,35 +87,11 @@ public class SystemLog implements Serializable{
 		this.isSuccess = isSuccess;
 	}
 
-	public String getIsCount() {
-		return isCount;
-	}
-
-	public void setIsCount(String isCount) {
-		this.isCount = isCount;
-	}
-
 	public String getQueryDate() {
 		return queryDate;
 	}
 
 	public void setQueryDate(String queryDate) {
 		this.queryDate = queryDate;
-	}
-	
-	public String getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
-
-	public String getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
 	}
 }

@@ -45,6 +45,9 @@ public class QueryApiSingle implements QueryApi {
 		
 		String resultStr = Constants.BLANK;
 		
+		// 数据来源
+		String dataFrom = Constants.BLANK;
+		
 		// 本地api参数
 		String localParams = String.valueOf(localApi.get("params"));
 		JSONArray localParamArray = JSONArray.parseArray(localParams);
@@ -69,6 +72,13 @@ public class QueryApiSingle implements QueryApi {
 		String encryptType = String.valueOf(remoteApi.get("encryptType"));
 		// 返回参数
 		String retCode = String.valueOf(remoteApi.get("retCode"));
+		
+		// 根据url获取数据来源
+		if (Constants.REMOTE_URL_QILINGYZ.equals(url)) {
+			dataFrom = Constants.DATA_FROM_QILINGYZ;
+		} else if (Constants.REMOTE_URL_QL.equals(url)) {
+			dataFrom = Constants.DATA_FROM_QL;
+		} 
 		
 		// 远程访问参数列表
 		Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -419,6 +429,7 @@ public class QueryApiSingle implements QueryApi {
 			}
 		}
 		
+		map.put("dataFrom", dataFrom);
 		map.put("result", resultStr);
 		map.put("isSuccess", isSuccess);
 		

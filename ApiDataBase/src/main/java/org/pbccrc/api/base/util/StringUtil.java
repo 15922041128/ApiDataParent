@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.util.Random;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -95,6 +96,13 @@ public class StringUtil {
     		return Constants.BLANK;
     	}
     	return str;
+    }
+    
+    public static String createUUID() {
+    	UUID uuid = UUID.randomUUID();
+		String uuidStr = uuid.toString();
+		uuidStr = uuidStr.toUpperCase();
+		return uuidStr;
     }
       
     public static void main(String[] args) {  

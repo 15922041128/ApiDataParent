@@ -1,28 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.pbccrc.api.core.mapper.SystemLogMapper">
+<mapper namespace="org.pbccrc.api.core.mapper.ApiLogMapper">
 
-	<resultMap type="org.pbccrc.api.base.bean.SystemLog" id="systemLog">
+	<resultMap type="org.pbccrc.api.base.bean.ApiLog" id="apiLog">
 		<id property="ID" column="ID" />
-		<result property="uuid" column="uuid" />
-		<result property="ipAddress" column="ipAddress" />
 		<result property="userID" column="userID" />
+		<result property="uuid" column="uuid" />
 		<result property="localApiID" column="localApiID" />
 		<result property="params" column="params" />
-		<result property="apiKey" column="apiKey" />
+		<result property="dataFrom" column="dataFrom" />
 		<result property="isSuccess" column="isSuccess" />
-		<result property="isCount" column="isCount" />
 		<result property="queryDate" column="queryDate" />
 	</resultMap>
 	
-	<insert id="addLog" parameterType="org.pbccrc.api.base.bean.SystemLog">
-		insert into systemLog(uuid, ipAddress, userID, localApiID, params, apiKey, isSuccess, isCount, queryDate) 
-			values(#{uuid}, #{ipAddress}, #{userID}, #{localApiID}, #{params}, #{apiKey}, #{isSuccess}, #{isCount}, #{queryDate})
+	<insert id="addLog" parameterType="org.pbccrc.api.base.bean.ApiLog">
+		insert into apiLog(userID, uuid, localApiID, params, dataFrom, isSuccess, queryDate) 
+			values(#{userID}, #{uuid}, #{localApiID}, #{params}, #{dataFrom}, #{isSuccess}, #{queryDate})
 	</insert>
 	
-	<select id="queryLog" parameterType="org.pbccrc.api.base.bean.SystemLog" resultMap="systemLog">
-		select * from systemLog
+	<select id="queryLog" parameterType="org.pbccrc.api.base.bean.ApiLog" resultMap="apiLog">
+		select * from apiLog
 		<where>
 			<if test="userID != null">
 				and userID = #{userID}

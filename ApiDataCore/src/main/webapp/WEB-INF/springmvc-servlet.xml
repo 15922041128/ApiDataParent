@@ -12,9 +12,6 @@
 
     <context:annotation-config/>
     
-    <!--  
-    <context:component-scan base-package="com.durbar.JavaServerArch.RpcServerDemo.core, org.springframework.web"/>
-    -->
     <context:component-scan base-package="org.pbccrc.api.core, org.pbccrc.api.base, org.springframework.web"/>
 
     <!-- 数据库 配置-->

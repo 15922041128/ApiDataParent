@@ -12,7 +12,7 @@ public interface ComplexService {
 	 * @return
 	 * @throws Exception
 	 */
-	public Map<String, Object> getPdfItem(String item, String identifier, Map<String, Object> localApi) throws Exception;
+	public Map<String, Object> getPdfItem(String uuid, String userID, String item, String identifier, Map<String, Object> localApi) throws Exception;
 	
 	/**
 	 * PDF自定义查询
@@ -22,7 +22,7 @@ public interface ComplexService {
 	 * @return
 	 * @throws Exception
 	 */
-	public Map<String, Object> getPdfCustom(String identifier, Map<String, Object> localApi) throws Exception;
+	public Map<String, Object> getPdfCustom(String uuid, String userID, String identifier, Map<String, Object> localApi) throws Exception;
 	
 	/**
 	 * 失信人查询验证
@@ -36,6 +36,6 @@ public interface ComplexService {
 	 * @param identifier
 	 * @return
 	 */
-	public Map<String, Object> querySxr(String identifier, String[] queryItems) throws Exception;
+	public Map<String, Object> querySxr(String uuid, String userID, String identifier, String[] queryItems) throws Exception;
 
 }

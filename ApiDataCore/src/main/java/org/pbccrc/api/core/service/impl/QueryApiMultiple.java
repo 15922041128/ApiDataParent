@@ -42,6 +42,9 @@ public class QueryApiMultiple implements QueryApi {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
+		// 数据来源
+		String dataFrom = Constants.BLANK;
+		
 		// 返回对象
 		Object resultStr = null;
 		
@@ -84,6 +87,12 @@ public class QueryApiMultiple implements QueryApi {
 			// 返回值对应关系
 			String retParamRel = String.valueOf(remoteApi.get("retParamRel"));
 			
+			// 根据url获取数据来源
+			if (Constants.REMOTE_URL_QILINGYZ.equals(url)) {
+				dataFrom = Constants.DATA_FROM_QILINGYZ;
+			} else if (Constants.REMOTE_URL_QL.equals(url)) {
+				dataFrom = Constants.DATA_FROM_QL;
+			}
 			
 			// 远程访问参数列表
 			Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -458,6 +467,7 @@ public class QueryApiMultiple implements QueryApi {
 			
 		} // loop remoteApiList end
 		
+		map.put("dataFrom", dataFrom);
 		map.put("result", resultStr);
 		map.put("isSuccess", isSuccess);
 		
