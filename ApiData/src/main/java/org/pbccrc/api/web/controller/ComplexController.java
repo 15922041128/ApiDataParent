@@ -11,11 +11,11 @@ import javax.ws.rs.GET;
 import org.apache.commons.io.FileUtils;
 import org.pbccrc.api.base.bean.ResultContent;
 import org.pbccrc.api.base.bean.SystemLog;
-import org.pbccrc.api.base.bean.User;
 import org.pbccrc.api.base.service.ComplexService;
 import org.pbccrc.api.base.service.LocalApiService;
 import org.pbccrc.api.base.service.SystemLogService;
 import org.pbccrc.api.base.util.Constants;
+import org.pbccrc.api.base.util.MyCookie;
 import org.pbccrc.api.base.util.StringUtil;
 import org.pbccrc.api.base.util.Validator;
 import org.pbccrc.api.base.util.pdf.PdfBuilder;
@@ -73,15 +73,13 @@ public class ComplexController {
 	 * @throws Exception
 	 */
 	@GET
-	@ResponseBody
 	@RequestMapping("/sxr")
 	public ResponseEntity<byte[]> querySxr(String identifier, String queryItem, HttpServletRequest request) throws Exception{
 		
 		String[] queryItems = queryItem.split(Constants.COMMA);
 		
-		// 获取当前用户并取得userID
-		User currentUser = (User) request.getSession().getAttribute(Constants.CURRENT_USER);
-		String userID = String.valueOf(currentUser.getID());
+		// 获取当前userID
+		String userID = MyCookie.getCookie(Constants.COOKIE_USERID, true, request);
 		
 		// pdf路径
 		String path = Constants.FILE_DOWNLOAD_SXR_PDF;
@@ -97,7 +95,7 @@ public class ComplexController {
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentDispositionFormData("attachment", fileName);   
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);   
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM); 
         
  		// 获取是否成功
  		String isNull = String.valueOf(queryResult.get("isNull"));
@@ -128,7 +126,7 @@ public class ComplexController {
  		systemLogService.addLog(systemLog);
 		
 		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),    
-                headers, HttpStatus.CREATED);
+                headers, HttpStatus.OK);
 	}
 	
 

@@ -50,19 +50,19 @@ public class pubElements {
 	   * @return
 	   */
 	  public static PdfPTable Pheader(String imagePath) {
-		  PdfPTable table = new PdfPTable(2);
+		  PdfPTable table = new PdfPTable(1);
 		  try {
 			  PdfPCell cell11 = new PdfPCell(new Paragraph("个人信用信息查询",FontChinese24));
 			  cell11.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			  cell11.setHorizontalAlignment(Element.ALIGN_CENTER);
 			  cell11.setBorder(0);
-			  Image image1 = Image.getInstance(imagePath); 
+//			  Image image1 = Image.getInstance(imagePath); 
 			  
 			  //设置每列宽度比例   
-			  int width11[] = {35,75};
+			  int width11[] = {110};
 			  table.setWidths(width11); 
 			  table.getDefaultCell().setBorder(0);
-			  table.addCell(image1);  
+//			  table.addCell(image1);  
 			  table.addCell(cell11);  
 			  table.addCell("");
 		} catch (Exception e) {

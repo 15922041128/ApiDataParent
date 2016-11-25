@@ -258,4 +258,10 @@ public class Constants {
 	// qilingyz
 	public static final String REMOTE_URL_QILINGYZ = "http://www.qilingyz.com/api.php";
 	
+	/** 缓存 */
+	// 登录用户cookie
+	public static final String COOKIE_USERID = "cookieUserID";
+	// 登录用户
+	public static final String CACHE_USER = "cacheUser";
+	
 }

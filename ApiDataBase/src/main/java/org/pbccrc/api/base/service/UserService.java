@@ -1,5 +1,8 @@
 package org.pbccrc.api.base.service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.pbccrc.api.base.bean.User;
 
 public interface UserService {
@@ -16,9 +19,10 @@ public interface UserService {
 	public void addUser(User user);
 	
 	/**
+	 * 
 	 * @param userName	帐号
 	 * @param password	密码
-	 * @return			是否成功
+	 * @return			登录帐号
 	 */
 	public User login(String userName, String password);
 	

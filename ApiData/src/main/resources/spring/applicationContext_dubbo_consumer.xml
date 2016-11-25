@@ -39,5 +39,7 @@
     <dubbo:reference id="localDBService" interface="org.pbccrc.api.base.service.LocalDBService" lazy="false" check="false"/>
     <dubbo:reference id="userService" interface="org.pbccrc.api.base.service.UserService" lazy="false" check="false"/>
     <dubbo:reference id="apiLogService" interface="org.pbccrc.api.base.service.ApiLogService" lazy="false" check="false"/>
+    
+    
 </beans>
 

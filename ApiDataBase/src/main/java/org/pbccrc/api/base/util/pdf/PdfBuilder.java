@@ -77,6 +77,8 @@ public class PdfBuilder {
 		
 		// 添加Header
 		document.add(pubElements.Pheader(imagePath));
+		
+		document.add(pubElements.emptyRow());
 
 		// 添加信用评分
 		PdfPTable table9 = new PdfPTable(3);

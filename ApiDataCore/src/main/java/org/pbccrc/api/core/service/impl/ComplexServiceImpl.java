@@ -237,8 +237,15 @@ public class ComplexServiceImpl implements ComplexService{
 			String service = Constants.SERVICE_S_QUERYSCORE;
 			Map<String, String[]> params = new HashMap<String, String[]>();
 			params.put("identityCard", new String[]{identifier});
-			String result = String.valueOf(queryApiService.query(uuid, userID, service, params).get("result"));
-			JSONObject resultObj = JSONObject.parseObject(result);
+			Object result = queryApiService.query(uuid, userID, service, params).get("result");
+			JSONObject resultObj = null;
+			if (result instanceof String) {
+				// String
+				resultObj = JSONObject.parseObject(String.valueOf(result));
+			} else {
+				// Object
+				resultObj = (JSONObject) JSONObject.toJSON(result);
+			}
 			String resultScore = resultObj.getString("score");
 			if (!StringUtil.isNull(resultScore)) {
 				score = resultScore;
@@ -342,8 +349,14 @@ public class ComplexServiceImpl implements ComplexService{
 					params = new HashMap<String, String[]>();
 					params.put("pname", new String[]{name});
 					params.put("idcardNo", new String[]{identifier});
-					String zxgg = String.valueOf(queryApiService.query(uuid, userID, service, params).get("result"));
-					zxggObj = JSONObject.parseObject(zxgg);
+					result = queryApiService.query(uuid, userID, service, params).get("result");
+					if (result instanceof String) {
+						// String
+						zxggObj = JSONObject.parseObject(String.valueOf(result));
+					} else {
+						// Object
+						zxggObj = (JSONObject) JSONObject.toJSON(result);
+					}
 					JSONArray zxggArray = new JSONArray();
 					JSONObject zxggResultObject = zxggObj.getJSONObject("Result");
 					if (null != zxggResultObject) {
@@ -365,8 +378,15 @@ public class ComplexServiceImpl implements ComplexService{
 					params = new HashMap<String, String[]>();
 					params.put("pname", new String[]{name});
 					params.put("idcardNo", new String[]{identifier});
-					String sxgg = String.valueOf(queryApiService.query(uuid, userID, service, params).get("result"));
-					sxggObj = JSONObject.parseObject(sxgg);
+//					String sxgg = String.valueOf(queryApiService.query(uuid, userID, service, params).get("result"));
+					result = queryApiService.query(uuid, userID, service, params).get("result");
+					if (result instanceof String) {
+						// String
+						sxggObj = JSONObject.parseObject(String.valueOf(result));
+					} else {
+						// Object
+						sxggObj = (JSONObject) JSONObject.toJSON(result);
+					}
 					JSONArray sxggArray = new JSONArray();
 					JSONObject sxggResultObject = sxggObj.getJSONObject("Result");
 					if (null != sxggResultObject) {
@@ -388,8 +408,15 @@ public class ComplexServiceImpl implements ComplexService{
 					params = new HashMap<String, String[]>();
 					params.put("pname", new String[]{name});
 					params.put("idcardNo", new String[]{identifier});
-					String cpws = String.valueOf(queryApiService.query(uuid, userID, service, params).get("result"));
-					cpwsObj = JSONObject.parseObject(cpws);
+//					String cpws = String.valueOf(queryApiService.query(uuid, userID, service, params).get("result"));
+					result = queryApiService.query(uuid, userID, service, params).get("result");
+					if (result instanceof String) {
+						// String
+						cpwsObj = JSONObject.parseObject(String.valueOf(result));
+					} else {
+						// Object
+						cpwsObj = (JSONObject) JSONObject.toJSON(result);
+					}
 					JSONArray cpwsArray = new JSONArray();
 					JSONObject cpwsResultObject = cpwsObj.getJSONObject("Result");
 					if (null != cpwsResultObject) {

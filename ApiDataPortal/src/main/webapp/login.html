@@ -1,0 +1,226 @@
+<div class="dialog">
+<!-- 登录 -->
+<div class="modal modal-auth modal-login" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header dialog-title">
+            	<!--  
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                -->
+                <button type="button" class="close" onclick="doClose();" aria-hidden="true">&times;</button>
+                <h4 id="loginModalLabel" class="modal-title text-center">用户登录{{$root.loginUserName}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="divider">
+                    <span class="or-text"></span>
+                </div>
+                <div class="login-form-container">
+                    <form class="login-form">                
+                       <div class="form-group">
+                            <i class="icon"><label class="span-red">*</label></i>
+                            <input id="login_userName" type="text" class="form-control" placeholder="请输入帐号">
+                        </div><!--//form-group-->    
+                        <div class="form-group password">
+                            <i class="icon"><label class="span-red">*</label></i>
+                            <input id="login_password" type="password" class="form-control" placeholder="请输入密码">
+                            <div class="extra">
+                                <div class="checkbox remember">
+                                    <label>
+                                        <input type="checkbox"> 记住我
+                                    </label>
+                                </div><!--//check-box-->
+								<!-- 
+                                <div class="forgotten-password">
+                                    <a href="#" id="resetpass-link" data-toggle="modal" data-target="#resetpass-modal" onclick="resetpassLink();">忘记密码?</a>
+                                </div>
+								-->
+                            </div><!--//extra-->
+                        </div><!--//form-group-->
+                        <input type="button" class="btn btn-cta btn-block btn-primary" value="登录" data-ng-click="login();"/>
+                    </form>
+                </div><!--//login-form-container-->
+                
+                <div class="option-container">
+                    <div class="lead-text">尚未注册?</div> 
+                    <a class="signup-link btn btn-ghost-alt" id="signup-link" href="#" onClick="signupLinkClick();">注册</a>                    
+                </div><!--//option-container-->
+                <div id="warnMessage" class="text-error mb15 mt10"></div>
+            </div><!--//modal-body-->
+            
+        </div><!--//modal-content-->
+    </div><!--//modal-dialog-->
+</div><!--//modal-->
+
+<!-- 注册 -->
+<div class="modal modal-auth modal-signup" id="signup-modal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header dialog-title">
+            	<!--  
+                <button id="clostButton" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                -->
+                <button type="button" class="close" onclick="doClose();" aria-hidden="true">&times;</button>
+                <h4 id="signupModalLabel" class="modal-title text-center">用户注册</h4>
+            </div>
+            <div class="modal-body">
+                
+                <div class="divider">
+                    <span class="or-text"></span>
+                </div>
+                <div class="login-form-container">
+                    <form class="login-form">         
+                        <div class="form-group">
+                            <i class="icon"><label class="span-red">*</label></i>
+                            <input id="userName" type="text" class="form-control" placeholder="请输入帐号">
+                        </div><!--//form-group-->       
+                        <div class="form-group">
+                            <i class="icon"><label class="span-red">*</label></i>
+                            <input id="password" type="password" class="form-control" placeholder="创建密码">
+                        </div><!--//form-group-->
+                        <div class="form-group">
+                            <i class="icon"><label class="span-red">*</label></i>
+                            <input id="password2" type="password" class="form-control" placeholder="确认密码">
+                        </div><!--//form-group-->
+                        <div class="form-group">
+                            <i class="icon"><label class="span-red">*</label></i>
+                            <input id="compName" type="text" class="form-control" placeholder="注册机构">
+                        </div><!--//form-group-->
+                        <div class="form-group">
+                            <i class="icon"><label class="span-red">*</label></i>
+                            <input id="compTel" type="text" class="form-control" placeholder="注册机构电话">
+                        </div><!--//form-group-->
+                        <div class="form-group">
+                            <i class="icon"><label class="span-red">*</label></i>
+                            <input id="contactName" type="text" class="form-control" placeholder="联系人">
+                        </div><!--//form-group-->
+                        <div class="form-group">
+                            <i class="icon"><label class="span-red">*</label></i>
+                            <input id="contactTel" type="text" class="form-control" placeholder="联系人电话">
+                        </div><!--//form-group-->
+                        <div class="form-group">
+                            <i class="icon"><label class="span-red">*</label></i>
+                            <input id="vCode" type="text" class="form-control-half" placeholder="验证码">
+                            <input type="button" id="vCodeBtn" value="发送验证码" class="btn btn-primary btn-cta width-40" onclick="sendVCode(this);"/>
+                          	<script type="text/javascript"> 
+								var countdown = 20; 
+								function settime(val) {
+									if (countdown == 0) {
+										val.removeAttribute("disabled"); 
+										val.value="发送验证码"; 
+										countdown = 20; 
+									} else {
+										val.setAttribute("disabled", true); 
+										val.value="重新发送(" + countdown + ")";
+										countdown--; 
+									} 
+									setTimeout(function() {
+										if (countdown == 20) {
+											return false;
+										}
+										settime(val) 
+									},1000) 
+								} 
+							</script> 
+						<input id="hiddenVCode" type="hidden">
+                        </div><!--//form-group-->
+                        <input type="hidden" id="silderValue" value="n">
+                        <button type="button" class="btn btn-block btn-primary btn-cta" onclick="doRegister();">注册</button>
+                        
+                    </form>
+                </div><!--//login-form-container-->
+                <div class="option-container">
+                    <div class="lead-text">已有帐号?</div> 
+                    <a class="login-link btn btn-ghost-alt" id="login-link" href="#" onclick="loginLinkClick();">登录</a>                    
+                </div><!--//option-container-->
+                <div id="warnMessage" class="text-error mb15 mt10"></div>
+            </div><!--//modal-body-->
+        </div><!--//modal-content-->
+    </div><!--//modal-dialog-->
+</div><!--//modal-->
+
+<!-- 重置密码 -->
+<div class="modal modal-auth modal-resetpass" id="resetpass-modal" tabindex="-1" role="dialog" aria-labelledby="resetpassModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header dialog-title">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 id="resetpassModalLabel" class="modal-title text-center">Forgot your password?</h4>
+            </div>
+            <div class="modal-body">
+                <div class="resetpass-form-container">
+                    <p class="intro">We'll email you a link to a page where you can easily create a new password.</p>
+                    <form class="resetpass-form">                
+                        <div class="form-group email">
+                            <label class="sr-only" for="reg-email">Your Email</label>
+                            <input id="reg-email" name="reg-email" type="email" class="form-control login-email" placeholder="Your Email">
+                        </div><!--//form-group-->
+                        <button type="submit" class="btn btn-block btn-secondary btn-cta">Reset Password</button>
+                    </form>
+                </div><!--//login-form-container-->
+                <div class="option-container">
+                    <div class="lead-text">I want to <a class="back-to-login-link" id="back-to-login-link" href="#" onclick="back2LoginLink();">return to login</a></div>                    
+                </div><!--//option-container-->
+            </div><!--//modal-body-->
+        </div><!--//modal-content-->
+    </div><!--//modal-dialog-->
+</div><!--//modal-->
+</div>
+<script type="text/javascript">
+    var Dragging=function(validateHandler){ //参数为验证点击区域是否为可移动区域，如果是返回欲移动元素，负责返回null
+        var draggingObj=null; //dragging Dialog
+        var diffX=0;
+        var diffY=0;
+        
+        function mouseHandler(e){
+            switch(e.type){
+                case 'mousedown':
+                    draggingObj=validateHandler(e);//验证是否为可点击移动区域
+                    if(draggingObj!=null){
+                        diffX=e.clientX-draggingObj.offsetLeft;
+                        diffY=e.clientY-draggingObj.offsetTop;
+                    }
+                    break;
+                
+                case 'mousemove':
+                    if(draggingObj){
+                        draggingObj.style.left=(e.clientX-diffX)+'px';
+                        draggingObj.style.top=(e.clientY-diffY)+'px';
+                    }
+                    break;
+                
+                case 'mouseup':
+                    draggingObj =null;
+                    diffX=0;
+                    diffY=0;
+                    break;
+            }
+        };
+        
+        return {
+            enable:function(){
+                document.addEventListener('mousedown',mouseHandler);
+                document.addEventListener('mousemove',mouseHandler);
+                document.addEventListener('mouseup',mouseHandler);
+            },
+            disable:function(){
+                document.removeEventListener('mousedown',mouseHandler);
+                document.removeEventListener('mousemove',mouseHandler);
+                document.removeEventListener('mouseup',mouseHandler);
+            }
+        }
+    }
+
+    function getDraggingDialog(e){
+        var target=e.target;
+        while(target && target.className.indexOf('dialog-title')==-1){
+            target=target.offsetParent;
+        }
+        if(target!=null){
+            return target.offsetParent;
+        }else{
+            return null;
+        }
+    }
+    
+    Dragging(getDraggingDialog).enable();
+</script>

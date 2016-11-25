@@ -34,9 +34,11 @@ function login() {
  	$.ajax({
         async:false,
         type: "GET",  
-        url: "r/user/login",  
+        url: "login",  
         data: params,
-        success: function(msg){  
+        success: function(data){  
+        	var msg = data.isSuccess;
+        	var user = data.loginUser;
         	if ('Y' == msg) {
         		window.location.href = "main.html";
         	} else {

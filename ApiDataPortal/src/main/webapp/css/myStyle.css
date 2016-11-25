@@ -1,0 +1,52 @@
+ .span-red{ color:#B81111;}
+ 
+ .text-error {
+    position: relative;
+    display: none;
+    border: 1px solid red;
+    font-size: 12px;
+    text-align: center;
+    background: #ffebe8;
+    color: #333333;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -khtml-border-radius: 3px;
+    padding: 2px;
+    line-height: 26px;
+    width: 100%;
+}
+.mb15{margin-bottom:15px}
+.mt10{margin-top:10px!important}
+.width-40 {
+  display: block;
+  width:45%;
+  margin-right: 0px;
+}
+
+/*** login icon *****/
+.f14{font-size:14px!important}
+.f16{font-size:16px!important}
+.mt-5{margin-top:-5px!important;}
+@font-face {
+  font-family: 'iconfont';
+  src: url('myFonts/font_1477574307_4533489.eot'); /* IE9*/
+  src: url('myFonts/font_1477574307_4533489.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('myFonts/font_1477574307_4533489.woff') format('woff'), /* chrome、firefox */
+  url('myFonts/font_1477574307_4533489.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url('myFonts/font_1477574307_4533489.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+	vertical-align: middle;
+	font-family: "iconfont" !important;
+	font-style: normal;
+	-webkit-font-smoothing: antialiased;
+	display: block;
+	-webkit-text-stroke-width: 0.2px;
+	-moz-osx-font-smoothing: grayscale;
+	display: inline-block;
+}
+
+.dialog{position:absolute;}
+.dialog-title{cursor:move;}
