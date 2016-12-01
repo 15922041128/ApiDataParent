@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html ng-app="apiData">
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -54,7 +54,7 @@
     
     <!-- Theme CSS -->
     <link id="theme-style" rel="stylesheet" href="assets/css/styles.css">
-
+    
 	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>
 	<!-- jQuery Easing -->
@@ -73,20 +73,17 @@
 	<!-- Main -->
 	<script src="js/main.js"></script>
 	
-	<!-- sweetalert.min -->
+	<script src="js/angular/angular.min.js"></script>
+	<script src="js/angular/angular-ui-router.min.js"></script>
+	<script src="js/angular/angular-animate.min.js"></script>
+	
+	<script src="js/config.js"></script>
 	<script src="js/sweetalert.min.js"></script>
-	
-	<!-- angular -->
-	<script src="js/angular-1.3.0.14/angular.js"></script>
-	
-	<!-- util -->
 	<script src="js/util.js"></script>
-	<!-- validator -->
 	<script src="js/validator.js"></script>
-	<!-- login -->
 	<script src="js/login.js"></script>
 	</head>
-	<body ng-app="app" ng-controller="loginController" data-ng-init="init()">
+	<body ng-controller="loginController" data-ng-init="init()">
 		
 	<div class="fh5co-loader"></div>
 	
@@ -94,7 +91,24 @@
 	
 	<div ng-include="'top.html'"></div>
 	<div ng-include="'login.html'"></div>
-
+	
+	
+	<!--  
+	<header id="fh5co-header" class="fh5co-cover" role="banner" style="background-image:url(images/img_bg_1.jpg);" data-stellar-background-ratio="0.5">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-7 text-left">
+					<div class="display-t">
+						<div class="display-tc animate-box" data-animate-effect="fadeInUp">
+							<div ng-include="'header.html'"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	-->
 	<header id="fh5co-header" class="fh5co-cover" role="banner" style="background-image:url(images/img_bg_1.jpg);" data-stellar-background-ratio="0.5">
 		<div class="overlay"></div>
 		<div class="container">
@@ -114,48 +128,6 @@
 		</div>
 	</header>
 	
-	<div id="fh5co-project">
-		<div class="container">
-			<div class="row row-pb-md">
-				<div class="col-md-8 col-md-offset-2 text-left fh5co-heading  animate-box">
-					<span>Want Some Cool Stuff</span>
-					<h2>Recent Products</h2>
-					<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-md-4 col-sm-6 fh5co-project animate-box" data-animate-effect="fadeIn">
-					<a href="#"><img src="images/work-1.jpg" alt="" class="img-responsive">
-						<div class="fh5co-copy">
-							<h3>Clipboard Office</h3>
-							<p>Web Design</p>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-4 col-sm-6 fh5co-project animate-box" data-animate-effect="fadeIn">
-					<a href="#"><img src="images/work-2.jpg" alt="" class="img-responsive">
-						<div class="fh5co-copy">
-							<h3>Smart Layers</h3>
-							<p>Brand &amp; Identity</p>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-4 col-sm-6 fh5co-project animate-box" data-animate-effect="fadeIn">
-					<a href="#"><img src="images/work-3.jpg" alt="" class="img-responsive">
-						<div class="fh5co-copy">
-							<h3>Notepad Mockup</h3>
-							<p>Illustration</p>
-						</div>
-					</a>
-				</div>
-
-			</div>
-		</div>
-		
-	</div>
-
-
 
 	<div id="fh5co-services" class="fh5co-bg-section border-bottom">
 		<div class="container">
@@ -398,7 +370,7 @@
 			</div>
 		</div>
 	</div>
-
+	
 	<footer id="fh5co-footer" role="contentinfo">
 		<div class="container">
 			<div class="row row-pb-md">

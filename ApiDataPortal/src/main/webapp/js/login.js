@@ -169,8 +169,19 @@ function doClose() {
 	$('#signup-modal').hide();
 }
 
-var app = angular.module('app',[]);
-app.controller('loginController', function ($scope, $http) {
+var app = angular.module('apiData', ['ui.router', 'ngAnimate']);
+app.config(function($stateProvider) {
+
+    $stateProvider
+	    .state('dataManager', {
+			url: "^" + getLocation() + '/dataManager',
+			templateUrl: 'dataManager.html'
+		})
+});
+app.controller('loginController', function ($scope, $http, $state) {
+	
+	$scope.imageUrl = 'images/bigdata.png';
+	
 	
 	/** 初始化 */
 	$scope.init = function() {
@@ -230,13 +241,31 @@ app.controller('loginController', function ($scope, $http) {
 		});
 	}
 	
-	/** 申请试用(PDF) */
-	$scope.tryPDF = function() {
+	/** 申请试用 */
+	$scope.applyTrial = function(productID) {
 		var loginUserName = $scope.loginUserName; 
 		if (undefined == loginUserName || '' == loginUserName) {
 			$('#login-modal').show();
 		} else {
-			alert('已登录 ');
+			window.location.href = 'dataManager.html';
+//			$state.go('dataManager', {productID: productID});
+//			window.location.href = 'dataManager.html';
+//			$http({
+//				method: 'GET',
+//				url: 'dataManager',
+//				params: {'productID': productID}
+//			}).success(function(data){
+//				alert(data);
+//				$scope.productID = data.productID;
+//				alert($scope.productID);
+//			}).error(function(){
+//				alert(1);
+//			});
 		}
 	}
-});  
+	
+	$scope.personalCenter = function () {
+		window.location.href = 'personalCenter/index.html';
+	}
+});
+

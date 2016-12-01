@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+    <meta charset="UTF-8">
+    <title>YINGZE</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+
+
+<!--[if lt IE 9]>
+<script src="/themes/v5/public/js/html5shiv.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/themes/v5/public/js/respond.min.js" type="text/javascript" charset="utf-8"></script>
+<![endif]-->
+<!--[if IE 6]>
+<script src="/themes/v5/public/js/DD_belatedPNG_0.0.8a.js"  type="text/javascript"></script>
+<script>DD_belatedPNG.fix('.centerIcon');</script>
+<![endif]-->
+
+
+<link media="all" href="css/money.css" type="text/css" rel="stylesheet">
+<link rel="stylesheet" href="css/layer.css" id="layui_layer_skinlayercss" style=""></head>
+<body>
+    <header class="clearfix">
+    <a href="default.html" class="centerLogo" target="_top" style="position: relative;" indepth="true"><img style="position: relative; left: -5px;" src="images/logo.png" alt="聚合数据"></a>
+    <div class="centerSearch">
+        <input class="searchText" name="q" placeholder="搜索" value="" type="text">
+        <button id="searchBtn" type="button" class="searchBtn centerIcon"></button>
+    </div>
+    <ul class="headerUl clearfix">
+        <li class="headerLi1">
+            <div class="headerInfo"><span>zmc2585</span><i class="headerIcon1 centerIcon"></i></div>
+            <a class="centerLogout" href="javascript:logout();">退出登录</a>
+        </li>
+        <li>
+            <a href="qa.html" target="_top" indepth="true">常见问题</a>
+        </li>
+        <li class="headerLi3">
+            <div class="headerFoucs"><span>关注聚合</span><i class="headerIcon1 centerIcon"></i></div>
+            <div class="juheCode">
+                <span class="centerIcon"></span>
+            </div>
+        </li>
+        <li>
+            <a class="headerContact" href="contact.html" target="_top" indepth="true">联系我们</a>
+        </li>
+    </ul>
+</header>
+
+    <!-- main start -->
+    <div id="ucenterWrapper" class="ucenterWidth1 clearfix">
+        <nav>
+    <ul class="ucenterNav">
+        <li class="navIndex ">
+            <div class="navDiv">
+                <a href="index.html" indepth="true"><i class="iconfont"></i>我的聚合</a>
+            </div>
+        </li>
+        <li class="">
+            <div class="navDiv">
+                <a href="mydata.html" indepth="true"><i class="iconfont"></i>我的数据</a>
+            </div>
+        </li>
+        <li class="">
+            <div class="navDiv">
+                <a href="myactivity.html" indepth="true"><i class="iconfont"></i>我的活动</a>
+            </div>
+        </li>
+        <li class="">
+            <div class="navDiv">
+                <a href="mycollection.html" indepth="true"><i class="iconfont"></i>我的收藏</a>
+            </div>
+        </li>
+        <li class="">
+            <div class="navDiv">
+                <a href="ipconfig.html" indepth="true"><i class="iconfont"></i>IP白名单</a>
+            </div>
+        </li>
+        <li class="active">
+            <div class="navDiv">
+                <a href="money.html" indepth="true"><i class="iconfont"></i>我的余额</a>
+            </div>
+        </li>
+        <li class="">
+            <div class="navDiv">
+                <a href="paylogs.html" indepth="true"><i class="iconfont"></i>我的充值记录</a>
+            </div>
+        </li>
+        <li class="">
+            <div class="navDiv">
+                <a href="purchaselogs.html" indepth="true"><i class="iconfont"></i>我的消费记录</a>
+            </div>
+        </li>
+        <li class="">
+            <div class="navDiv">
+                <a href="workorder.html" indepth="true"><i class="iconfont"></i>我的工单</a>
+            </div>
+        </li>
+                <li class="navInfoLi">
+            <span id="ucenterSubA"><i class="iconfont"></i>用户中心<i class="centerIcon subDown"></i></span>
+            <ul class="ucenterSub">
+                <li class=""><a href="accountinfo.html" indepth="true"><i class="iconfont"></i>账户信息</a></li>
+                <li class=""><a href="editpwd.html" indepth="true"><i class="iconfont"></i>密码修改</a></li>
+                <li class=""><a href="certify.html" indepth="true"><i class="iconfont"></i>实名认证</a></li>
+                <li>&nbsp;</li>
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+        <!-- main content start -->
+        <section id="ucenterSection">
+            <h2 class="centerTitle">我的余额</h2>
+            <!-- <div class="ContentDiv"> -->
+                <div class="ContentDiv new-content-money">
+<div class="moneyListDiv clearfix">
+    <ul class="moneyListUl centerFormUl clearfix">
+        <li class="clearfix">
+            <label class="labelLeft">账户余额：</label>
+            <div class="labelRight">
+                <span><font style="font-size: 20px; padding-right: 5px;" color="#fe514a">0<span class="moneyDeci">.00</span></font>元</span>
+            </div>
+        </li>
+                <li class="clearfix">
+            <label class="labelLeft">余额预警：</label>
+            <div class="labelRight">
+                <label>
+                <span class="iconfont waringOn onOff" style="display: none;"></span>
+                <span class="iconfont waringOff onOff"></span>
+                <input class="onOffCheckbox" type="checkbox">
+                </label>
+            </div>
+        </li>
+                <li class="clearfix" style="clear: both;">
+            <label class="labelLeft">保证金：</label>
+            <div class="labelRight">
+                <span><font style="font-size: 16px; font-weight: bold; padding-right: 5px;" color="#3ed493">0<span class="moneyDeci">.00</span></font>元</span>
+            </div>
+        </li>
+        <p class="explainP" style="color: rgb(254, 81, 74); font-weight: bold;">流量充值大放价，活动折扣联系客服。</p>
+    </ul>
+</div>
+</div>
+            <ul class="clearfix smsTab">
+                                <li class="active"><a>在线支付</a></li>
+                                <li class=""><a>支付宝转账</a></li>
+                <li><a>银行卡转账</a></li>
+            </ul>
+            <div class="ContentDiv tab-content">
+                                    <div class="moneyListDiv tab-list-money clearfix" id="alipayOnline" name="alipayOnline" style="position: relative; display: block;">
+    <ul class="centerFormUl">
+        <form action="https://www.juhe.cn/pay/account" method="post" onsubmit="return alipaySubmit()" target="_blank">
+            <li class="clearfix" style="margin: 10px 0px;">
+                <label class="labelLeft">充值金额：</label>
+                <div class="labelRight">
+                    <input min="1" name="price" class="inputText moneyTexti" value="" type="number">
+                    <i class="errorTips" style="display: none;"><span class="iconfont"></span><em></em></i>
+                </div>
+            </li>
+            <li class="clearfix" style="height: auto;">
+               <label class="labelLeft">在线支付：</label>
+               <div class="labelRight bank-list-div">
+               		<div class="bankicon">
+               			<label class="label-icon label-icon-zfb select-label"><span></span><input name="bankCode" value="alipay" type="radio"></label>
+               			<!-- <label class="label-icon label-icon-cmb"><span></span><input type="radio" name="bankCode" value="CMB" /></label>
+               			<label class="label-icon label-icon-icbc"><span></span><input type="radio" name="bankCode" value="ICBC" /></label>
+               			<label class="label-icon label-icon-boc"><span></span><input type="radio" name="bankCode" value="BOC" /></label>
+               			<label class="label-icon label-icon-abc"><span></span><input type="radio" name="bankCode" value="ABC" /></label>
+               			<label class="label-icon label-icon-bocm"><span></span><input type="radio" name="bankCode" value="BOCM" /></label>
+               			<label class="label-icon label-icon-spdb"><span></span><input type="radio" name="bankCode" value="SPDB" /></label>
+               			<label class="label-icon label-icon-gdb"><span></span><input type="radio" name="bankCode" value="GDB" /></label>
+               			<label class="label-icon label-icon-citic"><span></span><input type="radio" name="bankCode" value="CITIC" /></label>
+               			<label class="label-icon label-icon-ceb"><span></span><input type="radio" name="bankCode" value="CEB" /></label>
+               			<label class="label-icon label-icon-cib"><span></span><input type="radio" name="bankCode" value="CIB" /></label>
+               			<label class="label-icon label-icon-sdb"><span></span><input type="radio" name="bankCode" value="SDB" /></label>
+               			<label class="label-icon label-icon-cmbc"><span></span><input type="radio" name="bankCode" value="CMBC" /></label>
+               			<label class="label-icon label-icon-nbcb"><span></span><input type="radio" name="bankCode" value="NBCB" /></label>
+               			<label class="label-icon label-icon-bea"><span></span><input type="radio" name="bankCode" value="BEA" /></label>
+               			<label class="label-icon label-icon-njcb"><span></span><input type="radio" name="bankCode" value="NJCB" /></label>
+               			<label class="label-icon label-icon-srcb"><span></span><input type="radio" name="bankCode" value="SRCB" /></label>
+               			<label class="label-icon label-icon-bob"><span></span><input type="radio" name="bankCode" value="BOB" /></label> -->
+               		</div>
+               </div>
+           </li>
+            <li class="clearfix banks-btn">
+                <label class="labelLeft">&nbsp;</label>
+                <div class="labelRight">
+                    <button type="submit" class="centerBtn rechargeBtn">充值</button>
+                    <!-- <i class="errorTips" style="display: inline-block;"><span class="iconfont">&#xe604;</span><em>选择支付银行</em></i> -->
+                </div>
+            </li>
+        </form>
+    </ul>
+    <p class="explainP" style="color: rgb(254, 81, 74); font-weight: bold;">2015年09月01日起通过支付宝在线充值、银行卡在线充值的金额如果用于话费、流量、加油卡、游戏等充值类接口，按笔扣取1%的手续费，首次手续费用不定期统一按笔扣除，后续即时扣除，请知悉！银行转账或支付宝转账0手续费，如有疑问请联系在线客服。</p>
+</div>
+
+                                <div class="moneyListDiv tab-list-money clearfix" style="position: relative;">
+   <ul class="centerFormUl zhuanzhang-ul">
+       <li class="clearfix">
+           <label class="labelLeft">公司名称：</label>
+           <div class="labelRight">
+               <span>苏州新科兰德科技有限公司</span>
+           </div>
+       </li>
+       <li class="clearfix">
+           <label class="labelLeft">支付宝账号：</label>
+           <div class="labelRight">
+               <span>juhedata@think-land.com</span>
+           </div>
+       </li>
+       <li class="clearfix">
+           <label class="labelLeft">转账二维码：</label>
+           <div class="labelRight">
+               <button class="centerBtn zhuanzhang-btn">获取二维码支付宝转账</button>
+           </div>
+       </li>
+       <li class="clearfix" style="padding-top: 22px;">
+           <label class="labelLeft">支付宝订单号：</label>
+           <div class="labelRight">
+               <input name="tradeno" id="tradeno" value="" class="inputText" type="text">
+               <i class="errorTips"><span class="iconfont"></span><em></em></i>
+           </div>
+       </li>
+       <li class="clearfix" style="padding-top: 18px;">
+           <label class="labelLeft">&nbsp;</label>
+           <div class="labelRight">
+               <button type="button" class="centerBtn" id="zhibubaoBtn">确定</button>
+           </div>
+       </li>
+   </ul>
+   <div class="zhuanzhangimg">
+    <ul class="centerFormUl">
+       <li class="clearfix">
+           <label class="labelLeft">订单号示例：</label>
+           <div class="labelRight">
+            <img src="images/zhuanzhanglist.png">
+           </div>
+       </li>
+      </ul>
+   </div>
+   <p class="explainP" style="padding-top: 20px; color: rgb(254, 81, 74); font-weight: bold; clear: both;">转账备注中请写明聚合数据账号、购买的数据名称和联系电话，转账成功后输入支付宝订单号确认，您也可以在充值后和我们的客服联系。</p>
+</div>
+                <div class="moneyListDiv tab-list-money clearfix bankList" id="bank" name="bank" style="border: medium none;">
+    <ul class="centerFormUl bankUl">
+       <li class="clearfix">
+           <label class="labelLeft">开户银行：</label>
+           <div class="labelRight">
+               <span>浙商银行苏州分行（优先账户）</span>
+           </div>
+       </li>
+       <li class="clearfix">
+           <label class="labelLeft">公司名称：</label>
+           <div class="labelRight">
+               <span>苏州新科兰德科技有限公司</span>
+           </div>
+       </li>
+       <li class="clearfix">
+           <label class="labelLeft">银行账号：</label>
+           <div class="labelRight">
+               <span>3050020010120100129207</span>
+           </div>
+       </li>
+   </ul>
+    <ul class="centerFormUl bankUl">
+       <li class="clearfix">
+           <label class="labelLeft">开户银行：</label>
+           <div class="labelRight">
+               <span>招商银行苏州分行独墅湖支行</span>
+           </div>
+       </li>
+       <li class="clearfix">
+           <label class="labelLeft">公司名称：</label>
+           <div class="labelRight">
+               <span>苏州新科兰德科技有限公司</span>
+           </div>
+       </li>
+       <li class="clearfix">
+           <label class="labelLeft">银行账号：</label>
+           <div class="labelRight">
+               <span>512906011610701</span>
+           </div>
+       </li>
+   </ul>
+   <ul class="centerFormUl bankUl">
+       <li class="clearfix">
+           <label class="labelLeft">开户银行：</label>
+           <div class="labelRight">
+               <span>中国农业银行苏州工业园区科技支行</span>
+           </div>
+       </li>
+       <li class="clearfix">
+           <label class="labelLeft">公司名称：</label>
+           <div class="labelRight">
+               <span>苏州新科兰德科技有限公司</span>
+           </div>
+       </li>
+       <li class="clearfix">
+           <label class="labelLeft">银行账号：</label>
+           <div class="labelRight">
+               <span>10551101040014341</span>
+           </div>
+       </li>
+   </ul>
+    <p class="explainP" style="color: rgb(254, 81, 74); font-weight: bold;">公对公转账请备注聚合数据账号；个人对公转账备注中务必写清公司名称，否则不予加款，示例如：代XX公司加款，聚合账号：XX；充值后可以通过下方转账自助提交记录，财务审核通过即可入帐.</p>
+
+    <div class="zhuanzhang-form">
+           <form class="clearfix" name="form1" id="form1" enctype="multipart/form-data" action="https://www.juhe.cn/money/bankVoucher" method="post" style="position: relative;">
+            <p class="zzTitle">转账信息表单<span>*为了使您的充值金额快速到账，请您填写如下表单（务必于银行电子回单一致）：</span></p>
+            <ul class="centerFormUl zhuanzhang-ul">
+                <li class="clearfix">
+                    <label class="labelLeft">银行户名：</label>
+                    <div class="labelRight">
+                       <input name="remarks" class="inputText" placeholder="付款人姓名" value="" type="text">
+                       </div>
+                </li>
+                <li class="clearfix">
+                    <label class="labelLeft">入账银行：</label>
+                    <div class="labelRight">
+                       <select name="bankid" class="selectStyle">
+                            <option value="1">交通银行苏州科技支行</option>
+                            <option value="2">浙商银行苏州分行</option>
+                            <option value="3">招商银行苏州分行独墅湖支行</option>
+                            <option value="4">中国农业银行苏州工业园区科技支行</option>
+                        </select>
+                       </div>
+                </li>
+                <li class="clearfix">
+                    <label class="labelLeft">转账金额：</label>
+                    <div class="labelRight">
+                       <input name="amount" class="inputText" value="" type="text">
+                       </div>
+                </li>
+                <li class="clearfix">
+                    <label class="labelLeft">转账时间：</label>
+                    <div class="labelRight">
+                       <input name="paytime" class="inputText" value="2016-11-30 16:08:52" type="text">
+                       </div>
+                </li>
+                <li class="clearfix">
+                    <label class="labelLeft">转账截图：</label>
+                    <div class="labelRight">
+                       <input name="payfile" type="file">
+                       </div>
+                </li>
+                <li class="clearfix">
+                    <label class="labelLeft">&nbsp;</label>
+                    <div class="labelRight">
+                       <button type="button" class="centerBtn" id="button">确定</button>
+                       <i class="errorTips"><span class="iconfont"></span><em></em></i>
+                       </div>
+                </li>
+            </ul>
+
+
+     </form>
+   </div>
+
+        <div class="zhuanzhang-form">
+        <p class="zzTitle">转账截图示例&nbsp;<span>*不同银行格式不同,仅供参照</span></p>
+        <div class="zhuanzhangimg">
+            <ul class="centerFormUl" style="padding-bottom: 10px;">
+                <li class="clearfix" style="height: auto;">
+                    <label class="labelLeft">订单号示例：</label>
+                    <div class="labelRight">
+                        <img src="images/zzform.png">
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+                <div class="ContentDiv" style="display: none;" id="addMobilePhoneDive">
+    <form name="addMobilePhone" id="addMobilePhone" action="https://www.juhe.cn/money/accountWarnSubmit" method="post">
+        <ul class="centerFormUl">
+            <li class="clearfix disabledMoney">
+                <label class="labelLeft"><span class="required">*</span>状态：</label>
+                <div class="labelRight">
+                    <select class="inputText" name="warn_isopen">
+                        <option value="1">开启</option>
+                        <option value="0">关闭</option>
+                    </select>
+                </div>
+            </li>
+            <li class="clearfix disabledMoney warn_moneyLi1">
+                <label class="labelLeft"><span class="required">*</span>预警阈值：</label>
+                <div class="labelRight">
+                    <div class="labelRight">
+                        <input name="warn_money" value="1000" class="inputText" style="width: 170px;" type="tel">
+                        <i class="errorTips" style="display: none;"><span class="iconfont"></span><em></em></i>
+                    </div>
+                </div>
+            </li>
+            <li class="clearfix disabledMoney warn_moneyLi2">
+                <label class="labelLeft"><span class="required">*</span>预警号码：</label>
+                <div class="labelRight">
+                    <div class="labelRight">
+                        <select class="inputText" name="warn_mobilephone">
+                            <option value="0">预警号码列表为空</option>
+                                                    </select>
+                        &nbsp;<a style="color: rgb(3, 197, 255);" href="https://www.juhe.cn/warn/mobilephone" target="_top" class="mm">[号码管理]</a>
+                    </div>
+                </div>
+            </li>
+            <li class="clearfix" style="height: auto;">
+                <label class="labelLeft">&nbsp;</label>
+                <div class="labelRight">
+                    <input class="centerBtn subBtn" value="确定" type="button">
+                </div>
+            </li>
+        </ul>
+    </form>
+</div>
+            </div>
+        </section>
+        <!-- main content end -->
+    </div>
+    <div id="payQuestion" style="display: none;">
+	<div class="payQuestion centerlayerDiv">
+           <h3 class="layerTitle">
+                <span>支付宝在线充值</span>
+                <a class="layerCloseA iconfont" href="javascript:void(0);"></a>
+            </h3>
+           <div class="layerContent">
+               <p><font color="#03c5ff"><i class="iconfont"></i></font>请在新页面完成充值</p>
+               <button type="button" class="centerBtn paySuccess">充值成功</button>&nbsp;&nbsp;
+               <button type="button" class="centerBtn payFailed inputBtn">充值遇到问题</button>
+           </div>
+    </div>
+</div>
+
+<div id="zhuanzhang-layer-img">
+    <div class="zhuanzhang-layer-img centerlayerDiv">
+           <h3 class="layerTitle">
+        <span>支付宝转账</span>
+        <a class="layerCloseA iconfont" href="javascript:layer.closeAll();"></a>
+      </h3>
+           <div class="layerContent">
+        <p></p>
+           </div>
+    </div>
+</div>
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/ucenterpublic.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/layer.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/json.parse.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/nslog.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        //ucenter 统一使用的提交方式:ajaxsubmit,所以当用户登录失效的时候无法跳转到指定页面,
+        //添加下面对button 按钮的监视,如果为失效继续下面动作,如果点击按钮的时候登录失效了,就跳转到指定页面,如登录页面
+        $('.ajax-check-login,button,input:button').click(function(event){
+            var login = true;
+            $.getJSON('/login/loginStatus',function(obj){
+                if(obj.code=='-1')
+                {
+                    if(self == top){
+                        window.location.href = obj.acturl;
+                    }else{
+                        parent.window.location.reload();
+                    }
+
+                    login = false;
+                }
+            })
+
+            if(!login)
+            {
+                event.stopImmediatePropagation();
+            }
+        })
+
+    })
+    // 退出登录
+    function logout(){
+        $.getJSON('/login/logout',function(obj){
+            window.location.href='/';
+        })
+    }
+
+    $("input[name=q]").focus(function(){
+        document.onkeydown = function(e){
+            var ev = document.all ? window.event : e;
+            if(ev.keyCode==13) {
+                $("#searchBtn").click();
+            }
+        }
+    })
+
+    // header里的搜索框
+    $("#searchBtn").click(function(){
+        var q = $("input[name=q]").val();
+        q=q.replace(/\//g,'');
+
+        if(q.length==''){
+            $("input[name=q]").focus();
+            return false;
+        }
+
+        var searchUrl = '/docs/s/q/%40q%40';
+        searchUrl=searchUrl.replace(/%40q%40/,encodeURIComponent(q));
+        window.location.href=searchUrl;
+    })
+
+    $(document).ready(function(){
+
+        $("input[name=q]").focus(function(){
+            document.onkeydown = function(e){
+            var ev = document.all ? window.event : e;
+                if(ev.keyCode==13) {
+                    $("#searchBtn").click();
+                }
+            }
+        })
+    })
+
+    function isMobile(mobile){
+        var mreg =/^1[3|5|8|4|7]{1}[0-9]{1}[0-9]{8}$/;
+        if(!mreg.test(mobile)){
+            return false;
+        }
+        return true;
+    }
+
+    $('a[href="http://crm2.qq.com/page/portalpage/wpa.php?uin=800076065&f=1&ty=1&aty=0&a=&from=6"]').bind('click',function(){
+        nslog(1121);
+    });
+</script>
+
+<script type="text/javascript">
+    $(function(){
+        // 点击银行的图片时
+        $('.bankicon .label-icon').click(function(){
+            $('.bankicon .label-icon').removeClass('select-label')
+            $(this).addClass('select-label')
+        })
+        // 要打开时
+        $('.waringOff,.waringOn').click(function(){
+            layer.open({
+                type:1,
+                title:['设置余额预警'],
+                content:$('#addMobilePhoneDive'),
+                area:['500px','auto']
+            });
+            $(':input[name=name]').focus();
+
+            // 点击余额预警弹窗里的开启或关闭select时
+            $(':input[name=warn_isopen]').on('input', function(){
+                if ('0' == $(this).val()) {
+                    $(':input[name=warn_money]').attr('disabled', 'disabled');
+                    $(':input[name=warn_money]').parents('.warn_moneyLi1').addClass('disabledLi');
+                    $(':input[name=warn_mobilephone]').attr('disabled', 'disabled');
+                    $(':input[name=warn_mobilephone]').parents('.warn_moneyLi2').addClass('disabledLi');
+                } else {
+                    $(':input[name=warn_money]').removeAttr('disabled');
+                    $(':input[name=warn_money]').parents('.warn_moneyLi1').removeClass('disabledLi');
+                    $(':input[name=warn_mobilephone]').removeAttr('disabled');
+                    $(':input[name=warn_mobilephone]').parents('.warn_moneyLi2').removeClass('disabledLi');
+                }
+            })
+            // 点击设置余额预警金额的确定按钮时
+            $('#addMobilePhoneDive .subBtn').click(function(){
+                $(this).parents('form').ajaxSubmit(function(response){
+                    json = json_parse(response);
+                    if ('0' != json.code) {
+                        layer.alert(json.msg);
+                    } else {
+                        layer.msg(json.msg);
+                        window.location = '/money';
+                    }
+                })
+            })
+        })
+
+        // 点击余额设置的input时
+        $(":input[name='warn_money']").on('input', function(){
+            $('.inputYesBtn').show();
+        })
+
+        // 支付宝在线充值的弹窗中的关闭按钮
+        $('body').on('click', '.layerCloseA', function(){
+            layer.closeAll();
+        })
+
+        // 支付宝在线充值的弹窗中的两个按钮
+        $('body').on('click', '.payQuestion .paySuccess', function(){
+            window.location.reload();
+        }).on('click', '.payQuestion .payFailed', function(){
+            window.location = '/qa';
+        })
+    })
+
+    function alipaySubmit() {
+        if (!$(":input[name='price']").val()) {
+            $(":input[name='price']").siblings('.errorTips')
+                .html('<span class="iconfont">&#xe604;</span><em>请填写充值金额</em>').show();
+            return false;
+        } else if ($(":input[name='price']").val() < 0) {
+            $(":input[name='price']").siblings('.errorTips')
+                .html('<span class="iconfont">&#xe604;</span><em>请填写正确的充值金额</em>').show();
+            return false;
+        }
+
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            skin: 'layui-layer-nobg', //加上边框
+            area: ['402px', '282px'], //宽高
+            content: $('#payQuestion').html()
+        });
+    }
+
+
+// 7.15
+tabs(".smsTab", "active", ".tab-content");
+//选项卡
+function tabs(tabTit,on,tabCon){
+    $(tabCon).each(function(){
+      $(this).children().eq(0).show();
+      });
+    $(tabTit).each(function(){
+      $(this).children().eq(0).addClass(on);
+      });
+    $(tabTit).children().click(function(){
+        $(this).addClass(on).siblings().removeClass(on);
+            var index = $(tabTit).children().index(this);
+        $(tabCon).children().eq(index).show().siblings().hide();
+    });
+}
+
+//支付宝二维码
+$('.zhuanzhang-btn').click(function(){
+    layer.open({
+        type: 1,
+        title: false,
+        closeBtn: 0,
+        skin: 'layui-layer-nobg',
+        area: ['322px', '282px'],
+        content: $('#zhuanzhang-layer-img').html()
+    });
+});
+
+$("#zhibubaoBtn").click(function(){
+    var tradeno = $("#tradeno").val();
+    $('.zhuanzhang-ul .errorTips').css('display','none');
+    var param = { tradeno: tradeno };
+    //$(this).html('确定');
+    $(this).html('执行中...').attr("disabled","disabled");
+
+    if ( tradeno == '') {
+        $('.zhuanzhang-ul .errorTips').css({display:'block',paddingBottom:'6px'});
+        $('.zhuanzhang-ul .errorTips').find('em').html('订单号不能为空');
+        $("#zhibubaoBtn").html('确定').removeAttr("disabled");
+    } else {
+        $.ajax({
+            url: '/money/aliQuery',
+            type: "POST",
+            data: param,
+            dataType:'json',
+            success: function(json){
+                if( json.code == '1' ){
+                    layer.msg(json.msg);
+                    window.location.reload();
+                } else {
+                    $('.zhuanzhang-ul .errorTips').css({display:'block',paddingBottom:'6px'});
+                    $('.zhuanzhang-ul .errorTips').find('em').html(json.msg);
+                }
+                $("#zhibubaoBtn").html('确定').removeAttr("disabled");
+            },
+        });
+    }
+
+
+});
+
+/*bank form*/
+$("#button").click(function(){
+
+	var remarks = $("input[name='remarks']");
+	var amount = $("input[name='amount']");
+	var paytime = $("input[name='paytime']");
+	var payfile = $("input[name='payfile']");
+
+    $('.zhuanzhang-form .errorTips').hide();
+    $('.zhuanzhang-form .errorTips').find('em').html('');
+    $(this).html('执行中...').attr("disabled","disabled");
+
+    if( remarks.val() == '' ){
+    	showError('账户名不能为空');
+    	remarks.focus();
+    	return false;
+    } else if ( amount.val() == '' ){
+    	showError('转账金额不能为空');
+    	amount.focus();
+		return false;
+    } else if ( paytime.val() == '' ){
+    	showError('转账时间不能为空');
+    	paytime.focus();
+		return false;
+    } else if ( payfile.val() == '' ){
+    	showError('转账图片不能为空');
+		return false;
+    } else {
+    	$("#form1").ajaxSubmit(function(e){
+            var obj = json_parse(e);
+            var code = obj.code;
+
+            if( code == '1' ){
+            	layer.msg(obj.msg);
+                window.location.reload();
+            }else{
+		    	showError(obj.msg);
+            }
+
+        });
+    }
+
+
+});
+
+
+function showError(msg){
+    $('.zhuanzhang-form .errorTips').find('em').html(msg);
+	$('.zhuanzhang-form .errorTips').show();
+	$("#button").html('提交').removeAttr("disabled");
+}
+
+
+</script>
+
+
+
+
+</body></html>

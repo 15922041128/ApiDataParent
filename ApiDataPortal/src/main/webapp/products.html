@@ -73,21 +73,17 @@
 	<!-- Main -->
 	<script src="js/main.js"></script>
 	
-	<!-- sweetalert.min -->
+	<script src="js/angular/angular.min.js"></script>
+	<script src="js/angular/angular-ui-router.min.js"></script>
+	<script src="js/angular/angular-animate.min.js"></script>
+	<script src="js/config.js"></script>
 	<script src="js/sweetalert.min.js"></script>
-	
-	<!-- angular -->
-	<script src="js/angular-1.3.0.14/angular.js"></script>
-	
-	<!-- util -->
 	<script src="js/util.js"></script>
-	<!-- validator -->
 	<script src="js/validator.js"></script>
-	<!-- login -->
 	<script src="js/login.js"></script>
 
 	</head>
-	<body ng-app="app" ng-controller="loginController" data-ng-init="init()">
+	<body ng-app="apiData" ng-controller="loginController" data-ng-init="init()">
 		
 	<div class="fh5co-loader"></div>
 	
@@ -158,7 +154,7 @@
 								<span>Let's try it</span>
 								<h2>免费试用</h2>
 								<p>立即注册即可获得免费试用权利 </p>
-								<p><button type="submit" class="btn btn-default" ng-click="tryPDF()">申请试用</button></p>
+								<p><button type="button" class="btn btn-default" ng-click="applyTrial(123)">申请试用</button></p>
 						</div>
 					</div>
 				</div>

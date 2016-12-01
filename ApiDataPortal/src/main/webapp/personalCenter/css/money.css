@@ -1,0 +1,189 @@
+/* ::::: https://www.juhe.cn/themes/v5/public/css/reset.min.css ::::: */
+
+html, body, ul, li, p, h1, h2, h3, h4, h5, h6, input, form, dd, dt, dl, ol, caption, td, tr, th, hr, header, footer, blockquote, pre, fieldset, legend, aside, nav, section { padding: 0px; margin: 0px; }
+html, body { width: 100%; height: 100%; }
+body { font-family: Tahoma,Helvetica,"microsoft yahei","Hiragino Sans GB",Simsun,宋体,sans-serif; }
+a { text-decoration: none; }
+ul, li { list-style: outside none none; }
+table, div, img { border-collapse: collapse; border-spacing: 0px; }
+img { border: 0px none; vertical-align: middle; }
+button, input, select, textarea { outline: 0px none; font-family: inherit; }
+:focus { outline: 0px none; }
+button, input[type="button"], input[type="reset"], input[type="submit"] { cursor: pointer; }
+select { font-family: "microsoft yahei"; color: rgb(102, 102, 102); }
+.clear, .clearfix {  }
+.clear::after, .clearfix::after { content: ""; display: block; clear: both; }
+/* ::::: https://www.juhe.cn/themes/v5/public/css/ucenter.css?v=1 ::::: */
+
+body { width: 100%; min-width: 1200px; background: rgb(240, 240, 240) none repeat scroll 0% 0%; font-size: 14px; font-family: Tahoma,Helvetica,"microsoft yahei","Hiragino Sans GB",Simsun,宋体,sans-serif; color: rgb(96, 96, 96); }
+i, em { font-style: normal; }
+.ucenterWidth1 { width: 100%; min-width: 1200px; }
+#ucenterWrapper { background: rgb(240, 240, 240) none repeat scroll 0% 0%; }
+.errorTips { display: none; color: rgb(254, 81, 74); margin-left: 10px; font-size: 12px; }
+.required { color: rgb(254, 81, 74); padding: 5px; font-size: 16px; position: relative; top: 4px; }
+input[type="radio"], .input[type="checkbox"] { vertical-align: baseline; }
+select { background: rgb(255, 255, 255) none repeat scroll 0% 0%; }
+@font-face {
+	font-family: "iconfont";
+	src: url('images/iconfont.eot') format("embedded-opentype"), url('images/iconfont.woff') format("woff"), url('images/iconfont.ttf') format("truetype"), url('images/iconfont.svg') format("svg");
+}
+.iconfont { font-family: "iconfont" ! important; font-size: 16px; font-style: normal; }
+.centerIcon { background-image: url('images/centericon.png'); background-color: transparent; }
+input::-moz-placeholder { color: rgb(204, 204, 204); }
+input::-moz-placeholder { color: rgb(204, 204, 204); }
+.centerTitle { font-size: 16px; height: 50px; line-height: 50px; }
+.centerBtn { background: rgb(3, 197, 255) none repeat scroll 0% 0%; font-size: 14px; border: 0px none; height: 30px; width: 100px; color: rgb(255, 255, 255); border-radius: 2px; text-align: center; cursor: pointer; }
+.centerBtn:hover { background: rgb(0, 182, 237) none repeat scroll 0% 0%; }
+.centerFormUl { padding: 20px 0px; }
+.centerFormUl li { padding: 14px; height: 30px; line-height: 30px; }
+.centerFormUl .inputText { height: 20px; width: 230px; line-height: 20px; padding: 4px; border: 1px solid rgb(211, 211, 211); border-radius: 2px; color: rgb(96, 96, 96); }
+.centerFormUl .inputText:focus, .selectStyle:focus, .tableDl textarea.inputText:focus { border: 1px solid rgb(3, 197, 255); }
+.centerFormUl .labelLeft { font-weight: bold; text-align: right; padding-right: 20px; }
+.onOff { font-size: 52px; font-weight: 100; }
+.waringOff { color: rgb(179, 179, 179); }
+.waringOn { color: rgb(3, 197, 255); }
+.centerFormUl select.inputText, .selectStyle { height: 30px; line-height: 30px; padding: 0px 0px 0px 4px; width: 180px; border: 1px solid rgb(211, 211, 211); border-radius: 2px; }
+.selectStyle { width: auto; min-width: 100px; }
+.errorTips .iconfont { font-size: 12px; margin-right: 5px; }
+header { height: 64px; width: 100%; min-width: 1200px; border-bottom: 1px solid rgb(231, 231, 231); position: fixed; z-index: 9; background: rgb(255, 255, 255) none repeat scroll 0% 0%; }
+.centerLogo { float: left; padding: 16px 0px; text-align: center; width: 199px; border-right: 1px solid rgb(237, 237, 237); }
+.centerSearch { position: relative; width: 210px; height: 40px; float: left; padding: 12px 40px; }
+.searchText { padding: 5px 0px 5px 45px; width: 160px; height: 26px; line-height: 26px; border: 2px solid rgb(242, 242, 242); border-radius: 18px; }
+.searchBtn { position: absolute; left: 55px; top: 24px; background-position: -209px -32px; height: 18px; width: 18px; border: medium none; }
+.headerUl { float: right; height: 64px; }
+.headerUl li { position: relative; float: left; height: 64px; cursor: pointer; line-height: 64px; padding: 0px 30px; border-left: 1px solid rgb(242, 242, 242); }
+.headerUl li a { color: rgb(96, 96, 96); }
+.headerUl li .centerLogout:hover { color: rgb(3, 197, 255); }
+.centerLogout, .juheCode { position: absolute; top: 64px; left: -1px; width: 100%; height: 20px; line-height: 20px; padding: 10px 0px 20px; border-width: 0px 1px 1px; border-style: none solid solid; border-color: -moz-use-text-color rgb(242, 242, 242) rgb(242, 242, 242); -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; border-image: none; background-color: rgb(255, 255, 255); text-align: center; display: none; }
+.headerIcon1 { background-position: -226px -132px; height: 6px; width: 10px; display: inline-block; position: relative; left: 8px; top: -2px; }
+.juheCode { height: 90px; padding-top: 0px; padding-bottom: 15px; }
+.juheCode span { height: 90px; width: 90px; display: block; margin: 0px auto; background-position: -111px 0px; }
+nav { position: fixed; top: 0px; left: 0px; width: 200px; height: 100%; overflow: auto; background: rgb(50, 54, 60) none repeat scroll 0% 0%; z-index: 8; }
+.ucenterNav { padding-top: 64px; }
+.ucenterNav li { height: 46px; line-height: 46px; padding: 0px 30px; }
+.ucenterNav .navIndex { height: 64px; line-height: 66px; margin-bottom: 8px; }
+.ucenterNav .navIndex .navDiv { border-bottom: 2px solid rgb(57, 62, 69); }
+.ucenterNav .navIndex i { font-size: 18px; }
+.ucenterNav a, #ucenterSubA { color: rgb(168, 175, 185); cursor: pointer; }
+.ucenterNav a i.iconfont, #ucenterSubA i.iconfont { padding-right: 6px; display: inline-block; width: 20px; }
+.ucenterNav .active a { color: rgb(0, 147, 83); }
+.ucenterSub {  }
+.ucenterNav .ucenterSub li { padding-left: 20px; line-height: 36px; height: 36px; font-size: 12px; }
+.ucenterNav a:hover, .ucenterNav .active a { color: rgb(3, 197, 255); }
+.subDown { background-position: -176px -174px; height: 5px; width: 11px; display: inline-block; opacity: 0.8; position: relative; left: 6px; top: -2px; }
+.ucenterNav .active { background: transparent url('images/navbg.png') no-repeat scroll right center; }
+.ucenterNav .navInfoLi { padding: 0px 0px 0px 30px; }
+.ucenterNav .ucenterSub li i { padding-right: 2px; font-size: 12px; }
+#ucenterSection { margin-left: 200px; padding: 84px 40px 30px; }
+.ucenterIndexUl2 li:nth-of-type(3n-1) { width: 34%; }
+.my-gongzh-div .ucenterIndexUl2 li:nth-of-type(3n-1) { width: 33%; }
+.ucenterIndexUl2 li:nth-of-type(3n+1) .indexUlDiv2 { margin-right: 10px; }
+.ucenterIndexUl2 li:nth-of-type(3n-1) .indexUlDiv2 { margin: 0px 10px; }
+.my-gongzh-div .ucenterIndexUl2 li:nth-of-type(3n-1) .indexUlDiv2 { margin-left: 0px; }
+.ucenterIndexUl2 li:nth-of-type(3n) .indexUlDiv2 { margin-left: 10px; }
+#myDataWarning, #tieTel, #payQuestion, #mobileLayer { margin-left: 220px; margin-bottom: 40px; }
+.payQuestion { width: 400px; height: 280px; }
+.centerlayerDiv, .rightBackground { background: rgb(255, 255, 255) none repeat scroll 0% 0%; border-radius: 2px; border: 1px solid rgb(231, 231, 231); }
+.centerlayerDiv .layerTitle, .buyDataContent .buyTitle { height: 56px; line-height: 56px; padding-left: 26px; color: rgb(96, 96, 96); font-size: 16px; border-bottom: 1px solid rgb(231, 231, 231); position: relative; }
+.centerlayerDiv .layerCloseA { color: rgb(187, 187, 187); font-weight: 100; font-size: 30px; line-height: 30px; position: absolute; right: 20px; top: 12px; }
+.inputBtn { color: rgb(85, 85, 85); background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 1px solid rgb(211, 211, 211); border-radius: 2px; }
+.inputBtn:hover { background: rgb(240, 240, 240) none repeat scroll 0% 0%; }
+.onOffCheckbox { opacity: 0; }
+.ContentDiv, .exportForm { background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 1px solid rgb(221, 221, 221); border-radius: 2px; }
+.ContentDiv { padding-bottom: 10px; }
+.moneyListDiv { border-bottom: 1px solid rgb(221, 221, 221); }
+.moneyListDiv:last-child { border: medium none; }
+.moneyListUl { float: left; width: 600px; }
+.moneyListDiv .labelLeft { float: left; width: 110px; }
+.labelLeft { float: left; width: 120px; }
+.labelRight { float: left; }
+.moneyListDiv .inputText { width: 130px; }
+.moneyListDiv .moneyTexti { width: 170px; }
+.explainP { float: none; clear: both; color: rgb(204, 204, 204); padding: 0px 50px 30px; line-height: 20px; }
+.payQuestion .layerContent { text-align: center; }
+.payQuestion .layerContent p { font-size: 20px; height: 40px; line-height: 40px; padding: 45px 0px; }
+.payQuestion .layerContent p i { font-size: 24px; padding-right: 8px; position: relative; top: 1px; }
+.payQuestion .centerBtn { width: 120px; }
+.orderTips1::after, .orderTips1::before, .orderTips2::after, .orderTips2::before { top: 100%; border: 10px solid transparent; content: " "; width: 0px; height: 0px; position: absolute; pointer-events: none; }
+.orderTips1::after, .orderTips2::after { border-top-color: rgb(255, 255, 255); border-width: 8px; left: 20%; margin-left: -8px; }
+.orderTips1::before, .orderTips2::before { border-top-color: rgb(231, 231, 231); border-width: 10px; left: 20%; margin-left: -10px; }
+.orderTips2::after { left: auto; right: 30px; }
+.orderTips2::before { left: auto; right: 28px; }
+.failTd .orderTips2::after { right: auto; left: 30px; }
+.failTd .orderTips2::before { right: auto; left: 30px; }
+.moneyListUl .moneyDeci { font-weight: normal; font-size: 14px; }
+.moneyListDiv li { padding: 10px 14px; }
+.moneyListDiv .bankUl { float: left; }
+.moneyListDiv .bankUl { float: left; width: 33.3%; }
+@media only screen and (min-width: 1440px) {
+	.moneyListDiv .bankUl { float: left; width: 33.3%; }
+	.bankList .labelLeft { width: 120px; padding-right: 10px; }
+	.bankList .labelRight span { white-space: nowrap; display: inline-block; width: 160px; }
+}
+@media only screen and (max-width: 1440px) {
+	.moneyListDiv .bankUl { float: left; width: 33.3%; }
+	.bankList .labelLeft { width: 100px; padding-right: 10px; }
+	.bankList .labelRight span { white-space: nowrap; display: inline-block; width: 160px; }
+}
+.new-content-money { margin-bottom: 26px; padding-bottom: 0px; }
+.new-content-money .moneyListUl { float: none; width: auto; }
+.new-content-money .moneyListUl li { float: left; }
+.new-content-money {  }
+.smsTab { position: relative; top: 1px; margin-top: 20px; }
+.smsTab li { float: left; height: 42px; line-height: 42px; width: 180px; margin-right: 6px; font-size: 16px; text-align: center; background: rgb(247, 247, 247) none repeat scroll 0% 0%; border-width: 1px 1px medium; border-style: solid solid none; border-color: rgb(221, 221, 221) rgb(221, 221, 221) -moz-use-text-color; -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; border-image: none; border-top-left-radius: 2px; border-top-right-radius: 2px; }
+.smsTab li a { color: rgb(179, 179, 179); display: block; cursor: pointer; }
+.smsTab .active { height: 41px; line-height: 41px; border-top: 2px solid rgb(3, 197, 255); background: rgb(255, 255, 255) none repeat scroll 0% 0%; }
+.smsTab .active a { color: rgb(3, 197, 255); font-weight: bold; }
+.tab-list-money { display: none; border-bottom: 0px none; }
+.zhuanzhang-btn { width: 180px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 1px solid rgb(204, 204, 204); color: rgb(96, 96, 96); }
+.zhuanzhang-btn:hover { background: rgb(241, 241, 241) none repeat scroll 0% 0%; }
+.zhuanzhang-ul li .labelLeft { width: 120px; }
+.zhuanzhang-ul li .inputText { width: 350px; }
+.zhuanzhang-ul { float: left; width: 580px; }
+.zhuanzhangimg { float: left; position: relative; }
+.zhuanzhang-ul .errorTips { display: none; width: 30px; white-space: nowrap; }
+#zhuanzhang-layer-img { display: none; }
+.zhuanzhang-layer-img { width: 320px; height: 280px; }
+.zhuanzhang-layer-img p { height: 140px; background: transparent url('thinkland.png') no-repeat scroll center center; margin-top: 35px; }
+@media only screen and (max-width: 1599px) {
+}
+.zhuanzhang-form { border-top: 1px solid rgb(221, 221, 221); }
+.zhuanzhang-form .centerFormUl li span { width: auto; }
+.zhuanzhang-form .zzTitle { font-size: 16px; line-height: 1; font-weight: bold; background: rgb(247, 247, 247) none repeat scroll 0% 0%; padding: 14px 0px 14px 60px; }
+.zhuanzhang-form .zzTitle span { font-size: 12px; color: rgb(3, 197, 255); line-height: 16px; font-weight: normal; padding-left: 5px; }
+.zhuanzhang-form .centerFormUl li { padding-top: 16px; padding-bottom: 16px; }
+.zhuanzhang-form .centerFormUl .selectStyle { width: 360px; }
+.bank-list-div { width: 860px; }
+.bankicon {  }
+.label-icon { position: relative; display: inline-block; margin-right: 6px; height: 38px; width: 198px; overflow: hidden; border: 1px solid rgb(221, 221, 221); margin-bottom: 4px; cursor: pointer; }
+.label-icon input { opacity: 0; position: absolute; left: 0px; top: 4px; z-index: 2; }
+.label-icon span { height: 36px; width: 196px; display: inline-block; vertical-align: top; background: transparent url('images/bankicon.png') no-repeat scroll 0% 0%; }
+.label-icon.select-label { height: 36px; width: 196px; border: 2px solid rgb(3, 197, 255); background: transparent url('images/bankselect.png') no-repeat scroll right bottom; }
+.label-icon:hover { border: 2px solid rgb(3, 197, 255); height: 36px; width: 196px; }
+.label-icon-zfb span { background-position: 0px -1px; }
+.banks-btn { padding-top: 0px ! important; }
+@media only screen and (max-width: 1330px) {
+	.bank-list-div { width: 660px; }
+}
+@media only screen and (min-width: 1560px) {
+	.bank-list-div { width: 1050px; }
+}
+/* ::::: https://www.juhe.cn/themes/v5/public/css/respond.css ::::: */
+
+@media only screen and (min-width: 1599px) {
+}
+@media only screen and (min-width: 1360px) and (max-width: 1599px) {
+}
+@media only screen and (min-width: 1266px) and (max-width: 1360px) {
+}
+@media only screen and (max-width: 1266px) {
+}
+@media only screen and (max-width: 1366px) {
+	body { font-size: 12px; }
+	.noLogs, .noPriceContent h4, .centerlayerDiv .layerTitle, .buyDataContent .buyTitle { font-size: 14px; }
+	.centerBtn, .addSomeBtn { font-size: 12px; }
+	.payQuestion .layerContent p { font-size: 18px; }
+}
+/* ::::: https://www.juhe.cn/themes/v5/public/js/layer/skin/layer.css ::::: */
+
+html #layui_layer_skinlayercss { display: none; position: absolute; width: 1989px; }

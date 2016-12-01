@@ -1,0 +1,232 @@
+/* ::::: https://www.juhe.cn/themes/v5/public/css/idangerous.swiper.css ::::: */
+
+.swiper-container { margin: 0px auto; position: relative; overflow: hidden; backface-visibility: hidden; z-index: 1; }
+.swiper-wrapper { position: relative; width: 100%; transition-property: transform, left, top; transition-duration: 0s; transform: translate3d(0px, 0px, 0px); transition-timing-function: ease; box-sizing: content-box; }
+.swiper-slide { float: left; box-sizing: content-box; }
+.swiper-container {  }
+.swiper-slide {  }
+/* ::::: https://www.juhe.cn/themes/v5/public/css/reset.min.css ::::: */
+
+html, body, ul, li, p, h1, h2, h3, h4, h5, h6, input, form, dd, dt, dl, ol, caption, td, tr, th, hr, header, footer, blockquote, pre, fieldset, legend, aside, nav, section { padding: 0px; margin: 0px; }
+html, body { width: 100%; height: 100%; }
+body { font-family: Tahoma,Helvetica,"microsoft yahei","Hiragino Sans GB",Simsun,宋体,sans-serif; }
+a { text-decoration: none; }
+ul, li { list-style: outside none none; }
+table, div, img { border-collapse: collapse; border-spacing: 0px; }
+img { border: 0px none; vertical-align: middle; }
+button, input, select, textarea { outline: 0px none; font-family: inherit; }
+:focus { outline: 0px none; }
+button, input[type="button"], input[type="reset"], input[type="submit"] { cursor: pointer; }
+.clear, .clearfix {  }
+.clear::after, .clearfix::after { content: ""; display: block; clear: both; }
+/* ::::: https://www.juhe.cn/themes/v5/public/css/ucenter.css?v=1 ::::: */
+
+body { width: 100%; min-width: 1200px; background: rgb(240, 240, 240) none repeat scroll 0% 0%; font-size: 14px; font-family: Tahoma,Helvetica,"microsoft yahei","Hiragino Sans GB",Simsun,宋体,sans-serif; color: rgb(96, 96, 96); }
+i, em { font-style: normal; }
+.ucenterWidth1 { width: 100%; min-width: 1200px; }
+#ucenterWrapper { background: rgb(240, 240, 240) none repeat scroll 0% 0%; }
+@font-face {
+	font-family: "iconfont";
+	src: url('images/iconfont.eot') format("embedded-opentype"), url('images/iconfont.woff') format("woff"), url('images/iconfont.ttf') format("truetype"), url('images/iconfont.svg') format("svg");
+}
+.iconfont { font-family: "iconfont" ! important; font-size: 16px; font-style: normal; }
+.centerIcon { background-image: url('images/centericon.png'); background-color: transparent; }
+input::-moz-placeholder { color: rgb(204, 204, 204); }
+input::-moz-placeholder { color: rgb(204, 204, 204); }
+.centerTitle { font-size: 16px; height: 50px; line-height: 50px; }
+.centerBtn { background: rgb(3, 197, 255) none repeat scroll 0% 0%; font-size: 14px; border: 0px none; height: 30px; width: 100px; color: rgb(255, 255, 255); border-radius: 2px; text-align: center; cursor: pointer; }
+.centerBtn:hover { background: rgb(0, 182, 237) none repeat scroll 0% 0%; }
+header { height: 64px; width: 100%; min-width: 1200px; border-bottom: 1px solid rgb(231, 231, 231); position: fixed; z-index: 9; background: rgb(255, 255, 255) none repeat scroll 0% 0%; }
+.centerLogo { float: left; padding: 16px 0px; text-align: center; width: 199px; border-right: 1px solid rgb(237, 237, 237); }
+.centerSearch { position: relative; width: 210px; height: 40px; float: left; padding: 12px 40px; }
+.searchText { padding: 5px 0px 5px 45px; width: 160px; height: 26px; line-height: 26px; border: 2px solid rgb(242, 242, 242); border-radius: 18px; }
+.searchBtn { position: absolute; left: 55px; top: 24px; background-position: -209px -32px; height: 18px; width: 18px; border: medium none; }
+.headerUl { float: right; height: 64px; }
+.headerUl li { position: relative; float: left; height: 64px; cursor: pointer; line-height: 64px; padding: 0px 30px; border-left: 1px solid rgb(242, 242, 242); }
+.headerUl li a { color: rgb(96, 96, 96); }
+.headerUl li .centerLogout:hover { color: rgb(3, 197, 255); }
+.centerLogout, .juheCode { position: absolute; top: 64px; left: -1px; width: 100%; height: 20px; line-height: 20px; padding: 10px 0px 20px; border-width: 0px 1px 1px; border-style: none solid solid; border-color: -moz-use-text-color rgb(242, 242, 242) rgb(242, 242, 242); -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; border-image: none; background-color: rgb(255, 255, 255); text-align: center; display: none; }
+.headerIcon1 { background-position: -226px -132px; height: 6px; width: 10px; display: inline-block; position: relative; left: 8px; top: -2px; }
+.juheCode { height: 90px; padding-top: 0px; padding-bottom: 15px; }
+.juheCode span { height: 90px; width: 90px; display: block; margin: 0px auto; background-position: -111px 0px; }
+nav { position: fixed; top: 0px; left: 0px; width: 200px; height: 100%; overflow: auto; background: rgb(50, 54, 60) none repeat scroll 0% 0%; z-index: 8; }
+.ucenterNav { padding-top: 64px; }
+.ucenterNav li { height: 46px; line-height: 46px; padding: 0px 30px; }
+.ucenterNav .navIndex { height: 64px; line-height: 66px; margin-bottom: 8px; }
+.ucenterNav .navIndex .navDiv { border-bottom: 2px solid rgb(57, 62, 69); }
+.ucenterNav .navIndex i { font-size: 18px; }
+.ucenterNav a, #ucenterSubA { color: rgb(168, 175, 185); cursor: pointer; }
+.ucenterNav a i.iconfont, #ucenterSubA i.iconfont { padding-right: 6px; display: inline-block; width: 20px; }
+.ucenterNav .active a { color: rgb(0, 147, 83); }
+.ucenterSub {  }
+.ucenterNav .ucenterSub li { padding-left: 20px; line-height: 36px; height: 36px; font-size: 12px; }
+.ucenterNav a:hover, .ucenterNav .active a { color: rgb(3, 197, 255); }
+.subDown { background-position: -176px -174px; height: 5px; width: 11px; display: inline-block; opacity: 0.8; position: relative; left: 6px; top: -2px; }
+.ucenterNav .active { background: transparent url('images/navbg.png') no-repeat scroll right center; }
+.ucenterNav .navInfoLi { padding: 0px 0px 0px 30px; }
+.ucenterNav .ucenterSub li i { padding-right: 2px; font-size: 12px; }
+#ucenterSection { margin-left: 200px; padding: 84px 40px 30px; }
+.centerInfoBar {  }
+.centerInfoBar li { float: left; padding: 12px 30px 15px 0px; height: 30px; line-height: 30px; }
+.centerInfoBar li.welcomeLi { font-size: 16px; }
+.centerInfoBar li.welcomeLi a { color: rgb(3, 197, 255); }
+.centerInfoBar li.messageLi i { font-size: 24px; }
+.centerInfoBar li.vertifyLi i { font-size: 18px; }
+.centerInfoBar li a { color: rgb(96, 96, 96); }
+.centerInfoBar li i.iconfont { display: inline-block; width: 30px; position: relative; top: 2px; }
+.ucenterIndexUl1 { height: 138px; border: 1px solid rgb(231, 231, 231); border-radius: 2px; background: rgb(247, 247, 247) none repeat scroll 0% 0%; margin-bottom: 20px; }
+.ucenterIndexUl1 li { float: left; width: 50%; padding: 35px 0px; }
+.ucenterIndexUl1 .indexMyDiv { height: 68px; padding: 0px 35px; }
+.ucenterIndexUl1 .indexMyDiv1 .zhuzhu { float: left; font-size: 60px; line-height: 60px; color: rgb(209, 210, 214); display: block; width: 60px; height: 60px; }
+.ucenterIndexUl1 .indexMyDiv1 dl { float: left; padding: 10px 50px 0px 25px; }
+.ucenterIndexUl1 .indexMyDiv1 dd { color: rgb(254, 81, 74); font-size: 20px; font-weight: bold; padding: 10px 0px; line-height: 20px; }
+.ucenterIndexUl1 .indexMyDiv1 dd span { font-size: 26px; }
+.ucenterIndexUl1 .indexMyDiv1 dd .moneyDeci { font-size: 20px; }
+.ucenterIndexUl1 .indexMyDiv1 .czfp { padding-top: 35px; display: block; }
+.ucenterIndexUl1 .indexMyDiv1 .czfp a { color: rgb(3, 197, 255); margin-left: 14px; position: relative; top: 6px; }
+.ucenterIndexUl1 .indexMyDiv2 { border-left: 1px solid rgb(231, 231, 231); }
+.ucenterIndexUl1 .indexMyDiv2 dt { font-size: 16px; height: 40px; line-height: 40px; font-weight: 400; }
+.ucenterIndexUl1 .indexMyDiv2 dt i { font-size: 28px; color: rgb(3, 197, 255); font-weight: 100; padding-right: 5px; display: inline-block; width: 30px; }
+.ucenterIndexUl1 .indexMyDiv2 dt span { position: relative; top: -3px; }
+.ucenterIndexUl1 .indexMyDiv2 dd { float: left; height: 20px; line-height: 20px; padding-top: 10px; }
+.ucenterIndexUl1 .indexMyDiv2 dd font { font-size: 20px; }
+.ucenterIndexUl1 .indexMyDiv2 dd i { font-size: 16px; padding: 0px 25px; color: rgb(209, 210, 214); display: inline-block; width: 12px; }
+.swiper-container {  }
+.swiper-wrapper, .swiper-container, .prevNext { width: 100%; height: 350px; overflow: hidden; }
+.ucenterIndexUl2 { width: 100%; height: 350px; overflow: hidden; background: rgb(240, 240, 240) none repeat scroll 0% 0%; }
+.ucenterIndexUl2 li { float: left; width: 33%; padding-bottom: 20px; }
+.ucenterIndexUl2 li:nth-of-type(3n-1) { width: 34%; }
+.my-gongzh-div .ucenterIndexUl2 li:nth-of-type(3n-1) { width: 33%; }
+.ucenterIndexUl2 li:nth-of-type(3n+1) .indexUlDiv2 { margin-right: 10px; }
+.ucenterIndexUl2 li:nth-of-type(3n-1) .indexUlDiv2 { margin: 0px 10px; }
+.my-gongzh-div .ucenterIndexUl2 li:nth-of-type(3n-1) .indexUlDiv2 { margin-left: 0px; }
+.ucenterIndexUl2 li:nth-of-type(3n) .indexUlDiv2 { margin-left: 10px; }
+.prevNext { position: relative; }
+.arrow-left, .arrow-right { z-index: 1; position: absolute; top: 130px; opacity: 1; }
+.arrow-right { right: 0px; height: 60px; width: 40px; background-position: -40px -107px; background-image: url('images/centericon.png'); background-size: auto auto; }
+.arrow-left { left: 0px; height: 60px; width: 40px; background-position: -120px -107px; background-image: url('images/centericon.png'); background-size: auto auto; }
+.arrow-right:hover { background-position: 0px -107px; }
+.arrow-left:hover { background-position: -80px -107px; }
+.pagination { position: absolute; z-index: 20; bottom: 10px; width: 100%; text-align: center; }
+.ucenterIndexUl2 .indexUlDiv2 { height: 88px; padding: 30px 10px 30px 30px; border: 1px solid rgb(231, 231, 231); border-radius: 3px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; overflow: hidden; }
+.indexDataImg { float: left; width: 80px; height: 80px; }
+.indexDataImg img { width: 80px; height: 80px; }
+.indexUlDiv2 dl { float: left; padding-left: 20px; }
+.indexUlDiv2 dt { padding-bottom: 4px; }
+.indexUlDiv2 dt a { font-size: 16px; font-weight: bold; color: rgb(96, 96, 96); }
+.indexUlDiv2 dd { color: rgb(144, 144, 144); height: 20px; line-height: 20px; }
+.continueA { color: rgb(3, 197, 255); display: block; clear: both; padding-left: 100px; position: relative; top: -8px; }
+.lastData { text-align: center; text-indent: -20px; }
+.lastData .iconfont { font-size: 50px; color: rgb(160, 160, 160); }
+.lastData p { color: rgb(160, 160, 160); }
+.lastLi p { font-size: 16px; }
+.ucenterIndexUl2 li.lastLi .indexUlDiv2 { background: rgb(240, 240, 240) none repeat scroll 0% 0%; border: 2px dotted rgb(231, 231, 231); height: 86px; }
+.payQuestion { width: 400px; height: 280px; }
+.centerlayerDiv, .rightBackground { background: rgb(255, 255, 255) none repeat scroll 0% 0%; border-radius: 2px; border: 1px solid rgb(231, 231, 231); }
+.centerlayerDiv .layerTitle, .buyDataContent .buyTitle { height: 56px; line-height: 56px; padding-left: 26px; color: rgb(96, 96, 96); font-size: 16px; border-bottom: 1px solid rgb(231, 231, 231); position: relative; }
+.centerlayerDiv .layerCloseA { color: rgb(187, 187, 187); font-weight: 100; font-size: 30px; line-height: 30px; position: absolute; right: 20px; top: 12px; }
+.inputBtn { color: rgb(85, 85, 85); background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 1px solid rgb(211, 211, 211); border-radius: 2px; }
+.inputBtn:hover { background: rgb(240, 240, 240) none repeat scroll 0% 0%; }
+.payQuestion .layerContent { text-align: center; }
+.payQuestion .layerContent p { font-size: 20px; height: 40px; line-height: 40px; padding: 45px 0px; }
+.payQuestion .layerContent p i { font-size: 24px; padding-right: 8px; position: relative; top: 1px; }
+.payQuestion .centerBtn { width: 120px; }
+.orderTips1::after, .orderTips1::before, .orderTips2::after, .orderTips2::before { top: 100%; border: 10px solid transparent; content: " "; width: 0px; height: 0px; position: absolute; pointer-events: none; }
+.orderTips1::after, .orderTips2::after { border-top-color: rgb(255, 255, 255); border-width: 8px; left: 20%; margin-left: -8px; }
+.orderTips1::before, .orderTips2::before { border-top-color: rgb(231, 231, 231); border-width: 10px; left: 20%; margin-left: -10px; }
+.orderTips2::after { left: auto; right: 30px; }
+.orderTips2::before { left: auto; right: 28px; }
+.failTd .orderTips2::after { right: auto; left: 30px; }
+.failTd .orderTips2::before { right: auto; left: 30px; }
+a.centerBtn { line-height: 30px; display: inline-block; }
+@media only screen and (min-width: 1440px) {
+}
+@media only screen and (max-width: 1440px) {
+}
+.indexUlDiv2 { position: relative; }
+.my-gongzh-div .indexUlDiv2 .gongzh-set-dt a { line-height: 24px; overflow: hidden; text-align: left; white-space: initial ! important; }
+.my-gongzh-div .gongzh-new-function { position: absolute; right: 14px; top: 0px; width: 68px; height: 34px; background: transparent url('images/gongzh.png') no-repeat scroll 0px -2px; }
+#stopLayer { display: none; }
+.my-gongzh-div .indexDataImg img { margin-top: 4px; }
+.my-gongzh-li1 .indexUlDiv2 dl { position: relative; top: -9px; }
+@media only screen and (max-width: 1599px) {
+	.my-gongzh-div .my-gongzh-li1 .indexUlDiv2 dl dd a { height: 20px; line-height: 20px; background: rgb(3, 197, 255) none repeat scroll 0% 0%; color: rgb(255, 255, 255); border-radius: 2px; display: inline-block; padding: 0px 10px; font-size: 12px; }
+	.my-gongzh-div .my-gongzh-li1 .indexUlDiv2 .gongzh-set-dt span { line-height: 22px; }
+	.my-gongzh-div .my-gongzh-li1 .indexUlDiv2 .gongzh-set-dt p { line-height: 22px; }
+	.my-gongzh-div .my-gongzh-li1 .indexUlDiv2 dl dt a { padding-top: 11px; }
+	.my-gongzh-div .my-gongzh-li1 .indexUlDiv2 .continueA { top: -5px; }
+	.indexUlDiv2 .gongzh-set-dt { padding-bottom: 2px; }
+}
+@media only screen and (max-width: 1330px) {
+}
+@media only screen and (min-width: 1560px) {
+}
+/* ::::: https://www.juhe.cn/themes/v5/public/css/respond.css ::::: */
+
+@media only screen and (min-width: 1599px) {
+	.swiper-slide .indexUlDiv2 dd { line-height: 26px; }
+	.indexUlDiv2 { position: relative; }
+	.continueA { position: absolute; right: 0px; top: 30px; width: 150px; padding-left: 0px; text-align: center; height: 88px; line-height: 88px; border-left: 1px solid rgb(231, 231, 231); clear: none; }
+	.my-gongzh-div .indexUlDiv2 dl dt { line-height: 88px; }
+	.my-gongzh-div .indexUlDiv2 dt a { font-size: 15px; }
+	.my-gongzh-div .indexUlDiv2 .gongzh-set-dt { line-height: 30px; padding-top: 16px; padding-left: 0px; }
+	.my-gongzh-div .indexUlDiv2 .gongzh-set-dt span { display: block; line-height: 30px; }
+	.my-gongzh-li1 .indexUlDiv2 dl { position: relative; top: -14px; }
+	.my-gongzh-div .my-gongzh-li1 .indexUlDiv2 .gongzh-set-dt span { line-height: 24px; }
+	.my-gongzh-div .my-gongzh-li1 .indexUlDiv2 .gongzh-set-dt p { line-height: 24px; }
+	.my-gongzh-div .my-gongzh-li1 .indexUlDiv2 dl dd a { height: 20px; line-height: 20px; background: rgb(3, 197, 255) none repeat scroll 0% 0%; color: rgb(255, 255, 255); border-radius: 2px; display: inline-block; padding: 0px 10px; font-size: 12px; }
+}
+@media only screen and (min-width: 1360px) and (max-width: 1599px) {
+	.indexUlDiv2 dt a { display: inline-block; max-width: 200px; white-space: nowrap; overflow: hidden; }
+	.my-gongzh-div .indexUlDiv2 dl dt a { line-height: 30px; padding-top: 16px; }
+	.my-gongzh-div .continueA { top: -30px; line-height: 20px; }
+	.my-gongzh-div .my-gongzh-li1 .continueA { top: -20px; line-height: 20px; }
+	.my-gongzh-div .indexUlDiv2 .gongzh-set-dt a { font-size: 14px; }
+}
+@media only screen and (min-width: 1266px) and (max-width: 1360px) {
+	.ucenterIndexUl1 .indexMyDiv1 dl { float: left; padding: 10px 30px 0px 25px; }
+	.ucenterIndexUl1 .indexMyDiv1 dd span { font-size: 22px; }
+	.ucenterIndexUl1 .indexMyDiv2 dd i { padding: 0px 16px 4px 10px; }
+	.ucenterIndexUl1 .indexMyDiv2 dd font { font-size: 14px; }
+	.ucenterIndexUl1 .indexMyDiv2 { padding-right: 10px; }
+	.ucenterIndexUl2 .indexUlDiv2 { padding: 30px 10px 30px 15px; }
+	.indexUlDiv2 dl { float: left; padding-left: 15px; }
+	.indexUlDiv2 dt a { font-size: 15px; display: inline-block; max-width: 180px; white-space: nowrap; overflow: hidden; }
+	.my-gongzh-div .indexUlDiv2 dl dt a { line-height: 30px; padding-top: 16px; }
+	.continueA { padding-left: 95px; }
+	.my-gongzh-div .continueA { top: -30px; line-height: 20px; }
+	.my-gongzh-div .my-gongzh-li1 .continueA { top: -20px; line-height: 20px; }
+}
+@media only screen and (max-width: 1266px) {
+	.ucenterIndexUl1 .indexMyLi1 { float: left; width: 50%; padding: 28px 0px; }
+	.ucenterIndexUl1 .indexMyDiv1 dl { padding-top: 0px; }
+	.ucenterIndexUl1 .indexMyDiv .czfp { padding-top: 0px; padding-left: 86px; clear: both; }
+	.ucenterIndexUl1 .indexMyDiv .czfp a { color: rgb(3, 197, 255); margin-left: 10px; }
+	.ucenterIndexUl1 .indexMyDiv2 dd i { padding: 0px 16px 4px 10px; }
+	.ucenterIndexUl1 .indexMyDiv2 dd font { font-size: 14px; }
+	.ucenterIndexUl1 .indexMyDiv2 { padding-right: 10px; }
+	.ucenterIndexUl2 .indexUlDiv2 { padding: 30px 10px 30px 15px; }
+	.indexUlDiv2 dl { float: left; padding-left: 15px; }
+	.indexUlDiv2 dt a { font-size: 14px; display: inline-block; width: 160px; overflow: hidden; white-space: nowrap; }
+	.my-gongzh-div .indexUlDiv2 dl dt a { line-height: 30px; padding-top: 16px; }
+	.continueA { padding-left: 95px; }
+	.my-gongzh-div .continueA { top: -30px; line-height: 20px; padding-left: 95px; }
+	.my-gongzh-div .my-gongzh-li1 .continueA { top: -20px; line-height: 20px; }
+	.lastData { text-align: center; text-indent: -2px; }
+	.my-gongzh-div .indexUlDiv2 .gongzh-set-dt a { overflow: hidden; white-space: normal ! important; font-size: 12px; }
+}
+@media only screen and (max-width: 1366px) {
+	body { font-size: 12px; }
+	.noLogs, .noPriceContent h4, .centerlayerDiv .layerTitle, .buyDataContent .buyTitle { font-size: 14px; }
+	.centerBtn, .addSomeBtn { font-size: 12px; }
+	.ucenterIndexUl1 .indexMyDiv1 dd span { font-size: 22px; }
+	.ucenterIndexUl1 .indexMyDiv1 dd .moneyDeci { font-size: 16px; }
+	.payQuestion .layerContent p { font-size: 18px; }
+	.my-gongzh-div .indexUlDiv2 .gongzh-set-dt a { overflow: hidden; font-size: 12px; }
+}
+/* ::::: https://www.juhe.cn/themes/v5/public/js/layer/skin/layer.css ::::: */
+
+html #layui_layer_skinlayercss { display: none; position: absolute; width: 1989px; }
+.firebugResetStyles { z-index: 2147483646 ! important; top: 0px ! important; left: 0px ! important; display: block ! important; border: 0px none ! important; margin: 0px ! important; padding: 0px ! important; outline: 0px none ! important; min-width: 0px ! important; max-width: none ! important; min-height: 0px ! important; max-height: none ! important; position: fixed ! important; transform: rotate(0deg) ! important; transform-origin: 50% 50% 0px ! important; border-radius: 0px ! important; box-shadow: none ! important; background: transparent none repeat scroll 0% 0% ! important; pointer-events: none ! important; white-space: normal ! important; }
+style.firebugResetStyles { display: none ! important; }
+.firebugResetStyles::before, .firebugResetStyles::after { content: "" ! important; }

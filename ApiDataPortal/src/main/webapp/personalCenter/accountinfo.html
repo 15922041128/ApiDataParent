@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+    <meta charset="UTF-8">
+    <title>YINGZE</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+
+
+<!--[if lt IE 9]>
+<script src="/themes/v5/public/js/html5shiv.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/themes/v5/public/js/respond.min.js" type="text/javascript" charset="utf-8"></script>
+<![endif]-->
+<!--[if IE 6]>
+<script src="/themes/v5/public/js/DD_belatedPNG_0.0.8a.js"  type="text/javascript"></script>
+<script>DD_belatedPNG.fix('.centerIcon');</script>
+<![endif]-->
+
+
+<link media="all" href="css/accountinfo.css" type="text/css" rel="stylesheet">
+<link rel="stylesheet" href="css/layer.css" id="layui_layer_skinlayercss" style=""></head>
+<body>
+    <header class="clearfix">
+    <a href="default.html" class="centerLogo" target="_top" style="position: relative;" indepth="true"><img style="position: relative; left: -5px;" src="images/logo.png" alt="聚合数据"></a>
+    <div class="centerSearch">
+        <input class="searchText" name="q" placeholder="搜索" value="" type="text">
+        <button id="searchBtn" type="button" class="searchBtn centerIcon"></button>
+    </div>
+    <ul class="headerUl clearfix">
+        <li class="headerLi1">
+            <div class="headerInfo"><span>zmc2585</span><i class="headerIcon1 centerIcon"></i></div>
+            <a class="centerLogout" href="javascript:logout();">退出登录</a>
+        </li>
+        <li>
+            <a href="qa.html" target="_top" indepth="true">常见问题</a>
+        </li>
+        <li class="headerLi3">
+            <div class="headerFoucs"><span>关注聚合</span><i class="headerIcon1 centerIcon"></i></div>
+            <div class="juheCode">
+                <span class="centerIcon"></span>
+            </div>
+        </li>
+        <li>
+            <a class="headerContact" href="contact.html" target="_top" indepth="true">联系我们</a>
+        </li>
+    </ul>
+</header>
+
+    <!-- main start -->
+    <div id="ucenterWrapper" class="ucenterWidth1 clearfix">
+        <nav>
+    <ul class="ucenterNav">
+        <li class="navIndex ">
+            <div class="navDiv">
+                <a href="index.html" indepth="true"><i class="iconfont"></i>我的聚合</a>
+            </div>
+        </li>
+        <li class="">
+            <div class="navDiv">
+                <a href="mydata.html" indepth="true"><i class="iconfont"></i>我的数据</a>
+            </div>
+        </li>
+        <li class="">
+            <div class="navDiv">
+                <a href="myactivity.html" indepth="true"><i class="iconfont"></i>我的活动</a>
+            </div>
+        </li>
+        <li class="">
+            <div class="navDiv">
+                <a href="mycollection.html" indepth="true"><i class="iconfont"></i>我的收藏</a>
+            </div>
+        </li>
+        <li class="">
+            <div class="navDiv">
+                <a href="ipconfig.html" indepth="true"><i class="iconfont"></i>IP白名单</a>
+            </div>
+        </li>
+        <li class="">
+            <div class="navDiv">
+                <a href="money.html" indepth="true"><i class="iconfont"></i>我的余额</a>
+            </div>
+        </li>
+        <li class="">
+            <div class="navDiv">
+                <a href="paylogs.html" indepth="true"><i class="iconfont"></i>我的充值记录</a>
+            </div>
+        </li>
+        <li class="">
+            <div class="navDiv">
+                <a href="purchaselogs.html" indepth="true"><i class="iconfont"></i>我的消费记录</a>
+            </div>
+        </li>
+        <li class="">
+            <div class="navDiv">
+                <a href="workorder.html" indepth="true"><i class="iconfont"></i>我的工单</a>
+            </div>
+        </li>
+                <li class="navInfoLi">
+            <span id="ucenterSubA"><i class="iconfont"></i>用户中心<i class="centerIcon subDown"></i></span>
+            <ul class="ucenterSub">
+                <li class="active"><a href="accountinfo.html" indepth="true"><i class="iconfont"></i>账户信息</a></li>
+                <li class=""><a href="editpwd.html" indepth="true"><i class="iconfont"></i>密码修改</a></li>
+                <li class=""><a href="certify.html" indepth="true"><i class="iconfont"></i>实名认证</a></li>
+                <li>&nbsp;</li>
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+        <!-- main content start -->
+        <section id="ucenterSection">
+            <h2 class="centerTitle">账户信息</h2>
+            <div class="ContentDiv">
+                <form class="moneyListForm" action="https://www.juhe.cn/account/accountInfo">
+                    <div class="moneyListDiv clearfix" style="border: medium none;">
+                        <ul class="centerFormUl">
+                            <li class="clearfix">
+                                <label class="labelLeft">用户名：</label>
+                                <div class="labelRight">
+                                    <span>zmc2585</span>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <label class="labelLeft">实名认证：</label>
+                                                                <div class="labelRight">
+                                    <a class="centerBtn unvertifyBtn" href="certify.html" indepth="true">未认证</a>
+                                </div>
+                                                            </li>
+                            <li class="clearfix">
+                                <label class="labelLeft">OpenId：</label>
+                                <div class="labelRight">
+                                    <span>JH14e1f4fff3a9fe69dabbda51f42c21cd</span>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <label class="labelLeft">绑定邮箱：</label>
+                                <div class="labelRight">
+                                                                        <div class="changeDefault2">
+                                        <button type="button" class="waringBtn centerBtn userEmailBind">绑定邮箱</button>
+                                    </div>
+                                                                    </div>
+                            </li>
+                            <li class="clearfix">
+                                <label class="labelLeft">手机号码：</label>
+                                <div class="labelRight">
+                                                                        <div class="changeDefault1">
+                                        <span class="yuzhiMoney">
+                                            15652934884
+                                        </span>
+                                    </div>
+                                                                    </div>
+                            </li>
+                            <li class="clearfix">
+                                <label class="labelLeft">用户类型：</label>
+                                                                <div class="labelRight">
+                                    <label class="userLabelRadio">
+                                       <!-- <input type="radio" name="type" checked="checked">  -->
+                                        个人
+                                                                            </label>
+                                    <!-- <i class="errorTips errorVertify">已通过实名认证或正在审核的不支持修改类型</i> -->
+                                </div>
+                                                            </li>
+                            <!-- <li class="clearfix">
+                                <label class="labelLeft">&nbsp;</label>
+                                <div class="labelRight">
+                                    <button type="button" class="centerBtn">保存</button>
+                                </div>
+                            </li> -->
+                        </ul>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <!-- main content end -->
+    </div>
+    <div id="userEmailBind" style="display: none;">
+    <div class="emailcertify centerlayerDiv" style="width: 400px;">
+        <h3 class="layerTitle">
+            <span>绑定邮箱</span>
+            <a class="layerCloseA iconfont" href="javascript:layer.closeAll();"></a>
+        </h3>
+        <form class="formWaring emailForm" action="https://www.juhe.cn/mobileCertify/emailCertify" method="post">
+            <ul class="centerFormUl">
+                <li class="clearfix disabledLi">
+                    <label class="labelLeft" style="width: 100px;"><span class="required">*</span>邮箱：</label>
+                    <div class="labelRight">
+                        <input name="email" style="width: 190px;" id="mobile" value="" class="inputText mobileInput" type="tel">
+                        <i class="errorTips" style="display: none;"><span class="iconfont"></span><em></em></i>
+                    </div>
+                </li>
+                <li class="clearfix disabledLi" style="padding-bottom: 1px;">
+                    <label class="labelLeft" style="width: 100px;"><span class="required">*</span>验证码：</label>
+                    <div class="labelRight">
+                        <input style="width: 85px;" name="emailcode" id="emailcode" value="" class="inputText vecodeInput" type="text">
+                        <button type="button" class="inputBtn centerBtn emailsend" style="padding: 0px;">获取验证码</button>
+                        <i class="errorTips" style="display: none;"><span class="iconfont"></span><em>证码邮件已</em></i>
+                    </div>
+                </li>
+                <li class="clearfix disabledLi" style="padding: 0px;">
+                    <label class="labelLeft" style="width: 100px;">&nbsp;</label>
+                    <div class="labelRight">
+                        <i class="successTips" style="color: rgb(3, 197, 255); display: none;"><em>验证码已发送,请到邮箱查看并完成绑定</em></i>
+                    </div>
+                </li>
+                <li class="clearfix disabledLi" style="padding-top: 0px;">
+                    <label class="labelLeft" style="width: 100px;">&nbsp;</label>
+                    <div class="labelRight">
+                        <button type="button" class="centerBtn">确定</button>
+                    </div>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+    <div id="mobilePhoneBind" style="display: none;">
+    <div class="mobileLayer centerlayerDiv">
+        <h3 class="layerTitle">
+            <span>绑定手机号码</span>
+            <a class="layerCloseA iconfont" href="javascript:layer.closeAll();"></a>
+        </h3>
+        <form class="formWaring mobileForm" action="https://www.juhe.cn/mobileCertify/certifyDo" method="post">
+           <ul class="centerFormUl">
+               <li class="clearfix disabledLi">
+                   <label class="labelLeft"><span class="required">*</span>手机号码：</label>
+                   <div class="labelRight">
+                       <input name="mobile" id="mobile" value="" class="inputText mobileInput" type="tel">
+                       <i class="errorTips" style="display: none;"><span class="iconfont"></span><em></em></i>
+                   </div>
+               </li>
+               <li class="clearfix disabledLi" style="padding-bottom: 1px;">
+                   <label class="labelLeft"><span class="required">*</span>验证码：</label>
+                   <div class="labelRight">
+                       <input name="mobilecode" id="mobilecode" value="" class="inputText vecodeInput" type="text">
+                       <button type="button" class="inputBtn centerBtn smsBtn" style="padding: 0px;">获取验证码</button>
+                       <i class="errorTips" style="display: none;"><span class="iconfont"></span><em>绑定手机号，才能申请数据</em></i>
+                   </div>
+               </li>
+               <li class="clearfix disabledLi" style="padding: 0px;">
+                   <label class="labelLeft" style="width: 100px;">&nbsp;</label>
+                   <div class="labelRight">
+                       <i class="successTips" style="color: rgb(3, 197, 255); display: none;"><em>验证码已发送,请注意查收短信</em></i>
+                   </div>
+               </li>
+               <li class="clearfix disabledLi" style="padding-top: 0px;">
+                   <label class="labelLeft">&nbsp;</label>
+                   <div class="labelRight">
+                       <button type="button" class="centerBtn">确定</button>
+                   </div>
+               </li>
+           </ul>
+        </form>
+    </div>
+</div>
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/ucenterpublic.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/layer.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/json.parse.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/nslog.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        //ucenter 统一使用的提交方式:ajaxsubmit,所以当用户登录失效的时候无法跳转到指定页面,
+        //添加下面对button 按钮的监视,如果为失效继续下面动作,如果点击按钮的时候登录失效了,就跳转到指定页面,如登录页面
+        $('.ajax-check-login,button,input:button').click(function(event){
+            var login = true;
+            $.getJSON('/login/loginStatus',function(obj){
+                if(obj.code=='-1')
+                {
+                    if(self == top){
+                        window.location.href = obj.acturl;
+                    }else{
+                        parent.window.location.reload();
+                    }
+
+                    login = false;
+                }
+            })
+
+            if(!login)
+            {
+                event.stopImmediatePropagation();
+            }
+        })
+
+    })
+    // 退出登录
+    function logout(){
+        $.getJSON('/login/logout',function(obj){
+            window.location.href='/';
+        })
+    }
+
+    $("input[name=q]").focus(function(){
+        document.onkeydown = function(e){
+            var ev = document.all ? window.event : e;
+            if(ev.keyCode==13) {
+                $("#searchBtn").click();
+            }
+        }
+    })
+
+    // header里的搜索框
+    $("#searchBtn").click(function(){
+        var q = $("input[name=q]").val();
+        q=q.replace(/\//g,'');
+
+        if(q.length==''){
+            $("input[name=q]").focus();
+            return false;
+        }
+
+        var searchUrl = '/docs/s/q/%40q%40';
+        searchUrl=searchUrl.replace(/%40q%40/,encodeURIComponent(q));
+        window.location.href=searchUrl;
+    })
+
+    $(document).ready(function(){
+
+        $("input[name=q]").focus(function(){
+            document.onkeydown = function(e){
+            var ev = document.all ? window.event : e;
+                if(ev.keyCode==13) {
+                    $("#searchBtn").click();
+                }
+            }
+        })
+    })
+
+    function isMobile(mobile){
+        var mreg =/^1[3|5|8|4|7]{1}[0-9]{1}[0-9]{8}$/;
+        if(!mreg.test(mobile)){
+            return false;
+        }
+        return true;
+    }
+
+    $('a[href="http://crm2.qq.com/page/portalpage/wpa.php?uin=800076065&f=1&ty=1&aty=0&a=&from=6"]').bind('click',function(){
+        nslog(1121);
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        //点击修改
+        $('.userEmailBind').click(function(){
+            showBindLayer($('#userEmailBind'));
+        });
+
+        //点击确认
+        $('.mobilePhoneBind').click(function(){
+            showBindLayer($('#mobilePhoneBind'));
+        })
+
+        // 绑定手机表单，点击确定按钮时
+        $('.mobileLayer .centerBtn').click(function(){
+            $('.successTips').hide();
+            var mobile = $(":input[name='mobile']").val();
+            if(!isPhone(mobile)){
+                $(':input[name=mobile]').siblings('.errorTips').show().find('em').html('手机号码错误');
+                $(':input[name=mobile]').focus();
+                return false;
+            }else if(!$(':input[name=mobilecode]').val()){
+                $(':input[name=mobilecode]').siblings('.errorTips').show().find('em').html('请填写短信验证码');
+                $(':input[name=mobilecode]').focus();
+                return false;
+            }
+            else{
+                $('form.mobileForm').ajaxSubmit({dataType:'json',success:function(json){
+                    if (0 > json.code) {
+                        $(':input[name=mobilecode]').siblings('.errorTips').show().find('em').html(json.info);
+                    } else {
+                        window.location.reload();
+                    }
+                }})
+            }
+
+        })
+
+        // 点击发送短信按钮时
+        $(".smsBtn").click(function(){
+            $('.successTips').hide();
+            $('.errorTips').hide().find('em').html('');
+            var mobile = $(":input[name='mobile']").val();
+            if(!isPhone(mobile)){
+                $(':input[name=mobile]').siblings('.errorTips').show().find('em').html('手机号码错误');
+                $(':input[name=mobile]').focus();
+            }else{
+                $(".smsBtn").html('发送中...').prop("disabled",true);
+                $.post('/mobileCertify/sendsms',{mobile:mobile},function(e){
+                    var o = json_parse(e);
+                    if(o.code!='-2' && o.code!='-5'){
+                        resetSmsBtn(120);
+                    }else{
+                        if(o.code == '1'){
+                            $(':input[name=mobile]').siblings('.errorTips').show().find('em').html(o.info);
+                            $(':input[name=mobile]').focus();
+                        }else{
+                            $(':input[name=mobilecode]').siblings('.errorTips').show().find('em').html(o.info);
+                        }
+                        $(".smsBtn").html("获取验证码").css({"background":"#fff"}).prop("disabled",false);
+                    }
+                })
+            }
+        })
+
+        // 绑定手机表单，点击确定按钮时
+        $('.emailcertify .centerBtn').click(function(){
+            $('.successTips').hide();
+            $('.errorTips').hide().find('em').html('');
+            var email = $(":input[name='email']").val();
+
+            if(!isEmail(email)){
+                $(':input[name="email"]').siblings('.errorTips').show().find('em').html('邮箱格式错误');
+                $(':input[name="email"]').focus();
+                return false;
+            }else if(!$(':input[name=emailcode]').val()){
+                $(':input[name=emailcode]').siblings('.errorTips').show().find('em').html('请填写邮件验证码');
+                $(':input[name=emailcode]').focus();
+                return false;
+            }else {
+                $(this).prop("disabled",true);
+                $('form.emailForm').ajaxSubmit({
+                    dataType: 'json', success: function (json) {
+                        if (json.code == '0') {
+                            window.location.reload();
+                        } else if (json.code != '-100') {
+                            $(':input[name=email]').siblings('.errorTips').show().find('em').html(json.info);
+                        } else {
+                            $(':input[name=emailcode]').siblings('.errorTips').show().find('em').html(json.info);
+                        }
+                    }
+                })
+            }
+        })
+        // 点击发送短信按钮时
+        $(".emailsend").click(function(){
+            $('.successTips').hide();
+            $('.errorTips').hide().find('em').html('');
+            var email = $(":input[name='email']").val();
+
+            if(!isEmail(email)){
+                $(':input[name=email]').siblings('.errorTips').show().find('em').html('邮箱格式错误');
+                $(':input[name=email]').focus();
+            }else{
+                $(".emailsend").html('发送中...').prop("disabled",true);
+                $.post('/mobileCertify/sendEmail',{email:email},function(e){
+                    var o = json_parse(e);
+                    if(o.code=='0'){
+                        resetEmailBtn(120);
+                    }else{
+                        if(o.code != '-100'){
+                            $(':input[name=email]').siblings('.errorTips').show().find('em').html(o.info);
+                            $(':input[name=email]').focus();
+                        }else{
+                            $(':input[name=emailcode]').siblings('.errorTips').show().find('em').html(o.info);
+                        }
+                        $(".emailsend").html('获取验证码').prop("disabled",false);
+                    }
+
+                })
+            }
+        })
+    })
+    // 重置短信发送按钮
+    function resetEmailBtn(index){
+        var init = setInterval(function(){
+            index--;
+            if(index<=0){
+                clearInterval(init);
+                $(".emailsend").html("获取验证码").css({"background":"#fff"}).prop("disabled",false);
+            }else{
+                $(".emailsend").html("重新发送("+index+")").css({"background":"#f4f4f4"}).prop("disabled",true);
+                $('.successTips').show();
+            }
+        },1000)
+    }
+
+    // 重置短信发送按钮
+    function resetSmsBtn(index){
+        var init = setInterval(function(){
+            index--;
+            if(index<=0){
+                clearInterval(init);
+                $(".smsBtn").html("获取验证码").css({"background":"#fff"}).prop("disabled",false);
+            }else{
+                $(".smsBtn").html("重新发送("+index+")").css({"background":"#f4f4f4"}).prop("disabled",true);
+                $('.successTips').show();
+            }
+        },1000)
+    }
+    function showBindLayer(obj)
+    {
+        layer.open({
+            type:1,
+            title:false,
+            closeBtn:false,
+            area:['auto','atuo'],
+            content:obj
+        })
+    }
+    function showError(msg,selector)
+    {
+        selector.next().next('.errorTips').show().find('em').html(msg);
+        selector.focus();
+    }
+    //验证邮箱是否有效
+    function isEmail(email)
+    {
+        //对电子邮件的验证
+        var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\-|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+        if(!myreg.test(email))
+        {
+            return false;
+        }
+        return true;
+    }
+</script>
+
+
+
+
+</body></html>

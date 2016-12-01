@@ -1,0 +1,108 @@
+/* ::::: https://www.juhe.cn/themes/v5/public/css/reset.min.css ::::: */
+
+html, body, ul, li, p, h1, h2, h3, h4, h5, h6, input, form, dd, dt, dl, ol, caption, td, tr, th, hr, header, footer, blockquote, pre, fieldset, legend, aside, nav, section { padding: 0px; margin: 0px; }
+html, body { width: 100%; height: 100%; }
+body { font-family: Tahoma,Helvetica,"microsoft yahei","Hiragino Sans GB",Simsun,宋体,sans-serif; }
+a { text-decoration: none; }
+ul, li { list-style: outside none none; }
+table, div, img { border-collapse: collapse; border-spacing: 0px; }
+img { border: 0px none; vertical-align: middle; }
+button, input, select, textarea { outline: 0px none; font-family: inherit; }
+:focus { outline: 0px none; }
+button, input[type="button"], input[type="reset"], input[type="submit"] { cursor: pointer; }
+.clear, .clearfix {  }
+.clear::after, .clearfix::after { content: ""; display: block; clear: both; }
+/* ::::: https://www.juhe.cn/themes/v5/public/css/ucenter.css?v=1 ::::: */
+
+body { width: 100%; min-width: 1200px; background: rgb(240, 240, 240) none repeat scroll 0% 0%; font-size: 14px; font-family: Tahoma,Helvetica,"microsoft yahei","Hiragino Sans GB",Simsun,宋体,sans-serif; color: rgb(96, 96, 96); }
+i, em { font-style: normal; }
+.ucenterWidth1 { width: 100%; min-width: 1200px; }
+#ucenterWrapper { background: rgb(240, 240, 240) none repeat scroll 0% 0%; }
+@font-face {
+	font-family: "iconfont";
+	src: url('images/iconfont.eot') format("embedded-opentype"), url('images/iconfont.woff') format("woff"), url('images/iconfont.ttf') format("truetype"), url('images/iconfont.svg') format("svg");
+}
+.iconfont { font-family: "iconfont" ! important; font-size: 16px; font-style: normal; }
+.centerIcon { background-image: url('images/centericon.png'); background-color: transparent; }
+input::-moz-placeholder { color: rgb(204, 204, 204); }
+input::-moz-placeholder { color: rgb(204, 204, 204); }
+header { height: 64px; width: 100%; min-width: 1200px; border-bottom: 1px solid rgb(231, 231, 231); position: fixed; z-index: 9; background: rgb(255, 255, 255) none repeat scroll 0% 0%; }
+.centerLogo { float: left; padding: 16px 0px; text-align: center; width: 199px; border-right: 1px solid rgb(237, 237, 237); }
+.centerSearch { position: relative; width: 210px; height: 40px; float: left; padding: 12px 40px; }
+.searchText { padding: 5px 0px 5px 45px; width: 160px; height: 26px; line-height: 26px; border: 2px solid rgb(242, 242, 242); border-radius: 18px; }
+.searchBtn { position: absolute; left: 55px; top: 24px; background-position: -209px -32px; height: 18px; width: 18px; border: medium none; }
+.headerUl { float: right; height: 64px; }
+.headerUl li { position: relative; float: left; height: 64px; cursor: pointer; line-height: 64px; padding: 0px 30px; border-left: 1px solid rgb(242, 242, 242); }
+.headerUl li a { color: rgb(96, 96, 96); }
+.headerUl li .centerLogout:hover { color: rgb(3, 197, 255); }
+.centerLogout, .juheCode { position: absolute; top: 64px; left: -1px; width: 100%; height: 20px; line-height: 20px; padding: 10px 0px 20px; border-width: 0px 1px 1px; border-style: none solid solid; border-color: -moz-use-text-color rgb(242, 242, 242) rgb(242, 242, 242); -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; border-image: none; background-color: rgb(255, 255, 255); text-align: center; display: none; }
+.headerIcon1 { background-position: -226px -132px; height: 6px; width: 10px; display: inline-block; position: relative; left: 8px; top: -2px; }
+.juheCode { height: 90px; padding-top: 0px; padding-bottom: 15px; }
+.juheCode span { height: 90px; width: 90px; display: block; margin: 0px auto; background-position: -111px 0px; }
+nav { position: fixed; top: 0px; left: 0px; width: 200px; height: 100%; overflow: auto; background: rgb(50, 54, 60) none repeat scroll 0% 0%; z-index: 8; }
+.ucenterNav { padding-top: 64px; }
+.ucenterNav li { height: 46px; line-height: 46px; padding: 0px 30px; }
+.ucenterNav .navIndex { height: 64px; line-height: 66px; margin-bottom: 8px; }
+.ucenterNav .navIndex .navDiv { border-bottom: 2px solid rgb(57, 62, 69); }
+.ucenterNav .navIndex i { font-size: 18px; }
+.ucenterNav a, #ucenterSubA { color: rgb(168, 175, 185); cursor: pointer; }
+.ucenterNav a i.iconfont, #ucenterSubA i.iconfont { padding-right: 6px; display: inline-block; width: 20px; }
+.ucenterNav .active a { color: rgb(0, 147, 83); }
+.ucenterSub {  }
+.ucenterNav .ucenterSub li { padding-left: 20px; line-height: 36px; height: 36px; font-size: 12px; }
+.ucenterNav a:hover, .ucenterNav .active a { color: rgb(3, 197, 255); }
+.subDown { background-position: -176px -174px; height: 5px; width: 11px; display: inline-block; opacity: 0.8; position: relative; left: 6px; top: -2px; }
+.ucenterNav .active { background: transparent url('images/navbg.png') no-repeat scroll right center; }
+.ucenterNav .navInfoLi { padding: 0px 0px 0px 30px; }
+.ucenterNav .ucenterSub li i { padding-right: 2px; font-size: 12px; }
+#ucenterSection { margin-left: 200px; padding: 84px 40px 30px; }
+.ucenterIndexUl2 li:nth-of-type(3n-1) { width: 34%; }
+.my-gongzh-div .ucenterIndexUl2 li:nth-of-type(3n-1) { width: 33%; }
+.ucenterIndexUl2 li:nth-of-type(3n+1) .indexUlDiv2 { margin-right: 10px; }
+.ucenterIndexUl2 li:nth-of-type(3n-1) .indexUlDiv2 { margin: 0px 10px; }
+.my-gongzh-div .ucenterIndexUl2 li:nth-of-type(3n-1) .indexUlDiv2 { margin-left: 0px; }
+.ucenterIndexUl2 li:nth-of-type(3n) .indexUlDiv2 { margin-left: 10px; }
+.ucenterTable { width: 100%; text-align: left; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 1px solid rgb(231, 231, 231); }
+.ucenterTable td, .ucenterTable th { border-bottom: 1px solid rgb(231, 231, 231); padding-left: 25px; height: 52px; text-align: left; }
+.ucenterTable th { background: rgb(247, 247, 247) none repeat scroll 0% 0%; height: 40px; padding-left: 25px; }
+.purchaseTabUl { height: 50px; border-bottom: 1px solid rgb(224, 224, 224); margin-bottom: 30px; }
+.purchaseTabUl li { float: left; }
+.purchaseTabUl li a { display: inline-block; height: 50px; line-height: 50px; padding: 0px 20px; font-size: 16px; color: rgb(144, 144, 144); }
+.purchaseTabUl .active a { color: rgb(3, 197, 255); border-bottom: 2px solid rgb(3, 197, 255); height: 49px; line-height: 50px; font-weight: bold; }
+.purchaseTabUl li a:hover { color: rgb(3, 197, 255); }
+.orderTips1::after, .orderTips1::before, .orderTips2::after, .orderTips2::before { top: 100%; border: 10px solid transparent; content: " "; width: 0px; height: 0px; position: absolute; pointer-events: none; }
+.orderTips1::after, .orderTips2::after { border-top-color: rgb(255, 255, 255); border-width: 8px; left: 20%; margin-left: -8px; }
+.orderTips1::before, .orderTips2::before { border-top-color: rgb(231, 231, 231); border-width: 10px; left: 20%; margin-left: -10px; }
+.orderTips2::after { left: auto; right: 30px; }
+.orderTips2::before { left: auto; right: 28px; }
+.failTd .orderTips2::after { right: auto; left: 30px; }
+.failTd .orderTips2::before { right: auto; left: 30px; }
+@media only screen and (min-width: 1440px) {
+}
+@media only screen and (max-width: 1440px) {
+}
+@media only screen and (max-width: 1599px) {
+}
+@media only screen and (max-width: 1330px) {
+}
+@media only screen and (min-width: 1560px) {
+}
+/* ::::: https://www.juhe.cn/themes/v5/public/css/respond.css ::::: */
+
+@media only screen and (min-width: 1599px) {
+}
+@media only screen and (min-width: 1360px) and (max-width: 1599px) {
+}
+@media only screen and (min-width: 1266px) and (max-width: 1360px) {
+	.ucenterTable td, .ucenterTable th { padding-left: 15px; }
+}
+@media only screen and (max-width: 1266px) {
+	.ucenterTable td, .ucenterTable th { padding-left: 10px; }
+}
+@media only screen and (max-width: 1366px) {
+	body { font-size: 12px; }
+	.purchaseTabUl li a { font-size: 14px; }
+}
+/* ::::: https://www.juhe.cn/themes/v5/public/js/layer/skin/layer.css ::::: */
+
+html #layui_layer_skinlayercss { display: none; position: absolute; width: 1989px; }

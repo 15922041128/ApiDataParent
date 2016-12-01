@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Yingze</title>
+	<link rel="stylesheet" href="css/wan.css">
+    <link rel="stylesheet" href="css/wxlink.css">
+    <link rel="icon" type="image/png" href="images/yingze.jpg">
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+	<script src="js/angular-1.3.0.14/angular.js"></script>
+	<script src="js/login.js"></script>
+</head>
+            
+<body class="bg-white" ng-app="app" ng-controller="loginController">
+<div class="gnb-w">
+    <div class="gnb-box">
+        <ul class="gnb" id="header_admin" tag="" flag="">
+                                    <li class="gnb-log" clstag="pageclick|keycount|wxlink_201608015|1"><a href="https://sso.jcloud.com/sso/login?ReturnUrl=https://wxlink.jcloud.com"> <i class="gnb-icon"></i> 登录</a>|</li>
+                <li class="gnb-reg" clstag="pageclick|keycount|wxlink_201608015|2"><a href="https://reg.jd.com/reg/person?ReturnUrl=https://wxlink.jcloud.com"> <i class="gnb-icon2"></i> 注册</a>|</li>
+                        <li class="gnb-con" clstag="pageclick|keycount|wxlink_201608015|3"><a href="http://wxlink.jcloud.com/help/questionUI" target="_blank"> <i class="gnb-icon3"></i> 联系我们</a></li>
+        </ul>
+    </div>
+</div>
+
+<script type="application/javascript">
+    jQuery(function () {
+        jQuery('#logout_a').click(function(){
+            jQuery.getJSON("//sso.jd.com/exit?t="+new Date()+"&callback=?", function () {
+            });
+            jQuery.getJSON("//sso.jcloud.com/exit?t="+new Date()+"&callback=?", function () {
+            });
+            setTimeout(function () {
+                window.location.href="https://sso.jcloud.com/sso/login?ReturnUrl=https://wxlink.jcloud.com";
+            }, 500);
+        });
+    });
+</script>        
+<div class="header-w" style="display: inline-blcok;">
+    <div class="header-new">
+        
+        <div class="logo-new">
+        <a href="http://wxlink.jcloud.com/index">
+        <img src="images/yingze.jpg" alt="YINGZE" height="65" width="234">
+        </a>
+        </div>
+        <div class="header-s">
+            <form action="http://wxlink.jcloud.com/search/apis" id="searchForm" target="_blank">
+                <input type="text" class="search-inp" name="keyword" id="keyword" value="" onblur="replaceSpace(this)"><span class="clstagstyle" clstag="pageclick|keycount|wxlink_201608015|4"><input type="button" class="search-btn" value="搜 索"></span>
+            </form>
+            <div class="search-hotw">
+            <a href="http://wxlink.jcloud.com/search/apis?keyword=%E5%BE%81%E4%BF%A1" target="_blank" clstag="pageclick|keycount|wxlink_201608015|31">征信</a>|                                            <a href="http://wxlink.jcloud.com/search/apis?keyword=%E5%AD%A6%E7%B1%8D%E8%AE%A4%E8%AF%81" target="_blank" clstag="pageclick|keycount|wxlink_201608015|32">学籍认证</a>|                                            <a href="http://wxlink.jcloud.com/search/apis?keyword=%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81" target="_blank" clstag="pageclick|keycount|wxlink_201608015|33">身份认证</a>|                                            <a href="http://wxlink.jcloud.com/search/apis?keyword=%E4%BC%81%E4%B8%9A%E5%B7%A5%E5%95%86%E6%95%B0%E6%8D%AE" target="_blank" clstag="pageclick|keycount|wxlink_201608015|34">企业工商数据</a>|                                            <a href="http://wxlink.jcloud.com/search/apis?keyword=%E9%87%91%E8%9E%8D%E9%BB%91%E5%90%8D%E5%8D%95" target="_blank" clstag="pageclick|keycount|wxlink_201608015|35">金融黑名单</a>|                                            <a href="http://wxlink.jcloud.com/search/apis?keyword=%E6%B6%88%E8%B4%B9%E8%80%85%E7%94%BB%E5%83%8F" target="_blank" clstag="pageclick|keycount|wxlink_201608015|36">消费者画像</a>|                                            <a href="http://wxlink.jcloud.com/search/apis?keyword=%E4%BA%AC%E4%B8%9C%E9%87%91%E8%9E%8D" target="_blank" clstag="pageclick|keycount|wxlink_201608015|37">京东金融</a>                                    </div>
+        </div>
+        <a href="http://dataplus.jcloud.com/" class="header-fb" target="_blank" clstag="pageclick|keycount|wxlink_201608015|5">发布数据</a>
+   </div>
+</div>
+
+
+<div class="lnb-w">
+    <div class="lnb-box">
+        <div class="hot-left">
+            <h2 class="hot-left-h2"><i class="hot-icon"></i> 数据分类</h2>
+            <div class="hot-lst hide categorybg">
+                        <dl class="first">
+                        <dt clstag="pageclick|keycount|wxlink_201608015|41">
+                            <i class="nav-icon" style="background-image:url(//img11.360buyimg.com/wanxiang/jfs/t2635/193/3751546605/1449/a1a63f0a/579b3b38N9e6c1185.png);"></i>
+                            <a href="http://wxlink.jcloud.com/market/apis/5" target="_blank">金融服务</a>
+                        </dt>
+                        <dd>
+                            <a href="http://wxlink.jcloud.com/market/apis/5?tagId=1" target="_blank">个人征信</a>
+                    		<a href="http://wxlink.jcloud.com/market/apis/5?tagId=2" target="_blank">企业征信</a>
+                        </dd>
+                        <dd class="sublayer">
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=4" target="_blank">银行卡核验</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=5" target="_blank">学历学籍</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=6" target="_blank">企业工商</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=7" target="_blank">反欺诈</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=8" target="_blank">黑名单</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=9" target="_blank">银行卡</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=10" target="_blank">税务</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=11" target="_blank">司法</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=12" target="_blank">社保公积金</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=13" target="_blank">知识产权</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=14" target="_blank">执业信息</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=15" target="_blank">贷款</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=16" target="_blank">风控</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=17" target="_blank">招投标</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=18" target="_blank">资质备案</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=19" target="_blank">行政监管</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=20" target="_blank">投资交易</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=21" target="_blank">资讯</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=22" target="_blank">手机号在网查询</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=23" target="_blank">手机消费查询</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=24" target="_blank">手机号码归属</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=25" target="_blank">手机号码验证</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=26" target="_blank">手机号码状态</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=28" target="_blank">基站</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=31" target="_blank">车辆信息</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=33" target="_blank">违章查询</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=37" target="_blank">快递物流</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=38" target="_blank">航班</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=39" target="_blank">标准电码</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=40" target="_blank">行政区域</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=41" target="_blank">历史气象</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=53" target="_blank">精准营销</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=54" target="_blank">用户画像</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=55" target="_blank">商品评论</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=59" target="_blank">质检</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=66" target="_blank">京东指数</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=68" target="_blank">证件牌照识别</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=69" target="_blank">图片识别</a>
+                           <a href="http://wxlink.jcloud.com/market/apis/5?tagId=76" target="_blank">万象11.11</a>
+                   	</dd>
+                    </dl>
+                   	<dl>
+                        <dt clstag="pageclick|keycount|wxlink_201608015|42">
+                            <i class="nav-icon" style="background-image:url(//img11.360buyimg.com/wanxiang/jfs/t2977/161/2091150471/1491/fa91866c/579b3b4cN8ba13962.png);"></i>
+                            <a href="http://wxlink.jcloud.com/market/apis/16" target="_blank">通讯服务</a>
+                        </dt>
+                        <dd>
+                            <a href="http://wxlink.jcloud.com/market/apis/16?tagId=1" target="_blank">个人征信</a>
+                            <a href="http://wxlink.jcloud.com/market/apis/16?tagId=3" target="_blank">身份验证</a>
+						</dd>
+                        <dd class="sublayer">
+                              <a href="http://wxlink.jcloud.com/market/apis/16?tagId=22" target="_blank">手机号在网查询</a>
+                              <a href="http://wxlink.jcloud.com/market/apis/16?tagId=23" target="_blank">手机消费查询</a>
+                              <a href="http://wxlink.jcloud.com/market/apis/16?tagId=24" target="_blank">手机号码归属</a>
+                              <a href="http://wxlink.jcloud.com/market/apis/16?tagId=25" target="_blank">手机号码验证</a>
+                              <a href="http://wxlink.jcloud.com/market/apis/16?tagId=26" target="_blank">手机号码状态</a>
+                              <a href="http://wxlink.jcloud.com/market/apis/16?tagId=27" target="_blank">短信API</a>
+                              <a href="http://wxlink.jcloud.com/market/apis/16?tagId=28" target="_blank">基站</a>
+                              <a href="http://wxlink.jcloud.com/market/apis/16?tagId=29" target="_blank">网站监测</a>
+                              <a href="http://wxlink.jcloud.com/market/apis/16?tagId=30" target="_blank">IP地址</a>
+                              <a href="http://wxlink.jcloud.com/market/apis/16?tagId=76" target="_blank">万象11.11</a>
+                      	</dd>
+                    </dl>
+            </div>
+        </div>
+        <ul class="lnb-lst">
+            <li clstag="pageclick|keycount|wxlink_201608015|7"><a href="http://wxlink.jcloud.com/market/apis" target="_blank" class="cur">数据市场</a></li>
+            <li clstag="pageclick|keycount|wxlink_201608015|96"><a href="http://wxlink.jcloud.com/market/packets" target="_blank">数据包</a></li>
+            <li clstag="pageclick|keycount|wxlink_201608015|8"><a href="http://wxlink.jcloud.com/demand/demandUI" target="_blank">数据定制</a></li>
+            <li clstag="pageclick|keycount|wxlink_201608015|9"><a href="http://wxlink.jcloud.com/help/center/1" target="_blank">帮助中心</a></li>
+        </ul>
+    </div>
+</div>        
+<script type="text/javascript" src="js/apiDetail.js" xmlns="http://www.w3.org/1999/html"></script>
+<script type="text/javascript" src="./央行个人征信报告授权数据_金融服务_API数据_京东万象_files/iterator.page.js"></script>
+<script type="text/javascript" src="./央行个人征信报告授权数据_金融服务_API数据_京东万象_files/comment.operation.js"></script>
+<script type="text/javascript" src="./央行个人征信报告授权数据_金融服务_API数据_京东万象_files/order.operation.js"></script>
+
+<!-- 详情页 -->
+<section class="wrap">
+    <input type="hidden" id="id" name="id" value="10636">
+    <input type="hidden" id="chargeType" value="0">
+    <input type="hidden" id="dataType" value="0">
+    <div class="position"><i class="new-pos"></i> 当前位置：<a href="http://wxlink.jcloud.com/market/apis">数据市场</a> <span class="song">&gt;</span> <a href="http://wxlink.jcloud.com/market/apis/5">金融服务</a> <span class="song">&gt;</span> <span class="pos-on">央行个人征信报告授权数据</span></div>
+
+
+    <div class="mb25 cl">
+        <div class="detail-left">
+            <div class="order new-show">
+                <div class="new-tmp">
+                        <img src="images/img-t-001.png" alt="央行个人征信报告授权数据" width="230" height="230">
+                        <div class="pt5">
+                        <span class="index-span"><i class="index-icon2"></i> 浏览(3093)</span>
+                        <span class="index-span" id="add-fav">
+                        	<a href="javascript:;" clstag="pageclick|keycount|wxlink_201512091|95" class="collectBtn"><i class="index-icon5"></i>收藏</a>
+                        	<span class="collectNum">（10）</span>
+                        </span>
+                    	</div>
+                </div>
+                <div class="info-show">
+                    <h1 class="pl15">央行个人征信报告授权数据<span class="blue-tag">免费试用30次</span></h1>
+                    <p class="new-intro">提供被查询人的央行个人征信报告信息</p>
+                    <div class="new-price-show">
+                        <ul>
+                             <li>
+                             	<span class="tit" id="apiCharge">价 格</span>￥<del>&nbsp;150&nbsp;</del>
+                             </li>
+                             <li>
+                             	<span class="tit"> 活动价 </span>￥
+                             	
+                             	<span class="price-num" style="display: inline;">
+									<span class="price-true">12.00</span>
+                                </span>
+                                <span class="orangeTag equivalent-price" style="display: inline-block;">折合：0.12元/次</span>
+                                
+                                <span class="price-num" style="display: none;">
+                                   <span class="price-true">52.00</span>
+                               	</span>
+                               	<span class="orangeTag equivalent-price" style="display: none;">折合：0.10元/次</span>
+                             </li>                                                                                                                                                                                            </li>
+                             <li id="specs"><span class="tit">规 格</span>
+                                <span class="price cur chargeSelected price-times" onclick="priceSelect(this,0)" chargeid="5320">100次 </span>
+                                <span class="price price-times" onclick="priceSelect(this,0)" chargeid="5321">500次</span>
+                             </li>
+                        </ul>
+                    </div>
+                    <ul class="info-list">
+                        <li><span class="tit">评 分</span>
+                            <i class="star"></i>
+                            <i class="star"></i>
+                            <i class="star"></i>
+                            <i class="star"></i>
+                            <i class="star"></i>
+                            <span class="dark-color">5.0分</span>
+                        </li>
+                        <li><span class="tit">类 目</span>
+                            <span><a href="http://wxlink.jcloud.com/market/apis?tagId=1" clstag="pageclick|keycount|wxlink_201608015|56" class="blue">个人征信</a></span> 
+                      	</li>
+                        <li><span class="tit">
+                        	商 家</span><span class="blue"><a href="http://wxlink.jcloud.com/shop/shopDetail/intecredit" target="_blank">中科慧信（北京）科技有限公司</a></span></li>
+                        <li><span class="tit">
+                        	服 务</span>免费测试
+                        </li>
+                    </ul>
+
+                    <div>
+                        <span class="tit pt10 fl">数 量</span>
+                        <span class="numbox">
+                        	<input clstag="pageclick|keycount|wxlink_201512091|100" type="text" class="numInput" value="1" id="selectCount" onblur="checkNum(this)">
+                            <i class="plus" clstag="pageclick|keycount|wxlink_201512091|99"></i>
+                            <i class="reduce" clstag="pageclick|keycount|wxlink_201512091|98"></i>
+                        </span>
+                        <a href="javascript:;" id="purchaseBtn" class="purchaseBtn" tag="//fw.jd.com" returnurl="http://o.wxlink.jd.com/wallet/return_url" clstag="pageclick|keycount|wxlink_201512091|97">立即购买</a>
+                    </div>
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+ <div class="detail-left">
+     <div class="conBox detail bg-white" id="conBox">
+        	<!-- 横向菜单 -->
+            <nav class="nav new-tab">
+                <ul>
+                	<li id="detailTab1" onclick="setTab(&#39;detailTab&#39;,1,3)" class="on" clstag="pageclick|keycount|wxlink_201512091|93"><a href="javascript:;">API详情</a></li>
+                    <li id="detailTab2" onclick="setTab(&#39;detailTab&#39;,2,3);" clstag="pageclick|keycount|wxlink_201512091|94" class=""><a href="javascript:;">详细介绍</a></li>
+                    <li id="detailTab3" onclick="setTab(&#39;detailTab&#39;,3,3)" clstag="pageclick|keycount|wxlink_201512091|92" class=""><a href="javascript:;">错误码参照</a></li>
+                </ul>
+            </nav>
+
+<!-- API详情 -->
+<div id="con-detailTab-1" style="display: block;">
+<aside class="side-list">
+    <ul>
+            <li id="index0" class="cur" onclick="showDetail(0)">
+                <a title="1注册功能2获取图片验证码" href="javascript:;"><i></i>1注册功能2获取图片验证码</a>
+            </li>
+           	<li id="index1" onclick="showDetail(1)" class="">
+                <a title="1注册功能3填写证件信息" href="javascript:;"><i></i>1注册功能3填写证件信息</a>
+            </li>
+	</ul>
+</aside>
+
+
+<section class="content" id="interface0" style="display:block;">
+<div class="title"><h2>1注册功能2获取图片验证码<a href="javascript:;" class="blueTag ml10" clstag="pageclick|keycount|wxlink_201512091|87" onclick="testTools(10636)">立即测试</a></h2></div>
+    <div class="checkDiv pt10">
+        <p class="dataName">标示：reportRegisterCaptcha</p>
+        <ul class="data pt10">
+            <li><span class="tit">接口描述：</span></li>
+            <li><span class="tit">接口地址：</span>https://way.jd.com/intecredit/reportRegisterCaptcha</li>
+            <li><span class="tit">请求方式：</span>HTTPS GET POST</li>
+            <li><span class="tit">请求示例：</span>https://way.jd.com/intecredit/reportRegisterCaptcha?name=&amp;userid=&amp;appkey=您申请的APPKEY <button id="dialog1" class="blueTag" onclick="getKey()" clstag="pageclick|keycount|wxlink_201512091|88">获取APPKEY</button></li>
+        </ul>
+        <p class="dataName mt20">QUERY请求参数   
+            <input type="hidden" id="endpointId" value="7763">
+        </p>
+        <table class="paraTbl">
+            <colgroup>
+                <col width="120">
+                <col width="110">
+                <col width="80">
+                <col width="150">
+                <col width="">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>名称</th>
+                <th>类型</th>
+                <th>必填</th>
+                <th>示例值</th>
+                <th>描述</th>
+            </tr>
+            </thead>
+                            <tbody><tr>
+                    <td>name</td>
+                    <td>String</td>
+                    <td>
+                                                    是
+                                            </td>
+                    <td style="word-break:break-all"></td>
+                    <td style="word-break:break-all">注册用户的中文姓名</td>
+                </tr>
+                            <tr>
+                    <td>userid</td>
+                    <td>String</td>
+                    <td>
+                                                    是
+                                            </td>
+                    <td style="word-break:break-all"></td>
+                    <td style="word-break:break-all">调用核心API获取唯一标识userid，类似：001201601011410389100716</td>
+                </tr>
+                        </tbody><tbody>
+            </tbody>
+        </table>
+        
+                                    
+                            <p class="dataName mt20">返回示例值</p>
+                                    <div class="egDiv">
+                    <pre>{
+    "result": true,
+    "code": 0,
+    "msg":"https://api.intecredit.cn/captcha/404.jpg"
+}
+说明：result=true表示请求成功，result=false表示请求失败，具体错误需要判断code 
+（1）当code=10006时表示请求图片验证码失败 
+（2）当code=0时表示请求成功，可以从msg字段里获取图片验证码 
+（3）当code=10000时表示流程请求不对，请从第一步开始 
+（4）当code=10001时表示系统异常 </pre>
+  </div>
+</div>
+</section>
+<section class="content" id="interface1" style="display:none;">
+    <div class="title"><h2>1注册功能3填写证件信息<a href="javascript:;" class="blueTag ml10" clstag="pageclick|keycount|wxlink_201512091|87" onclick="testTools(10636)">立即测试</a></h2></div>
+    <div class="checkDiv pt10">
+        <p class="dataName">标示：Reportregister</p>
+        <ul class="data pt10">
+            <li><span class="tit">接口描述：</span></li>
+            <li><span class="tit">接口地址：</span>https://way.jd.com/intecredit/Reportregister</li>
+            <li><span class="tit">请求方式：</span>HTTPS GET POST</li>
+            <li><span class="tit">请求示例：</span>https://way.jd.com/intecredit/Reportregister?name=&amp;userid=&amp;idType=0&amp;idNo=&amp;captchaCode=&amp;appkey=您申请的APPKEY <button id="dialog1" class="blueTag" onclick="getKey()" clstag="pageclick|keycount|wxlink_201512091|88">获取APPKEY</button></li>
+        </ul>
+        <p class="dataName mt20">QUERY请求参数   
+            <input type="hidden" id="endpointId" value="7764">
+        </p>
+        <table class="paraTbl">
+            <colgroup>
+                <col width="120">
+                <col width="110">
+                <col width="80">
+                <col width="150">
+                <col width="">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>名称</th>
+                <th>类型</th>
+                <th>必填</th>
+                <th>示例值</th>
+                <th>描述</th>
+            </tr>
+            </thead>
+                 <tbody>
+                 <tr>
+                    <td>name</td>
+                    <td>String</td>
+                    <td>
+                                                    是
+                    </td>
+                    <td style="word-break:break-all"></td>
+                    <td style="word-break:break-all">注册用户的中文姓名</td>
+                </tr>
+                            <tr>
+                    <td>userid</td>
+                    <td>String</td>
+                    <td>
+                                                    是
+                    </td>
+                    <td style="word-break:break-all"></td>
+                    <td style="word-break:break-all">调用核心API获取唯一标识userid，类似：001201601011410389100716</td>
+                </tr>
+                            <tr>
+                    <td>idType</td>
+                    <td>String</td>
+                    <td>
+                                                    是
+                                            </td>
+                    <td style="word-break:break-all">0</td>
+                    <td style="word-break:break-all"></td>
+                </tr>
+                            <tr>
+                    <td>idNo</td>
+                    <td>String</td>
+                    <td>
+                                                    是
+                                            </td>
+                    <td style="word-break:break-all"></td>
+                    <td style="word-break:break-all">身份证号码</td>
+                </tr>
+                            <tr>
+                    <td>captchaCode</td>
+                    <td>String</td>
+                    <td>
+                                                    是
+                                            </td>
+                    <td style="word-break:break-all"></td>
+                    <td style="word-break:break-all">图片验证码</td>
+                </tr>
+                        </tbody><tbody>
+            </tbody>
+        </table>
+           <p class="dataName mt20">返回示例值</p>
+           <div class="egDiv">
+                    <pre>{
+					    "result": true,
+					    "code": 0,
+					"msg": 
+					{
+					    "htmlToken"："123456"
+					}
+					}
+					注：htmlToken将用于最后完成注册接口的参数。
+					说明：result=true表示请求成功，result=false表示请求失败，具体错误需要判断code ，其中htmlToken的值将作为提交补充信息，完成注册 接口的参数。
+					（1）当code=23003时表示 目前系统尚未收录您的个人信息，无法进行注册。 
+					（2）当code=20002时表示图片验证码输入错误，需重新获取图片验证码
+					（3）当code=0时表示请求成功，可以进行下一步操作 
+					（4）当code=10000时表示流程请求不对，请从第一步开始 
+					（5）当code=10001时表示系统异常
+
+				</pre>
+  		</div>
+  </div>
+</section>
+                                                                       
+<div class="mask" id="confirmAppKey" style="display:none">
+    <div class="homePop innerPop conAPP" id="confirmApp">
+        <div class="myappKey appKeyDiv">密钥</div>
+        <div class="appclose"></div>
+        <div class="text appcontent appKeyCon" style="top:30px;left:25px;">
+            这是您在京东万象调用服务所需要的密钥，<br>
+            可以调用平台所有即用服务。
+            <div class="small" style="font-weight: bolder;color:red;"></div>
+            您可以在接口测试工具及用户中心查看您的<br>
+            APPKEY，为了您能够安全调用，请不要将<br>
+            密钥给他人使用。
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- 详细介绍 -->
+<div id="con-detailTab-2" style="display: none;">
+<div class="detail content_error" style="min-height: 500px">
+    <section class="textContent" id="intro" style="overflow:hidden">
+        <p><span style="color:#FF0000"><strong>使用时请先调用最后一个接口，获取唯一用户标识userid。</strong></span></p>
+
+		<p>&nbsp;</p>
+		
+		<p>央行个人征信报告授权数据由3个独立的部分构成：注册、登陆授权和快捷登陆授权。调用每一部分前都要先调用相对应的获取userid接口。</p>
+		
+		<p>（1）未在“中国人民银行征信中心系统（<a href="http://www.pbccrc.org.cn/"><u>http://www.pbccrc.org.cn</u></a>）”注册用户，须先调用注册接口进行用户注册或在“中国人民银行征信中心系统（<a href="http://www.pbccrc.org.cn/"><u>http://www.pbccrc.org.cn</u></a>）”官网注册；</p>
+		
+		<p>（2）已注册用户但未获取央行征信报告查询码的用户，可调用登陆授权接口获取查询码；</p>
+		
+		<p>（3）已拥有央行征信报告查询码用户可以直接授权账号、密码及授权码，提交查询请求获取查询结果。</p>
+		
+		<p>&nbsp;</p>
+
+
+    </section>
+    <div class="clear"></div>
+</div>
+</div>
+
+<!-- 错误码参照 -->
+<div id="con-detailTab-3" style="display: none;">
+<div class="detail content_error">
+    <section>
+        <h4 class="f18 gray mb15">系统级错误码参照：</h4>
+        <table class="rectbl noboder">
+            <colgroup>
+                <col width="300">
+                <col width="550">
+            </colgroup>
+            <thead>
+            <tr>
+                <th class="tleft">错误码</th>
+                <th class="tleft">说明</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="tleft">10000</td>  <td class="tleft">查询成功</td>
+            </tr>
+            <tr>
+                <td class="tleft">10001</td> <td class="tleft">错误的请求appKey</td>
+            </tr>
+            <tr>
+                <td class="tleft">10002</td> <td class="tleft">调用服务商接口异常， 请联系管理员</td>
+            </tr>
+            <tr>
+                <td class="tleft">10003</td> <td class="tleft">不存在相应的数据信息</td>
+            </tr>
+            <tr>  <td class="tleft"> 10004 </td> <td class="tleft">URL上appKey参数不能为空</td> </tr>
+            <tr>  <td class="tleft"> 10010 </td> <td class="tleft">接口需要付费，请充值</td> </tr>
+            <tr>  <td class="tleft"> 10020 </td> <td class="tleft">系统繁忙，请稍后再试</td></tr>
+            <tr>  <td class="tleft"> 10030 </td> <td class="tleft">调用万象网关失败， 请联系管理员</td>  </tr>
+            <tr>  <td class="tleft"> 10040 </td> <td class="tleft">超过每天限量，请明天继续</td></tr>
+            <tr>  <td class="tleft"> 10050 </td> <td class="tleft">用户已被禁用</td> </tr>
+            <tr>  <td class="tleft"> 10060 </td> <td class="tleft">提供方设置调用权限，请联系提供方</td> </tr>
+            <tr>  <td class="tleft"> 10070 </td> <td class="tleft">该数据只允许企业用户调用</td> </tr>
+            </tbody>
+        </table>
+    </section>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+<div class="clear"></div>
+
+
+<footer class="footer">
+    <div class="wrap">
+        <dl>
+            <dt class="i51"></dt>
+            <dt>首页</dt>
+            <dd><a href="http://wxlink.jcloud.com/market/apis">数据市场</a></dd>
+            <dd><a href="http://dataplus.jcloud.com/" target="_blank">ISP管理中心</a></dd>
+        </dl>
+        <dl>
+            <dt class="i52"></dt>
+            <dt>帮助中心</dt>
+            <dd><a href="http://wxlink.jcloud.com/help/center/1">平台介绍</a></dd>
+            <dd><a href="http://wxlink.jcloud.com/help/center/2">入驻流程</a></dd>
+            <dd><a href="http://wxlink.jcloud.com/help/center/3">数据录入</a></dd>
+            <dd><a href="http://wxlink.jcloud.com/help/center/4">数据调用</a></dd>
+            <dd><a href="http://wxlink.jcloud.com/help/center/5">发票管理</a></dd>
+            <dd><a href="http://wxlink.jcloud.com/help/center/6">常见问题</a></dd>
+        </dl>
+        <dl>
+            <dt class="i53"></dt>
+            <dt>联系我们</dt>
+            <dd><a href="http://wxlink.jcloud.com/help/questionUI">商务合作</a></dd>
+            <dd><a href="http://wxlink.jcloud.com/help/questionUI?#maodian">用户反馈</a></dd>
+            <dd><a href="http://wxlink.jcloud.com/help/myLinks" target="_blank">合作伙伴</a></dd>
+        </dl>
+    </div>
+</footer>
+<nav class="footNav">
+    <a href="http://www.jd.com/" target="_blank">京东商城</a>|
+    <a href="http://www.jcloud.com/" target="_blank">京东云</a>|
+    <a href="http://fw.jd.com/" target="_blank">京东服务市场</a>|
+    <a href="http://jos.jd.com/" target="_blank">京东开放服务</a>|
+    <a href="http://jzt.jd.com/gw/" target="_blank">京准通</a>|
+    <a href="http://smart.jd.com/" target="_blank">京东智能</a>|
+    <a href="http://ft.jd.com/" target="_blank">企业金融服务</a>
+</nav>
+</body></html>
