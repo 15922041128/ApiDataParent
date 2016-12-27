@@ -58,6 +58,9 @@ public class User implements Serializable{
 	/** 营业执照副本(url) */
 	private String licenseImg;
 	
+	/** 审核信息 */
+	private String message;
+	
 	public Integer getID() {
 		return ID;
 	}
@@ -184,5 +187,13 @@ public class User implements Serializable{
 
 	public void setLicenseImg(String licenseImg) {
 		this.licenseImg = licenseImg;
+	}
+	
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 }
