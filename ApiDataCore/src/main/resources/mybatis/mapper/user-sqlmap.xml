@@ -37,6 +37,33 @@
         	<if test="auth !=null and auth != '' ">
             	auth = #{auth},
         	</if>
+        	<if test="province !=null and province != '' ">
+            	province = #{province},
+        	</if>
+        	<if test="city !=null and city != '' ">
+            	city = #{city},
+        	</if>
+        	<if test="area !=null and area != '' ">
+            	area = #{area},
+        	</if>
+        	<if test="address !=null and address != '' ">
+            	address = #{address},
+        	</if>
+        	<if test="license !=null and license != '' ">
+            	license = #{license},
+        	</if>
+        	<if test="taxRegCertify !=null and taxRegCertify != '' ">
+            	taxRegCertify = #{taxRegCertify},
+        	</if>
+        	<if test="org !=null and org != '' ">
+            	org = #{org},
+        	</if>
+        	<if test="licenseImg !=null and licenseImg != '' ">
+            	licenseImg = #{licenseImg},
+        	</if>
+        	<if test="message !=null and message != '' ">
+            	message = #{message},
+        	</if>
         </set>
         <where>
 			ID = #{ID}
