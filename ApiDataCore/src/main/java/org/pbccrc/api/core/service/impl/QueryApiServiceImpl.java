@@ -192,7 +192,7 @@ public class QueryApiServiceImpl implements QueryApiService{
 		String dataFrom = Constants.DATA_FROM_LOCAL;
 		
 		// localApiID
-		String localApiID = "1";
+		String localApiID = Constants.API_ID_SFZRZ;
 		// returnType
 		String returnType = "2";
 		// tableName
@@ -232,6 +232,9 @@ public class QueryApiServiceImpl implements QueryApiService{
 			urlBuff.append(Constants.URL_PARAM_CONNECTOR + "identityCard=" + URLEncoder.encode(idCardNo, "utf-8"));
 			urlBuff.append(Constants.URL_PARAM_CONNECTOR + "fullName=" + URLEncoder.encode(name, "utf-8"));
 			String returnStr = remoteApiOperator.remoteAccept(urlBuff.toString());
+			
+			boolean flag = false;
+			
 			// 判断返回字符串是否为空
 			if (!StringUtil.isNull(returnStr)) {
 				// 如果返回字符串不为空,则插入数据库并返回
@@ -239,14 +242,23 @@ public class QueryApiServiceImpl implements QueryApiService{
 				JSONObject returnJson = JSONObject.parseObject(returnStr);
 				String status = "一致";
 				status = returnJson.getString("status");
-				if ("一致".equals(status)) {
-					insertDB(tableName, localApiID, returnType, name, idCardNo, status);
+				
+				if (StringUtil.isNull(status)) {
+					flag = true;
+				} else {
+					if ("一致".equals(status)) {
+						insertDB(tableName, localApiID, returnType, name, idCardNo, status);
+					}
+					resultJson.put("ret_status", status);
+					resultContent.setRetData(resultJson);
+					map.put("result", resultContent);
+					map.put("isSuccess", true);
 				}
-				resultJson.put("ret_status", status);
-				resultContent.setRetData(resultJson);
-				map.put("result", resultContent);
-				map.put("isSuccess", true);
 			} else {
+				flag = true;
+			}
+			
+			if (flag) {
 				// 返回字符串为空,则查询全联
 				// 数据来源设置为qilingyz
 				dataFrom = Constants.DATA_FROM_QL;
@@ -270,12 +282,21 @@ public class QueryApiServiceImpl implements QueryApiService{
 					// 解析返回数据
 					JSONObject returnJson = JSONObject.parseObject(returnStr);
 					String status = "一致";
-					status = returnJson.getJSONObject("Result").getString("COMPRESULT");
-					resultJson.put("ret_status", status);
-					resultContent.setRetData(resultJson);
-					if ("一致".equals(status)) {
-						insertDB(tableName, localApiID, returnType, name, idCardNo, status);
+					JSONObject jsonObject = returnJson.getJSONObject("Result");
+					if (null == jsonObject) {
+						resultContent.setCode(Constants.CODE_ERR_FAIL);
+						resultContent.setRetMsg(Constants.CODE_ERR_FAIL_MSG);
+						map.put("result", resultContent);
+						map.put("isSuccess", false);
+					} else {
+						status = jsonObject.getString("COMPRESULT");
+						resultJson.put("ret_status", status);
+						resultContent.setRetData(resultJson);
+						if ("一致".equals(status)) {
+							insertDB(tableName, localApiID, returnType, name, idCardNo, status);
+						}
 					}
+					
 				}
 			}
 		}

@@ -7,7 +7,7 @@ import org.pbccrc.api.core.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserDao {
+public class UserDao{
 	
 	@Resource
 	private UserMapper userMapper;
@@ -16,8 +16,9 @@ public class UserDao {
 		return userMapper.isExist(userName);
 	}
 	
-	public void addUser(User user){
-		userMapper.addUser(user);;
+	public int addUser(User user){
+		userMapper.addUser(user);
+		return user.getID();
 	}
 	
 	public User login(User user){
@@ -26,5 +27,9 @@ public class UserDao {
 	
 	public void updateUser(User user){
 		userMapper.updateUser(user);;
+	}
+	
+	public User getUserByID(String userID) {
+		return userMapper.getUserByID(userID);
 	}
 }

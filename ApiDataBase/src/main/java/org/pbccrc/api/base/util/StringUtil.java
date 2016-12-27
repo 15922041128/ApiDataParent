@@ -104,6 +104,10 @@ public class StringUtil {
 		uuidStr = uuidStr.toUpperCase();
 		return uuidStr;
     }
+    
+    public static String createApiKey() {
+    	return UUID.randomUUID().toString().replaceAll(Constants.CONNECTOR_LINE, Constants.BLANK); 
+    }
       
     public static void main(String[] args) {  
         System.out.println( decodeUnicode("\u8eab\u4efd\u8bc1\u53f7\u7801\u4e0d\u5408\u6cd5\uff01"));  

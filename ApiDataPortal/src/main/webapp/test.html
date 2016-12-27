@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<!-- saved from url=(0023)https://www.juhe.cn/box -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" type="text/css" href="css/reset.css">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/highlight.min.css" rel="stylesheet">
+<title>YINGZE</title>
+<script src="js/hm.js"></script>
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/highlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="js/json.parse.js" type="text/javascript"></script>
+<!--[if lt IE 9]>
+<script src="/themes/v4/public/js/html5shiv.min.js" type="text/javascript" charset="utf-8"></script>
+<![endif]-->
+<!--[if IE 6]>
+<script src="/themes/v4/public/js/DD_belatedPNG_0.0.8a.js"  type="text/javascript"></script>
+<script>DD_belatedPNG.fix('.png_bg');</script>
+<![endif]-->
+<style>
+@charset "utf-8";
+body{ font-family: "microsoft yahei"}
+header{background: #fff; font-family:Tahoma,Arial,Helvetica,"microsoft yahei","Hiragino Sans GB",Simsun,\5b8b\4f53,sans-serif;}
+.width100_v4{width: 100%; ,min-width: 1200px;}
+.width1200_v4{width: 1200px; margin: 0 auto;}
+#headerTop_v4{height: 80px; position: relative; }
+#headerTop_v4 .search_v4{position: absolute; left: 492px; top: 0; width: 450px;}
+
+/*
+#searchText_v4{height: 22px; line-height: 22px; width: 340px; padding: 8px 10px 8px 36px; color: #555; border:2px solid #03c5ff; background: url(../images/serch.png) 10px center no-repeat;}
+#searchText_v4:focus{outline: none;}
+#searchBtn_v4{position: absolute; right: 0; top: 0; *top: 1px; _top:2px; width: 62px; border: 0 none; background: #03C5FF; height: 42px; line-height: 40px; color: #fff; font-size: 16px;}
+*/
+.hotWord_v4{font-size: 12px; height: 14px; line-height: 14px; padding-top: 8px; overflow: hidden;}
+.hotWord_v4 a{color: #999; padding: 0 6px;}
+.hotWord_v4 a:first-child{padding-left: 0;}
+.hotWord_v4 a:hover,.hotWord_v4 .active{color: #03c5ff; text-decoration: none;}
+
+.userCenter_v4{position: absolute; right: 0; top: 0; height: 45px;}
+.userCenter_v4 a{font-size: 16px; font-weight: bold; line-height: 45px; display: inline-block; padding: 0 26px; vertical-align: top; text-decoration: none; letter-spacing: 3px;}
+.userCenter_v4 a:hover{opacity: 0.6; filter: alpha(opacity=60);}
+.line_v4{height: 45px; border-left: 2px solid #eee; position: absolute; right: 90px; top: 0;}
+
+.width1200_v4 nav{height: 40px; line-height: 40px;}
+.width1200_v4 nav a{ float:left; line-height: 38px; color: #03C5FF; font-size: 16px; font-weight: bold; padding-left: 120px; padding-right: 150px;}
+.width1200_v4 nav .active{border-bottom: 2px solid #03C5FF;}
+.width1200_v4 nav a:hover{border-bottom: 2px solid #03C5FF; text-decoration: none;}
+.width1200_v4 nav .contact_v4{float: right; font-size: 14px; padding: 0 15px 0 50px; background: url(../images/contact.png) 15px center no-repeat;}
+
+footer{height: 210px; padding: 40px 0 30px; background: #fff; border-top: 1px solid #e7e7e7;font-size: 12px; color: #999;font-family:Tahoma,Arial,Helvetica,"microsoft yahei","Hiragino Sans GB",Simsun,\5b8b\4f53,sans-serif;}
+.footerContent_v4{height: 20px; position: relative;}
+.footer1_v4{float: left; width: 400px;}
+.footer1_v4 .footerLogo{padding-bottom: 30px;}
+.footer1_v4 p{line-height: 22px;}
+.footer1_v4 .footerContact{font-size: 24px; font-weight: 400; color: #666; padding-left: 82px; margin-top: 30px; background: url(../images/footerContactBg.png) left center no-repeat;}
+.footerDl_v4{float: left; width: 120px; text-align: left;margin-top: 10px;}
+.footerDl_v4 dt{font-size: 16px; color: #777; padding-bottom: 10px;}
+.footerDl_v4 dd a{line-height: 24px; color: #999;}
+.juheCode_v4{float: left; padding-left: 50px; padding-top: 20px; width: 112px; height: 150px; text-align: center;}
+.juheCode_v4 p{padding-top: 10px;}
+</style>
+<style>
+.jboxmain {
+    width:1200px;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+.jboxnav {width:1200px; margin: 0 auto;}
+.jboxnav ul li {
+  float: left;
+  padding-right: 20px;
+  padding-left: 10px;
+  line-height: 35px;
+  font-size: 12px;
+  font-weight: lighter;
+  color: #666
+}
+.jboxnav ul li.last{
+  background: none;
+}
+.jboxnav ul li a{ color: #666; text-decoration: none;}
+.jboxnav ul li a:hover{color:#00b7ee;}
+
+.feedback ,.feedback2{width:100%; height:35px; line-height:35px;margin-bottom:10px; border-radius:6px; display:none;
+  border:1px solid rgba(169,68,66,0.8);
+  border-color:rgba(169,68,66,0.8);
+  color:rgba(169,68,66,1);
+  text-indent:20px;
+  outline:0;
+  outline:thin dotted \9;
+  -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(169,68,66,0.6);
+  -moz-box-shadow:inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(169,68,66,0.6);
+  box-shadow:inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(169,68,66,0.6)
+}
+.feedback2 {display: block;}
+</style>
+
+
+
+</head>
+
+<body>
+<!-- baidu log start   -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?5d12e2b4eed3b554ae941c0ac43c330a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- baidu log stop   -->
+    <!-- Header -->
+<header class="width100_v4">
+        <div class="width1200_v4">
+            <div id="headerTop_v4">
+                <h1><a href="http://www.juhe.cn/"><img src="images/logo.png" alt="聚合数据"></a></h1>
+                <div class="search_v4 form-inline col-xs-1" style="padding-top:10px">
+                    <input type="text" class="form-control" id="searchText_v4" placeholder="输入想要查询的数据，例如：天气预报" name="q" style="width:300px;">
+                    <button type="button" id="searchBtn_v4" class="btn btn-info">搜索</button>
+                </div>
+                <div class="userCenter_v4">
+                
+                                <a style="font-size: 12px;line-height: 18px; padding-top: 3px; letter-spacing: 0; text-align: right;" href="https://www.juhe.cn/my" rel="nofollow">
+                        <span style="color: #666;line-height: 18px;">+ zmc2585</span><br>
+                        <span style="color: #03C5FF;line-height: 18px;">个人中心</span>
+                    </a>
+                    <a style="color: #fc6480;" href="javascript:void(0);" id="loginout" rel="nofollow">退出</a>
+                                
+                <p class="line_v4"></p>
+                </div>
+                <nav class="clearfix">
+                  <a href="https://www.juhe.cn/box" class="active">聚盒子测试</a>
+                </nav>
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </header>
+    <script type="text/javascript">
+        var searchUrl = '/docs/s/q/%40q%40';
+        var loginOutUrl = '/login/logout';
+        var juheIndex = '/';
+    </script>
+    <script src="js/common.js"></script>
+
+    <div class="jboxnav">
+      <ul>
+          <li><a href="https://www.juhe.cn/docs" target="_blank">聚盒子</a></li>
+          <li><a href="https://www.juhe.cn/docs/index/cid/10" target="_blank">车辆服务</a></li>
+          <li class="last">接口测试&nbsp;(<a href="https://www.juhe.cn/box/oindex">返回旧版本</a>)</li>
+      </ul>
+    </div>
+    <div class="clearfix"></div>
+    <div class="jboxmain">
+        <div class="container">
+            <form>
+                                                  
+                <div class="form-group">
+                  <label for="apinamesel" class="control-label">我的数据：</label>
+                  <div class="">
+                        <select class="form-control  input-sm" id="datasel">
+                                                    <option value="74" selected="selected">[74]&nbsp;车系查询</option>
+                                                    <option value="178">[178]&nbsp;商标信息查询</option>
+                                                    <option value="61">[61]&nbsp;语音验证码</option>
+                                                    <option value="232">[232]&nbsp;中国股权投资行业数据库</option>
+                                                    <option value="189">[189]&nbsp;二维码在线生成</option>
+                                                    <option value="121">[121]&nbsp;笑话大全</option>
+                                                    <option value="46">[46]&nbsp;菜谱大全</option>
+                                                  </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="apinamesel" class="control-label">接口名称：</label>
+                  <div class="">
+                        <select class="form-control  input-sm" id="apinamesel">
+                                                    <option value="207">车系信息查询</option>
+                                                    <option value="369">车辆品牌查询</option>
+                                                  </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="apiurl" class=" control-label">接口地址：</label>
+                  <div class="">
+                    <input type="text" class="form-control input-sm" id="apiurl" placeholder="接口的URL" value="http://op.juhe.cn/onebox/car/query" readonly="">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="requesttypesel" class=" control-label">请求方式：</label>
+                  <div class="">
+                        <select class="form-control  input-sm" id="requesttypesel">
+                            <option value="GET">GET</option>
+                            <option value="POST">POST</option>
+                        </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="params" class="">请求参数：</label>
+                  <table class="table table-bordered table-striped table-condensed" id="params" style="font-size:12px"><tbody><tr><td>参数名</td><td>类型</td><td>是否必填</td><td>说明</td><td>值</td></tr><tr><td>brand</td><td>string</td><td>是</td><td>车系名称，如:奥迪</td><td><input type="text" class="form-control input-sm" name="input-param" placeholder="" data="brand"></td></tr></tbody></table>
+                </div>
+
+                <div class="form-group">
+                  <button type="button" class="btn btn-success" id="boxBtn">发送请求</button>
+                </div>
+
+                <div class="feedback" id="feedback" style="display: none;"></div>
+
+                <div>
+                    <label class="">请求详情：</label>
+                    <div>
+                       <pre id="requestinfo">请求地址：http://op.juhe.cn/onebox/car/brand<br>请求参数：brand=%E7%89%B9%E6%96%AF%E6%8B%89&amp;key=78f8db589467b6ce18211dbe1fb2da11<br>请求方式：GET<br></pre>
+                    </div>
+
+                </div>
+                <div>
+                    <label class="">返回内容：</label>
+                    <div id="returnarea">
+                           <pre><code id="response" class="json hljs">{
+	"<span class="hljs-attribute">reason</span>":<span class="hljs-value"><span class="hljs-string">"查询成功"</span></span>,
+	"<span class="hljs-attribute">result</span>":<span class="hljs-value">[
+		{
+			"<span class="hljs-attribute">car</span>":<span class="hljs-value"><span class="hljs-string">"特斯拉"</span></span>,
+			"<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"MODEL S"</span>
+		</span>},
+		{
+			"<span class="hljs-attribute">car</span>":<span class="hljs-value"><span class="hljs-string">"特斯拉"</span></span>,
+			"<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"MODEL X"</span>
+		</span>},
+		{
+			"<span class="hljs-attribute">car</span>":<span class="hljs-value"><span class="hljs-string">"特斯拉"</span></span>,
+			"<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"特斯拉 Roadster"</span>
+		</span>}
+	]</span>,
+	"<span class="hljs-attribute">error_code</span>":<span class="hljs-value"><span class="hljs-number">0</span>
+</span>}</code></pre>
+                    </div>
+                </div>
+
+              </form>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+  $("#datasel").change(function(){
+      var did = $("#datasel").val();
+      var rurl = '/box/index/id/%40id%40';
+      rurl=rurl.replace(/%40id%40/,encodeURIComponent(did));
+      window.location.href=rurl;
+  })
+
+  $("#apinamesel").change(function(){
+    $("#response,#requestinfo").html('');
+    $("#feedback").html("").css({display:"none"});
+    var apiid = $(this).val();
+    $.post('/box/getpara',{id:apiid},function(e){
+      var obj = json_parse(e);
+      var code = obj.code;
+      if(code == 1){
+        $("#apiurl").val(obj.data.url);
+        var params=obj.data.params;
+        var paramsHtml = '<tr><td>参数名</td><td>类型</td><td>是否必填</td><td>说明</td><td>值</td></tr>';
+        var paramsHtmlLoading = '<tr><td colspan="5">loading...</td></tr>';
+        $("#params").html(paramsHtml+paramsHtmlLoading);
+        //return false;
+        for(var j in params){
+
+          if(params[j][0]!='key' && params[j][0]){
+            paramsHtml +='<tr>';
+            paramsHtml +='<td>'+params[j][0]+'</td>';
+            paramsHtml +='<td>'+params[j][2]+'</td>';
+            paramsHtml +='<td>'+params[j][1]+'</td>';
+            paramsHtml +='<td>'+params[j][3]+'</td>';
+            paramsHtml +='<td><input type="text" class="form-control input-sm" name="input-param" placeholder="" data="'+params[j][0]+'"></td>';
+            paramsHtml +='</tr>';
+          }
+        }
+        $("#params").html(paramsHtml);
+      }else{
+        alert(code+":"+obj.info);
+      }
+    })
+  })
+
+  $("#boxBtn").click(function(){
+    $("#boxBtn").html('请求中...').attr('disabled','disabled');
+
+    $("#feedback").html("").css({display:"none"});
+
+    $("#response,#requestinfo").html('');
+
+    var requesttypesel = $("#requesttypesel").val();
+    var inputs= $("input[name=input-param]");
+    var apiid = $("#apinamesel").val();
+
+    var paraObj = {requesttypesel:requesttypesel,apiid:apiid};
+    var params = {};
+    $.each(inputs,function(){
+      //alert($(this).val());
+      var paranamevalue=$(this).val();
+      var paraname= $(this).attr("data");
+      //paraObj[paraname]=paranamevalue;
+      params[paraname] = paranamevalue;
+    });
+    paraObj['params'] = JSON.stringify(params);
+
+    $.post('/box/newtest',paraObj,function(e){
+        var obj = json_parse(e);
+        var code = obj.code;
+        if(code == '1'){
+            var data = obj.data;
+            var requestinfo = '';
+            requestinfo ="请求地址："+data.url+"<br/>";
+            requestinfo +="请求参数："+data.params+"<br/>";
+            requestinfo +="请求方式："+data.requestType+"<br/>";
+            //alert(data.response);
+            /**/
+
+            if(data.isxml=='1'){
+              $("#response").removeClass("json").addClass("xml");
+              data.response = formatXml(data.response)
+              data.response = html_encode(data.response);
+              //data.response = '<code id="response" class="xml hljs">'+data.response+'</code>';
+            }else{
+              $("#response").removeClass("xml").addClass("json");
+            }
+
+            //html_encode
+            $("#requestinfo").html(requestinfo);
+            $("#response").html(data.response);
+            hljs.highlightBlock($("#returnarea pre code").get(0));
+        }else{
+            var feedback = obj.info;
+            if(obj.url){
+                feedback += "，<a href='"+obj.url+"'>点击这里>></a>";
+            }
+            $("#feedback").html(feedback).css({display:""});
+        }
+        $("#boxBtn").html('发送请求').removeAttr('disabled');
+    })
+
+  })
+
+})
+
+ function formatXml(text)
+    {
+        //去掉多余的空格
+        text = '\n' + text.replace(/(<\w+)(\s.*?>)/g,function($0, name, props)
+        {
+            return name + ' ' + props.replace(/\s+(\w+=)/g," $1");
+        }).replace(/>\s*?</g,">\n<");
+
+        //把注释编码
+        text = text.replace(/\n/g,'\r').replace(/<!--(.+?)-->/g,function($0, text)
+        {
+            var ret = '<!--' + escape(text) + '-->';
+            //alert(ret);
+            return ret;
+        }).replace(/\r/g,'\n');
+
+        //调整格式
+        var rgx = /\n(<(([^\?]).+?)(?:\s|\s*?>|\s*?(\/)>)(?:.*?(?:(?:(\/)>)|(?:<(\/)\2>)))?)/mg;
+        var nodeStack = [];
+        var output = text.replace(rgx,function($0,all,name,isBegin,isCloseFull1,isCloseFull2 ,isFull1,isFull2){
+            var isClosed = (isCloseFull1 == '/') || (isCloseFull2 == '/' ) || (isFull1 == '/') || (isFull2 == '/');
+            //alert([all,isClosed].join('='));
+            var prefix = '';
+            if(isBegin == '!')
+            {
+                prefix = getPrefix(nodeStack.length);
+            }
+            else
+            {
+                if(isBegin != '/')
+                {
+                    prefix = getPrefix(nodeStack.length);
+                    if(!isClosed)
+                    {
+                        nodeStack.push(name);
+                    }
+                }
+                else
+                {
+                    nodeStack.pop();
+                    prefix = getPrefix(nodeStack.length);
+                }
+
+            }
+                var ret =  '\n' + prefix + all;
+                return ret;
+        });
+
+        var prefixSpace = -1;
+        var outputText = output.substring(1);
+        //alert(outputText);
+
+        //把注释还原并解码，调格式
+        outputText = outputText.replace(/\n/g,'\r').replace(/(\s*)<!--(.+?)-->/g,function($0, prefix,  text)
+        {
+            //alert(['[',prefix,']=',prefix.length].join(''));
+            if(prefix.charAt(0) == '\r')
+                prefix = prefix.substring(1);
+            text = unescape(text).replace(/\r/g,'\n');
+            var ret = '\n' + prefix + '<!--' + text.replace(/^\s*/mg, prefix ) + '-->';
+            //alert(ret);
+            return ret;
+        });
+
+        return outputText.replace(/\s+$/g,'').replace(/\r/g,'\n');
+    }
+
+    function getPrefix(prefixIndex)
+    {
+        var span = '    ';
+        var output = [];
+        for(var i = 0 ; i < prefixIndex; ++i)
+        {
+            output.push(span);
+        }
+
+        return output.join('');
+    }
+
+    function html_encode(str)
+    {
+      var s = "";
+      if (str.length == 0) return "";
+      s = str.replace(/&/g, "&gt;");
+      s = s.replace(/</g, "&lt;");
+      s = s.replace(/>/g, "&gt;");
+      s = s.replace(/ /g, "&nbsp;");
+      s = s.replace(/\'/g, "&#39;");
+      s = s.replace(/\"/g, "&quot;");
+      s = s.replace(/\n/g, "<br>");
+      return s;
+    }
+</script></body></html>

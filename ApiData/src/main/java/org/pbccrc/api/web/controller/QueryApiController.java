@@ -24,6 +24,7 @@ import org.pbccrc.api.base.util.StringUtil;
 import org.pbccrc.api.base.util.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -61,6 +62,7 @@ public class QueryApiController {
 	 * @throws Exception
 	 */
 	@GET
+	@CrossOrigin
 	@RequestMapping(value="/get", produces={"application/json;charset=UTF-8"})
 	@ResponseBody
 	@SuppressWarnings("rawtypes")
@@ -83,15 +85,8 @@ public class QueryApiController {
 			return JSONObject.toJSONString(resultContent);
 		}
 		
-		// 获取service标识
-		String[] serviceArray = service.split(Constants.CONNECTOR_LINE);
-		// 单个或多个api标识
-		String isSingle = serviceArray[0];
-		// 访问服务
-		String target = serviceArray[1];
-		
 		// 获取本地api
-		Map<String, Object> localApi = localApiService.queryByService(isSingle + Constants.CONNECTOR_LINE + target);
+		Map<String, Object> localApi = localApiService.queryByService(service);
 		
 		// 验证本地是否有该api
 		if (null == localApi) {
@@ -186,7 +181,7 @@ public class QueryApiController {
 				}
 			}
 			if (isCost) {
-				costService.cost(userID, apiKey, String.valueOf(localApi.get("ID")));	
+				costService.cost(userID, apiKey);	
 			}
 		}
 		
@@ -270,6 +265,7 @@ public class QueryApiController {
 	 * @throws Exception
 	 */
 	@GET
+	@CrossOrigin
 	@RequestMapping(value="/querySfz", produces={"application/json;charset=UTF-8"})
 	@ResponseBody
 	public String querySfz(@Context HttpServletRequest request) throws Exception {
@@ -287,7 +283,7 @@ public class QueryApiController {
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
 		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, "1", resultContent)) {
+		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_SFZRZ, resultContent)) {
 			return JSONObject.toJSONString(resultContent);
 		}
 		
@@ -300,7 +296,7 @@ public class QueryApiController {
 		
 		// 判断是否计费
 		if(Constants.CODE_ERR_SUCCESS.equals(resultJson.getString("code"))) {
-			costService.cost(userID, apiKey, "1");
+			costService.cost(userID, apiKey);
 		}
 		
 		// 记录日志

@@ -41,4 +41,7 @@
     <dubbo:service interface="org.pbccrc.api.base.service.ApiLogService" ref="apiLogServiceImpl"/>
     <dubbo:service interface="org.pbccrc.api.base.service.SMSService" ref="dxw_smsServiceImpl"/>
     <dubbo:service interface="org.pbccrc.api.base.service.SMSService" ref="ms_smsServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.ProductService" ref="productServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.TestService" ref="testServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.CodeService" ref="codeServiceImpl"/>
 </beans>

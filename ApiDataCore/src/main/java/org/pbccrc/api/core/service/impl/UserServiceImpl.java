@@ -1,8 +1,12 @@
 package org.pbccrc.api.core.service.impl;
 
+import java.math.BigDecimal;
+
+import org.pbccrc.api.base.bean.ApiUser;
 import org.pbccrc.api.base.bean.User;
 import org.pbccrc.api.base.service.UserService;
 import org.pbccrc.api.base.util.StringUtil;
+import org.pbccrc.api.core.dao.ApiUserDao;
 import org.pbccrc.api.core.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +16,9 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private ApiUserDao apiUserDao;
 
 	/**
 	 * @param userName 	帐号
@@ -22,13 +29,22 @@ public class UserServiceImpl implements UserService{
 	}
 
 	/**
-	 * @param user 	用户信息
+	 * 
+	 * @param user 用户信息
+	 * @return	      主键
 	 */
 	public void addUser(User user) {
 		
-		userDao.addUser(user);
+		int userID = userDao.addUser(user);
+		
+		ApiUser apiUser = new ApiUser();
+		apiUser.setID(userID);
+		apiUser.setBlance(new BigDecimal("0.00"));
+		apiUser.setCreditLimit(new BigDecimal("0.00"));
+		
+		apiUserDao.addApiUser(apiUser);
 	}
-
+	
 	/**
 	 * 
 	 * @param userName	帐号
@@ -51,7 +67,7 @@ public class UserServiceImpl implements UserService{
 	 * @param userID    用户ID
 	 * @param password  用户新密码
 	 */
-	public void resetPassword(int userID, String password) {
+	public void resetPassword(Integer userID, String password) {
 		User user = new User();
 		user.setID(userID);
 		user.setPassword(StringUtil.string2MD5(password));
@@ -63,5 +79,23 @@ public class UserServiceImpl implements UserService{
 	 */
 	public void modifyUser(User user) {
 		userDao.updateUser(user);
+	}
+	
+	/** 根据userID获取用户信息 */
+	public User getUserByID(String userID) {
+		return userDao.getUserByID(userID);
+	}
+	
+	/**
+	 * 判断用户传入密码是否正确
+	 * @param userID
+	 * @param password
+	 * @return
+	 */
+	public boolean passwordIsTrue(String userID, String password) {
+		
+		User user = userDao.getUserByID(userID);
+		
+		return user.getPassword().equals(StringUtil.string2MD5(password));
 	}
 }

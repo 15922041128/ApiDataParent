@@ -196,12 +196,12 @@ app.controller('loginController', function ($scope, $http, $state) {
 		var password = $("#login_password").val();
 		
 		if (userName=='') {
-			showMessage('warnMessage', "用户名不能为空", true, 5);
+			showMessage('warnMessage_login', "用户名不能为空", true, 5);
 			return false;
 		}
 		
 		if (password=='') {
-			showMessage('warnMessage', "密码不能为空", true, 5);
+			showMessage('warnMessage_login', "密码不能为空", true, 5);
 			return false;
 		}
 		
@@ -217,10 +217,10 @@ app.controller('loginController', function ($scope, $http, $state) {
         		$scope.loginModel = {show: false};
         		$scope.registModel = {show: true};
         		$scope.loginUserName = user.userName;
+        		$('#login-modal').hide();
         	} else {
-        		showMessage('warnMessage', "密码不正确,请重新输入!", true, 5);
+        		showMessage('warnMessage_login', "密码不正确,请重新输入!", true, 5);
         	}
-        	$('#login-modal').hide();
 		}).error(function(data){
 			
 		});

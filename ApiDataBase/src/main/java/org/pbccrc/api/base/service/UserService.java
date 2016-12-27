@@ -1,8 +1,5 @@
 package org.pbccrc.api.base.service;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.pbccrc.api.base.bean.User;
 
 public interface UserService {
@@ -14,7 +11,8 @@ public interface UserService {
 	public boolean isExist(String userName);
 	
 	/**
-	 * @param user 	用户信息
+	 * 
+	 * @param user 用户信息
 	 */
 	public void addUser(User user);
 	
@@ -31,11 +29,22 @@ public interface UserService {
 	 * @param userID    用户ID
 	 * @param password  用户新密码
 	 */
-	public void resetPassword(int userID, String password);
+	public void resetPassword(Integer userID, String password);
 	
 	/**
 	 * @param user 	用户信息
 	 */
 	public void modifyUser(User user);
+	
+	/** 根据userID获取用户信息 */
+	public User getUserByID(String userID);
+	
+	/**
+	 * 判断用户传入密码是否正确
+	 * @param userID
+	 * @param password
+	 * @return
+	 */
+	public boolean passwordIsTrue(String userID, String password);
 
 }

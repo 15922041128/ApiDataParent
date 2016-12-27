@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.pbccrc.api.base.bean.Code;
 import org.pbccrc.api.base.bean.DBEntity;
 import org.pbccrc.api.base.service.ApiUserService;
+import org.pbccrc.api.base.service.CodeService;
 import org.pbccrc.api.base.service.DBOperatorService;
 import org.pbccrc.api.base.service.LocalApiService;
+import org.pbccrc.api.base.service.ProductService;
 import org.pbccrc.api.base.service.RelationService;
 import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.base.util.RedisClient;
@@ -32,9 +35,15 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
 	
 	@Autowired
 	private RelationService relationService;
+	
+	@Autowired
+	private ProductService productService;
+	
+	@Autowired
+	private CodeService codeService;
 
 	@Override
-	public void onApplicationEvent(ContextRefreshedEvent event) {
+	public void onApplicationEvent(ContextRefreshedEvent event){
 
 		// 将缓存中数据加载到数据库
 		sync2DB("apiUser");
@@ -44,6 +53,13 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
 		RedisClient.flushAll();
 		
 		// 将数据库中数据加载到缓存
+		// product
+		List<Map<String, Object>> productList = productService.queryAll();
+		for (Map<String, Object> product : productList) {
+			String key = "product" + Constants.UNDERLINE + String.valueOf(product.get("ID"));
+			RedisClient.set(key, product);
+		}
+		
 		// localApi
 		List<Map<String, Object>> localApiList = localApiService.queryAll();
 		for (Map<String, Object> localApi : localApiList) {
@@ -64,8 +80,14 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
 			StringBuilder key = new StringBuilder("relation");
 			key.append(Constants.UNDERLINE + String.valueOf(relation.get("userID")));
 			key.append(Constants.UNDERLINE + String.valueOf(relation.get("apiKey")));
-			key.append(Constants.UNDERLINE + String.valueOf(relation.get("localApiID")));
+//			key.append(Constants.UNDERLINE + String.valueOf(relation.get("productID")));
 			RedisClient.set(key.toString(), relation);
+		}
+		
+		// code
+		List<Code> codeList = codeService.queryAll();
+		for (Code code : codeList) {
+			RedisClient.set("code_" + code.getId(), code);
 		}
 	}
 	

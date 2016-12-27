@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<meta charset="utf-8">
+<meta name="keywords" content="语音验证码数据接口,API数据调用">
+<meta name="description" content="聚合数据，专业的API数据平台，为您提供内容标题数据接口以及调用信息，无期限免费试用再付费升级。">
+
+
+
+<title>YINGZE</title>
+<script src="//hm.baidu.com/hm.js?5d12e2b4eed3b554ae941c0ac43c330a"></script>
+<script src="js/hm.js"></script>
+<script src="js/jquery.min_002.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/json.parse_001.js" type="text/javascript" charset="utf-8"></script>
+<!--[if lt IE 9]>
+<script src="/themes/v4/public/js/html5shiv.min.js" type="text/javascript" charset="utf-8"></script>
+<![endif]-->
+<!--[if IE 6]>
+<script src="/themes/v4/public/js/DD_belatedPNG_0.0.8a.js"  type="text/javascript"></script>
+<script>DD_belatedPNG.fix('.png_bg');</script>
+<![endif]-->
+
+<link media="all" href="css/61.css" type="text/css" rel="stylesheet">
+<link rel="stylesheet" href="css/layer.css" id="layui_layer_skinlayercss" style=""></head>
+<body>
+    
+    <!-- baidu log start   -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?5d12e2b4eed3b554ae941c0ac43c330a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- baidu log stop   -->
+
+<header id="new-header" class="width100" style="border-bottom: 1px solid rgb(244, 244, 244);">
+    <div class="top-tips width100">
+        <div class="top-tip-content width1200">
+            <ul class="clearfix">
+                
+                                <li class="top-li1">
+                    <div class="user-div">
+                        <a href="index.html" nslog-type="1401" nslog-params="{&quot;index&quot;:&quot;1&quot;}" indepth="true">+ zmc2585<i class="iconfont"></i></a>
+                        <a class="logout" href="javascript:;" id="loginout" target="_self" nslog-type="1401" nslog-params="{&quot;index&quot;:&quot;2&quot;}">退出</a>
+                    </div>
+                </li>
+                <li class="top-li2"><a href="index.html" nslog-type="1401" nslog-params="{&quot;index&quot;:&quot;3&quot;}" indepth="true">个人中心</a></li>
+                                
+                <li class="top-li3"><a>|</a></li>
+                <li class="top-li4">
+                    <a>关注聚合</a>
+                    <div class="juhecode">
+                        <span></span>
+                    </div>
+                </li>
+                <li><a href="qa.html" nslog-type="1401" nslog-params="{&quot;index&quot;:&quot;6&quot;}" indepth="true">常见问题</a></li>
+                <li><a href="contact.html" nslog-type="1401" nslog-params="{&quot;index&quot;:&quot;7&quot;}" indepth="true">联系我们</a></li>
+            </ul>
+        </div>
+    </div>
+    <section class="section-top">
+        <div class="top-wrapper width1200">
+            <a class="juhe-logo png_bg" href="default.html" nslog-type="1402" nslog-params="{&quot;index&quot;:&quot;1&quot;}" indepth="true">聚合数据</a>
+            <nav>
+                <ul class="clearfix">
+                    <li><a href="default.html" nslog-type="1402" nslog-params="{&quot;index&quot;:&quot;2&quot;}" indepth="true">首页</a></li>
+                    <li class="active"><a href="https://www.juhe.cn/docs" nslog-type="1402" nslog-params="{&quot;index&quot;:&quot;3&quot;}">API</a></li>
+                    <li><a href="marketing.html" nslog-type="1402" nslog-params="{&quot;index&quot;:&quot;4&quot;}" indepth="true">营销方案</a></li>
+                    <li><a href="https://code.juhe.cn/" nslog-type="1402" nslog-params="{&quot;index&quot;:&quot;5&quot;}">聚合代码</a></li>
+                    <li><a href="https://www.juhe.cn/news/listview" nslog-type="1402" nslog-params="{&quot;index&quot;:&quot;6&quot;}">新闻动态</a></li>
+                </ul>
+            </nav>
+            <div class="top-search">
+                <input id="searchText_v4" name="q" placeholder="天气预报" autocomplete="off" maxlength="12" value="" type="text">
+                <button class="iconfont" type="button" id="searchBtn_v4" nslog-type="1402" nslog-params="{&quot;index&quot;:&quot;7&quot;}"></button>
+            </div>
+        </div>
+    </section>
+</header>
+
+    
+    <div id="docsapiContent" class="clearfix">
+        <div id="docs_api_main">
+            <div class="api_data">
+                <div class="api_data_img png_bg" style="background: transparent url('images/a61_001.png') no-repeat scroll center center;">
+                	<!--五周年活动 icon-->
+            		            			                                    	<!--五周年活动 icon end-->
+                </div>
+                <div class="api_data_info">
+                    <h2><strong>语音验证码</strong>
+                                                <span class="h1_span color_juhe">聚合数据</span>
+                        
+                                                <span class="h1_span color_https">支持HTTPS</span>                        
+                                            </h2>
+                    <p class="doc_api_decsP">通过手机接听验证码实现验证功能</p>
+					<!--五周年活动 start-->
+                    					<!--五周年活动 end-->
+                    <div id="api_arguments" class="clearfix">
+                        <div class="doc_arguments">
+                            <p><b>数据ID：</b><font color="#ff9445">61</font></p>
+                            <p><b>接口状态：</b><font color="#88c773"><span style="color: rgb(136, 199, 115);">正常</span></font></p>
+                        </div>
+                        <div class="doc_arguments">
+                            <p><b>连接应用数：</b><font color="#777">3624</font></p>
+                            <p><b>接入服务商：</b><font color="#03c5ff">聚合数据</font></p>
+                        </div>
+                        <div class="doc_arguments docPrice">
+                                                                                            <p>
+                                    <span style="color: rgb(240, 118, 127); font-size: 16px;">
+                                        ￥499.00
+                                    </span>
+                                    <span style="color: rgb(136, 136, 136); padding-left: 5px;">
+                                    /10000次</span>
+                                                                        <span style="color: rgb(240, 118, 127);">（申请即送3次）</span>
+                                                                    </p>
+                                                                                        <!-- <p>使用SDK每日免费赠送 10000 次 <a class="youhuia" href="https://www.juhe.cn/price" target="_blank" rel="nofollow">详情&gt;&gt;</a></p> -->
+                        </div>
+                    </div>
+                    <div class="api_data_btns">
+                                                
+                        <a class="api_newbtn_apply" href="https://www.juhe.cn/myData/apply/id/61" title="申请语音验证码 API" data="/myData/apply/id/61">申请数据</a>
+                        
+                        
+                        
+                        <!-- <a class="api_newbtn_pdf" href="/docs/demo/id/61" target="_blank">离线文档</a> -->
+                    </div>
+                </div>
+                
+                                  <a class="unfavit" id="favita" data="61"></a>
+                                <!--                 <p class="apiappkey"><b>APPKEY：</b><span>98d7b633571a28ec8df645a659a57b02</span></p>
+                 -->
+                
+
+            </div>
+            <!-- little ban -->
+                        <!--tab-->
+            <div class="docs_api_tab">
+                <ul class="tabul clearfix">
+                    <li id="apilists" class="active">API</li>
+                    <li id="errorcode">错误码参照</li>
+
+                    <li id="apiprice">价格与请求限制</li>
+
+                    <li id="sdkandqa">示例代码</li>
+                                        <li id="apicontact">其他相关</li>
+                </ul>
+            </div>
+            <div class="tabDiv">
+                <!--api-->
+                <div style="padding-left: 0px; display: block;" class="docs_api_show clearfix">
+                    <ul class="das_left">
+                                                 <li class="clearfix">
+                            <a class="selected" href="61.html" title="发送语音验证码" indepth="true">1.发送语音验证码</a>
+                        </li>
+                                            </ul>
+                    <div class="das_right">
+                        <div class="simpleline"><strong>接口地址：</strong><span class="url">http://op.juhe.cn/yuntongxun/voice</span></div>
+                        <div class="simpleline"><strong>支持格式：</strong><span class="url">json/xml</span></div>
+                        <div class="simpleline"><strong>请求方式：</strong><span class="url">http get/post</span></div>
+                        <div class="simpleline"><strong>请求示例：</strong><span class="url">http://op.juhe.cn/yuntongxun/voice?key=您申请的KEY&amp;valicode=12345678&amp;to=18912312312&amp;playtimes=3</span></div>
+
+                                                <div class="simpleline"><strong>接口备注：</strong><font color="">运营商限制一个手机号一天最多15条</font></div>
+                        
+                                                <div class="simpleline"><strong>调用样例及调试工具：</strong><a class="api_test_tools" href="https://www.juhe.cn/box/index/id/61" target="_top">API测试工具</a></div>
+                                                <div class="simpleline simpleTable">
+                            <strong>请求参数说明：</strong>
+                            <table class="api_table" cellspacing="0" cellpadding="0" border="0">
+                                <tbody><tr class="title">
+                                    <th width="20"></th>
+                                    <th width="100">名称</th>
+                                    <th width="80">类型</th>
+                                    <th width="60">必填</th>
+                                    <th>说明</th>
+                                </tr>
+                                                                  <tr>
+                                    <td>&nbsp;</td>
+                                    <td class="url">valicode</td>
+                                    <td class="url">string</td>
+                                    <td class="url">是</td>
+                                    <td>验证码内容，字母、数字 4-8位</td>
+                                  </tr>
+                                                                    <tr>
+                                    <td>&nbsp;</td>
+                                    <td class="url">to</td>
+                                    <td class="url">string</td>
+                                    <td class="url">是</td>
+                                    <td>接收手机号码</td>
+                                  </tr>
+                                                                    <tr>
+                                    <td>&nbsp;</td>
+                                    <td class="url">playtimes</td>
+                                    <td class="url">int</td>
+                                    <td class="url">否</td>
+                                    <td>验证码播放次数，默认3</td>
+                                  </tr>
+                                                                    <tr>
+                                    <td>&nbsp;</td>
+                                    <td class="url">key</td>
+                                    <td class="url">string</td>
+                                    <td class="url">是</td>
+                                    <td>应用APPKEY(应用详细页查询)</td>
+                                  </tr>
+                                                                    <tr>
+                                    <td>&nbsp;</td>
+                                    <td class="url">dtype</td>
+                                    <td class="url">string</td>
+                                    <td class="url">否</td>
+                                    <td>返回数据的格式,xml或json，默认json</td>
+                                  </tr>
+                                                              </tbody></table>
+                        </div>
+                        <div class="simpleline simpleTable">
+                            <strong>返回参数说明：</strong>
+                            <table class="api_table" cellspacing="0" cellpadding="0" border="0">
+                                <tbody><tr class="title">
+                                    <th width="20"></th>
+                                    <th width="100">名称</th>
+                                    <th width="80">类型</th>
+                                    <th>说明</th>
+                                </tr>
+                                                                  <tr>
+                                    <td>&nbsp;</td>
+                                    <td class="url"></td>
+                                    <td class="url"></td>
+                                    <td></td>
+                                  </tr>
+                                                              </tbody></table>
+                        </div>
+                                                <div class="simpleline simpleTable">
+                            <b>JSON返回示例：</b>
+                            <div class="prediv">
+                                <pre>{
+    "reason": "语音验证码发送成功，请注意接听",
+    "result": {
+        "valicode": "12345678", <font color="red">/*验证码内容*/</font>
+        "callSid": "1408071238531349000500010002409e", <font color="red">/*验证码标识*/</font>
+        "dateCreated": "2014-08-07 12:38:53" <font color="red">/*发送时间*/</font>
+    },
+    "error_code": 0 <font color="red">/*返回码*/</font>
+}</pre>
+                            </div>
+                        </div>
+                                                                    </div>
+                </div>
+
+                <!--error-->
+                <div class="docs_api_show">
+                    <div class="simpleline simpleTable">
+                        <b>服务级错误码参照(error_code)：</b>
+                        <table class="api_table" cellspacing="0" cellpadding="0" border="0">
+                            <tbody><tr>
+                                <th width="20">&nbsp;</th>
+                                <th width="200">错误码</th>
+                                <th>说明</th>
+                            </tr>
+                                                          <tr>
+                                <td>&nbsp;</td>
+                                <td class="url">206101</td>
+                                <td class="text">验证码内容不符合规范</td>
+                                <!--<td class="url"></td>-->
+                              </tr>
+                                                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="url">206102</td>
+                                <td class="text">手机号码不正确</td>
+                                <!--<td class="url"></td>-->
+                              </tr>
+                                                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="url">206103</td>
+                                <td class="text">不正确的播放次数</td>
+                                <!--<td class="url"></td>-->
+                              </tr>
+                                                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="url">206104</td>
+                                <td class="text">发送失败</td>
+                                <!--<td class="url"></td>-->
+                              </tr>
+                                                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="url">206105</td>
+                                <td class="text">网络错误请重试</td>
+                                <!--<td class="url"></td>-->
+                              </tr>
+                                                      </tbody></table>
+                    </div>
+                    <div class="simpleline simpleTable">
+                        <b>系统级错误码参照：</b>
+                        <table class="api_table" cellspacing="0" cellpadding="0" border="0">
+                            <tbody><tr>
+                                <th width="20">&nbsp;</th>
+                                <th width="200">错误码</th>
+                                <th>说明</th>
+                                <th width="150">旧版本（resultcode）</th>
+                            </tr>
+                                                          <tr>
+                                <td>&nbsp;</td>
+                                <td class="url">10001</td>
+                                <td class="text">错误的请求KEY</td>
+                                <td class="url">101</td>
+                              </tr>
+                                                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="url">10002</td>
+                                <td class="text">该KEY无请求权限</td>
+                                <td class="url">102</td>
+                              </tr>
+                                                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="url">10003</td>
+                                <td class="text">KEY过期</td>
+                                <td class="url">103</td>
+                              </tr>
+                                                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="url">10004</td>
+                                <td class="text">错误的OPENID</td>
+                                <td class="url">104</td>
+                              </tr>
+                                                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="url">10005</td>
+                                <td class="text">应用未审核超时，请提交认证</td>
+                                <td class="url">105</td>
+                              </tr>
+                                                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="url">10007</td>
+                                <td class="text">未知的请求源</td>
+                                <td class="url">107</td>
+                              </tr>
+                                                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="url">10008</td>
+                                <td class="text">被禁止的IP</td>
+                                <td class="url">108</td>
+                              </tr>
+                                                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="url">10009</td>
+                                <td class="text">被禁止的KEY</td>
+                                <td class="url">109</td>
+                              </tr>
+                                                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="url">10011</td>
+                                <td class="text">当前IP请求超过限制</td>
+                                <td class="url">111</td>
+                              </tr>
+                                                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="url">10012</td>
+                                <td class="text">请求超过次数限制</td>
+                                <td class="url">112</td>
+                              </tr>
+                                                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="url">10013</td>
+                                <td class="text">测试KEY超过请求限制</td>
+                                <td class="url">113</td>
+                              </tr>
+                                                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="url">10014</td>
+                                <td class="text">系统内部异常<font color="red">(调用充值类业务时，请务必联系客服或通过订单查询接口检测订单，避免造成损失)</font></td>
+                                <td class="url">114</td>
+                              </tr>
+                                                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="url">10020</td>
+                                <td class="text">接口维护</td>
+                                <td class="url">120</td>
+                              </tr>
+                                                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="url">10021</td>
+                                <td class="text">接口停用</td>
+                                <td class="url">121</td>
+                              </tr>
+                                                      </tbody></table>
+                    </div>
+                    <div class="simpleline simpleTable">
+                        <b>错误码格式说明（示例：200201）：</b>
+                        <table class="api_table" cellspacing="0" cellpadding="0" border="0">
+                            <tbody><tr>
+                                <th width="20">&nbsp;</th>
+                                <th width="200">2</th>
+                                <th width="200">002</th>
+                                <th>01</th>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>服务级错误（1为系统级错误）</td>
+                                <td>服务模块代码(即数据ID)</td>
+                                <td>具体错误代码</td>
+                            </tr>
+                        </tbody></table>
+                    </div>
+                </div>
+
+                <!--price-->
+                <div class="docs_api_show">
+                                                                    <div class="simpleline simpleTable">
+                            <b>《语音验证码》资费说明：</b>
+                            <table class="api_table" width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
+                                  <tbody><tr class="title">
+                                    <th width="20">&nbsp;</th>
+                                    <th width="200">名称</th>
+                                    <th width="100">价格</th>
+                                    <th width="100">次数</th>
+                                    <th>说明</th>
+                                  </tr>
+                                  <tr>
+                                    <td>&nbsp;</td>
+                                    <td class="url" width="200">赠送包</td>
+                                    <td class="url" width="200">￥0.00&nbsp;&nbsp;</td>
+                                    <td class="url">3&nbsp;&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                  </tr>
+                        </tbody></table>
+                        </div>
+                                                <div class="simpleline simpleTable">
+                            <b>常规套餐包<a href="http://www.juhe.cn/contact" target="_top"><font color="#FF0000">【更多次数、更多优惠，请与商务联系&gt;&gt;】</font></a></b>
+                            <table class="api_table" cellspacing="0" cellpadding="0" border="0">
+                                <tbody><tr>
+                                    <th width="20">&nbsp;</th>
+                                    <th width="200">名称</th>
+                                    <th width="100">价格</th>
+                                    <th width="100">次数</th>
+                                    <th>说明</th>
+                                </tr>
+                                                                  <tr>
+                                    <td>&nbsp;</td>
+                                    <td class="url" width="200">发展套餐</td>
+                                    <td class="url" width="200">￥499.00&nbsp;&nbsp;</td>
+                                    <td class="url">10000&nbsp;&nbsp;</td>
+                                    <td></td>
+                                  </tr>
+                                                                    <tr>
+                                    <td>&nbsp;</td>
+                                    <td class="url" width="200">起步套餐</td>
+                                    <td class="url" width="200">￥99.00&nbsp;&nbsp;</td>
+                                    <td class="url">1600&nbsp;&nbsp;</td>
+                                    <td></td>
+                                  </tr>
+                                                              </tbody></table>
+                        </div>
+                        
+                    
+                                                                <div class="simpleline simpleTable">
+                        <b>为什么选择聚合数据？我们来做个比较!</b>
+                        <table class="api_table" cellspacing="0" cellpadding="0" border="0">
+                             <tbody><tr>
+                                <td width="180">&nbsp;购买聚合数据的服务支出 </td>
+                                <td>&lt;&lt;</td>
+                                <td>服务器(600元/月)+带宽(100元/月)+技术人员(6000元/月)+...</td>
+                              </tr>
+                        </tbody></table>
+                    </div>
+
+                </div>
+
+                <!--demo-->
+                <div class="docs_api_show">
+
+                    <div class="simpleline simpleTable">
+                        <b>完整教学代码示例：</b>
+                                                <table id="code_table" class="api_table" cellspacing="0" cellpadding="0" border="0"><tbody><tr class="title"><td width="40">&nbsp;</td><td width="100">语言</td><td>标题</td><td>提供者</td><td>时间</td></tr><tr><td>&nbsp;</td><td class="url">PHP</td><td><a href="http://code.juhe.cn/docs/920" class="blue" target="_blank">语音验证码示例</a></td><td>JoneDwyane</td><td>2015-09-14 17:46:25</td></tr><tr><td>&nbsp;</td><td class="url">Python</td><td><a href="http://code.juhe.cn/docs/1053" class="blue" target="_blank">语音验证码接口调用示例</a></td><td>JoneDwyane</td><td>2015-09-14 19:35:21</td></tr><tr><td>&nbsp;</td><td class="url">C#</td><td><a href="http://code.juhe.cn/docs/1320" class="blue" target="_blank">语音验证码接口调用示例</a></td><td>JoneDwyane</td><td>2015-09-15 13:34:24</td></tr><tr><td>&nbsp;</td><td class="url">Go</td><td><a href="http://code.juhe.cn/docs/1458" class="blue" target="_blank">语音验证码接口调用示例</a></td><td>JoneDwyane</td><td>2015-09-15 19:17:46</td></tr><tr><td>&nbsp;</td><td class="url">JAVA</td><td><a href="http://code.juhe.cn/docs/792" class="blue" target="_blank">语音验证码接口调用示例</a></td><td>silk</td><td>2016-02-26 10:45:05</td></tr></tbody></table>
+                                            </div>
+
+                    <div class="simpleline simpleTable">
+                        <b>常见问题：</b>
+                        <table id="code_table" class="api_table" cellspacing="0" cellpadding="0" border="0">
+                            <tbody><tr>
+                                <th width="20">&nbsp;</th>
+                                <th width="200">内容</th>
+                                <th>详细</th>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="url">常见问题:</td>
+                                <td class="url"><a href="http://www.juhe.cn/qa/index/1480493357" class="blue" target="_top">http://www.juhe.cn/qa/index/1480493357</a></td>
+                            </tr>
+                        </tbody></table>
+                    </div>
+
+                </div>
+
+                <!--update-->
+                                <!--
+                <div class="docs_api_show">
+                    <div class="simpleline simpleTable">
+                        <b>更新动态：</b>
+                        <table class="api_table" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <th width="20">&nbsp;</th>
+                                <th width="350">内容</th>
+                                <th>时间</th>
+                            </tr>
+                                                        <tr>
+                                <td>&nbsp;</td>
+                                <td>暂无该数据的更新记录！</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                                                    </table>
+                    </div>
+                </div> -->
+
+                <!--other-->
+                <div class="docs_api_show">
+                    <div class="simpleline simpleTable">
+                        <b>其他相关内容</b>
+                        <table class="api_table" cellspacing="0" cellpadding="0" border="0">
+                            <tbody><tr class="title">
+                                <td width="40">&nbsp;</td>
+                                <td width="200">内容</td>
+                                <td>详细</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="text">接口测试:</td>
+                                <td class="text"><a href="https://www.juhe.cn/box/index/id/61" class="blue" target="_top">API测试工具</a></td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="text">技术支持:</td>
+                                <td class="url">info@juhe.cn</td>
+                            </tr>
+                            <!--<tr>-->
+                                <!--<td >&nbsp;</td>-->
+                                <!--<td class="text">QQ交流群:</td>-->
+                                <!--<td class="url"><a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=99a9921f13d308198750305839c99a944ef21f06e6518cc328cdd16a1b0dec79">416149343</a>-->
+                                <!--&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=e17502cc91127bd7c14888136175bff3e5cc059133c55d93b0439d3d5f1cce47">197290285</a>(已满)-->
+                                <!--&nbsp;&nbsp;&nbsp;&nbsp;-->
+                                <!--<a target="_blank" class="blue" href="http://shang.qq.com/wpa/qunwpa?idkey=ebeea1a768390bdd129c9f1d094e1e98b398e02bfb02590948842a2032ec38b0">264591694</a>(已满)-->
+                                <!--&nbsp;&nbsp;&nbsp;&nbsp;-->
+                                <!--<a target="_blank" class="blue" href="http://shang.qq.com/wpa/qunwpa?idkey=d3659d3c1741d65eacf14b381033369ce099212e204ace93caf809747437f783">186225860</a>(已满)</td>-->
+                            <!--</tr>-->
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="text">联系电话:</td>
+                                <td class="url">0512-62391880</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="text">在线客服QQ:</td>
+                                <td class="url"><a href="http://crm2.qq.com/page/portalpage/wpa.php?uin=800076065&amp;f=1&amp;ty=1&amp;aty=0&amp;a=&amp;from=6" target="_top">800076065</a></td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="text">商务合作QQ:</td>
+                                <td class="url">603866358</td>
+                            </tr>
+                        </tbody></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--right-->
+        <div id="doc_api_right">
+            <h3>推荐接口<span>/API</span></h3>
+            <ul class="tuijianapi">
+                                <li>
+                    <a class="tuijianimg" href="61.html" indepth="true"><img src="images/a61_001.png"></a>
+                    <p class="apiname"><a href="61.html" indepth="true">语音验证码</a></p>
+                    <p class="apides">通过手机接听验证码实现验证功能</p>
+                </li>
+                                <li>
+                    <a class="tuijianimg" href="https://www.juhe.cn/docs/api/id/72"><img src="images/a72.png"></a>
+                    <p class="apiname"><a href="https://www.juhe.cn/docs/api/id/72">手机固话来电显示</a></p>
+                    <p class="apides">查询手机/固话号码归属地，是否诈骗、营销、广告电话</p>
+                </li>
+                                <li>
+                    <a class="tuijianimg" href="https://www.juhe.cn/docs/api/id/54"><img src="images/a54.png"></a>
+                    <p class="apiname"><a href="https://www.juhe.cn/docs/api/id/54">短信API服务</a></p>
+                    <p class="apides">稳定的短信发送API，低至3.7分/条；【请务必添加图片验证码等防恶意攻击的机制，以防短信轰炸】。</p>
+                </li>
+                                <li>
+                    <a class="tuijianimg" href="https://www.juhe.cn/docs/api/id/102"><img src="images/a102.png"></a>
+                    <p class="apiname"><a href="https://www.juhe.cn/docs/api/id/102">双向回呼</a></p>
+                    <p class="apides">可以快速建立起访客与网站主之间的电话连接，让访客更加轻松的与网站主进行对话、咨询、洽谈等</p>
+                </li>
+                            </ul>
+            <h3>活动推荐<span>/Activity</span></h3>
+            <ul class="apiActivity">
+                <!--<li>
+                    <a href="https://www.juhe.cn/docs/api/id/54" target="_blank"><img src="/themes/v4/public/images/apiactivity2.png"/></a>
+                </li>-->
+                                <li>
+                    <a href="http://www.juhe.cn/activity/oneDiscount" target="_top" title="1元特惠，新用户专享"><img src="images/57b669bb9cbda.png" border="0"></a>
+                </li>
+                                <li>
+                    <a href="https://free.juhe.cn/" target="_top" title="免费数据第二波"><img src="images/57639730a1606.png" border="0"></a>
+                </li>
+                            </ul>
+        </div>
+    </div>
+
+<div class="clear"></div>
+    <footer class="width100">
+    <div class="width1200 clearfix">
+        <dl>
+            <dt>关于聚合</dt>
+            <dd><a href="https://www.juhe.cn/docs" nslog-type="1418" nslog-params="{&quot;index&quot;:&quot;1&quot;}" rel="nofollow">API</a></dd>
+            <dd><a href="https://www.juhe.cn/news/listview" nslog-type="1418" nslog-params="{&quot;index&quot;:&quot;2&quot;}" rel="nofollow">新闻动态</a></dd>
+            <dd><a href="https://www.juhe.cn/links" nslog-type="1418" nslog-params="{&quot;index&quot;:&quot;3&quot;}" rel="nofollow">合作伙伴</a></dd>
+        </dl>
+        <dl>
+            <dt>聚合工具</dt>
+            <dd><a href="https://www.juhe.cn/box" nslog-type="1419" nslog-params="{&quot;index&quot;:&quot;1&quot;}" rel="nofollow">聚盒子</a></dd>
+            <dd><a href="https://www.juhe.cn/cellmap/gsm" nslog-type="1420" nslog-params="{&quot;index&quot;:&quot;2&quot;}" rel="nofollow">基站定位</a></dd>
+            <dd><a href="https://wodiche.juhe.cn/" nslog-type="1421" nslog-params="{&quot;index&quot;:&quot;3&quot;}" rel="nofollow">车辆违章查询</a></dd>
+        </dl>
+        <dl>
+            <dt>关注我们</dt>
+            <dd class="focusus"></dd>
+        </dl>
+        <dl>
+            <dt>服务&amp;支持</dt>
+            <dd><a href="qa.html" nslog-type="1420" nslog-params="{&quot;index&quot;:&quot;1&quot;}" rel="nofollow" indepth="true">常见问题</a></dd>
+            <dd><a href="https://www.juhe.cn/legal" nslog-type="1421" nslog-params="{&quot;index&quot;:&quot;2&quot;}" rel="nofollow">服务条款</a></dd>
+            <dd><a href="https://www.juhe.cn/privacy" nslog-type="1422" nslog-params="{&quot;index&quot;:&quot;3&quot;}" rel="nofollow">隐私政策</a></dd>
+        </dl>
+        <dl>
+            <dt>联系我们</dt>
+            <dd>400-882-7715</dd>
+            <dd>Link@juhe.cn</dd>
+            <dd><a href="https://www.juhe.cn/complaints" rel="nofollow">投诉与建议</a></dd>
+        </dl>
+    </div>
+    <p>苏州新科兰德科技有限公司©版权所有&nbsp;&nbsp;&nbsp;&nbsp;苏ICP备14006450号-3&nbsp;&nbsp;&nbsp;&nbsp;增值电信业务经营许可证：苏B2-20140496</p>
+</footer>
+<ul id="juhegoTop">
+	<li id="tools_qq">
+		<a href="http://crm2.qq.com/page/portalpage/wpa.php?uin=800076065&amp;f=1&amp;ty=1&amp;aty=0&amp;a=&amp;from=6" target="_top" rel="nofollow"></a>
+		<span>QQ客服</span>
+	</li>
+	<li id="tools_contact">
+		<a href="contact.html" target="_top" rel="nofollow" indepth="true"></a>
+		<span>联系我们</span>
+	</li>
+	<li id="tools_feedback">
+		<a href="qa.html" target="_top" rel="nofollow" indepth="true"></a>
+		<span>问题反馈</span>
+	</li>
+	<li id="tools_goTop">
+		<a rel="nofollow" href="javascript:;" target="_self"></a>
+		<span>返回顶部</span>
+	</li>
+</ul>
+<script src="js/jquery.min_001.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/placeholder.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/nslog.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/header.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    var searchUrl = '/docs/s/q/%40q%40';
+    var loginOutUrl = '/login/logout';
+    var juheIndex = '/';
+</script>
+<script src="js/layer_001.js" type="text/javascript" charset="utf-8"></script>
+<script>
+$(document).ready(function(){
+	tabs(".tabul", "active", ".tabDiv");
+	
+    $("#favita").click(function(){
+        var id = $(this).attr("data");
+        $.post('/docs/dofav',{id:id},function(e){
+            var obj = json_parse(e);
+            var code = obj.code;
+            if(code == '-2'){
+                window.location.href='/login';
+            }else if(code == '1'){
+                var sta = obj.sta;
+                if(sta =='1'){
+                    $("#favita").removeClass("unfavit").addClass("favit");
+                }else{
+                    $("#favita").removeClass("favit").addClass("unfavit");
+                }
+            }
+        })
+    })
+
+    var did = 61;
+    $.getJSON("https://code.juhe.cn/api/docsByDid?callback=?", {
+        "did" : did
+      }, function(data) {
+          var code = data.code;
+          if(code == '1'){
+              var list = data.list;
+              var codehtml = '<tr class="title"><td width="40">&nbsp;</td><td width="100">语言</td><td>标题</td><td>提供者</td><td>时间</td></tr>';
+              for(var j in list){
+                  codehtml +='<tr>'+
+                    '<td >&nbsp;</td>'+
+                    '<td class="url">'+list[j].language+'</td>'+
+                    '<td ><a href="'+list[j].url+'" class="blue" target="_blank">'+list[j].title+'</a></td>'+
+                    '<td >'+list[j].nickname+'</td>'+
+                    '<td >'+list[j].addtime+'</td>'+
+                '</tr>';
+              }
+              $("#code_table").html(codehtml);
+          }else{
+              var codehtml = '<tr class="title"><td width="40">&nbsp;</td><td width="100">语言</td><td>标题</td><td>提供者</td><td>时间</td></tr>';
+              codehtml +="<tr><td colspan='5' align='center'>暂无教学代码，小聚正在拼命添加中....</td></tr>";
+              $("#code_table").html(codehtml);
+          }
+      });
+
+    nslog(1050, window.location.href, {
+        did: did
+    });
+})
+function xlogin() {
+	layer.open({
+		type: 2,
+		shadeClose: false,
+		title: false,
+		closeBtn: 0,
+		shade: [0.65, '#000'],
+		border: [1, 0.5, '#ccc'],
+		area: ['400px', '465px'],
+		content: ['/login/mini','no']
+	})
+}
+function logout() {
+	$.getJSON('/login/logout', function(obj) {
+		window.location.reload()
+	})
+}
+function loginBack(obj){
+    var url = $(".api_newbtn_apply").attr("data");
+    layer.closeAll();
+    window.location.href=url;
+}
+//选项卡
+function tabs(tabTit,on,tabCon){
+    $(tabCon).each(function(){
+      $(this).children().eq(0).show();
+      });
+    $(tabTit).each(function(){
+      $(this).children().eq(0).addClass(on);
+      });
+    $(tabTit).children().click(function(){
+        $(this).addClass(on).siblings().removeClass(on);
+            var index = $(tabTit).children().index(this);
+        $(tabCon).children().eq(index).show().siblings().hide();
+    });
+}
+</script>
+    
+
+
+
+</body></html>

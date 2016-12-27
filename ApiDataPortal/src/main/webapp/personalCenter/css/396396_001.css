@@ -1,0 +1,144 @@
+/* ::::: https://www.juhe.cn/themes/v5/public/css/reset.min.css ::::: */
+
+html, body, ul, li, p, h1, h2, h3, h4, h5, h6, input, form, dd, dt, dl, ol, caption, td, tr, th, hr, header, footer, blockquote, pre, fieldset, legend, aside, nav, section { padding: 0px; margin: 0px; }
+html, body { width: 100%; height: 100%; }
+body { font-family: Tahoma,Helvetica,"microsoft yahei","Hiragino Sans GB",Simsun,宋体,sans-serif; }
+a { text-decoration: none; }
+ul, li { list-style: outside none none; }
+table, div, img { border-collapse: collapse; border-spacing: 0px; }
+img { border: 0px none; vertical-align: middle; }
+button, input, select, textarea { outline: 0px none; font-family: inherit; }
+:focus { outline: 0px none; }
+button, input[type="button"], input[type="reset"], input[type="submit"] { cursor: pointer; }
+.clear, .clearfix {  }
+.clear::after, .clearfix::after { content: ""; display: block; clear: both; }
+/* ::::: https://www.juhe.cn/themes/v5/public/css/ucenter.css?v=1 ::::: */
+
+body { width: 100%; min-width: 1200px; background: rgb(240, 240, 240) none repeat scroll 0% 0%; font-size: 14px; font-family: Tahoma,Helvetica,"microsoft yahei","Hiragino Sans GB",Simsun,宋体,sans-serif; color: rgb(96, 96, 96); }
+i, em { font-style: normal; }
+.ucenterWidth1 { width: 100%; min-width: 1200px; }
+#ucenterWrapper { background: rgb(240, 240, 240) none repeat scroll 0% 0%; }
+.floatLeft { float: left; }
+.errorTips { display: none; color: rgb(254, 81, 74); margin-left: 10px; font-size: 12px; }
+input[type="radio"], .input[type="checkbox"] { vertical-align: baseline; }
+@font-face {
+	font-family: "iconfont";
+	src: url('images/iconfont.eot') format("embedded-opentype"), url('images/iconfont.woff') format("woff"), url('images/iconfont.ttf') format("truetype"), url('images/iconfont.svg') format("svg");
+}
+.iconfont { font-family: "iconfont" ! important; font-size: 16px; font-style: normal; }
+.centerIcon { background-image: url('images/centericon.png'); background-color: transparent; }
+input::-moz-placeholder { color: rgb(204, 204, 204); }
+input::-moz-placeholder { color: rgb(204, 204, 204); }
+.centerTitle { font-size: 16px; height: 50px; line-height: 50px; }
+.centerTitle .titleA { color: rgb(96, 96, 96); }
+.centerTitle i { color: rgb(144, 144, 144); }
+.centerTitle span { color: rgb(96, 96, 96); font-weight: normal; font-size: 14px; }
+.centerBtn { background: rgb(3, 197, 255) none repeat scroll 0% 0%; font-size: 14px; border: 0px none; height: 30px; width: 100px; color: rgb(255, 255, 255); border-radius: 2px; text-align: center; cursor: pointer; }
+.centerBtn:hover { background: rgb(0, 182, 237) none repeat scroll 0% 0%; }
+.fourBtn { width: 120px; }
+.rightBackground { padding-bottom: 40px; margin-bottom: 50px; }
+.centerFormUl { padding: 20px 0px; }
+.centerFormUl li { padding: 14px; height: 30px; line-height: 30px; }
+.centerFormUl .inputText { height: 20px; width: 230px; line-height: 20px; padding: 4px; border: 1px solid rgb(211, 211, 211); border-radius: 2px; color: rgb(96, 96, 96); }
+.centerFormUl .inputText:focus, .selectStyle:focus, .tableDl textarea.inputText:focus { border: 1px solid rgb(3, 197, 255); }
+.centerFormUl .labelLeft { font-weight: bold; text-align: right; padding-right: 20px; }
+.errorTips .iconfont { font-size: 12px; margin-right: 5px; }
+header { height: 64px; width: 100%; min-width: 1200px; border-bottom: 1px solid rgb(231, 231, 231); position: fixed; z-index: 9; background: rgb(255, 255, 255) none repeat scroll 0% 0%; }
+.centerLogo { float: left; padding: 16px 0px; text-align: center; width: 199px; border-right: 1px solid rgb(237, 237, 237); }
+.centerSearch { position: relative; width: 210px; height: 40px; float: left; padding: 12px 40px; }
+.searchText { padding: 5px 0px 5px 45px; width: 160px; height: 26px; line-height: 26px; border: 2px solid rgb(242, 242, 242); border-radius: 18px; }
+.searchBtn { position: absolute; left: 55px; top: 24px; background-position: -209px -32px; height: 18px; width: 18px; border: medium none; }
+.headerUl { float: right; height: 64px; }
+.headerUl li { position: relative; float: left; height: 64px; cursor: pointer; line-height: 64px; padding: 0px 30px; border-left: 1px solid rgb(242, 242, 242); }
+.headerUl li a { color: rgb(96, 96, 96); }
+.headerUl li .centerLogout:hover { color: rgb(3, 197, 255); }
+.centerLogout, .juheCode { position: absolute; top: 64px; left: -1px; width: 100%; height: 20px; line-height: 20px; padding: 10px 0px 20px; border-width: 0px 1px 1px; border-style: none solid solid; border-color: -moz-use-text-color rgb(242, 242, 242) rgb(242, 242, 242); -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; border-image: none; background-color: rgb(255, 255, 255); text-align: center; display: none; }
+.headerIcon1 { background-position: -226px -132px; height: 6px; width: 10px; display: inline-block; position: relative; left: 8px; top: -2px; }
+.juheCode { height: 90px; padding-top: 0px; padding-bottom: 15px; }
+.juheCode span { height: 90px; width: 90px; display: block; margin: 0px auto; background-position: -111px 0px; }
+nav { position: fixed; top: 0px; left: 0px; width: 200px; height: 100%; overflow: auto; background: rgb(50, 54, 60) none repeat scroll 0% 0%; z-index: 8; }
+.ucenterNav { padding-top: 64px; }
+.ucenterNav li { height: 46px; line-height: 46px; padding: 0px 30px; }
+.ucenterNav .navIndex { height: 64px; line-height: 66px; margin-bottom: 8px; }
+.ucenterNav .navIndex .navDiv { border-bottom: 2px solid rgb(57, 62, 69); }
+.ucenterNav .navIndex i { font-size: 18px; }
+.ucenterNav a, #ucenterSubA { color: rgb(168, 175, 185); cursor: pointer; }
+.ucenterNav a i.iconfont, #ucenterSubA i.iconfont { padding-right: 6px; display: inline-block; width: 20px; }
+.ucenterNav .active a { color: rgb(0, 147, 83); }
+.ucenterSub {  }
+.ucenterNav .ucenterSub li { padding-left: 20px; line-height: 36px; height: 36px; font-size: 12px; }
+.ucenterNav a:hover, .ucenterNav .active a { color: rgb(3, 197, 255); }
+.subDown { background-position: -176px -174px; height: 5px; width: 11px; display: inline-block; opacity: 0.8; position: relative; left: 6px; top: -2px; }
+.ucenterNav .active { background: transparent url('images/navbg.png') no-repeat scroll right center; }
+.ucenterNav .navInfoLi { padding: 0px 0px 0px 30px; }
+.ucenterNav .ucenterSub li i { padding-right: 2px; font-size: 12px; }
+#ucenterSection { margin-left: 200px; padding: 84px 40px 30px; }
+.ucenterIndexUl2 li:nth-of-type(3n-1) { width: 34%; }
+.my-gongzh-div .ucenterIndexUl2 li:nth-of-type(3n-1) { width: 33%; }
+.ucenterIndexUl2 li:nth-of-type(3n+1) .indexUlDiv2 { margin-right: 10px; }
+.ucenterIndexUl2 li:nth-of-type(3n-1) .indexUlDiv2 { margin: 0px 10px; }
+.my-gongzh-div .ucenterIndexUl2 li:nth-of-type(3n-1) .indexUlDiv2 { margin-left: 0px; }
+.ucenterIndexUl2 li:nth-of-type(3n) .indexUlDiv2 { margin-left: 10px; }
+#myDataWarning, #tieTel, #payQuestion, #mobileLayer { margin-left: 220px; margin-bottom: 40px; }
+.payQuestion { width: 400px; height: 280px; }
+.centerlayerDiv, .rightBackground { background: rgb(255, 255, 255) none repeat scroll 0% 0%; border-radius: 2px; border: 1px solid rgb(231, 231, 231); }
+.centerlayerDiv .layerTitle, .buyDataContent .buyTitle { height: 56px; line-height: 56px; padding-left: 26px; color: rgb(96, 96, 96); font-size: 16px; border-bottom: 1px solid rgb(231, 231, 231); position: relative; }
+.centerlayerDiv .layerCloseA { color: rgb(187, 187, 187); font-weight: 100; font-size: 30px; line-height: 30px; position: absolute; right: 20px; top: 12px; }
+.changedBtn { border: 0px none; background: transparent none repeat scroll 0% 0%; color: rgb(3, 197, 255); margin-left: 10px; text-decoration: underline; }
+.inputBtn { color: rgb(85, 85, 85); background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 1px solid rgb(211, 211, 211); border-radius: 2px; }
+.inputBtn:hover { background: rgb(240, 240, 240) none repeat scroll 0% 0%; }
+.buyDataContent .buyTitle {  }
+.buyDataContent h1 img { width: 40px; height: 40px; margin-right: 6px; margin-left: 10px; }
+.buyDataForm .labelLeft { width: 100px; }
+.buyDataLi .packageUl li { float: left; padding: 0px 10px; border: 1px solid rgb(221, 221, 221); height: 30px; line-height: 30px; border-radius: 2px; background: transparent none repeat scroll 0% 0%; margin-right: 10px; cursor: pointer; }
+.buyDataLi .packageUl .active, .buyDataLi .packageUl li:hover { height: 28px; line-height: 28px; padding: 0px 9px; border: 2px solid rgb(3, 197, 255); }
+.buyDataLi .packageUl .active { background: transparent url('images/buyselbg.png') no-repeat scroll right bottom; }
+.buyMyYue { color: rgb(96, 96, 96); }
+.buyDesDl { border-top: 1px solid rgb(231, 231, 231); padding-left: 44px; }
+.buyDesDl dt { font-weight: bold; height: 30px; line-height: 30px; padding-top: 16px; }
+.buyDesDl dd { line-height: 25px; }
+.buyDesDl dd a.iconfont, .noPriceContent a.iconfont { color: rgb(3, 197, 255); font-size: 26px; }
+.centerFormUl .buyDataNum { width: 170px; }
+.labelLeft { float: left; width: 120px; }
+.labelRight { float: left; }
+.payQuestion .layerContent { text-align: center; }
+.payQuestion .layerContent p { font-size: 20px; height: 40px; line-height: 40px; padding: 45px 0px; }
+.payQuestion .layerContent p i { font-size: 24px; padding-right: 8px; position: relative; top: 1px; }
+.payQuestion .centerBtn { width: 120px; }
+.orderTips1::after, .orderTips1::before, .orderTips2::after, .orderTips2::before { top: 100%; border: 10px solid transparent; content: " "; width: 0px; height: 0px; position: absolute; pointer-events: none; }
+.orderTips1::after, .orderTips2::after { border-top-color: rgb(255, 255, 255); border-width: 8px; left: 20%; margin-left: -8px; }
+.orderTips1::before, .orderTips2::before { border-top-color: rgb(231, 231, 231); border-width: 10px; left: 20%; margin-left: -10px; }
+.orderTips2::after { left: auto; right: 30px; }
+.orderTips2::before { left: auto; right: 28px; }
+.failTd .orderTips2::after { right: auto; left: 30px; }
+.failTd .orderTips2::before { right: auto; left: 30px; }
+@media only screen and (min-width: 1440px) {
+}
+@media only screen and (max-width: 1440px) {
+}
+@media only screen and (max-width: 1599px) {
+}
+@media only screen and (max-width: 1330px) {
+}
+@media only screen and (min-width: 1560px) {
+}
+/* ::::: https://www.juhe.cn/themes/v5/public/css/respond.css ::::: */
+
+@media only screen and (min-width: 1599px) {
+}
+@media only screen and (min-width: 1360px) and (max-width: 1599px) {
+}
+@media only screen and (min-width: 1266px) and (max-width: 1360px) {
+}
+@media only screen and (max-width: 1266px) {
+	.buyDataLi .packageUl li { font-size: 12px; }
+}
+@media only screen and (max-width: 1366px) {
+	body { font-size: 12px; }
+	.noLogs, .noPriceContent h4, .centerlayerDiv .layerTitle, .buyDataContent .buyTitle { font-size: 14px; }
+	.centerBtn, .addSomeBtn { font-size: 12px; }
+	.payQuestion .layerContent p { font-size: 18px; }
+}
+/* ::::: https://www.juhe.cn/themes/v5/public/js/layer/skin/layer.css ::::: */
+
+html #layui_layer_skinlayercss { display: none; position: absolute; width: 1989px; }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.pbccrc.api.base.bean.ApiUser;
 import org.pbccrc.api.core.mapper.ApiUserMapper;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +17,9 @@ public class ApiUserDao {
 	
 	public List<Map<String, Object>> queryAll() {
 		return apiUserMapper.queryAll();
+	}
+	
+	public void addApiUser(ApiUser apiUser) {
+		apiUserMapper.addApiUser(apiUser);
 	}
 }

@@ -25,6 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -58,6 +59,7 @@ public class ComplexController {
 	 * @throws Exception
 	 */
 	@GET
+	@CrossOrigin
 	@ResponseBody
 	@RequestMapping("/validateSxr")
 	public String validateSxr(String identifier) throws Exception{
@@ -73,6 +75,7 @@ public class ComplexController {
 	 * @throws Exception
 	 */
 	@GET
+	@CrossOrigin
 	@RequestMapping("/sxr")
 	public ResponseEntity<byte[]> querySxr(String identifier, String queryItem, HttpServletRequest request) throws Exception{
 		
@@ -139,6 +142,7 @@ public class ComplexController {
 	 * @throws Exception
 	 */
 	@GET
+	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/getPdfItem", produces={"application/json;charset=UTF-8"})
 	public String query(String service, String identifier, HttpServletRequest request) throws Exception {
@@ -216,6 +220,7 @@ public class ComplexController {
 	 * @throws Exception
 	 */
 	@GET
+	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/getPdfCustom", produces={"application/json;charset=UTF-8"})
 	public String queryCustom(String service, String identifier, HttpServletRequest request) throws Exception {
