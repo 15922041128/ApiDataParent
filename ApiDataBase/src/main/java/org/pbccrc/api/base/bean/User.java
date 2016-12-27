@@ -2,6 +2,10 @@ package org.pbccrc.api.base.bean;
 
 import java.io.Serializable;
 
+/**
+ * @author Administrator
+ *
+ */
 public class User implements Serializable{
 
 	private static final long serialVersionUID = -7313847131251988603L;
@@ -26,7 +30,10 @@ public class User implements Serializable{
 	
 	/** 联系人电话 */
 	private String contactTel;
-
+	
+	/** 认证标识 0否1是 */
+	private String auth;
+	
 	public Integer getID() {
 		return ID;
 	}
@@ -83,4 +90,11 @@ public class User implements Serializable{
 		this.contactTel = contactTel;
 	}
 	
+	public String getAuth() {
+		return auth;
+	}
+
+	public void setAuth(String auth) {
+		this.auth = auth;
+	}
 }

@@ -248,7 +248,7 @@ public class Constants {
 	
 	/** apiID */
 	// 身份证认证
-	public static final String API_ID_SFZRZ = "1";
+	public static final String API_ID_SFZRZ = "9999";
 	// 页面pdf
 	public static final String API_ID_PAGE_PDF = "99999999999";
 	
@@ -264,4 +264,17 @@ public class Constants {
 	// 登录用户
 	public static final String CACHE_USER = "cacheUser";
 	
+	/** 产品状态 */
+	// 待发布
+	public static final int TO_BE_PUBLISH  = 0; 
+	// 发布
+	public static final int PUBLISHED = 1; 
+	// 下架
+	public static final int REMOVED = 2;
+	
+	/** 账户认证状态 */
+	// 已认证
+	public static final String AUTH__STATUS_YES = "1";
+	// 未认证
+	public static final String AUTH_STATUS_NO = "0";
 }

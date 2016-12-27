@@ -62,7 +62,7 @@ public class RedisClient {
 	 * @return
 	 * @throws Exception
 	 */
-	public static boolean set(String key, String value) throws Exception {
+	public static boolean set(String key, String value) {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPool.getResource();

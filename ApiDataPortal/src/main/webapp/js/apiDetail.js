@@ -30,7 +30,9 @@ $(function () {
     })
 
     //价格变动
-    $('.price-times').live('click',function(){
+//   $(document).on('click','.price-times',function(){
+     $('.price-times').live('click',function(){
+    	console.log(1111);
         i = $(this).index()-1;
         $('.price-num').siblings(".price-num").each(function () {
             $(this).hide();
@@ -409,8 +411,6 @@ function priceSelect(obj,flag) {
             $(this).attr('class', 'price price-times');
         });
     }
-
-
 }
 
 function showDetail(index) {

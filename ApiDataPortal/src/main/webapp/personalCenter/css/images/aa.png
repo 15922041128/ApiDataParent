@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="5;url=/">
+<title>404_聚合数据</title>
+</head>
+<body>
+	<div style="text-align: center; padding: 80px; font-family:Tahoma,Helvetica,'幼圆','microsoft yahei','Hiragino Sans GB',Simsun,\5b8b\4f53,sans-serif;">
+		<div><img src="https://juheimg.oss-cn-hangzhou.aliyuncs.com/www/activity/404.png" width="560" height="277" alt="404" /></div>
+		<div style="padding: 30px 0 20px;"><img src="https://juheimg.oss-cn-hangzhou.aliyuncs.com/www/activity/notfind.png" width="265" height="34" alt="404" /></div>
+		<div><a style="font-size: 16px; color: #fff; display: block; width: 150px; height: 45px; line-height: 45px; background: #00b4ff; margin: 0 auto; text-decoration: none; border-radius: 4px;" href="https://www.juhe.cn">返回首页</a></div>
+		<div style="font-size: 14px; line-height: 50px; color: #717171;">先回首页看看吧~</div>
+	</div>
+</body>
+</html>

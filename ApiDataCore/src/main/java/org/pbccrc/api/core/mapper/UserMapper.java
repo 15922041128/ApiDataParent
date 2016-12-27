@@ -13,4 +13,6 @@ public interface UserMapper {
 	User login(User user);
 	
 	void updateUser(User user);
+	
+	User getUserByID(String userID);
 }

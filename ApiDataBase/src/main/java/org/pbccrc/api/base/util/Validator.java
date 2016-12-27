@@ -37,12 +37,6 @@ public class Validator {
 			return false;
 		}
 		
-		StringBuilder relationKey = new StringBuilder("relation");
-		relationKey.append(Constants.UNDERLINE + userID);
-		relationKey.append(Constants.UNDERLINE + apiKey);
-		relationKey.append(Constants.UNDERLINE + String.valueOf(localApi.get("ID")));
-		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get(relationKey.toString())));
-		
 		// 验证APIKEY是否存在
 		if (StringUtil.isNull(apiKey)) {
 			resultContent.setCode(Constants.ERR_MISSING_APIKEY);
@@ -50,12 +44,44 @@ public class Validator {
 			return false;
 		}
 		
+		StringBuilder relationKey = new StringBuilder("relation");
+		relationKey.append(Constants.UNDERLINE + userID);
+		relationKey.append(Constants.UNDERLINE + apiKey);
+//		relationKey.append(Constants.UNDERLINE + String.valueOf(localApi.get("ID")));
+		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get(relationKey.toString())));
+		
 		// 验证APIKEY是否有效
 		if (null == relation) {
 			resultContent.setCode(Constants.ERR_APIKEY_USER_INVALID);
 			resultContent.setRetMsg(Constants.RET_MSG_APIKEY_USER_INVALID);
 			return false;
 		}
+		
+		// 获取localApiID
+		String localApiID = String.valueOf(localApi.get("ID"));
+		
+		// 验证apiKey所属产品是否包含查询api
+		// 获取productID
+		String productID = relation.getString("productID");
+		// 获取product信息
+		StringBuilder productKey = new StringBuilder("product");
+		productKey.append(Constants.UNDERLINE + productID);
+		JSONObject product = JSONObject.parseObject(String.valueOf(RedisClient.get(productKey.toString())));
+		// 判断product中是否包含请求访问的API
+		String[] apiArray = product.getString("apis").split(Constants.COMMA);
+		boolean hasApiID = false;
+		for (String api : apiArray) {
+			if (api.equals(localApiID)) {
+				hasApiID = true;
+				break;
+			}
+		}
+		if (!hasApiID) {
+			resultContent.setCode(Constants.ERR_APIKEY_INVALID);
+			resultContent.setRetMsg(Constants.RET_MSG_APIKEY_INVALID);
+			return false;
+		}
+		
 		
 		// 获取计费方式
 		String costType = relation.getString("costType");
@@ -138,7 +164,6 @@ public class Validator {
 		StringBuilder relationKey = new StringBuilder("relation");
 		relationKey.append(Constants.UNDERLINE + userID);
 		relationKey.append(Constants.UNDERLINE + apiKey);
-		relationKey.append(Constants.UNDERLINE + localApiID);
 		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get(relationKey.toString())));
 		
 		// 验证APIKEY是否存在
@@ -155,9 +180,23 @@ public class Validator {
 			return false;
 		}
 		
-		String dbAPIKEY = String.valueOf(relation.get(Constants.API_KEY));
-		
-		if (!apiKey.equals(dbAPIKEY)) {
+		// 验证apiKey所属产品是否包含查询api
+		// 获取productID
+		String productID = relation.getString("productID");
+		// 获取product信息
+		StringBuilder productKey = new StringBuilder("product");
+		productKey.append(Constants.UNDERLINE + productID);
+		JSONObject product = JSONObject.parseObject(String.valueOf(RedisClient.get(productKey.toString())));
+		// 判断product中是否包含请求访问的API
+		String[] apiArray = product.getString("apis").split(Constants.COMMA);
+		boolean hasApiID = false;
+		for (String api : apiArray) {
+			if (api.equals(localApiID)) {
+				hasApiID = true;
+				break;
+			}
+		}
+		if (!hasApiID) {
 			resultContent.setCode(Constants.ERR_APIKEY_INVALID);
 			resultContent.setRetMsg(Constants.RET_MSG_APIKEY_INVALID);
 			return false;
