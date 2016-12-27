@@ -7,12 +7,12 @@
 		select count(1) from user where userName = #{userName}
 	</select>
 	
-	<insert id="addUser" parameterType="java.util.HashMap">
-		insert into user(userName, password, compName, compTel, contactName, contactTel) values(
-			#{userName}, #{password}, #{compName}, #{compTel}, #{contactName}, #{contactTel})
+	<insert id="addUser" parameterType="org.pbccrc.api.base.bean.User" keyProperty="ID">
+		insert into user(userName, password, compName, compTel, contactName, contactTel, auth) values(
+			#{userName}, #{password}, #{compName}, #{compTel}, #{contactName}, #{contactTel}, #{auth})
 	</insert>
 	
-	<select id="login" parameterType="java.util.HashMap" resultType="org.pbccrc.api.base.bean.User">
+	<select id="login" parameterType="org.pbccrc.api.base.bean.User" resultType="org.pbccrc.api.base.bean.User">
 		select * from user where userName = #{userName} and password = #{password} 
 	</select>
 	
@@ -34,11 +34,18 @@
         	<if test="contactTel !=null and contactTel != '' ">
             	contactTel = #{contactTel},
         	</if>
+        	<if test="auth !=null and auth != '' ">
+            	auth = #{auth},
+        	</if>
         </set>
         <where>
 			ID = #{ID}
 		</where>	
 		
 	</update>
+	
+	<select id="getUserByID" parameterType="java.lang.String" resultType="org.pbccrc.api.base.bean.User">
+		select * from user where ID = #{userID}
+	</select>
 	
 </mapper>

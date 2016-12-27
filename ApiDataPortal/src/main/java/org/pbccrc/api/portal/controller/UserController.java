@@ -1,5 +1,9 @@
 package org.pbccrc.api.portal.controller;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
@@ -11,9 +15,11 @@ import org.pbccrc.api.base.service.UserService;
 import org.pbccrc.api.base.util.CacheUtil;
 import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.base.util.MyCookie;
+import org.pbccrc.api.base.util.RedisClient;
 import org.pbccrc.api.base.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -29,6 +35,7 @@ public class UserController {
 	private CacheUtil cacheUtil;
 	
 	@GET
+	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/r/user/register", produces={"text/html;charset=UTF-8"})
 	public String register(
@@ -46,6 +53,7 @@ public class UserController {
 		user.setCompTel(compTel);
 		user.setContactName(contactName);
 		user.setContactTel(contactTel);
+		user.setAuth(Constants.AUTH_STATUS_NO);
 		
 		userService.addUser(user);
 		
@@ -54,6 +62,7 @@ public class UserController {
 	
 	
 	@GET
+	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/r/user/isExist", produces={"text/html;charset=UTF-8"})
 	public String isExist(@QueryParam("userName") String userName){
@@ -69,6 +78,7 @@ public class UserController {
 	}
 	
 	@GET
+	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/login", produces={"application/json;charset=UTF-8"})
 	public JSONObject login(@QueryParam("userName") String userName, @QueryParam("password") String password, 
@@ -95,20 +105,18 @@ public class UserController {
 	}
 	
 	@GET
+	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/r/user/resetPassword", produces={"text/html;charset=UTF-8"})
-	public String resetPassword(@QueryParam("password") String password, @Context HttpServletRequest request){
-		
-		String retData = Constants.RET_STAT_ERROR;
-		
-		String userID = MyCookie.getCookie(Constants.COOKIE_USERID, true, request);
+	public String resetPassword(@QueryParam("userID") String userID, @QueryParam("password") String password){
 		
 		userService.resetPassword(Integer.parseInt(userID), password);
 		
-		return retData;
+		return Constants.RET_STAT_SUCCESS;
 	}
 	
 	@GET
+	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/r/user/getUser", produces={"application/json;charset=UTF-8"})
 	public String getUser(@Context HttpServletRequest request){
@@ -120,6 +128,22 @@ public class UserController {
 	}
 	
 	@GET
+	@CrossOrigin
+	@ResponseBody
+	@RequestMapping(value="/r/user/getUserByID", produces={"application/json;charset=UTF-8"})
+	public String getUserByID(@QueryParam("userID") String userID){
+		
+		User currentUser = (User)cacheUtil.getObj(Constants.CACHE_USER + Constants.UNDERLINE  + userID);
+		
+		if (null == currentUser) {
+			currentUser = userService.getUserByID(userID);
+		}
+		
+		return JSONObject.toJSONString(currentUser);
+	}
+	
+	@GET
+	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/r/user/modifyUser", produces={"text/html;charset=UTF-8"})
 	public String modifyUser(
@@ -145,6 +169,7 @@ public class UserController {
 	}
 	
 	@GET
+	@CrossOrigin
 	@RequestMapping(value="/r/user/loginOut")
 	public void loginOut(@Context HttpServletRequest request) {
 		
@@ -152,4 +177,64 @@ public class UserController {
 		cacheUtil.delObj(Constants.CACHE_USER + Constants.UNDERLINE  + userID);
 	}
 	
+	@GET
+	@CrossOrigin
+	@ResponseBody
+	@RequestMapping(value="/getApiKey", produces={"application/json;charset=UTF-8"})
+	public JSONObject getApiKey(@QueryParam("userID") String userID, @QueryParam("productID") String productID){
+		
+		JSONObject object = new JSONObject();
+		
+		// apiKey
+		String apiKey = Constants.BLANK;
+		
+		// 根据用户ID获取当前用户已购买的产品关系
+		List<Map<String, Object>> relationList = RedisClient.fuzzyQuery("relation_" + userID + "_");
+		for (Map<String, Object> relation : relationList) {
+			// 判断当前产品ID是否和传入的相等
+			
+			Set<String> keySet = relation.keySet();
+			
+			for (String key : keySet) {
+				JSONObject relationObj = JSONObject.parseObject(String.valueOf(relation.get(key)));
+				if (productID.equals(relationObj.getString("productID"))) {
+					// 如果相等则获取当前relation的apiKey
+					apiKey = String.valueOf(relationObj.get("apiKey"));
+					break;
+				}
+			}
+		}
+		
+		object.put("apiKey", apiKey);
+		
+		return object;
+	}
+	
+	@GET
+	@CrossOrigin
+	@ResponseBody
+	@RequestMapping(value="/r/user/passwordIsTrue", produces={"application/json;charset=UTF-8"})
+	public JSONObject passwordIsTrue(@QueryParam("userID") String userID, @QueryParam("password") String password){
+		
+		JSONObject object = new JSONObject();
+		
+		boolean passwordIsTrue = userService.passwordIsTrue(userID, password);
+		
+		if (passwordIsTrue) {
+			object.put("passwordIsTrue", "Y");
+		} else {
+			object.put("passwordIsTrue", "N");
+		}
+		
+		return object;
+	}
+	
+	@GET
+	@CrossOrigin
+	@ResponseBody
+	@RequestMapping(value="/r/user/getApiUser", produces={"application/json;charset=UTF-8"})
+	public JSONObject getApiUser(@QueryParam("userID") String userID){
+		
+		return JSONObject.parseObject(String.valueOf(RedisClient.get("apiUser_" + userID)));
+	}
 }

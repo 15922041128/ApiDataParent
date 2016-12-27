@@ -8,6 +8,7 @@ import org.pbccrc.api.base.service.SMSService;
 import org.pbccrc.api.base.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -20,6 +21,7 @@ public class SMSController {
 	private SMSService smsService;
 	
 	@GET
+	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/getVCode", produces={"application/json;charset=UTF-8"})
 	public String query(@QueryParam("phoneNo") String phoneNo) throws Exception {
