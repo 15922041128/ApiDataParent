@@ -34,6 +34,33 @@ public class User implements Serializable{
 	/** 认证标识 0否1是 */
 	private String auth;
 	
+	/** 公司地址-省 */
+	private String province;
+	
+	/** 公司地址-市 */
+	private String city;
+	
+	/** 公司地址-区 */
+	private String area;
+	
+	/** 公司地址-详细地址 */
+	private String address;
+	
+	/** 营业执照编号 */
+	private String license;
+	
+	/** 税务登记证编号 */
+	private String taxRegCertify;
+	
+	/** 组织机构编号 */
+	private String org;
+	
+	/** 营业执照副本(url) */
+	private String licenseImg;
+	
+	/** 审核信息 */
+	private String message;
+	
 	public Integer getID() {
 		return ID;
 	}
@@ -96,5 +123,77 @@ public class User implements Serializable{
 
 	public void setAuth(String auth) {
 		this.auth = auth;
+	}
+	
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getLicense() {
+		return license;
+	}
+
+	public void setLicense(String license) {
+		this.license = license;
+	}
+
+	public String getTaxRegCertify() {
+		return taxRegCertify;
+	}
+
+	public void setTaxRegCertify(String taxRegCertify) {
+		this.taxRegCertify = taxRegCertify;
+	}
+
+	public String getOrg() {
+		return org;
+	}
+
+	public void setOrg(String org) {
+		this.org = org;
+	}
+
+	public String getLicenseImg() {
+		return licenseImg;
+	}
+
+	public void setLicenseImg(String licenseImg) {
+		this.licenseImg = licenseImg;
+	}
+	
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 }
