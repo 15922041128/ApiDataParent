@@ -130,9 +130,14 @@
        </dependency>
        
        <dependency>
-		<groupId>commons-io</groupId>
-		<artifactId>commons-io</artifactId>
-	</dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+	    </dependency>
+	    
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+		</dependency>
 	
 	<!--spring security-->
        <dependency>
@@ -165,6 +170,7 @@
 		    <groupId>org.aspectj</groupId>
 		    <artifactId>aspectjweaver</artifactId>
 		</dependency>
+		
    </dependencies>
   
    <build>

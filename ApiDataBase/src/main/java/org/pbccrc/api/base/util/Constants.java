@@ -273,8 +273,13 @@ public class Constants {
 	public static final int REMOVED = 2;
 	
 	/** 账户认证状态 */
-	// 已认证
-	public static final String AUTH__STATUS_YES = "1";
 	// 未认证
 	public static final String AUTH_STATUS_NO = "0";
+	// 待审核
+	public static final String AUTH_STATUS_WAIT = "1";
+	// 已认证
+	public static final String AUTH_STATUS_YES = "2";
+	// 认证失败
+	public static final String AUTH_STATUS_ERROR = "3";
+	
 }
