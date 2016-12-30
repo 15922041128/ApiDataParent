@@ -1,5 +1,6 @@
 package org.pbccrc.api.portal.controller;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -7,9 +8,12 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 
+import org.apache.commons.fileupload.DiskFileUpload;
+import org.apache.commons.fileupload.FileItem;
 import org.pbccrc.api.base.bean.User;
 import org.pbccrc.api.base.service.UserService;
 import org.pbccrc.api.base.util.CacheUtil;
@@ -26,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 
 @Controller
+@SuppressWarnings("deprecation")
 public class UserController {
 	
 	@Autowired
@@ -131,13 +136,9 @@ public class UserController {
 	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/r/user/getUserByID", produces={"application/json;charset=UTF-8"})
-	public String getUserByID(@QueryParam("userID") String userID){
+	public String getUserByID(@QueryParam("userID") String userID) {
 		
-		User currentUser = (User)cacheUtil.getObj(Constants.CACHE_USER + Constants.UNDERLINE  + userID);
-		
-		if (null == currentUser) {
-			currentUser = userService.getUserByID(userID);
-		}
+		User currentUser = userService.getUserByID(userID);
 		
 		return JSONObject.toJSONString(currentUser);
 	}
@@ -237,4 +238,75 @@ public class UserController {
 		
 		return JSONObject.parseObject(String.valueOf(RedisClient.get("apiUser_" + userID)));
 	}
+	
+	/**
+	 * 实名认证
+	 * @return
+	 */
+	@POST
+	@ResponseBody
+	@RequestMapping(value="/r/user/certify", produces={"application/json;charset=UTF-8"})
+	public JSONObject certify(
+			@QueryParam("userID") String userID,
+			@QueryParam("province") String province,
+			@QueryParam("city") String city,
+			@QueryParam("area") String area,
+			@QueryParam("address") String address,
+			@QueryParam("license") String license,
+			@QueryParam("taxRegCertify") String taxRegCertify,
+			@QueryParam("org") String org,
+			@Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
+		
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("success", Constants.RET_STAT_SUCCESS);
+		
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+		
+		String filePath = Constants.BLANK;
+		filePath = request.getSession().getServletContext().getRealPath("/") + Constants.FILE_PATH_BASE + File.separator + Constants.FILE_PATH_LICENSE;
+		File dir = new File(filePath);
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+		DiskFileUpload fu = new DiskFileUpload();
+		fu.setSizeMax(10485760);
+		fu.setSizeThreshold(4096);
+		
+		List<FileItem> fileItems = fu.parseRequest(request);
+		
+		File photo = null;
+		FileItem item = fileItems.get(0);
+		String fileName = item.getName();
+		if (!StringUtil.isNull(fileName)) {
+			fileName = fileName.substring(fileName.indexOf(Constants.POINT), fileName.length());
+			fileName = System.currentTimeMillis() + fileName;
+			photo = new File(filePath + File.separator + fileName);
+			item.write(photo);
+		}
+		
+		User user = userService.getUserByID(userID);
+		user.setProvince(province);
+		user.setCity(city);
+		user.setArea(area);
+		user.setAddress(address);
+		user.setLicense(license);
+		user.setTaxRegCertify(taxRegCertify);
+		user.setOrg(org);
+		user.setAuth(Constants.AUTH_STATUS_WAIT);
+		// 如果用户重新上传图片,则覆盖当前图片
+		if (!StringUtil.isNull(fileName)) {
+			user.setLicenseImg(photo.getName());
+		}
+		
+		userService.modifyUser(user);
+		user = userService.getUserByID(userID);
+		
+		jsonObject.put("user", user);
+		
+		return jsonObject;
+	}
+	
 }
