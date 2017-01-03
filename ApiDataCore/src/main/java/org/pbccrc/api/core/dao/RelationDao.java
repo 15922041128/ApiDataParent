@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.pbccrc.api.base.bean.Relation;
 import org.pbccrc.api.core.mapper.RelationMapper;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +17,10 @@ public class RelationDao {
 	
 	public List<Map<String, Object>> queryAll() {
 		return relationMapper.queryAll();
+	}
+	
+	public int addRelation(Relation relation){
+		relationMapper.addRelation(relation);
+		return relation.getID();
 	}
 }

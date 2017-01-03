@@ -24,9 +24,15 @@ public class Product implements Serializable{
 	/** 产品包含apiID */
 	private String apis;
 	
-	/** 产品状态(待发布,发布,下架) */
+	/** 产品状态(0待发布,1发布,2下架) */
 	private String status;
-
+	
+	/** 初始赠送次数 -1为免费使用 */
+	private int initCount;
+	
+	/** 初始赠送描述 */
+	private String initNote;
+	
 	public int getID() {
 		return ID;
 	}
@@ -81,5 +87,21 @@ public class Product implements Serializable{
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public int getInitCount() {
+		return initCount;
+	}
+
+	public void setInitCount(int initCount) {
+		this.initCount = initCount;
+	}
+
+	public String getInitNote() {
+		return initNote;
+	}
+
+	public void setInitNote(String initNote) {
+		this.initNote = initNote;
 	}
 }

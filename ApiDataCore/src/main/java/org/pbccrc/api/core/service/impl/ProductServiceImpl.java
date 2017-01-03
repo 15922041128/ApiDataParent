@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.pbccrc.api.base.bean.Product;
 import org.pbccrc.api.base.service.ProductService;
 import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.base.util.RedisClient;
@@ -95,5 +96,23 @@ public class ProductServiceImpl implements ProductService{
 		productInfo.put("codeArray", codeArray);
 		
 		return productInfo;
+	}
+	
+	/**
+	 * 根据产品类型获取产品信息
+	 * @param productType
+	 * @return
+	 */
+	public JSONArray getProductByType(String productType) {
+		
+		JSONArray jsonArray = new JSONArray();
+		
+		List<Product> productList = productDao.getProductByType(productType);
+		
+		for (Product product : productList) {
+			jsonArray.add(product);
+		}
+		
+		return jsonArray;
 	}
 }
