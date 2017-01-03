@@ -55,6 +55,7 @@ public class Constants {
 	/** 服务器文件相关 */
 	public static final String FILE_PATH_BASE = "files";
 	public static final String FILE_PATH_PHOTO = "photos";
+	public static final String FILE_PATH_LICENSE = "license";
 	
 	/** url参数相关 */
 	// apiKey
