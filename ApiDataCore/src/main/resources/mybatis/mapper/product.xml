@@ -7,4 +7,8 @@
 		select * from product
 	</select>
 	
+	<select id="getProductByType" parameterType="java.lang.String" resultType="org.pbccrc.api.base.bean.Product">
+		select * from product where type = #{productType}
+	</select>
+	
 </mapper>

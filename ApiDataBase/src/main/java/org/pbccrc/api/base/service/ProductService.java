@@ -25,4 +25,11 @@ public interface ProductService {
 	 * @return
 	 */
 	JSONObject getProductInfo(String productID);
+	
+	/**
+	 * 根据产品类型获取产品信息
+	 * @param productType
+	 * @return
+	 */
+	JSONArray getProductByType(String productType);
 }
