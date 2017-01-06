@@ -7,4 +7,11 @@
 		select * from identification where identifier = #{identifier}
 	</select>
 	
+	<select id="getInnerID" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select * from identification where identifier = #{identifier} 
+		<if test="name !=null and name != '' ">
+			and name = #{name}
+        </if>
+	</select>
+	
 </mapper>

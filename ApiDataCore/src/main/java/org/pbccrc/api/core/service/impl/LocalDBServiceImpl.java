@@ -5,18 +5,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.pbccrc.api.base.service.LocalDBService;
 import org.pbccrc.api.base.bean.DBEntity;
 import org.pbccrc.api.base.bean.ResultContent;
+import org.pbccrc.api.base.service.LocalDBService;
+import org.pbccrc.api.base.util.Constants;
+import org.pbccrc.api.core.dao.BlackDao;
 import org.pbccrc.api.core.dao.DBOperatorDao;
 import org.pbccrc.api.core.dao.LdbApiDao;
+import org.pbccrc.api.core.dao.ScoreDao;
 import org.pbccrc.api.core.dao.ZhIdentificationDao;
 import org.pbccrc.api.core.dao.datasource.DynamicDataSourceHolder;
-import org.pbccrc.api.base.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 @Service
 public class LocalDBServiceImpl implements LocalDBService {
@@ -29,6 +32,12 @@ public class LocalDBServiceImpl implements LocalDBService {
 	
 	@Autowired
 	private ZhIdentificationDao zhIdentificationDao;
+	
+	@Autowired
+	private BlackDao blackDao;
+	
+	@Autowired
+	private ScoreDao scoreDao;
 	
 	/***
 	 * 根据身份证和姓名查询信贷信息
@@ -119,18 +128,19 @@ public class LocalDBServiceImpl implements LocalDBService {
 	/**
 	 * 查询本地api
 	 * @param service
+	 * @param name
 	 * @param idCardNo
 	 * @return
 	 * @throws Exception
 	 */
-	public Map<String, Object> queryApi(String service, String idCardNo) throws Exception {
+	public Map<String, Object> queryApi(String service, String name, String idCardNo) throws Exception {
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("isNull", "N");
 		
 		// 根据身份证号获取内码信息
 		DynamicDataSourceHolder.change2oracle();
-		Map<String, Object> insideCodeMap = zhIdentificationDao.queryByCode(idCardNo);
+		Map<String, Object> insideCodeMap = zhIdentificationDao.getInnerID(name, idCardNo);
 		DynamicDataSourceHolder.change2mysql();
 		if (null == insideCodeMap) {
 			returnMap.put("isNull", "Y");
@@ -165,5 +175,92 @@ public class LocalDBServiceImpl implements LocalDBService {
 		returnMap.put("result", result);
 		
 		return returnMap;
+	}
+	
+	/***
+	 * 根据身份证和姓名查询内码
+	 * @param name			姓名
+	 * @param idCardNo		身份证号
+	 * @return
+	 * @throws Exception
+	 */
+	public String getInnerID(String name, String identifier) throws Exception {
+		
+		String innerID = Constants.BLANK;
+		
+		DynamicDataSourceHolder.change2oracle();
+		Map<String, Object> returnMap = zhIdentificationDao.getInnerID(name, identifier);
+		DynamicDataSourceHolder.change2mysql();
+		
+		if (null == returnMap) {
+			return innerID;
+		}
+
+		innerID = String.valueOf(returnMap.get("INNERID"));
+		
+		return innerID;
+	}
+	
+	/***
+	 * 根据身份证查询内码
+	 * @param idCardNo		身份证号
+	 * @return
+	 * @throws Exception
+	 */
+	public String getInnerID(String identifier) throws Exception {
+		
+		String innerID = Constants.BLANK;
+		
+		DynamicDataSourceHolder.change2oracle();
+		Map<String, Object> returnMap = zhIdentificationDao.getInnerID(identifier);
+		DynamicDataSourceHolder.change2mysql();
+		
+		if (null == returnMap) {
+			return innerID;
+		}
+
+		innerID = String.valueOf(returnMap.get("INNERID"));
+		
+		return innerID;
+	}
+	
+	/**
+	 * 根据内码获得黑名单
+	 * @param innerID
+	 * @return
+	 */
+	public JSONObject getBlack(String innerID) {
+		
+		DynamicDataSourceHolder.change2oracle();
+		List<Map<String, Object>> blackMapList = blackDao.getBlack(innerID);
+		DynamicDataSourceHolder.change2mysql();
+		
+		if (blackMapList.size() == 0) {
+			return null;
+		}
+		
+		JSONObject object = (JSONObject) JSONObject.toJSON(blackMapList.get(0));
+		
+		return object;
+	}
+	
+	/**
+	 * 根据内码获得信用分
+	 * @param innerID
+	 * @return
+	 */
+	public JSONObject getScore(String innerID) {
+		
+		DynamicDataSourceHolder.change2oracle();
+		List<Map<String, Object>> scoreMapList = scoreDao.getScore(innerID);
+		DynamicDataSourceHolder.change2mysql();
+		
+		if (scoreMapList.size() == 0) {
+			return null;
+		}
+		
+		JSONObject object = (JSONObject) JSONObject.toJSON(scoreMapList.get(0));
+		
+		return object;
 	}
 }

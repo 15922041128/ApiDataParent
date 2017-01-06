@@ -63,14 +63,15 @@ public class ComplexServiceImpl implements ComplexService{
 	
 	/**
 	 * 失信人查询验证
+	 * @param name
 	 * @param identifier
 	 * @return
 	 */
-	public String validateSxr(String identifier) throws Exception {
+	public String validateSxr(String name, String identifier) throws Exception {
 		String isNull = "N";
 		// 根据身份证号获取内码信息
 		DynamicDataSourceHolder.change2oracle();
-		Map<String, Object> insideCodeMap = zhIdentificationDao.queryByCode(identifier);
+		Map<String, Object> insideCodeMap = zhIdentificationDao.getInnerID(name, identifier);
 		DynamicDataSourceHolder.change2mysql();
 		if (null == insideCodeMap) {
 			isNull = "Y";
@@ -81,20 +82,21 @@ public class ComplexServiceImpl implements ComplexService{
 	/**
 	 * PDF单项查询
 	 * @param item
+	 * @param name
 	 * @param identifier
 	 * @param localApi
 	 * @return
 	 * @throws Exception
 	 */
 	public Map<String, Object> getPdfItem(String uuid, String userID, String service, 
-			String identifier, Map<String, Object> localApi) throws Exception {
+			String name, String identifier, Map<String, Object> localApi) throws Exception {
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("isNull", "N");
 		
 		// 根据身份证号获取内码信息
 		DynamicDataSourceHolder.change2oracle();
-		Map<String, Object> insideCodeMap = zhIdentificationDao.queryByCode(identifier);
+		Map<String, Object> insideCodeMap = zhIdentificationDao.getInnerID(name, identifier);
 		DynamicDataSourceHolder.change2mysql();
 		
 		if (null == insideCodeMap) {
@@ -106,8 +108,6 @@ public class ComplexServiceImpl implements ComplexService{
 			
 			// 内码
 			String innerID = String.valueOf(insideCodeMap.get("INNERID"));
-			// 姓名
-			String name = String.valueOf(insideCodeMap.get("NAME"));
 			
 			// 查询结果
 			Map<String, Object> queryResult = new HashMap<String, Object>();
@@ -125,8 +125,10 @@ public class ComplexServiceImpl implements ComplexService{
 				queryResult = zhPersonDao.query(innerID);
 				DynamicDataSourceHolder.change2mysql();
 				// 根据配置返回信息
-				for (String key : returnParams) {
-					returnResult.put(key, queryResult.get(key.toUpperCase()));
+				if (null != queryResult) {
+					for (String key : returnParams) {
+						returnResult.put(key, queryResult.get(key.toUpperCase()));
+					}					
 				}
 				returnStr = JSONObject.toJSON(returnResult);
 			} else if (Constants.SERVICE_ZH_ADDRESS.equals(service)) {
@@ -135,8 +137,10 @@ public class ComplexServiceImpl implements ComplexService{
 				queryResult = zhAddressDao.query(innerID);
 				DynamicDataSourceHolder.change2mysql();
 				// 根据配置返回信息
-				for (String key : returnParams) {
-					returnResult.put(key, queryResult.get(key.toUpperCase()));
+				if (null != queryResult) {
+					for (String key : returnParams) {
+						returnResult.put(key, queryResult.get(key.toUpperCase()));
+					}					
 				}
 				returnStr = JSONObject.toJSON(returnResult);
 			} else if (Constants.SERVICE_ZH_EMPLOYMENT .equals(service)) {
@@ -145,8 +149,10 @@ public class ComplexServiceImpl implements ComplexService{
 				queryResult = zhEmploymentDao.query(innerID);
 				DynamicDataSourceHolder.change2mysql();
 				// 根据配置返回信息
-				for (String key : returnParams) {
-					returnResult.put(key, queryResult.get(key.toUpperCase()));
+				if (null != queryResult) {
+					for (String key : returnParams) {
+						returnResult.put(key, queryResult.get(key.toUpperCase()));
+					}					
 				}
 				returnStr = JSONObject.toJSON(returnResult);
 			} else if (Constants.SERVICE_ZH_CREDITCARD .equals(service)) {
@@ -155,8 +161,10 @@ public class ComplexServiceImpl implements ComplexService{
 				queryResult = zhCreditCardDao.query(innerID);
 				DynamicDataSourceHolder.change2mysql();
 				// 根据配置返回信息
-				for (String key : returnParams) {
-					returnResult.put(key, queryResult.get(key.toUpperCase()));
+				if (null != queryResult) {
+					for (String key : returnParams) {
+						returnResult.put(key, queryResult.get(key.toUpperCase()));
+					}					
 				}
 				returnStr = JSONObject.toJSON(returnResult);
 			} else if (Constants.SERVICE_ZH_LOAN.equals(service)) {
@@ -165,8 +173,10 @@ public class ComplexServiceImpl implements ComplexService{
 				queryResult = zhLoanDao.query(innerID);
 				DynamicDataSourceHolder.change2mysql();
 				// 根据配置返回信息
-				for (String key : returnParams) {
-					returnResult.put(key, queryResult.get(key.toUpperCase()));
+				if (null != queryResult) {
+					for (String key : returnParams) {
+						returnResult.put(key, queryResult.get(key.toUpperCase()));
+					}					
 				}
 				returnStr = JSONObject.toJSON(returnResult);
 			} else if (Constants.SERVICE_ZH_GUARANTEE .equals(service)) {
@@ -176,12 +186,14 @@ public class ComplexServiceImpl implements ComplexService{
 				DynamicDataSourceHolder.change2mysql();
 				JSONArray jsonArray = new JSONArray();
 				// 根据配置返回信息
-				for (Map<String, Object> map : returnList) {
-					for (String key : returnParams) {
-						returnResult.put(key, map.get(key.toUpperCase()));
+				if (null != returnList) {
+					for (Map<String, Object> map : returnList) {
+						for (String key : returnParams) {
+							returnResult.put(key, map.get(key.toUpperCase()));
+						}
+						jsonArray.add(returnResult);
+						returnResult = new HashMap<String, Object>();
 					}
-					jsonArray.add(returnResult);
-					returnResult = new HashMap<String, Object>();
 				}
 				returnStr = jsonArray;
 			} else {
@@ -215,22 +227,20 @@ public class ComplexServiceImpl implements ComplexService{
 	 * @param identifier
 	 * @return
 	 */
-	public Map<String, Object> querySxr(String uuid, String userID, String identifier, String[] queryItems) throws Exception{
+	public Map<String, Object> querySxr(String uuid, String userID, String name, String identifier, String[] queryItems) throws Exception{
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("isNull", "N");
 		
 		// 根据身份证号获取内码信息
 		DynamicDataSourceHolder.change2oracle();
-		Map<String, Object> insideCodeMap = zhIdentificationDao.queryByCode(identifier);
+		Map<String, Object> insideCodeMap = zhIdentificationDao.getInnerID(name, identifier);
 		DynamicDataSourceHolder.change2mysql();
 		if (null == insideCodeMap) {
 			returnMap.put("isNull", "Y");
 		} else {
 			// 内码
 			String innerID = String.valueOf(insideCodeMap.get("INNERID"));
-			// 姓名
-			String name = String.valueOf(insideCodeMap.get("NAME"));
 			
 			// 获取用户信用评分信息
 			String score = "暂无分数"; 
@@ -470,19 +480,20 @@ public class ComplexServiceImpl implements ComplexService{
 	/**
 	 * PDF自定义查询
 	 * @param item
+	 * @param name
 	 * @param identifier
 	 * @param localApi
 	 * @return
 	 * @throws Exception
 	 */
-	public Map<String, Object> getPdfCustom(String uuid, String userID, String identifier, Map<String, Object> localApi) throws Exception {
+	public Map<String, Object> getPdfCustom(String uuid, String userID, String name, String identifier, Map<String, Object> localApi) throws Exception {
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("isNull", "N");
 		
 		// 根据身份证号获取内码信息
 		DynamicDataSourceHolder.change2oracle();
-		Map<String, Object> insideCodeMap = zhIdentificationDao.queryByCode(identifier);
+		Map<String, Object> insideCodeMap = zhIdentificationDao.getInnerID(name, identifier);
 		DynamicDataSourceHolder.change2mysql();
 		
 		if (null == insideCodeMap) {
@@ -490,8 +501,6 @@ public class ComplexServiceImpl implements ComplexService{
 		} else {
 			// 内码
 			String innerID = String.valueOf(insideCodeMap.get("INNERID"));
-			// 姓名
-			String name = String.valueOf(insideCodeMap.get("NAME"));
 			
 			// 查询结果
 			Map<String, Object> queryResult = new HashMap<String, Object>();
