@@ -1,5 +1,6 @@
 package org.pbccrc.api.core.mapper;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
@@ -7,5 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ZhIdentificationMapper {
 
-	Map<String, Object> queryByIdentifier(String innerID);
+	List<Map<String, Object>> queryByIdentifier(String innerID);
+	
+	List<Map<String, Object>> getInnerID(Map<String, String> map);
 }

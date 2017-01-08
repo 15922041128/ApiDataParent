@@ -2,6 +2,8 @@ package org.pbccrc.api.base.util;
 
 public class Constants {
 	
+	public static final String PDF_FILE_PATH = PropertiesUtil.getStringByKey("pdfFilePath");
+	
 	public static final int COUNT_MAX = -1;
 	
 	public static final String BLANK = "";

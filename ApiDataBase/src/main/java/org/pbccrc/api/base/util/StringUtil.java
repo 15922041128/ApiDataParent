@@ -105,11 +105,40 @@ public class StringUtil {
 		return uuidStr;
     }
     
+    public final static String MD5Encoder(String s) {
+        try {
+        	return MD5Encoder(s, "utf-8");
+        } catch (Exception e) {
+            return Constants.BLANK;
+        }
+    }
+    
+	public final static String MD5Encoder(String s, String charset) {
+        try {
+            byte[] btInput = s.getBytes(charset);
+            MessageDigest mdInst = MessageDigest.getInstance("MD5");
+            mdInst.update(btInput);
+            byte[] md = mdInst.digest();
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < md.length; i++) {
+                int val = ((int) md[i]) & 0xff;
+                if (val < 16){
+                	sb.append("0");
+                }
+                sb.append(Integer.toHexString(val));
+            }
+            return sb.toString();
+        } catch (Exception e) {
+            return Constants.BLANK;
+        }
+    }
+    
     public static String createApiKey() {
     	return UUID.randomUUID().toString().replaceAll(Constants.CONNECTOR_LINE, Constants.BLANK); 
     }
       
     public static void main(String[] args) {  
-        System.out.println( decodeUnicode("\u8eab\u4efd\u8bc1\u53f7\u7801\u4e0d\u5408\u6cd5\uff01"));  
+    	String md5Str = MD5Encoder("贾昌鑫");
+		System.out.println(md5Str);  
     }  
 }

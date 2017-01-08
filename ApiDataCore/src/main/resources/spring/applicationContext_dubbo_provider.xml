@@ -46,4 +46,5 @@
     <dubbo:service interface="org.pbccrc.api.base.service.CodeService" ref="codeServiceImpl"/>
     <dubbo:service interface="org.pbccrc.api.base.service.ProductTypeService" ref="productTypeServiceImpl"/>
     <dubbo:service interface="org.pbccrc.api.base.service.ApplyService" ref="applyServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.DataBaseService" ref="dataBaseServiceImpl"/>
 </beans>

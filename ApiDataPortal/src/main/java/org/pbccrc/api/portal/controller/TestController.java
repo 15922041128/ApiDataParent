@@ -2,6 +2,7 @@ package org.pbccrc.api.portal.controller;
 
 import javax.ws.rs.GET;
 
+import org.pbccrc.api.base.service.DataBaseService;
 import org.pbccrc.api.base.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,9 @@ public class TestController {
 	
 	@Autowired
 	private TestService testService;
+	
+	@Autowired
+	private DataBaseService dataBaseService;
 
 	@GET
 	@CrossOrigin
@@ -24,6 +28,24 @@ public class TestController {
 	public JSONArray queryAllApi(String productID){
 		
 		return testService.queryAllApi(productID);
+	}
+	
+	@GET
+	@CrossOrigin
+	@ResponseBody
+	@RequestMapping(value="/queryAllTable", produces={"application/json;charset=UTF-8"})
+	public JSONArray queryAllTable() {
+		
+		return dataBaseService.queryAllTable();
+	}
+	
+	@GET
+	@CrossOrigin
+	@ResponseBody
+	@RequestMapping(value="/queryColumnByTable", produces={"application/json;charset=UTF-8"})
+	public JSONArray queryColumnByTable(String tableName) {
+		
+		return dataBaseService.queryColumnByTable(tableName);
 	}
 	
 }
