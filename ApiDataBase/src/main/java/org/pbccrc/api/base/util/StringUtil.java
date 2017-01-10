@@ -107,7 +107,7 @@ public class StringUtil {
     
     public final static String MD5Encoder(String s) {
         try {
-        	return MD5Encoder(s, "utf-8");
+        	return MD5Encoder(s, "gbk");
         } catch (Exception e) {
             return Constants.BLANK;
         }

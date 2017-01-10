@@ -1,5 +1,7 @@
 package org.pbccrc.api.web.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -9,15 +11,21 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 
 import org.pbccrc.api.base.bean.ResultContent;
+import org.pbccrc.api.base.bean.SystemLog;
+import org.pbccrc.api.base.service.CostService;
+import org.pbccrc.api.base.service.LocalApiService;
 import org.pbccrc.api.base.service.LocalDBService;
+import org.pbccrc.api.base.service.SystemLogService;
 import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.base.util.StringUtil;
+import org.pbccrc.api.base.util.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 @Controller
@@ -26,6 +34,18 @@ public class LocalDBController {
 	
 	@Autowired
 	private LocalDBService localDBService;
+	
+	@Autowired
+	private LocalApiService localApiService;
+	
+	@Autowired
+	private Validator validator;
+	
+	@Autowired
+	private CostService costService;
+	
+	@Autowired
+	private SystemLogService systemLogService;
 
 	/**
 	 * 根据身份证和姓名查询信贷信息
@@ -170,6 +190,117 @@ public class LocalDBController {
 			return (JSONObject) JSONObject.toJSON(resultContent);
 		}
 		resultContent.setRetData(object);
+		
+		return (JSONObject) JSONObject.toJSON(resultContent);
+		
+	}
+	
+	/**
+	 * 综合查询本地数据
+	 * @param name			姓名
+	 * @param identifier	身份证号码
+	 * @param telNum		电话号码
+	 * @return
+	 * @throws Exception
+	 */
+	@GET
+	@CrossOrigin
+	@ResponseBody
+	@RequestMapping(value="/getResult", produces={"application/json;charset=UTF-8"})
+	public JSONObject getResult(String service, String name, String identifier, String telNum, HttpServletRequest request) throws Exception {
+		
+		ResultContent resultContent = new ResultContent();
+		resultContent.setCode(Constants.CODE_ERR_SUCCESS);
+		resultContent.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);
+		resultContent.setRetData(Constants.BLANK);
+		
+		// 获取apiKey
+		String apiKey = request.getHeader(Constants.HEAD_APIKEY);
+		// 获得用ID
+		String userID = request.getHeader(Constants.HEAD_USER_ID);
+		
+		// 验证service格式
+		if (StringUtil.isNull(service) || service.split(Constants.CONNECTOR_LINE).length != 2) {
+			resultContent.setCode(Constants.ERR_SERVICE);
+			resultContent.setRetMsg(Constants.RET_MSG_SERVICE);
+			return (JSONObject) JSONObject.toJSON(resultContent);
+		}
+		
+		// 获取本地api
+		Map<String, Object> localApi = localApiService.queryByService(service);
+		
+		// 验证本地是否有该api
+		if (null == localApi) {
+			resultContent.setCode(Constants.ERR_NO_SERVICE);
+			resultContent.setRetMsg(Constants.RET_MSG_NO_SERVICE);
+			return (JSONObject) JSONObject.toJSON(resultContent);
+		}
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, localApi, name, identifier, telNum, resultContent)) {
+			return (JSONObject) JSONObject.toJSON(resultContent);
+		}
+		
+		// 内码
+		String innerID = Constants.BLANK;
+		// 查询参数(记录日志用)
+		JSONObject paramObj = new JSONObject();
+		// 判断查询方式
+		String params = (String) localApi.get("params");
+		JSONArray array = JSONArray.parseArray(params);
+		if (array.size() == 1) {
+			// size为1 则通过电话号码查询内码
+			innerID = localDBService.getInnerIDByTelNum(telNum);
+			paramObj.put("telNum", telNum);
+		} else {
+			// size为2 则通过两标查询内码
+			innerID = localDBService.getInnerID(name, identifier);
+			paramObj.put("name", name);
+			paramObj.put("identifier", identifier);
+		}
+		
+		// 生成UUID
+		String uuid = StringUtil.createUUID();
+		
+		Map<String, Object> map = localDBService.getResult(uuid, userID, service, innerID, paramObj);
+		
+		// 查询结果
+		boolean isSuccess = (boolean) map.get("isSuccess");
+		Object result = map.get("result");
+		
+		JSONObject resultJson = (JSONObject) JSONObject.toJSON(result);
+		
+		// 判断是否成功
+		if (isSuccess) {
+			// 计费
+			costService.cost(userID, apiKey);
+			resultContent.setRetData(resultJson);
+		} else {
+			resultContent.setCode(Constants.ERR_NO_RESULT);
+			resultContent.setRetMsg(Constants.RET_MSG_NO_RESULT);
+		}
+		
+		// 记录日志
+		SystemLog systemLog = new SystemLog();
+		// uuid
+		systemLog.setUuid(uuid);
+		// ip地址
+		systemLog.setIpAddress(request.getRemoteAddr());
+		// apiKey
+		systemLog.setApiKey(apiKey);
+		// localApiID
+		systemLog.setLocalApiID(String.valueOf(localApi.get("ID")));
+		// 参数
+		systemLog.setParams(paramObj.toJSONString());
+		// 用户ID
+		systemLog.setUserID(userID);
+		// 是否成功
+		systemLog.setIsSuccess(String.valueOf(isSuccess));
+		// 是否计费
+		systemLog.setIsCount(String.valueOf(isSuccess));
+		// 查询时间
+		systemLog.setQueryDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+		systemLogService.addLog(systemLog);
 		
 		return (JSONObject) JSONObject.toJSON(resultContent);
 		

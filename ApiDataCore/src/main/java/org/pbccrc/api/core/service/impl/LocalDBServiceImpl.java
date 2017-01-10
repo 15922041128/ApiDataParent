@@ -1,18 +1,24 @@
 package org.pbccrc.api.core.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.pbccrc.api.base.bean.ApiLog;
 import org.pbccrc.api.base.bean.DBEntity;
 import org.pbccrc.api.base.bean.ResultContent;
 import org.pbccrc.api.base.service.LocalDBService;
 import org.pbccrc.api.base.util.Constants;
+import org.pbccrc.api.core.dao.ApiLogDao;
 import org.pbccrc.api.core.dao.BlackDao;
 import org.pbccrc.api.core.dao.DBOperatorDao;
 import org.pbccrc.api.core.dao.LdbApiDao;
+import org.pbccrc.api.core.dao.LocalApiDao;
 import org.pbccrc.api.core.dao.ScoreDao;
+import org.pbccrc.api.core.dao.TelPersonDao;
 import org.pbccrc.api.core.dao.ZhIdentificationDao;
 import org.pbccrc.api.core.dao.datasource.DynamicDataSourceHolder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +40,19 @@ public class LocalDBServiceImpl implements LocalDBService {
 	private ZhIdentificationDao zhIdentificationDao;
 	
 	@Autowired
+	private TelPersonDao telPersonDao;
+	
+	@Autowired
 	private BlackDao blackDao;
 	
 	@Autowired
 	private ScoreDao scoreDao;
+	
+	@Autowired
+	private LocalApiDao localApiDao;
+	
+	@Autowired
+	private ApiLogDao apiLogDao;
 	
 	/***
 	 * 根据身份证和姓名查询信贷信息
@@ -224,6 +239,29 @@ public class LocalDBServiceImpl implements LocalDBService {
 		return innerID;
 	}
 	
+	/***
+	 * 根据手机号查询内码
+	 * @param telNum	手机号码
+	 * @return
+	 * @throws Exception
+	 */
+	public String getInnerIDByTelNum(String telNum) throws Exception {
+		
+		String innerID = Constants.BLANK;
+		
+		DynamicDataSourceHolder.change2oracle();
+		Map<String, Object> returnMap = telPersonDao.getInnerID(telNum);
+		DynamicDataSourceHolder.change2mysql();
+		
+		if (null == returnMap) {
+			return innerID;
+		}
+
+		innerID = String.valueOf(returnMap.get("INNERID"));
+		
+		return innerID;
+	}
+	
 	/**
 	 * 根据内码获得黑名单
 	 * @param innerID
@@ -262,5 +300,73 @@ public class LocalDBServiceImpl implements LocalDBService {
 		JSONObject object = (JSONObject) JSONObject.toJSON(scoreMapList.get(0));
 		
 		return object;
+	}
+	
+	/**
+	 * 查询本地数据库
+	 * @param uuid
+	 * @param userID
+	 * @param service
+	 * @param innerID
+	 * @param params
+	 * @return
+	 */
+	public Map<String, Object> getResult(String uuid, String userID, String service, String innerID, JSONObject params) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("isSuccess", true);
+		
+		Map<String, Object> localApi = localApiDao.queryByService(service);
+		
+		// 获取表名
+		String tblName = String.valueOf(localApi.get("tblName"));
+		
+		// 获取返回参数
+		String returnParam = String.valueOf(localApi.get("returnParam"));
+		String[] returnParams = returnParam.split(Constants.COMMA);
+		
+		// 设置DBEntity
+		DBEntity entity = new DBEntity();
+		// 表名
+		entity.setTableName(tblName);
+		// 查询条件
+		List<String> fields = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		fields.add("INNERID");
+		values.add(innerID);
+		entity.setFields(fields);
+		entity.setValues(values);
+		// 返回值
+		String[] selectItems = new String[returnParams.length];
+		for (int i = 0; i < returnParams.length; i++) {
+			selectItems[i] = returnParams[i].toUpperCase();
+		}
+		entity.setSelectItems(selectItems);
+		// 数据库类型
+		entity.setDataBaseType(Constants.DATABASE_TYPE_ORACLE);
+		
+		DynamicDataSourceHolder.change2oracle();
+		Map<String, Object> dbMap = dbOperatorDao.queryData(entity);
+		DynamicDataSourceHolder.change2mysql();
+		
+		if (null == dbMap || dbMap.size() == 0) {
+			map.put("isSuccess", false);
+		} else {
+			map.put("result", JSONObject.toJSON(dbMap));
+		}
+		
+		// 记录日志
+		ApiLog apiLog = new ApiLog();
+		// uuid
+		apiLog.setUuid(uuid);
+		apiLog.setUserID(userID);
+		apiLog.setLocalApiID(String.valueOf(localApi.get("ID")));
+		apiLog.setParams(params.toJSONString());
+		apiLog.setDataFrom(Constants.DATA_FROM_LOCAL);
+		apiLog.setIsSuccess(String.valueOf(map.get("isSuccess")));
+		apiLog.setQueryDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+		apiLogDao.addLog(apiLog);
+		
+		return map;
 	}
 }

@@ -26,6 +26,9 @@ public class DBEntity implements Serializable{
 	/** 查询字段 */
 	private String[] selectItems;
 	
+	/** 数据库类型 */
+	private String dataBaseType;
+	
 	public String[] getSelectItems() {
 		return selectItems;
 	}
@@ -74,4 +77,11 @@ public class DBEntity implements Serializable{
 		this.returnFidlds = returnFidlds;
 	}
 	
+	public String getDataBaseType() {
+		return dataBaseType;
+	}
+
+	public void setDataBaseType(String dataBaseType) {
+		this.dataBaseType = dataBaseType;
+	}
 }

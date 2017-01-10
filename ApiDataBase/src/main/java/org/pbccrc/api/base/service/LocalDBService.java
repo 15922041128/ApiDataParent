@@ -51,6 +51,14 @@ public interface LocalDBService {
 	 */
 	public String getInnerID(String identifier) throws Exception;
 	
+	/***
+	 * 根据手机号查询内码
+	 * @param telNum	手机号码
+	 * @return
+	 * @throws Exception
+	 */
+	public String getInnerIDByTelNum(String telNum) throws Exception;
+	
 	/**
 	 * 根据内码获得黑名单
 	 * @param innerID
@@ -64,5 +72,16 @@ public interface LocalDBService {
 	 * @return
 	 */
 	public JSONObject getScore(String innerID);
+	
+	/**
+	 * 查询本地数据库
+	 * @param uuid
+	 * @param userID
+	 * @param service
+	 * @param innerID
+	 * @param params
+	 * @return
+	 */
+	public Map<String, Object> getResult(String uuid, String userID, String service, String innerID, JSONObject params);
 
 }
