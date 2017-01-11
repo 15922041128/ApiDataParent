@@ -1,8 +1,11 @@
 package org.pbccrc.api.core.service.impl;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.pbccrc.api.base.bean.ApiUser;
+import org.pbccrc.api.base.bean.PageInfo;
+import org.pbccrc.api.base.bean.Pagination;
 import org.pbccrc.api.base.bean.User;
 import org.pbccrc.api.base.service.UserService;
 import org.pbccrc.api.base.util.StringUtil;
@@ -97,5 +100,9 @@ public class UserServiceImpl implements UserService{
 		User user = userDao.getUserByID(userID);
 		
 		return user.getPassword().equals(StringUtil.string2MD5(password));
+	}
+
+	public Pagination queryAllUser(User user, Pagination pagination) {
+		return userDao.getUserByPage(user, pagination);
 	}
 }

@@ -11,4 +11,50 @@
 		select * from product where type = #{productType}
 	</select>
 	
+	<select id="queryProductByPage" parameterType="org.pbccrc.api.base.bean.Product" resultType="org.pbccrc.api.base.bean.Product">
+		select * from product where 1=1
+			<if test="name !=null and name != '' ">
+            	and name like CONCAT('%',#{name},'%') 
+        	</if>
+			<if test="type !=null and type != '' ">
+            	and service = #{type}
+        	</if>
+        	<if test="status !=null and status != '' ">
+            	and isOpen = #{status}
+        	</if>
+	</select>
+	
+	<insert id="addProduct" parameterType="org.pbccrc.api.base.bean.Product">
+		insert into Product(name, image, type, price, apis, status) 
+			values(#{name}, #{image}, #{type}, #{price}, #{apis}, #{status})
+	</insert>
+	
+	<update id="updateProduct" parameterType="org.pbccrc.api.base.bean.Product">
+		update Product
+		<set>  
+			<if test="name !=null and name != '' ">
+            	name = #{name},
+        	</if>
+        	<if test="image !=null and image != '' ">
+            	image = #{image},
+        	</if>
+        	<if test="type !=null and type != '' ">
+            	type = #{type},
+        	</if>
+        	<if test="price !=null and price != '' ">
+            	contactName = #{contactName},
+        	</if>
+        	<if test="apis !=null and apis != '' ">
+            	apis = #{apis},
+        	</if>
+        	<if test="auth !=null and status != '' ">
+            	status = #{status},
+        	</if>
+        </set>
+        <where>
+			ID = #{ID}
+		</where>	
+		
+	</update>
+	
 </mapper>

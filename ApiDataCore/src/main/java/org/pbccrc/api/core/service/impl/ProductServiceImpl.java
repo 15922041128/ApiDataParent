@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.pbccrc.api.base.bean.Pagination;
 import org.pbccrc.api.base.bean.Product;
 import org.pbccrc.api.base.service.ProductService;
 import org.pbccrc.api.base.util.Constants;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -114,5 +117,30 @@ public class ProductServiceImpl implements ProductService{
 		}
 		
 		return jsonArray;
+	}
+	
+	/**
+	 * 更新产品
+	 * @param product
+	 */
+	public void updateProduct(Product product){
+		productDao.updateProduct(product);
+	}
+	
+	/**
+	 * 条件分页查询产品
+	 * @param product
+	 * @return
+	 */
+	public Pagination queryProductByPage(Product product, Pagination pagination){
+		return productDao.queryProductByPage(product, pagination);
+	}
+	
+	/**
+	 * 新增产品
+	 * @param product
+	 */
+	public void addProduct(Product product){
+		productDao.addProduct(product);
 	}
 }

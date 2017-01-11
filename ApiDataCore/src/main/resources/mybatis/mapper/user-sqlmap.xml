@@ -74,5 +74,26 @@
 	<select id="getUserByID" parameterType="java.lang.String" resultType="org.pbccrc.api.base.bean.User">
 		select * from user where ID = #{userID}
 	</select>
+	<select id="getAllUser" parameterType="org.pbccrc.api.base.bean.User" resultType="org.pbccrc.api.base.bean.User">
+		select * from user where 1=1
+			<if test="userName !=null and userName != '' ">
+            	and userName like CONCAT('%',#{userName},'%') 
+        	</if>
+			<if test="compName !=null and compName != '' ">
+            	and compName = #{compName}
+        	</if>
+        	<if test="compTel !=null and compTel != '' ">
+            	and compTel = #{compTel}
+        	</if>
+        	<if test="contactName !=null and contactName != '' ">
+            	and contactName = #{contactName}
+        	</if>
+        	<if test="contactTel !=null and contactTel != '' ">
+            	and contactTel = #{contactTel}
+        	</if>
+        	<if test="auth !=null and auth != '' ">
+            	and auth = #{auth}
+        	</if>
+	</select>
 	
 </mapper>

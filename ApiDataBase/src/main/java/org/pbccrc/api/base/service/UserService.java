@@ -1,5 +1,10 @@
 package org.pbccrc.api.base.service;
 
+import java.util.List;
+import java.util.Map;
+
+import org.pbccrc.api.base.bean.PageInfo;
+import org.pbccrc.api.base.bean.Pagination;
 import org.pbccrc.api.base.bean.User;
 
 public interface UserService {
@@ -46,5 +51,10 @@ public interface UserService {
 	 * @return
 	 */
 	public boolean passwordIsTrue(String userID, String password);
+	/**
+	 * 查询返回所有用户
+	 * @return
+	 */
+	public Pagination queryAllUser(User user, Pagination pagination); 
 
 }

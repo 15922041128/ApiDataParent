@@ -1,9 +1,14 @@
 package org.pbccrc.api.base.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Pagination {
+public class Pagination implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int currentPage;
 	private int pageSize;
 	private long totalCount;

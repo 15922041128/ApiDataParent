@@ -11,4 +11,75 @@
 		select * from localApi
 	</select>
 	
+	<select id="queryApiByPage" parameterType="org.pbccrc.api.base.bean.LocalApi" resultType="org.pbccrc.api.base.bean.LocalApi">
+		select * from localApi where 1=1
+			<if test="apiName !=null and apiName != '' ">
+            	and apiName like CONCAT('%',#{apiName},'%') 
+        	</if>
+        	<if test="tblName !=null and tblName != '' ">
+            	and tblName like CONCAT('%',#{tblName},'%') 
+        	</if>
+			<if test="service !=null and service != '' ">
+            	and service like CONCAT('%',#{service},'%') 
+        	</if>
+        	<if test="isOpen !=null and isOpen != '' ">
+            	and isOpen = #{isOpen}
+        	</if>
+	</select>
+	
+	<select id="isExist" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(1) from localApi where service = #{service}
+	</select>
+	
+	<insert id="addLocalApi" parameterType="org.pbccrc.api.base.bean.LocalApi">
+		insert into localApi(apiName, service, tblName, url, params, returnType, returnParam, costCondition, basePrice, isOpen, createDate, stopDate) 
+			values(#{apiName}, #{service}, #{tblName}, #{url}, #{params}, #{returnType}, #{returnParam}, #{costCondition}, #{basePrice}, #{isOpen}, #{createDate}, #{stopDate})
+	</insert>
+	
+	<update id="updateLocalApi" parameterType="org.pbccrc.api.base.bean.LocalApi">
+		update localApi
+		<set>  
+			<if test="apiName !=null and apiName != '' ">
+            	apiName = #{apiName},
+        	</if>
+        	<if test="service !=null and service != '' ">
+            	service = #{service},
+        	</if>
+        	<if test="tblName !=null and tblName != '' ">
+            	tblName = #{tblName},
+        	</if>
+        	<if test="url !=null and url != '' ">
+            	url = #{url},
+        	</if>
+        	<if test="params !=null and params != '' ">
+            	params = #{params},
+        	</if>
+        	<if test="returnType !=null and returnType != '' ">
+            	returnType = #{returnType},
+        	</if>
+        	<if test="returnParam !=null and returnParam != '' ">
+            	returnParam = #{returnParam},
+        	</if>
+        	<if test="costCondition !=null and costCondition != '' ">
+            	costCondition = #{costCondition},
+        	</if>
+        	<if test="basePrice !=null and basePrice != '' ">
+            	basePrice = #{basePrice},
+        	</if>
+        	<if test="isOpen !=null and isOpen != '' ">
+            	isOpen = #{isOpen},
+        	</if>
+        	<if test="createDate !=null and createDate != '' ">
+            	createDate = #{createDate},
+        	</if>
+        	<if test="stopDate !=null and stopDate != '' ">
+            	stopDate = #{stopDate},
+        	</if>
+        </set>
+        <where>
+			ID = #{ID}
+		</where>	
+		
+	</update>
+	
 </mapper>

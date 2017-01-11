@@ -2,9 +2,13 @@ package org.pbccrc.api.core.dao;
 
 import javax.annotation.Resource;
 
+import org.pbccrc.api.base.bean.Pagination;
 import org.pbccrc.api.base.bean.User;
 import org.pbccrc.api.core.mapper.UserMapper;
 import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 
 @Service
 public class UserDao{
@@ -32,4 +36,14 @@ public class UserDao{
 	public User getUserByID(String userID) {
 		return userMapper.getUserByID(userID);
 	}
+	
+	public Pagination getUserByPage(User user, Pagination pagination) {
+		PageHelper.startPage(pagination.getCurrentPage(), pagination.getPageSize());
+		Page<User> users = (Page<User>) userMapper.getAllUser(user);
+		Pagination userPagination = new Pagination();
+		userPagination.setResult(users.getResult());
+		userPagination.setTotalCount(users.getTotal());
+		return userPagination;
+	}
+	
 }

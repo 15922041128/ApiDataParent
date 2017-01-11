@@ -22,4 +22,23 @@ public interface ProductMapper {
 	 */
 	List<Product> getProductByType(String productType);
 	
+	/**
+	 * 更新产品
+	 * @param product
+	 */
+	void updateProduct(Product product);
+	
+	/**
+	 * 条件分页查询产品
+	 * @param product
+	 * @return
+	 */
+	List<Product> queryProductByPage(Product product);
+	
+	/**
+	 * 新增产品
+	 * @param product
+	 */
+	void addProduct(Product product);
+	
 }

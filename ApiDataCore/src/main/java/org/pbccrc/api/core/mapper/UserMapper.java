@@ -1,5 +1,7 @@
 package org.pbccrc.api.core.mapper;
 
+import java.util.List;
+
 import org.pbccrc.api.base.bean.User;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +17,6 @@ public interface UserMapper {
 	void updateUser(User user);
 	
 	User getUserByID(String userID);
+	
+	List<User> getAllUser(User user);
 }
