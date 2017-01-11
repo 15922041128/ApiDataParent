@@ -4,44 +4,94 @@
 <mapper namespace="org.pbccrc.api.core.mapper.DBOperatorMapper">
 	
 	<insert id="insertData" parameterType="org.pbccrc.api.base.bean.DBEntity">
-		insert into ${tableName}
-			<foreach collection="fields" item="item" open="(" separator="," close=")">  
-	            `${item}`
-	        </foreach>
-		values 
-			<foreach collection="values" item="item" open="(" separator="," close=")">  
-	            #{item}
-	        </foreach>
+		<choose>
+			<when test="dataBaseType == 'oracle'">
+				insert into ${tableName}
+				<foreach collection="fields" item="item" open="(" separator="," close=")">  
+		            ${item}
+		        </foreach>
+				values 
+				<foreach collection="values" item="item" open="(" separator="," close=")">  
+		            #{item}
+		        </foreach>
+			</when>
+			<otherwise>
+				insert into ${tableName}
+				<foreach collection="fields" item="item" open="(" separator="," close=")">  
+		            `${item}`
+		        </foreach>
+				values 
+				<foreach collection="values" item="item" open="(" separator="," close=")">  
+		            #{item}
+		        </foreach>
+			</otherwise>
+		</choose>
 	</insert>
 	
 	<select id="queryData" parameterType="org.pbccrc.api.base.bean.DBEntity" resultType="java.util.HashMap">
-		select 
 		<choose>
-            <when test="selectItems != null">
-                <foreach collection="selectItems" item="item" separator=",">  
-	            	 `${item}`
-	        	</foreach>
-            </when>
-            <otherwise>
-                   *
-            </otherwise>
-         </choose>
-		from ${tableName} t where 1 = 1 ${sql}
+			<when test="dataBaseType == 'oracle'">
+				select 
+				<choose>
+		            <when test="selectItems != null">
+		                <foreach collection="selectItems" item="item" separator=",">  
+			            	 ${item}
+			        	</foreach>
+		            </when>
+		            <otherwise>
+		                   *
+		            </otherwise>
+		         </choose>
+				from ${tableName} t where 1 = 1 ${sql}
+			</when>
+			<otherwise>
+				select 
+				<choose>
+		            <when test="selectItems != null">
+		                <foreach collection="selectItems" item="item" separator=",">  
+			            	 `${item}`
+			        	</foreach>
+		            </when>
+		            <otherwise>
+		                   *
+		            </otherwise>
+		         </choose>
+				from ${tableName} t where 1 = 1 ${sql}
+			</otherwise>
+		</choose>
 	</select>
 	
 	<select id="queryDatas" parameterType="org.pbccrc.api.base.bean.DBEntity" resultType="java.util.HashMap">
-		select 
 		<choose>
-            <when test="selectItems != null">
-                <foreach collection="selectItems" item="item" separator=",">  
-	            	 `${item}`
-	        	</foreach>
-            </when>
-            <otherwise>
-                   *
-            </otherwise>
-         </choose>
-		from ${tableName} t where 1 = 1 ${sql}
+			<when test="dataBaseType == 'oracle'">
+				select 
+				<choose>
+		            <when test="selectItems != null">
+		                <foreach collection="selectItems" item="item" separator=",">  
+			            	 ${item}
+			        	</foreach>
+		            </when>
+		            <otherwise>
+		                   *
+		            </otherwise>
+		         </choose>
+				from ${tableName} t where 1 = 1 ${sql}
+			</when>
+			<otherwise>
+				select 
+				<choose>
+		            <when test="selectItems != null">
+		                <foreach collection="selectItems" item="item" separator=",">  
+			            	 `${item}`
+			        	</foreach>
+		            </when>
+		            <otherwise>
+		                   *
+		            </otherwise>
+		         </choose>
+				from ${tableName} t where 1 = 1 ${sql}
+			</otherwise>
+		</choose>
 	</select>
 
 	<update id="updateData" parameterType="org.pbccrc.api.base.bean.DBEntity">

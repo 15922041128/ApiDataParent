@@ -35,7 +35,7 @@ public class Constants {
 	public static final String FILE_TYPE_PDF = ".pdf";
 	
 	// pdf导出目录
-	public static final String FILE_DOWNLOAD_SXR_PDF = "/files/download/sxr/pdf";//pdf导出目录
+	public static final String FILE_DOWNLOAD_SXR_PDF = "/files/download/sxr/pdf";
 	// 上传错误文件目录
 	public static final String UPLOAD_ERROR_FILE = "/files/download/uploadError";
 	// 批量查询文件目录
@@ -246,8 +246,10 @@ public class Constants {
 	public static final String DATA_FROM_LOCAL = "local";
 	// 数据来源-qilingyz
 	public static final String DATA_FROM_QILINGYZ = "qilingyz";
-	// 数据来源-全连
+	// 数据来源-全联
 	public static final String DATA_FROM_QL = "ql";
+	// 数据库类型-oracle
+	public static final String DATABASE_TYPE_ORACLE = "oracle";
 	
 	/** apiID */
 	// 身份证认证

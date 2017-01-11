@@ -205,6 +205,139 @@ public class Validator {
 		return true;
 	}
 	
+	/**	api验证
+	 * @param userID     		用户ID
+	 * @param apiKey     		apiKey
+	 * @param localApi     		本地api
+	 * @param name				姓名
+	 * @param identifier		身份证号
+	 * @param telNum			电话号码
+	 * @param resultContent     查询返回对象
+	 * @return           		是否通过验证
+	 */
+	public boolean validateRequest(String userID, String apiKey, Map<String, Object> localApi, 
+			String name, String identifier, String telNum, ResultContent resultContent) {
+		
+		// 验证userID是否存在
+		if (StringUtil.isNull(userID)) {
+			resultContent.setCode(Constants.ERR_MISSING_USER_ID);
+			resultContent.setRetMsg(Constants.RET_MSG_MISSING_USER_ID);
+			return false;
+		}
+		
+		// 验证APIKEY是否存在
+		if (StringUtil.isNull(apiKey)) {
+			resultContent.setCode(Constants.ERR_MISSING_APIKEY);
+			resultContent.setRetMsg(Constants.RET_MSG_MISSING_APIKEY);
+			return false;
+		}
+		
+		StringBuilder relationKey = new StringBuilder("relation");
+		relationKey.append(Constants.UNDERLINE + userID);
+		relationKey.append(Constants.UNDERLINE + apiKey);
+		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get(relationKey.toString())));
+		
+		// 验证APIKEY是否有效
+		if (null == relation) {
+			resultContent.setCode(Constants.ERR_APIKEY_USER_INVALID);
+			resultContent.setRetMsg(Constants.RET_MSG_APIKEY_USER_INVALID);
+			return false;
+		}
+		
+		// 获取localApiID
+		String localApiID = String.valueOf(localApi.get("ID"));
+		
+		// 验证apiKey所属产品是否包含查询api
+		// 获取productID
+		String productID = relation.getString("productID");
+		// 获取product信息
+		StringBuilder productKey = new StringBuilder("product");
+		productKey.append(Constants.UNDERLINE + productID);
+		JSONObject product = JSONObject.parseObject(String.valueOf(RedisClient.get(productKey.toString())));
+		// 判断product中是否包含请求访问的API
+		String[] apiArray = product.getString("apis").split(Constants.COMMA);
+		boolean hasApiID = false;
+		for (String api : apiArray) {
+			if (api.equals(localApiID)) {
+				hasApiID = true;
+				break;
+			}
+		}
+		if (!hasApiID) {
+			resultContent.setCode(Constants.ERR_APIKEY_INVALID);
+			resultContent.setRetMsg(Constants.RET_MSG_APIKEY_INVALID);
+			return false;
+		}
+		
+		
+		// 获取计费方式
+		String costType = relation.getString("costType");
+		// 判断计费类型
+		if (Constants.COST_TYPE_COUNT.equals(costType)) {
+			// 按次数计费
+			// 验证访问次数
+			int count = Integer.parseInt(String.valueOf(relation.get("count")));
+			if (count == 0) {
+				resultContent.setCode(Constants.ERR_CNT);
+				resultContent.setRetMsg(Constants.RET_MSG_CNT);
+				return false;
+			}
+		} else if (Constants.COST_TYPE_PRICE.equals(costType)) {
+			// 按金额计费
+			// 验证余额和信用额
+			// 获取apiUser
+			String apiUserKey = "apiUser" + Constants.UNDERLINE + userID;
+			JSONObject apiUser = JSONObject.parseObject(String.valueOf(RedisClient.get(apiUserKey).toString()));
+			// 余额
+			BigDecimal blance = new BigDecimal(apiUser.getString("blance"));
+			// 获取用户价格
+			BigDecimal price = new BigDecimal(relation.getString("price"));
+			if (blance.compareTo(price) < 0) {
+				resultContent.setCode(Constants.ERR_BLANCE_NOT_ENOUGH);
+				resultContent.setRetMsg(Constants.RET_MSG_BLANCE_NOT_ENOUGH);
+				return false;
+			}
+		} else {
+			// to be extended
+		}
+		
+		String dbAPIKEY = String.valueOf(relation.get(Constants.API_KEY));
+		
+		if (!apiKey.equals(dbAPIKEY)) {
+			resultContent.setCode(Constants.ERR_APIKEY_INVALID);
+			resultContent.setRetMsg(Constants.RET_MSG_APIKEY_INVALID);
+			return false;
+		}
+		
+		// 验证参数是否与api匹配
+		String params = (String) localApi.get("params");
+		JSONArray array = JSONArray.parseArray(params);
+		if (array.size() == 1) {
+			// size == 1 为电话号码查询
+			if (StringUtil.isNull(telNum)) {
+				resultContent.setCode(Constants.ERR_URL_INVALID);
+				resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "telNum");
+				return false;
+			}
+		} else {
+			// size == 2 为两标查询
+			if (StringUtil.isNull(name)) {
+				resultContent.setCode(Constants.ERR_URL_INVALID);
+				resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "name");
+				return false;
+			}
+			
+			if (StringUtil.isNull(identifier)) {
+				resultContent.setCode(Constants.ERR_URL_INVALID);
+				resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "identifier");
+				return false;
+			}
+			
+		}
+		
+		return true;
+	}
+	
 	/**
 	 * 验证姓名
 	 * @param name
