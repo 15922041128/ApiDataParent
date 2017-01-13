@@ -54,4 +54,11 @@ public interface ProductService {
 	 * @param product
 	 */
 	void addProduct(Product product);
+	
+	/**
+	 * 查询该产品所有 api
+	 * @param productID
+	 * @return
+	 */
+	JSONArray getApiArray(String productID);
 }

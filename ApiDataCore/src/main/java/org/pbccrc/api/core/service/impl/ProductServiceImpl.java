@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -142,5 +140,24 @@ public class ProductServiceImpl implements ProductService{
 	 */
 	public void addProduct(Product product){
 		productDao.addProduct(product);
+	}
+	
+	/**
+	 * 查询该产品所有 api
+	 * @param productID
+	 * @return
+	 */
+	public JSONArray getApiArray(String productID) {
+		
+		JSONArray apiArray = new JSONArray();
+		
+		// 根据产品ID获取产品信息
+		JSONObject product = JSONObject.parseObject(String.valueOf(RedisClient.get("product_" + productID)));
+		String[] apis = product.getString("apis").split(Constants.COMMA);
+		for (String apiID : apis) {
+			apiArray.add(JSONObject.parseObject(String.valueOf(RedisClient.get("localApi_" + apiID))));
+		}
+		
+		return apiArray;
 	}
 }
