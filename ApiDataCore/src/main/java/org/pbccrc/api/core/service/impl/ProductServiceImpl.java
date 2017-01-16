@@ -71,30 +71,8 @@ public class ProductServiceImpl implements ProductService{
 		productInfo.put("product", product);
 		
 		// 获取该产品下所有api
-		JSONArray apiArray = new JSONArray();
-		String[] apiIDArray = product.getString("apis").split(Constants.COMMA);
-		for (String apiID : apiIDArray) {
-			JSONObject localApi = JSONObject.parseObject(String.valueOf(RedisClient.get("localApi_" + apiID)));
-			apiArray.add(localApi);
-		}
+		JSONArray apiArray = getApiArray(productID);
 		productInfo.put("apiArray", apiArray);
-		
-		// 获取code信息
-		JSONArray codeArray = new JSONArray();
-		List<Map<String, Object>> codeList = RedisClient.fuzzyQuery("code_");
-		
-		for (Map<String, Object> code : codeList) {
-			
-			JSONObject codeJson = new JSONObject();
-			
-			for (String key : code.keySet()) {
-				codeJson.put(key, code.get(key));
-			}
-			
-			codeArray.add(codeJson);
-		}
-		
-		productInfo.put("codeArray", codeArray);
 		
 		return productInfo;
 	}

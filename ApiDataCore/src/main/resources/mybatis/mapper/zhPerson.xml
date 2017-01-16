@@ -5,24 +5,39 @@
 	
 	<select id="query" parameterType="java.lang.String" resultType="java.util.HashMap">
 		select 
-			p.id,
-			p.innerID,
-			ddg.genderName as gender,
-			p.birthday,
-			ddm.marriageName as marriage,
-			ddedul.eduLevelName as eduLevel,
-			ddedud.degreeName as eduDegree,
-			p.homeTel,
-			p.mobileTel,
-			p.officeTel,
-			p.email,
-			p.address,
-			p.zip
-			from person p 
-		LEFT JOIN dd_gender ddg on p.gender = ddg.genderCode
-		LEFT JOIN dd_marriage ddm on p.marriage = ddm.marriageCode
-		LEFT JOIN dd_edulevel ddedul on p.eduLevel = ddedul.eduLevelCode
-		LEFT JOIN dd_edudegree ddedud on p.eduDegree = ddedud.degreeCode
+	        p.innerID,
+	        ddfin.corporatename as corporateName,
+	        ddg.genderName as gender,
+	        to_char(p.birthday, 'yyyy-mm-dd') as birthday,
+	        ddm.marriageName as marriage,
+	        ddedul.eduLevelName as eduLevel,
+	        ddedud.degreeName as eduDegree,
+	        p.SPOUSENAME,
+	        p.spousecertType,
+	        p.spouseOffice,
+	        p.spouseTel,
+	        p.homeTel,
+	        p.mobileTel,
+	        p.officeTel,
+	        p.email,
+	        p.address,
+	        p.zip,
+	        p.residence,
+	        p.pin,
+	        p.msgid,
+	        p.gettime,
+	        p.trust,
+	        p.hashvalue,
+	        p.recid,
+	        p.correctmsgid,
+	        p.recid,
+	        to_char(p.openDate, 'yyyy-mm-dd') openDate 
+	        from person p 
+	      LEFT JOIN dd_gender ddg on p.gender = ddg.genderCode
+	      LEFT JOIN dd_marriage ddm on p.marriage = ddm.marriageCode
+	      LEFT JOIN dd_edulevel ddedul on p.eduLevel = ddedul.eduLevelCode
+	      LEFT JOIN dd_edudegree ddedud on p.eduDegree = ddedud.degreeCode
+	      LEFT JOIN dd_financeorg ddfin on p.financecode = ddfin.financecode
 		where innerID = #{innerID}
 	</select>
 	

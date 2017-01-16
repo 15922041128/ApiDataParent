@@ -271,7 +271,7 @@ public class QueryApiController {
 	public String querySfz(@Context HttpServletRequest request) throws Exception {
 		
 		String name = request.getParameter("name");
-		String idCardNo = request.getParameter("idCardNo");
+		String identifier = request.getParameter("identifier");
 		
 		ResultContent resultContent = new ResultContent();
 		
@@ -290,12 +290,12 @@ public class QueryApiController {
 		// 生成UUID
 		String uuid = StringUtil.createUUID();
 		
-		Map<String, Object> map = queryApiService.querySfz(uuid, userID, name, idCardNo);
+		Map<String, Object> map = queryApiService.querySfz(uuid, userID, name, identifier);
 		result = map.get("result");
 		JSONObject resultJson = (JSONObject) JSONObject.toJSON(result);
 		
 		// 判断是否计费
-		if(Constants.CODE_ERR_SUCCESS.equals(resultJson.getString("code"))) {
+		if("Y".equals(resultJson.getString("isSuccess"))) {
 			costService.cost(userID, apiKey);
 		}
 		
@@ -312,7 +312,7 @@ public class QueryApiController {
 		// 参数
 		JSONObject params = new JSONObject();
 		params.put("name", name);
-		params.put("idCardNo", idCardNo);
+		params.put("identifier", identifier);
 		systemLog.setParams(params.toJSONString());
 		// 用户ID
 		systemLog.setUserID(userID);

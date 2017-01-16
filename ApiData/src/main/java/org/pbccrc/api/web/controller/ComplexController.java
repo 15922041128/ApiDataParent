@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 @Controller
@@ -167,8 +168,8 @@ public class ComplexController {
 		// 判断是否为空
 		if ("N".equals(isNull)) {
 			
-			JSONObject jsonObject = (JSONObject) JSONObject.toJSON(returnMap.get("returnStr"));
-			if (!jsonObject.isEmpty()) {
+			JSONArray jsonArray = (JSONArray) JSONArray.toJSON(returnMap.get("returnStr"));
+			if (!jsonArray.isEmpty()) {
 				resultContent.setCode(Constants.CODE_ERR_SUCCESS);
 				resultContent.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);				
 			}

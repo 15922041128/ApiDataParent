@@ -194,6 +194,8 @@ public class Constants {
 	public static final String SERVICE_ZH_EMPLOYMENT = "zh-employment";
 	// 综合查询(信用卡信息)
 	public static final String SERVICE_ZH_CREDITCARD = "zh-creditcard";
+	// 综合查询(信用卡信息)
+	public static final String SERVICE_ZH_CREDITCARD_ALL = "zh-creditcardAll";
 	// 综合查询(贷款信息)
 	public static final String SERVICE_ZH_LOAN = "zh-loan";
 	// 综合查询(担保信息)

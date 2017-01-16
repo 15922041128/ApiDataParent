@@ -137,8 +137,10 @@ public class StringUtil {
     	return UUID.randomUUID().toString().replaceAll(Constants.CONNECTOR_LINE, Constants.BLANK); 
     }
       
-    public static void main(String[] args) {  
-    	String md5Str = MD5Encoder("贾昌鑫");
-		System.out.println(md5Str);  
+    public static void main(String[] args) {
+//    	String str = "庄传礼";
+//    	String md5Str = MD5Encoder(str);
+//		System.out.println(str + " : " + md5Str);  
+    	System.out.println(createApiKey());
     }  
 }

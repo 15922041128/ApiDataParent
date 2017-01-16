@@ -21,8 +21,6 @@ public class ZhIdentificationDao {
 		map.put("name", StringUtil.MD5Encoder(name).toUpperCase());
 		map.put("identifier", StringUtil.MD5Encoder(identifier).toUpperCase());
 		
-		System.out.println("--------------------------name : " + StringUtil.MD5Encoder(name).toUpperCase());
-		
 		List<Map<String, Object>> mapList = zhIdentificationMapper.getInnerID(map);
 		if (null == mapList || mapList.size() == 0) {
 			return null;

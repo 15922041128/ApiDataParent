@@ -1,5 +1,6 @@
 package org.pbccrc.api.core.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -13,7 +14,7 @@ public class ZhEmploymentDao {
 	@Resource
 	private ZhEmploymentMapper zhEmploymentMapper;
 	
-	public Map<String, Object> query(String innerID){
+	public List<Map<String, Object>> query(String innerID){
 		return zhEmploymentMapper.query(innerID);
 	}
 	
