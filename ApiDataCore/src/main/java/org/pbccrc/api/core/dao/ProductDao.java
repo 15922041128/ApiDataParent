@@ -54,7 +54,7 @@ public class ProductDao {
 	 * 新增产品
 	 * @param product
 	 */
-	public void addProduct(Product product){
-		productMapper.addProduct(product);
+	public int addProduct(Product product){
+		return productMapper.addProduct(product);
 	}
 }

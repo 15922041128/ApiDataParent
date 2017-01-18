@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans.xsd
+ http://code.alibabatech.com/schema/dubbo
+ http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+ http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <dubbo:application name="ApiDataManage"/>
+
+    <context:property-placeholder location="classpath:zookeeper.properties" ignore-unresolvable="true"/>
+    <dubbo:registry protocol="zookeeper" address="${dubbo.registry}"/>
+    <dubbo:consumer timeout="300000"/>
+
+    <dubbo:reference id="queryApiService" interface="org.pbccrc.api.base.service.QueryApiService" lazy="false" check="false"/>
+    <dubbo:reference id="costService" interface="org.pbccrc.api.base.service.CostService" lazy="false" check="false"/>
+    <dubbo:reference id="systemLogService" interface="org.pbccrc.api.base.service.SystemLogService" lazy="false" check="false"/>
+    <dubbo:reference id="localApiService" interface="org.pbccrc.api.base.service.LocalApiService" lazy="false" check="false"/>
+    <dubbo:reference id="dbOperatorService" interface="org.pbccrc.api.base.service.DBOperatorService" lazy="false" check="false"/>
+    <dubbo:reference id="apiUserService" interface="org.pbccrc.api.base.service.ApiUserService" lazy="false" check="false"/>
+    <dubbo:reference id="relationService" interface="org.pbccrc.api.base.service.RelationService" lazy="false" check="false"/>
+    <dubbo:reference id="queryApiSingle" interface="org.pbccrc.api.base.service.QueryApi" lazy="false" check="false"/>
+    <dubbo:reference id="queryApiMultiple" interface="org.pbccrc.api.base.service.QueryApi" lazy="false" check="false"/>
+    <dubbo:reference id="complexService" interface="org.pbccrc.api.base.service.ComplexService" lazy="false" check="false"/>
+    <dubbo:reference id="localDBService" interface="org.pbccrc.api.base.service.LocalDBService" lazy="false" check="false"/>
+    <dubbo:reference id="userService" interface="org.pbccrc.api.base.service.UserService" lazy="false" check="false"/>
+    <dubbo:reference id="apiLogService" interface="org.pbccrc.api.base.service.ApiLogService" lazy="false" check="false"/>
+    <dubbo:reference id="dxw_smsServiceImpl" interface="org.pbccrc.api.base.service.SMSService" lazy="false" check="false"/>
+    <dubbo:reference id="ms_smsServiceImpl" interface="org.pbccrc.api.base.service.SMSService" lazy="false" check="false"/>
+    <dubbo:reference id="productServiceImpl" interface="org.pbccrc.api.base.service.ProductService" lazy="false" check="false"/>
+    <dubbo:reference id="testServiceImpl" interface="org.pbccrc.api.base.service.TestService" lazy="false" check="false"/>
+    <dubbo:reference id="dataBaseServiceImpl" interface="org.pbccrc.api.base.service.DataBaseService" lazy="false" check="false"/>
+</beans>
+

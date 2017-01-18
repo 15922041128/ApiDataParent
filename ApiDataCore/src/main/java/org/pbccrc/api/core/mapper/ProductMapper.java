@@ -39,6 +39,6 @@ public interface ProductMapper {
 	 * 新增产品
 	 * @param product
 	 */
-	void addProduct(Product product);
+	int addProduct(Product product);
 	
 }

@@ -24,7 +24,7 @@
         	</if>
 	</select>
 	
-	<insert id="addProduct" parameterType="org.pbccrc.api.base.bean.Product">
+	<insert id="addProduct" useGeneratedKeys="true" keyProperty="ID" parameterType="org.pbccrc.api.base.bean.Product">
 		insert into Product(name, image, type, price, apis, status) 
 			values(#{name}, #{image}, #{type}, #{price}, #{apis}, #{status})
 	</insert>
@@ -47,7 +47,7 @@
         	<if test="apis !=null and apis != '' ">
             	apis = #{apis},
         	</if>
-        	<if test="auth !=null and status != '' ">
+        	<if test="status !=null and status != '' ">
             	status = #{status},
         	</if>
         </set>

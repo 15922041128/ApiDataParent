@@ -28,7 +28,7 @@ public class LocalApi implements Serializable{
 	private String url;
 	
 	/** 查询参数列表 */
-	private String prarms;
+	private String params;
 	
 	/** 返回值类型(1String, 2json, 3 xml) */
 	private int returnType;
@@ -91,12 +91,12 @@ public class LocalApi implements Serializable{
 		this.url = url;
 	}
 
-	public String getPrarms() {
-		return prarms;
+	public String getParams() {
+		return params;
 	}
 
-	public void setPrarms(String prarms) {
-		this.prarms = prarms;
+	public void setParams(String params) {
+		this.params = params;
 	}
 
 	public int getReturnType() {
