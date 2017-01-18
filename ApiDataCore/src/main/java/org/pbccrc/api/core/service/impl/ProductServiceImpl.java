@@ -12,11 +12,10 @@ import org.pbccrc.api.base.util.RedisClient;
 import org.pbccrc.api.core.dao.ProductDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -73,30 +72,8 @@ public class ProductServiceImpl implements ProductService{
 		productInfo.put("product", product);
 		
 		// 获取该产品下所有api
-		JSONArray apiArray = new JSONArray();
-		String[] apiIDArray = product.getString("apis").split(Constants.COMMA);
-		for (String apiID : apiIDArray) {
-			JSONObject localApi = JSONObject.parseObject(String.valueOf(RedisClient.get("localApi_" + apiID)));
-			apiArray.add(localApi);
-		}
+		JSONArray apiArray = getApiArray(productID);
 		productInfo.put("apiArray", apiArray);
-		
-		// 获取code信息
-		JSONArray codeArray = new JSONArray();
-		List<Map<String, Object>> codeList = RedisClient.fuzzyQuery("code_");
-		
-		for (Map<String, Object> code : codeList) {
-			
-			JSONObject codeJson = new JSONObject();
-			
-			for (String key : code.keySet()) {
-				codeJson.put(key, code.get(key));
-			}
-			
-			codeArray.add(codeJson);
-		}
-		
-		productInfo.put("codeArray", codeArray);
 		
 		return productInfo;
 	}
@@ -123,8 +100,10 @@ public class ProductServiceImpl implements ProductService{
 	 * 更新产品
 	 * @param product
 	 */
+	@Transactional
 	public void updateProduct(Product product){
 		productDao.updateProduct(product);
+		RedisClient.set("product_" + product.getID(), product);
 	}
 	
 	/**
@@ -140,7 +119,31 @@ public class ProductServiceImpl implements ProductService{
 	 * 新增产品
 	 * @param product
 	 */
+	@Transactional
 	public void addProduct(Product product){
-		productDao.addProduct(product);
+		int id = productDao.addProduct(product);
+		if(id!=0){
+			RedisClient.set("product_" + product.getID(), product);
+		}
+	}
+
+	
+	/**
+	 * 查询该产品所有 api
+	 * @param productID
+	 * @return
+	 */
+	public JSONArray getApiArray(String productID) {
+		
+		JSONArray apiArray = new JSONArray();
+		
+		// 根据产品ID获取产品信息
+		JSONObject product = JSONObject.parseObject(String.valueOf(RedisClient.get("product_" + productID)));
+		String[] apis = product.getString("apis").split(Constants.COMMA);
+		for (String apiID : apis) {
+			apiArray.add(JSONObject.parseObject(String.valueOf(RedisClient.get("localApi_" + apiID))));
+		}
+		
+		return apiArray;
 	}
 }
