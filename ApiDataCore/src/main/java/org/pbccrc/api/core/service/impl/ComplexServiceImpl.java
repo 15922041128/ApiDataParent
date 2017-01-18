@@ -10,6 +10,7 @@ import java.util.Map;
 import org.pbccrc.api.base.bean.ApiLog;
 import org.pbccrc.api.base.service.ApiLogService;
 import org.pbccrc.api.base.service.ComplexService;
+import org.pbccrc.api.base.service.LocalDBService;
 import org.pbccrc.api.base.service.QueryApiService;
 import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.base.util.RemoteApiOperator;
@@ -61,6 +62,9 @@ public class ComplexServiceImpl implements ComplexService{
 	@Autowired
 	private ApiLogService apiLogService;
 	
+	@Autowired
+	private LocalDBService localDBService;
+	
 	/**
 	 * 失信人查询验证
 	 * @param name
@@ -104,7 +108,13 @@ public class ComplexServiceImpl implements ComplexService{
 		} else {
 			// 获得返回值信息
 			String returnParam = String.valueOf(localApi.get("returnParam"));
-			String[] returnParams = returnParam.split(Constants.COMMA);
+			
+			JSONArray paramArray = JSONArray.parseArray(returnParam);
+			String[] returnParams = new String[paramArray.size()];
+			for (int i = 0; i < paramArray.size(); i++) {
+				JSONObject object = (JSONObject) JSONObject.toJSON(paramArray.get(i));
+				returnParams[i] = object.getString("en_name");
+			}
 			
 			// 内码
 			String innerID = String.valueOf(insideCodeMap.get("INNERID"));
@@ -284,10 +294,11 @@ public class ComplexServiceImpl implements ComplexService{
 			
 			// 获取用户信用评分信息
 			String score = "暂无分数"; 
-			String service = Constants.SERVICE_S_QUERYSCORE;
+			String service = Constants.SERVICE_L_SCORE2;
 			Map<String, String[]> params = new HashMap<String, String[]>();
-			params.put("identityCard", new String[]{identifier});
-			Object result = queryApiService.query(uuid, userID, service, params).get("result");
+			params.put("identifier", new String[]{identifier});
+			params.put("name", new String[]{name});
+			Object result = localDBService.getResult(uuid, userID, service, innerID, (JSONObject)JSONObject.toJSON(params)).get("result");
 			JSONObject resultObj = null;
 			if (result instanceof String) {
 				// String
@@ -296,11 +307,11 @@ public class ComplexServiceImpl implements ComplexService{
 				// Object
 				resultObj = (JSONObject) JSONObject.toJSON(result);
 			}
-			String resultScore = resultObj.getString("score");
+			String resultScore = resultObj.getString("SCORE");
 			if (!StringUtil.isNull(resultScore)) {
 				score = resultScore;
 			}
-			returnMap.put("score", score);
+			returnMap.put("SCORE", score);
 			
 			// 遍历查询项
 			for (String queryItem : queryItems) {

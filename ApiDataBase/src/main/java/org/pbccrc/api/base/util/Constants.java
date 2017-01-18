@@ -177,7 +177,7 @@ public class Constants {
 	
 	/** 本地访问用service */
 	// 个人信用分
-	public static final String SERVICE_S_QUERYSCORE = "s-queryScore";
+	public static final String SERVICE_L_SCORE2 = "l-score2";
 	// 公积金 
 	public static final String SERVICE_S_QGJJD = "s-qgjjd";
 	// 涉诉信息(从执行公告中查询某人)
