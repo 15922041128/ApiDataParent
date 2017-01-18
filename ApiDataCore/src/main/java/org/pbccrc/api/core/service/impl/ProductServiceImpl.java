@@ -12,7 +12,6 @@ import org.pbccrc.api.base.util.RedisClient;
 import org.pbccrc.api.core.dao.ProductDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -100,10 +99,8 @@ public class ProductServiceImpl implements ProductService{
 	 * 更新产品
 	 * @param product
 	 */
-	@Transactional
 	public void updateProduct(Product product){
 		productDao.updateProduct(product);
-		RedisClient.set("product_" + product.getID(), product);
 	}
 	
 	/**
@@ -119,12 +116,8 @@ public class ProductServiceImpl implements ProductService{
 	 * 新增产品
 	 * @param product
 	 */
-	@Transactional
 	public void addProduct(Product product){
-		int id = productDao.addProduct(product);
-		if(id!=0){
-			RedisClient.set("product_" + product.getID(), product);
-		}
+		productDao.addProduct(product);
 	}
 	
 	/**
