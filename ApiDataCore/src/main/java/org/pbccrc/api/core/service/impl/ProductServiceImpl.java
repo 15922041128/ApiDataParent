@@ -126,7 +126,6 @@ public class ProductServiceImpl implements ProductService{
 			RedisClient.set("product_" + product.getID(), product);
 		}
 	}
-
 	
 	/**
 	 * 查询该产品所有 api
