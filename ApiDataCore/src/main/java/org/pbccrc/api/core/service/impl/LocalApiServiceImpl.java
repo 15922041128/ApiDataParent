@@ -7,8 +7,10 @@ import org.pbccrc.api.core.dao.LocalApiDao;
 import org.pbccrc.api.base.bean.LocalApi;
 import org.pbccrc.api.base.bean.Pagination;
 import org.pbccrc.api.base.service.LocalApiService;
+import org.pbccrc.api.base.util.RedisClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class LocalApiServiceImpl implements LocalApiService{
@@ -45,16 +47,20 @@ public class LocalApiServiceImpl implements LocalApiService{
 	 * 添加api
 	 * @param LocalApi
 	 */
+	@Transactional
 	public void addLocalApi(LocalApi localApi){
 		localApiDao.addLocalApi(localApi);
+		RedisClient.set("localApi_" + localApi.getID(), localApi);
 	}
 	
 	/**
 	 * 修改api
 	 * @param LocalApi
 	 */
+	@Transactional
 	public void updateLocalApi(LocalApi localApi){
 		localApiDao.updateLocalApi(localApi);
+		RedisClient.set("localApi_" + localApi.getID(), localApi);
 	}
 
 }
