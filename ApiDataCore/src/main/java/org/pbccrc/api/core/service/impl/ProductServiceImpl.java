@@ -145,23 +145,4 @@ public class ProductServiceImpl implements ProductService{
 		
 		return apiArray;
 	}
-	
-	/**
-	 * 查询该产品所有 api
-	 * @param productID
-	 * @return
-	 */
-	public JSONArray getApiArray(String productID) {
-		
-		JSONArray apiArray = new JSONArray();
-		
-		// 根据产品ID获取产品信息
-		JSONObject product = JSONObject.parseObject(String.valueOf(RedisClient.get("product_" + productID)));
-		String[] apis = product.getString("apis").split(Constants.COMMA);
-		for (String apiID : apis) {
-			apiArray.add(JSONObject.parseObject(String.valueOf(RedisClient.get("localApi_" + apiID))));
-		}
-		
-		return apiArray;
-	}
 }

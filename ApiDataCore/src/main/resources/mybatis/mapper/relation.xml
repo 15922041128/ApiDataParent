@@ -8,8 +8,8 @@
 	</select>
 	
 	<insert id="addRelation" parameterType="org.pbccrc.api.base.bean.Relation" keyProperty="ID">
-		insert into relation(userID, apiKey, productID, count, costType, price, createDate)
-			values(#{userID}, #{apiKey}, #{productID}, #{count}, #{costType}, #{price}, #{createDate})
+		insert into relation(userID, apiKey, productID, count, costType, price, createDate, allowIps)
+			values(#{userID}, #{apiKey}, #{productID}, #{count}, #{costType}, #{price}, #{createDate}, #{allowIps})
 	</insert>
 	
 </mapper>

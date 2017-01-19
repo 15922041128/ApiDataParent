@@ -30,6 +30,9 @@ public class Relation implements Serializable {
 	
 	/** 申请时间 */
 	private String createDate;
+	
+	/** 允许IP*/
+	private String allowIps;
 
 	public Integer getID() {
 		return ID;
@@ -93,5 +96,13 @@ public class Relation implements Serializable {
 
 	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
+	}
+
+	public String getAllowIps() {
+		return allowIps;
+	}
+
+	public void setAllowIps(String allowIps) {
+		this.allowIps = allowIps;
 	}
 }
