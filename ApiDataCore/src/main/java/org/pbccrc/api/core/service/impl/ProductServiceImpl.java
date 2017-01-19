@@ -51,6 +51,7 @@ public class ProductServiceImpl implements ProductService{
 				JSONObject product = JSONObject.parseObject(String.valueOf(RedisClient.get("product_" + productID)));
 				// 将relation信息添加到产品信息中
 				product.put("relation", object);
+				array.add(product);
 			}
 		}
 		

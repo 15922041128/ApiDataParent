@@ -127,7 +127,7 @@ public class ComplexServiceImpl implements ComplexService{
 			Object returnStr = null;
 			
 			// 判断查询类型
-			if (Constants.SERVICE_ZH_PERSON.equals(service)) {
+			if (Constants.SERVICE_ZH_PERSON2.equals(service)) {
 				// 人员基本信息
 				DynamicDataSourceHolder.change2oracle();
 				returnList = zhPersonDao.query(innerID);
@@ -144,7 +144,7 @@ public class ComplexServiceImpl implements ComplexService{
 					}
 				}
 				returnStr = jsonArray;
-			} else if (Constants.SERVICE_ZH_ADDRESS.equals(service)) {
+			} else if (Constants.SERVICE_ZH_ADDRESS2.equals(service)) {
 				// 居住信息
 				DynamicDataSourceHolder.change2oracle();
 				returnList = zhAddressDao.query(innerID);
@@ -161,7 +161,7 @@ public class ComplexServiceImpl implements ComplexService{
 					}
 				}
 				returnStr = jsonArray;
-			} else if (Constants.SERVICE_ZH_EMPLOYMENT.equals(service)) {
+			} else if (Constants.SERVICE_ZH_EMPLOYMENT2.equals(service)) {
 				// 职业信息
 				DynamicDataSourceHolder.change2oracle();
 				returnList = zhEmploymentDao.query(innerID);
@@ -178,7 +178,7 @@ public class ComplexServiceImpl implements ComplexService{
 					}
 				}
 				returnStr = jsonArray;
-			} else if (Constants.SERVICE_ZH_CREDITCARD.equals(service)) {
+			} else if (Constants.SERVICE_ZH_CREDITCARD2.equals(service)) {
 				// 信用卡信息
 				DynamicDataSourceHolder.change2oracle();
 				returnList = zhCreditCardDao.query(innerID);
@@ -195,7 +195,7 @@ public class ComplexServiceImpl implements ComplexService{
 					}
 				}
 				returnStr = jsonArray;
-			} else if (Constants.SERVICE_ZH_CREDITCARD_ALL.equals(service)) {
+			} else if (Constants.SERVICE_ZH_CREDITCARD_ALL2.equals(service)) {
 				// 信用卡信息
 				DynamicDataSourceHolder.change2oracle();
 				returnList = zhCreditCardDao.query(innerID);
@@ -212,7 +212,7 @@ public class ComplexServiceImpl implements ComplexService{
 					}
 				}
 				returnStr = jsonArray;
-			}else if (Constants.SERVICE_ZH_LOAN.equals(service)) {
+			}else if (Constants.SERVICE_ZH_LOAN2.equals(service)) {
 				// 贷款信息
 				DynamicDataSourceHolder.change2oracle();
 				returnList = zhLoanDao.query(innerID);
@@ -229,7 +229,7 @@ public class ComplexServiceImpl implements ComplexService{
 					}
 				}
 				returnStr = jsonArray;
-			} else if (Constants.SERVICE_ZH_GUARANTEE .equals(service)) {
+			} else if (Constants.SERVICE_ZH_GUARANTEE2.equals(service)) {
 				// 担保信息
 				DynamicDataSourceHolder.change2oracle();
 				returnList = zhGuaranteeDao.query(innerID);
