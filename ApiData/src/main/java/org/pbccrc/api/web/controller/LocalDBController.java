@@ -273,8 +273,12 @@ public class LocalDBController {
 		// 判断是否成功
 		if (isSuccess) {
 			// 计费
-			costService.cost(userID, apiKey);
+			Map<String, Object> costRetMap = costService.cost(userID, apiKey);
+			String queryCount = String.valueOf(costRetMap.get("queryCount"));
+			// 查询次数
+			resultContent.setQueryCount(queryCount);
 			resultContent.setRetData(resultJson);
+			
 		} else {
 			resultContent.setCode(Constants.ERR_NO_RESULT);
 			resultContent.setRetMsg(Constants.RET_MSG_NO_RESULT);

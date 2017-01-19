@@ -5,9 +5,11 @@ import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.QueryParam;
 
+import org.pbccrc.api.base.bean.Product;
 import org.pbccrc.api.base.bean.ProductType;
 import org.pbccrc.api.base.service.ProductService;
 import org.pbccrc.api.base.service.ProductTypeService;
+import org.pbccrc.api.base.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -58,6 +60,11 @@ public class MyDataController {
 	@RequestMapping(value="/getProductByType", produces={"application/json;charset=UTF-8"})
 	public JSONArray getProductByType(@QueryParam("productType") String productType){
 		
-		return productService.getProductByType(productType);
+		Product product = new Product();
+		product.setType(Integer.parseInt(productType));
+		product.setIsShow(Constants.IS_SHOW_TRUE);
+		product.setStatus(String.valueOf(Constants.PUBLISHED));
+		
+		return productService.getProductByType(product);
 	}
 }

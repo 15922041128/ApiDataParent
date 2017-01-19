@@ -37,7 +37,13 @@ public class DBOperatorDao {
 		
 		entity.setSql(sql.toString());
 		
-		return dbOperatorMapper.queryData(entity);
+		List<Map<String, Object>> mapList = dbOperatorMapper.queryDatas(entity);
+		
+		if (null == mapList || mapList.size() == 0) {
+			return null;
+		}
+		
+		return mapList.get(0);
 	}
 	
 	public List<Map<String, Object>> queryDatas(DBEntity entity) {

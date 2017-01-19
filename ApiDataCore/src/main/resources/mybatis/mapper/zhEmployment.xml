@@ -5,22 +5,26 @@
 	
 	<select id="query" parameterType="java.lang.String" resultType="java.util.HashMap">
 		select 
-			e.id,
-			e.innerID,
-			ddo.occupationName as occupation,
-			e.company,
-			ddi.industryName as industry,
-			e.occAddress,
-			e.occZIP,
-			e.startYear,
-			ddd.dutyName as duty,
-			ddc.casteName as caste,
-			e.annualIncome
-		from employment e
-		LEFT JOIN dd_occupation ddo on e.occupation = ddo.occupationCode
-		LEFT JOIN dd_industry ddi on e.industry = ddi.industryCode
-		LEFT JOIN dd_duty ddd on e.duty = ddd.dutyCode
-		LEFT JOIN dd_caste ddc on e.caste = ddc.casteCode
+	      e.innerID,
+	      ddfin.corporateName as corporateName, 
+	      ddo.occupationName as occupation,
+	      e.company,
+	      ddi.industryName as industry,
+	      e.occAddress,
+	      e.occZIP,
+	      e.startYear,
+	      ddd.dutyName as duty,
+	      ddc.casteName as caste,
+	      e.annualIncome,
+	      e.pin,
+	      e.gettime,
+	      to_char(e.opendate, 'yyyy-mm-dd') opendate 
+	    from employment e
+	    LEFT JOIN dd_financeorg ddfin on e.financecode = ddfin.financecode
+	    LEFT JOIN dd_occupation ddo on e.occupation = ddo.occupationCode
+	    LEFT JOIN dd_industry ddi on e.industry = ddi.industryCode
+	    LEFT JOIN dd_duty ddd on e.duty = ddd.dutyCode
+	    LEFT JOIN dd_caste ddc on e.caste = ddc.casteCode
 		where innerID = #{innerID}
 	</select>
 	

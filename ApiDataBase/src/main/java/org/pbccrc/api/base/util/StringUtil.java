@@ -9,6 +9,32 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringUtil {
+	
+	public enum JSON_TYPE{ 
+	    /**JSONObject*/     
+	    JSON_TYPE_OBJECT, 
+	    /**JSONArray*/ 
+	    JSON_TYPE_ARRAY, 
+	    /**不是JSON格式的字符串*/ 
+	    JSON_TYPE_ERROR 
+    }
+	
+	 public static JSON_TYPE getJSONType(String str){ 
+        if(isNull(str)){ 
+            return JSON_TYPE.JSON_TYPE_ERROR; 
+        } 
+         
+        final char[] strChar = str.substring(0, 1).toCharArray(); 
+        final char firstChar = strChar[0]; 
+         
+        if(firstChar == '{'){ 
+            return JSON_TYPE.JSON_TYPE_OBJECT; 
+        }else if(firstChar == '['){ 
+            return JSON_TYPE.JSON_TYPE_ARRAY; 
+        }else{ 
+            return JSON_TYPE.JSON_TYPE_ERROR; 
+        } 
+	    }
 
 	/** 
      * 解码 Unicode \\uXXXX 
@@ -137,8 +163,10 @@ public class StringUtil {
     	return UUID.randomUUID().toString().replaceAll(Constants.CONNECTOR_LINE, Constants.BLANK); 
     }
       
-    public static void main(String[] args) {  
-    	String md5Str = MD5Encoder("贾昌鑫");
-		System.out.println(md5Str);  
+    public static void main(String[] args) {
+//    	String str = "庄传礼";
+//    	String md5Str = MD5Encoder(str);
+//		System.out.println(str + " : " + md5Str);  
+    	System.out.println(createApiKey());
     }  
 }

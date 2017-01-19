@@ -4,32 +4,31 @@
 <mapper namespace="org.pbccrc.api.core.mapper.ZhLoanMapper">
 	
 	<select id="query" parameterType="java.lang.String" resultType="java.util.HashMap">
-			select
-			ID,
-			innerID,
-			settled_account_num,
-			unsettled_account_num,
-			org_num,
-			area_num,
-			loan_type_num,
-			housing_loan_num,
-			car_loan_num,
-			personal_biz_loan_num,
-			nor_num,
-			overdue_num,
-			max_gran_limit,
-			max_loan_limit,
-			settled_limit,
-			unsettled_limit,
-			overdue_180_principal,
-			overdue_180_unpaid,
-			overdue_180_single_principal,
-			overdue_180_single_unpaid,
-			total_overdue_num,
-			single_overdue_max,
-			five_category_most_type,
-			ear_loan_time,
-			latest_repay_time
+		select
+	      innerID,
+	      settled_account_num,
+	      unsettled_account_num,
+	      max_grant_limit,
+	      max_loan_limit,
+	      settled_limit,
+	      unsettled_limit,
+	      overdue_180_principal,
+	      overdue_180_unpaid,
+	      overdue_180_single_principal,
+	      overdue_180_single_unpaid,
+	      total_overdue_num,
+	      single_overdue_max,
+	      five_category_most_type,   
+	      org_num,
+	      area_num,
+	      to_char(ear_loan_time, 'yyyy-mm-dd') ear_loan_time,
+	      to_char(latest_repay_time, 'yyyy-mm-dd') latest_repay_time,
+	      loan_type_num,
+	      housing_loan_num,
+	      car_loan_num,
+	      personal_biz_loan_num,
+	      nor_num,
+	      overdue_num 
 		from loan where innerID = #{innerID}
 	</select>
 	

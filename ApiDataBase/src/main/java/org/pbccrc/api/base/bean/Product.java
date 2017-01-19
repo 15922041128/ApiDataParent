@@ -27,6 +27,9 @@ public class Product implements Serializable{
 	/** 产品状态(0待发布,1发布,2下架) */
 	private String status;
 	
+	/** 产品是否可见(0不可见,1可见) */
+	private int isShow;
+	
 	/** 初始赠送次数 -1为免费使用 */
 	private int initCount;
 	
@@ -87,6 +90,14 @@ public class Product implements Serializable{
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public int getIsShow() {
+		return isShow;
+	}
+
+	public void setIsShow(int isShow) {
+		this.isShow = isShow;
 	}
 	
 	public int getInitCount() {

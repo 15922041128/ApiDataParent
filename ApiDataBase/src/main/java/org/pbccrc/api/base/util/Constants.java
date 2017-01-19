@@ -177,7 +177,7 @@ public class Constants {
 	
 	/** 本地访问用service */
 	// 个人信用分
-	public static final String SERVICE_S_QUERYSCORE = "s-queryScore";
+	public static final String SERVICE_L_SCORE2 = "l-score2";
 	// 公积金 
 	public static final String SERVICE_S_QGJJD = "s-qgjjd";
 	// 涉诉信息(从执行公告中查询某人)
@@ -187,17 +187,19 @@ public class Constants {
 	// 涉诉信息(从裁判文书中查询某人)
 	public static final String SERVICE_S_UCACCIND_CPWS = "s-ucaccindCPWS";
 	// 综合查询(人员基本信息)
-	public static final String SERVICE_ZH_PERSON = "zh-person";
-	// 综合查询(居住信息)
-	public static final String SERVICE_ZH_ADDRESS = "zh-address";
-	// 综合查询(职业信息)
-	public static final String SERVICE_ZH_EMPLOYMENT = "zh-employment";
-	// 综合查询(信用卡信息)
-	public static final String SERVICE_ZH_CREDITCARD = "zh-creditcard";
-	// 综合查询(贷款信息)
-	public static final String SERVICE_ZH_LOAN = "zh-loan";
-	// 综合查询(担保信息)
-	public static final String SERVICE_ZH_GUARANTEE = "zh-guarantee";
+	public static final String SERVICE_ZH_PERSON2 = "zh-person2";
+	// 综合两标查询(居住信息)
+	public static final String SERVICE_ZH_ADDRESS2 = "zh-address2";
+	// 综合两标查询(职业信息)
+	public static final String SERVICE_ZH_EMPLOYMENT2 = "zh-employment2";
+	// 综合两标查询(信用卡信息)
+	public static final String SERVICE_ZH_CREDITCARD2 = "zh-creditcard2";
+	// 综合两标查询(信用卡信息)
+	public static final String SERVICE_ZH_CREDITCARD_ALL2 = "zh-creditcardAll2";
+	// 综合两标查询(贷款信息)
+	public static final String SERVICE_ZH_LOAN2 = "zh-loan2";
+	// 综合两标查询(担保信息)
+	public static final String SERVICE_ZH_GUARANTEE2 = "zh-guarantee2";
 	
 	/** 本地访问用url(local DB) */
 	// 失信人被执行信息
@@ -276,6 +278,12 @@ public class Constants {
 	public static final int PUBLISHED = 1; 
 	// 下架
 	public static final int REMOVED = 2;
+	
+	/** 产品可见状态 */
+	// 可见
+	public static final int IS_SHOW_TRUE = 1;
+	// 不可见
+	public static final int IS_SHOW_FALSE = 2;
 	
 	/** 账户认证状态 */
 	// 未认证

@@ -10,6 +10,7 @@ import java.util.Map;
 import org.pbccrc.api.base.bean.ApiLog;
 import org.pbccrc.api.base.service.ApiLogService;
 import org.pbccrc.api.base.service.ComplexService;
+import org.pbccrc.api.base.service.LocalDBService;
 import org.pbccrc.api.base.service.QueryApiService;
 import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.base.util.RemoteApiOperator;
@@ -61,6 +62,9 @@ public class ComplexServiceImpl implements ComplexService{
 	@Autowired
 	private ApiLogService apiLogService;
 	
+	@Autowired
+	private LocalDBService localDBService;
+	
 	/**
 	 * 失信人查询验证
 	 * @param name
@@ -104,13 +108,17 @@ public class ComplexServiceImpl implements ComplexService{
 		} else {
 			// 获得返回值信息
 			String returnParam = String.valueOf(localApi.get("returnParam"));
-			String[] returnParams = returnParam.split(Constants.COMMA);
+			
+			JSONArray paramArray = JSONArray.parseArray(returnParam);
+			String[] returnParams = new String[paramArray.size()];
+			for (int i = 0; i < paramArray.size(); i++) {
+				JSONObject object = (JSONObject) JSONObject.toJSON(paramArray.get(i));
+				returnParams[i] = object.getString("en_name");
+			}
 			
 			// 内码
 			String innerID = String.valueOf(insideCodeMap.get("INNERID"));
 			
-			// 查询结果
-			Map<String, Object> queryResult = new HashMap<String, Object>();
 			// 返回结果(Map)
 			Map<String, Object> returnResult = new HashMap<String, Object>();
 			// 返回结果(List)
@@ -119,67 +127,109 @@ public class ComplexServiceImpl implements ComplexService{
 			Object returnStr = null;
 			
 			// 判断查询类型
-			if (Constants.SERVICE_ZH_PERSON.equals(service)) {
+			if (Constants.SERVICE_ZH_PERSON2.equals(service)) {
 				// 人员基本信息
 				DynamicDataSourceHolder.change2oracle();
-				queryResult = zhPersonDao.query(innerID);
+				returnList = zhPersonDao.query(innerID);
 				DynamicDataSourceHolder.change2mysql();
+				JSONArray jsonArray = new JSONArray();
 				// 根据配置返回信息
-				if (null != queryResult) {
-					for (String key : returnParams) {
-						returnResult.put(key, queryResult.get(key.toUpperCase()));
-					}					
+				if (null != returnList) {
+					for (Map<String, Object> map : returnList) {
+						for (String key : returnParams) {
+							returnResult.put(key, map.get(key.toUpperCase()));
+						}
+						jsonArray.add(returnResult);
+						returnResult = new HashMap<String, Object>();
+					}
 				}
-				returnStr = JSONObject.toJSON(returnResult);
-			} else if (Constants.SERVICE_ZH_ADDRESS.equals(service)) {
+				returnStr = jsonArray;
+			} else if (Constants.SERVICE_ZH_ADDRESS2.equals(service)) {
 				// 居住信息
 				DynamicDataSourceHolder.change2oracle();
-				queryResult = zhAddressDao.query(innerID);
+				returnList = zhAddressDao.query(innerID);
 				DynamicDataSourceHolder.change2mysql();
+				JSONArray jsonArray = new JSONArray();
 				// 根据配置返回信息
-				if (null != queryResult) {
-					for (String key : returnParams) {
-						returnResult.put(key, queryResult.get(key.toUpperCase()));
-					}					
+				if (null != returnList) {
+					for (Map<String, Object> map : returnList) {
+						for (String key : returnParams) {
+							returnResult.put(key, map.get(key.toUpperCase()));
+						}
+						jsonArray.add(returnResult);
+						returnResult = new HashMap<String, Object>();
+					}
 				}
-				returnStr = JSONObject.toJSON(returnResult);
-			} else if (Constants.SERVICE_ZH_EMPLOYMENT .equals(service)) {
+				returnStr = jsonArray;
+			} else if (Constants.SERVICE_ZH_EMPLOYMENT2.equals(service)) {
 				// 职业信息
 				DynamicDataSourceHolder.change2oracle();
-				queryResult = zhEmploymentDao.query(innerID);
+				returnList = zhEmploymentDao.query(innerID);
 				DynamicDataSourceHolder.change2mysql();
+				JSONArray jsonArray = new JSONArray();
 				// 根据配置返回信息
-				if (null != queryResult) {
-					for (String key : returnParams) {
-						returnResult.put(key, queryResult.get(key.toUpperCase()));
-					}					
+				if (null != returnList) {
+					for (Map<String, Object> map : returnList) {
+						for (String key : returnParams) {
+							returnResult.put(key, map.get(key.toUpperCase()));
+						}
+						jsonArray.add(returnResult);
+						returnResult = new HashMap<String, Object>();
+					}
 				}
-				returnStr = JSONObject.toJSON(returnResult);
-			} else if (Constants.SERVICE_ZH_CREDITCARD .equals(service)) {
+				returnStr = jsonArray;
+			} else if (Constants.SERVICE_ZH_CREDITCARD2.equals(service)) {
 				// 信用卡信息
 				DynamicDataSourceHolder.change2oracle();
-				queryResult = zhCreditCardDao.query(innerID);
+				returnList = zhCreditCardDao.query(innerID);
 				DynamicDataSourceHolder.change2mysql();
+				JSONArray jsonArray = new JSONArray();
 				// 根据配置返回信息
-				if (null != queryResult) {
-					for (String key : returnParams) {
-						returnResult.put(key, queryResult.get(key.toUpperCase()));
-					}					
+				if (null != returnList) {
+					for (Map<String, Object> map : returnList) {
+						for (String key : returnParams) {
+							returnResult.put(key, map.get(key.toUpperCase()));
+						}
+						jsonArray.add(returnResult);
+						returnResult = new HashMap<String, Object>();
+					}
 				}
-				returnStr = JSONObject.toJSON(returnResult);
-			} else if (Constants.SERVICE_ZH_LOAN.equals(service)) {
+				returnStr = jsonArray;
+			} else if (Constants.SERVICE_ZH_CREDITCARD_ALL2.equals(service)) {
+				// 信用卡信息
+				DynamicDataSourceHolder.change2oracle();
+				returnList = zhCreditCardDao.query(innerID);
+				DynamicDataSourceHolder.change2mysql();
+				JSONArray jsonArray = new JSONArray();
+				// 根据配置返回信息
+				if (null != returnList) {
+					for (Map<String, Object> map : returnList) {
+						for (String key : returnParams) {
+							returnResult.put(key, map.get(key.toUpperCase()));
+						}
+						jsonArray.add(returnResult);
+						returnResult = new HashMap<String, Object>();
+					}
+				}
+				returnStr = jsonArray;
+			}else if (Constants.SERVICE_ZH_LOAN2.equals(service)) {
 				// 贷款信息
 				DynamicDataSourceHolder.change2oracle();
-				queryResult = zhLoanDao.query(innerID);
+				returnList = zhLoanDao.query(innerID);
 				DynamicDataSourceHolder.change2mysql();
+				JSONArray jsonArray = new JSONArray();
 				// 根据配置返回信息
-				if (null != queryResult) {
-					for (String key : returnParams) {
-						returnResult.put(key, queryResult.get(key.toUpperCase()));
-					}					
+				if (null != returnList) {
+					for (Map<String, Object> map : returnList) {
+						for (String key : returnParams) {
+							returnResult.put(key, map.get(key.toUpperCase()));
+						}
+						jsonArray.add(returnResult);
+						returnResult = new HashMap<String, Object>();
+					}
 				}
-				returnStr = JSONObject.toJSON(returnResult);
-			} else if (Constants.SERVICE_ZH_GUARANTEE .equals(service)) {
+				returnStr = jsonArray;
+			} else if (Constants.SERVICE_ZH_GUARANTEE2.equals(service)) {
 				// 担保信息
 				DynamicDataSourceHolder.change2oracle();
 				returnList = zhGuaranteeDao.query(innerID);
@@ -244,10 +294,11 @@ public class ComplexServiceImpl implements ComplexService{
 			
 			// 获取用户信用评分信息
 			String score = "暂无分数"; 
-			String service = Constants.SERVICE_S_QUERYSCORE;
+			String service = Constants.SERVICE_L_SCORE2;
 			Map<String, String[]> params = new HashMap<String, String[]>();
-			params.put("identityCard", new String[]{identifier});
-			Object result = queryApiService.query(uuid, userID, service, params).get("result");
+			params.put("identifier", new String[]{identifier});
+			params.put("name", new String[]{name});
+			Object result = localDBService.getResult(uuid, userID, service, innerID, (JSONObject)JSONObject.toJSON(params)).get("result");
 			JSONObject resultObj = null;
 			if (result instanceof String) {
 				// String
@@ -256,20 +307,23 @@ public class ComplexServiceImpl implements ComplexService{
 				// Object
 				resultObj = (JSONObject) JSONObject.toJSON(result);
 			}
-			String resultScore = resultObj.getString("score");
+			String resultScore = resultObj.getString("SCORE");
 			if (!StringUtil.isNull(resultScore)) {
 				score = resultScore;
 			}
-			returnMap.put("score", score);
+			returnMap.put("SCORE", score);
 			
 			// 遍历查询项
 			for (String queryItem : queryItems) {
 				// 人员基本信息
 				if (Constants.ITEM_PERSON.equals(queryItem)) {
 					DynamicDataSourceHolder.change2oracle();
-					Map<String, Object> personMap = zhPersonDao.query(innerID);
-					if (null == personMap) {
+					Map<String, Object> personMap = null;
+					List<Map<String, Object>> personMapList = zhPersonDao.query(innerID);
+					if (null == personMapList || personMapList.size() == 0) {
 						personMap = new HashMap<String, Object>();
+					} else {
+						personMap = personMapList.get(0);
 					}
 					personMap.put("name", name);
 					personMap.put("idCardNo", identifier);
@@ -280,9 +334,12 @@ public class ComplexServiceImpl implements ComplexService{
 				// 居住信息
 				if (Constants.ITEM_ADDRESS.equals(queryItem)) {
 					DynamicDataSourceHolder.change2oracle();
-					Map<String, Object> addressMap = zhAddressDao.query(innerID);
-					if (null == addressMap) {
+					Map<String, Object> addressMap = null;
+					List<Map<String, Object>> addressMapList = zhAddressDao.query(innerID);
+					if (null == addressMapList || addressMapList.size() == 0) {
 						addressMap = new HashMap<String, Object>();
+					} else {
+						addressMap = addressMapList.get(0);
 					}
 					returnMap.put("address", addressMap);
 					DynamicDataSourceHolder.change2mysql();
@@ -291,9 +348,12 @@ public class ComplexServiceImpl implements ComplexService{
 				// 就业信息
 				if (Constants.ITEM_EMPLOYMENT.equals(queryItem)) {
 					DynamicDataSourceHolder.change2oracle();
-					Map<String, Object> employmentMap = zhEmploymentDao.query(innerID);
-					if (employmentMap == null) {
+					Map<String, Object> employmentMap = null;
+					List<Map<String, Object>> employmentMapList = zhEmploymentDao.query(innerID);
+					if (null == employmentMapList || employmentMapList.size() == 0) {
 						employmentMap = new HashMap<String, Object>();
+					} else {
+						employmentMap = employmentMapList.get(0);
 					}
 					returnMap.put("employment", employmentMap);
 					DynamicDataSourceHolder.change2mysql();
@@ -302,9 +362,12 @@ public class ComplexServiceImpl implements ComplexService{
 				// 贷款信息
 				if (Constants.ITEM_LOAN.equals(queryItem)) {
 					DynamicDataSourceHolder.change2oracle();
-					Map<String, Object> loanMap = zhLoanDao.query(innerID);
-					if (null == loanMap) {
+					Map<String, Object> loanMap = null;
+					List<Map<String, Object>> loanMapList = zhLoanDao.query(innerID);
+					if (null == loanMapList || loanMapList.size() == 0) {
 						loanMap = new HashMap<String, Object>();
+					} else {
+						loanMap = loanMapList.get(0);
 					}
 					returnMap.put("loan", loanMap);
 					DynamicDataSourceHolder.change2mysql();
@@ -313,9 +376,12 @@ public class ComplexServiceImpl implements ComplexService{
 				// 信用卡信息
 				if (Constants.ITEM_CREDITCARD.equals(queryItem)) {
 					DynamicDataSourceHolder.change2oracle();
-					Map<String, Object> creditCardMap = zhCreditCardDao.query(innerID);
-					if (creditCardMap == null) {
+					Map<String, Object> creditCardMap = null;
+					List<Map<String, Object>> creditCardMapList = zhCreditCardDao.query(innerID);
+					if (null == creditCardMapList || creditCardMapList.size() == 0) {
 						creditCardMap = new HashMap<String, Object>();
+					} else {
+						creditCardMap = creditCardMapList.get(0);
 					}
 					returnMap.put("creditCard", creditCardMap);
 					DynamicDataSourceHolder.change2mysql();
@@ -488,147 +554,148 @@ public class ComplexServiceImpl implements ComplexService{
 	 */
 	public Map<String, Object> getPdfCustom(String uuid, String userID, String name, String identifier, Map<String, Object> localApi) throws Exception {
 		
-		Map<String, Object> returnMap = new HashMap<String, Object>();
-		returnMap.put("isNull", "N");
-		
-		// 根据身份证号获取内码信息
-		DynamicDataSourceHolder.change2oracle();
-		Map<String, Object> insideCodeMap = zhIdentificationDao.getInnerID(name, identifier);
-		DynamicDataSourceHolder.change2mysql();
-		
-		if (null == insideCodeMap) {
-			returnMap.put("isNull", "Y");
-		} else {
-			// 内码
-			String innerID = String.valueOf(insideCodeMap.get("INNERID"));
-			
-			// 查询结果
-			Map<String, Object> queryResult = new HashMap<String, Object>();
-			// 返回结果(Map)
-			Map<String, Object> returnResult = new HashMap<String, Object>();
-			// 返回结果(List)
-			List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
-			// 返回结果(JSON)
-			JSONObject returnJson = new JSONObject();
-			
-			// 获得查询信息
-			String params[] = String.valueOf(localApi.get("params")).split(Constants.COMMA);
-			
-			// 获得返回值信息
-			String returnParam = String.valueOf(localApi.get("returnParam"));
-			JSONObject returnParamJson = JSONObject.parseObject(returnParam);
-			
-			// 遍历查询项
-			for (String service : params) {
-				
-				// 判断查询类型
-				if (Constants.SERVICE_ZH_PERSON.equals(service)) {
-					// 人员基本信息
-					returnResult = new HashMap<String, Object>();
-					DynamicDataSourceHolder.change2oracle();
-					queryResult = zhPersonDao.query(innerID);
-					DynamicDataSourceHolder.change2mysql();
-					// 获取返回值信息
-					String[] returnParams = returnParamJson.getString(service).split(Constants.COMMA);
-					// 根据配置返回信息
-					for (String key : returnParams) {
-						returnResult.put(key, queryResult.get(key.toUpperCase()));
-					}
-					returnJson.put(service, returnResult);
-				} else if (Constants.SERVICE_ZH_ADDRESS.equals(service)) {
-					// 居住信息
-					returnResult = new HashMap<String, Object>();
-					DynamicDataSourceHolder.change2oracle();
-					queryResult = zhAddressDao.query(innerID);
-					DynamicDataSourceHolder.change2mysql();
-					// 获取返回值信息
-					String[] returnParams = returnParamJson.getString(service).split(Constants.COMMA);
-					// 根据配置返回信息
-					for (String key : returnParams) {
-						returnResult.put(key, queryResult.get(key.toUpperCase()));
-					}
-					returnJson.put(service, returnResult);
-				} else if (Constants.SERVICE_ZH_EMPLOYMENT .equals(service)) {
-					// 职业信息
-					returnResult = new HashMap<String, Object>();
-					DynamicDataSourceHolder.change2oracle();
-					queryResult = zhEmploymentDao.query(innerID);
-					DynamicDataSourceHolder.change2mysql();
-					// 获取返回值信息
-					String[] returnParams = returnParamJson.getString(service).split(Constants.COMMA);
-					// 根据配置返回信息
-					for (String key : returnParams) {
-						returnResult.put(key, queryResult.get(key.toUpperCase()));
-					}
-					returnJson.put(service, returnResult);
-				} else if (Constants.SERVICE_ZH_CREDITCARD .equals(service)) {
-					// 信用卡信息
-					returnResult = new HashMap<String, Object>();
-					DynamicDataSourceHolder.change2oracle();
-					queryResult = zhCreditCardDao.query(innerID);
-					DynamicDataSourceHolder.change2mysql();
-					// 获取返回值信息
-					String[] returnParams = returnParamJson.getString(service).split(Constants.COMMA);
-					// 根据配置返回信息
-					for (String key : returnParams) {
-						returnResult.put(key, queryResult.get(key.toUpperCase()));
-					}
-					returnJson.put(service, returnResult);
-				} else if (Constants.SERVICE_ZH_LOAN.equals(service)) {
-					// 贷款信息
-					returnResult = new HashMap<String, Object>();
-					DynamicDataSourceHolder.change2oracle();
-					queryResult = zhLoanDao.query(innerID);
-					DynamicDataSourceHolder.change2mysql();
-					// 获取返回值信息
-					String[] returnParams = returnParamJson.getString(service).split(Constants.COMMA);
-					// 根据配置返回信息
-					for (String key : returnParams) {
-						returnResult.put(key, queryResult.get(key.toUpperCase()));
-					}
-					returnJson.put(service, returnResult);
-				} else if (Constants.SERVICE_ZH_GUARANTEE .equals(service)) {
-					// 担保信息
-					DynamicDataSourceHolder.change2oracle();
-					returnList = zhGuaranteeDao.query(innerID);
-					DynamicDataSourceHolder.change2mysql();
-					// 获取返回值信息
-					String[] returnParams = returnParamJson.getString(service).split(Constants.COMMA);
-					JSONArray jsonArray = new JSONArray();
-					// 根据配置返回信息
-					for (Map<String, Object> map : returnList) {
-						Map<String, Object> guaranteeMap = new HashMap<String, Object>();
-						for (String key : returnParams) {
-							guaranteeMap.put(key, map.get(key.toUpperCase()));
-						}
-						jsonArray.add(guaranteeMap);
-					}
-					returnJson.put(service, jsonArray);
-				} else {
-					// default nothing
-				}
-			}
-			
-			returnResult.put("name", name);
-			returnResult.put("idCardNo", identifier);
-			returnMap.put("returnStr", returnJson);
-		}
-		
-		// 记录日志
-		ApiLog apiLog = new ApiLog();
-		// uuid
-		apiLog.setUuid(uuid);
-		apiLog.setUserID(userID);
-		apiLog.setLocalApiID(String.valueOf(localApi.get("ID")));
-		// 参数
-		JSONObject insDBParams = new JSONObject();
-		insDBParams.put("identifier", identifier);
-		apiLog.setParams(insDBParams.toJSONString());
-		apiLog.setDataFrom(Constants.DATA_FROM_LOCAL);
-		apiLog.setIsSuccess(String.valueOf(!"Y".equals(String.valueOf(returnMap.get("isNull")))));
-		apiLog.setQueryDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-		apiLogService.addLog(apiLog);
-		
-		return returnMap;
+//		Map<String, Object> returnMap = new HashMap<String, Object>();
+//		returnMap.put("isNull", "N");
+//		
+//		// 根据身份证号获取内码信息
+//		DynamicDataSourceHolder.change2oracle();
+//		Map<String, Object> insideCodeMap = zhIdentificationDao.getInnerID(name, identifier);
+//		DynamicDataSourceHolder.change2mysql();
+//		
+//		if (null == insideCodeMap) {
+//			returnMap.put("isNull", "Y");
+//		} else {
+//			// 内码
+//			String innerID = String.valueOf(insideCodeMap.get("INNERID"));
+//			
+//			// 查询结果
+//			Map<String, Object> queryResult = new HashMap<String, Object>();
+//			// 返回结果(Map)
+//			Map<String, Object> returnResult = new HashMap<String, Object>();
+//			// 返回结果(List)
+//			List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
+//			// 返回结果(JSON)
+//			JSONObject returnJson = new JSONObject();
+//			
+//			// 获得查询信息
+//			String params[] = String.valueOf(localApi.get("params")).split(Constants.COMMA);
+//			
+//			// 获得返回值信息
+//			String returnParam = String.valueOf(localApi.get("returnParam"));
+//			JSONObject returnParamJson = JSONObject.parseObject(returnParam);
+//			
+//			// 遍历查询项
+//			for (String service : params) {
+//				
+//				// 判断查询类型
+//				if (Constants.SERVICE_ZH_PERSON.equals(service)) {
+//					// 人员基本信息
+//					returnResult = new HashMap<String, Object>();
+//					DynamicDataSourceHolder.change2oracle();
+//					queryResult = zhPersonDao.query(innerID);
+//					DynamicDataSourceHolder.change2mysql();
+//					// 获取返回值信息
+//					String[] returnParams = returnParamJson.getString(service).split(Constants.COMMA);
+//					// 根据配置返回信息
+//					for (String key : returnParams) {
+//						returnResult.put(key, queryResult.get(key.toUpperCase()));
+//					}
+//					returnJson.put(service, returnResult);
+//				} else if (Constants.SERVICE_ZH_ADDRESS.equals(service)) {
+//					// 居住信息
+//					returnResult = new HashMap<String, Object>();
+//					DynamicDataSourceHolder.change2oracle();
+//					queryResult = zhAddressDao.query(innerID);
+//					DynamicDataSourceHolder.change2mysql();
+//					// 获取返回值信息
+//					String[] returnParams = returnParamJson.getString(service).split(Constants.COMMA);
+//					// 根据配置返回信息
+//					for (String key : returnParams) {
+//						returnResult.put(key, queryResult.get(key.toUpperCase()));
+//					}
+//					returnJson.put(service, returnResult);
+//				} else if (Constants.SERVICE_ZH_EMPLOYMENT .equals(service)) {
+//					// 职业信息
+//					returnResult = new HashMap<String, Object>();
+//					DynamicDataSourceHolder.change2oracle();
+//					queryResult = zhEmploymentDao.query(innerID);
+//					DynamicDataSourceHolder.change2mysql();
+//					// 获取返回值信息
+//					String[] returnParams = returnParamJson.getString(service).split(Constants.COMMA);
+//					// 根据配置返回信息
+//					for (String key : returnParams) {
+//						returnResult.put(key, queryResult.get(key.toUpperCase()));
+//					}
+//					returnJson.put(service, returnResult);
+//				} else if (Constants.SERVICE_ZH_CREDITCARD .equals(service)) {
+//					// 信用卡信息
+//					returnResult = new HashMap<String, Object>();
+//					DynamicDataSourceHolder.change2oracle();
+//					queryResult = zhCreditCardDao.query(innerID);
+//					DynamicDataSourceHolder.change2mysql();
+//					// 获取返回值信息
+//					String[] returnParams = returnParamJson.getString(service).split(Constants.COMMA);
+//					// 根据配置返回信息
+//					for (String key : returnParams) {
+//						returnResult.put(key, queryResult.get(key.toUpperCase()));
+//					}
+//					returnJson.put(service, returnResult);
+//				} else if (Constants.SERVICE_ZH_LOAN.equals(service)) {
+//					// 贷款信息
+//					returnResult = new HashMap<String, Object>();
+//					DynamicDataSourceHolder.change2oracle();
+//					queryResult = zhLoanDao.query(innerID);
+//					DynamicDataSourceHolder.change2mysql();
+//					// 获取返回值信息
+//					String[] returnParams = returnParamJson.getString(service).split(Constants.COMMA);
+//					// 根据配置返回信息
+//					for (String key : returnParams) {
+//						returnResult.put(key, queryResult.get(key.toUpperCase()));
+//					}
+//					returnJson.put(service, returnResult);
+//				} else if (Constants.SERVICE_ZH_GUARANTEE .equals(service)) {
+//					// 担保信息
+//					DynamicDataSourceHolder.change2oracle();
+//					returnList = zhGuaranteeDao.query(innerID);
+//					DynamicDataSourceHolder.change2mysql();
+//					// 获取返回值信息
+//					String[] returnParams = returnParamJson.getString(service).split(Constants.COMMA);
+//					JSONArray jsonArray = new JSONArray();
+//					// 根据配置返回信息
+//					for (Map<String, Object> map : returnList) {
+//						Map<String, Object> guaranteeMap = new HashMap<String, Object>();
+//						for (String key : returnParams) {
+//							guaranteeMap.put(key, map.get(key.toUpperCase()));
+//						}
+//						jsonArray.add(guaranteeMap);
+//					}
+//					returnJson.put(service, jsonArray);
+//				} else {
+//					// default nothing
+//				}
+//			}
+//			
+//			returnResult.put("name", name);
+//			returnResult.put("idCardNo", identifier);
+//			returnMap.put("returnStr", returnJson);
+//		}
+//		
+//		// 记录日志
+//		ApiLog apiLog = new ApiLog();
+//		// uuid
+//		apiLog.setUuid(uuid);
+//		apiLog.setUserID(userID);
+//		apiLog.setLocalApiID(String.valueOf(localApi.get("ID")));
+//		// 参数
+//		JSONObject insDBParams = new JSONObject();
+//		insDBParams.put("identifier", identifier);
+//		apiLog.setParams(insDBParams.toJSONString());
+//		apiLog.setDataFrom(Constants.DATA_FROM_LOCAL);
+//		apiLog.setIsSuccess(String.valueOf(!"Y".equals(String.valueOf(returnMap.get("isNull")))));
+//		apiLog.setQueryDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+//		apiLogService.addLog(apiLog);
+//		
+//		return returnMap;
+		return null;
 	}
 }

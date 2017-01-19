@@ -11,7 +11,10 @@ public class ResultContent implements Serializable{
 	
 	/** 返回信息 */
 	private String retMsg;
-
+	
+	/** 查询次数 */
+	private String queryCount;
+	
 	/** 返回数据 */
 	private Object retData;
 
@@ -37,5 +40,13 @@ public class ResultContent implements Serializable{
 
 	public void setRetData(Object retData) {
 		this.retData = retData;
+	}
+	
+	public String getQueryCount() {
+		return queryCount;
+	}
+
+	public void setQueryCount(String queryCount) {
+		this.queryCount = queryCount;
 	}
 }

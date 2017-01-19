@@ -5,18 +5,14 @@
 	
 	<select id="query" parameterType="java.lang.String" resultType="java.util.HashMap">
 		select
-			g.id,
-			g.innerID,
-			g.guaranteeSum,
-			ddgs.statName as guaranteeStat,
-			ddgw.guaranteeWayName as guaranteeWay,
-			ddf.corporateName as finance,
-			g.occurpyTime,
-			g.forInnerID
-		from guarantee g
-		LEFT JOIN dd_guaranteestat ddgs on g.guaranteeStat = ddgs.statCode
-		LEFT JOIN dd_guaranteeway ddgw on g.guaranteeWay = ddgw.guaranteeWayCode
-		LEFT JOIN dd_financeorg ddf on g.financeCode = ddf.financeCode
+	     g.innerID,
+	     ddfin.corporatename as corporateName,
+	     g.guaranteeSum,
+	     ddgs.statName as guaranteeStat,
+	     g.origincertno
+	   from guarantee g
+	   LEFT JOIN dd_financeorg ddfin on g.financecode = ddfin.financecode
+	   LEFT JOIN dd_guaranteestat ddgs on g.guaranteeStat = ddgs.statCode
 		where g.innerID = #{innerID}
 	</select>
 	
