@@ -1,5 +1,7 @@
 package org.pbccrc.api.base.service;
 
+import java.util.Map;
+
 public interface CostService {
 	
 	/**
@@ -7,6 +9,6 @@ public interface CostService {
 	 * @param userID
 	 * @param apiKey
 	 */
-	public void cost(String userID, String apiKey);
+	public Map<String, Object> cost(String userID, String apiKey);
 
 }

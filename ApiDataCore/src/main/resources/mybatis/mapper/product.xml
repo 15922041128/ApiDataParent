@@ -7,8 +7,14 @@
 		select * from product
 	</select>
 	
-	<select id="getProductByType" parameterType="java.lang.String" resultType="org.pbccrc.api.base.bean.Product">
-		select * from product where type = #{productType}
+	<select id="getProductByType" parameterType="org.pbccrc.api.base.bean.Product" resultType="org.pbccrc.api.base.bean.Product">
+		select * from product where type = #{type} 
+		<if test="isShow !=null and isShow != '' ">
+           and isShow = #{isShow}
+        </if>
+        <if test="status !=null and status != '' ">
+           and status = #{status}
+        </if>
 	</select>
 	
 	<select id="queryProductByPage" parameterType="org.pbccrc.api.base.bean.Product" resultType="org.pbccrc.api.base.bean.Product">

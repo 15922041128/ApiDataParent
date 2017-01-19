@@ -181,7 +181,10 @@ public class QueryApiController {
 				}
 			}
 			if (isCost) {
-				costService.cost(userID, apiKey);	
+				Map<String, Object> costRetMap = costService.cost(userID, apiKey);
+				String queryCount = String.valueOf(costRetMap.get("queryCount"));
+				// 查询次数
+				resultJson.put("queryCount", queryCount);
 			}
 		}
 		

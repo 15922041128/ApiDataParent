@@ -31,10 +31,10 @@ public interface ProductService {
 	
 	/**
 	 * 根据产品类型获取产品信息
-	 * @param productType
+	 * @param product
 	 * @return
 	 */
-	JSONArray getProductByType(String productType);
+	JSONArray getProductByType(Product product);
 	
 	/**
 	 * 更新产品

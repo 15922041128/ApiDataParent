@@ -10,6 +10,7 @@ import javax.ws.rs.GET;
 import org.pbccrc.api.base.bean.ResultContent;
 import org.pbccrc.api.base.bean.SystemLog;
 import org.pbccrc.api.base.service.ComplexService;
+import org.pbccrc.api.base.service.CostService;
 import org.pbccrc.api.base.service.LocalApiService;
 import org.pbccrc.api.base.service.SystemLogService;
 import org.pbccrc.api.base.util.Constants;
@@ -39,6 +40,9 @@ public class ComplexController {
 	
 	@Autowired
 	private Validator validator;
+	
+	@Autowired
+	private CostService costService;
 	
 //	/**
 //	 * 失信人查询验证
@@ -167,14 +171,20 @@ public class ComplexController {
 		String isNull = String.valueOf(returnMap.get("isNull"));
 		// 判断是否为空
 		if ("N".equals(isNull)) {
-			
 			JSONArray jsonArray = (JSONArray) JSONArray.toJSON(returnMap.get("returnStr"));
 			if (!jsonArray.isEmpty()) {
 				resultContent.setCode(Constants.CODE_ERR_SUCCESS);
 				resultContent.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);				
 			}
-			
 			resultContent.setRetData(returnMap.get("returnStr"));
+			// 计费
+			Map<String, Object> costRetMap = costService.cost(userID, apiKey);
+			String queryCount = String.valueOf(costRetMap.get("queryCount"));
+			// 查询次数
+			resultContent.setQueryCount(queryCount);
+		} else {
+			resultContent.setCode(Constants.ERR_NO_RESULT);
+			resultContent.setRetMsg(Constants.RET_MSG_NO_RESULT);
 		}
 		
 		// 记录日志

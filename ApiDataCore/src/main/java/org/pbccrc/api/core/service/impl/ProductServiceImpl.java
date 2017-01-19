@@ -51,7 +51,6 @@ public class ProductServiceImpl implements ProductService{
 				JSONObject product = JSONObject.parseObject(String.valueOf(RedisClient.get("product_" + productID)));
 				// 将relation信息添加到产品信息中
 				product.put("relation", object);
-				array.add(product);
 			}
 		}
 		
@@ -82,14 +81,14 @@ public class ProductServiceImpl implements ProductService{
 	 * @param productType
 	 * @return
 	 */
-	public JSONArray getProductByType(String productType) {
+	public JSONArray getProductByType(Product product) {
 		
 		JSONArray jsonArray = new JSONArray();
 		
-		List<Product> productList = productDao.getProductByType(productType);
+		List<Product> productList = productDao.getProductByType(product);
 		
-		for (Product product : productList) {
-			jsonArray.add(product);
+		for (Product obj : productList) {
+			jsonArray.add(obj);
 		}
 		
 		return jsonArray;

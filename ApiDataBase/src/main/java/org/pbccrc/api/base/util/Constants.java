@@ -279,6 +279,12 @@ public class Constants {
 	// 下架
 	public static final int REMOVED = 2;
 	
+	/** 产品可见状态 */
+	// 可见
+	public static final int IS_SHOW_TRUE = 1;
+	// 不可见
+	public static final int IS_SHOW_FALSE = 2;
+	
 	/** 账户认证状态 */
 	// 未认证
 	public static final String AUTH_STATUS_NO = "0";
