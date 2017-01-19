@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.pbccrc.api.base.bean.LocalApi;
 import org.pbccrc.api.base.bean.Pagination;
 import org.pbccrc.api.base.bean.Product;
 import org.pbccrc.api.core.mapper.ProductMapper;
@@ -24,8 +23,8 @@ public class ProductDao {
 		return productMapper.queryAll();
 	}
 	
-	public List<Product> getProductByType(String productType) {
-		return productMapper.getProductByType(productType);
+	public List<Product> getProductByType(Product product) {
+		return productMapper.getProductByType(product);
 	}
 	
 	/**

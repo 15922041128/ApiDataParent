@@ -20,7 +20,7 @@ public interface ProductMapper {
 	 * @param productType
 	 * @return
 	 */
-	List<Product> getProductByType(String productType);
+	List<Product> getProductByType(Product product);
 	
 	/**
 	 * 更新产品
