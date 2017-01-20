@@ -21,7 +21,10 @@ public class Relation implements Serializable {
 	
 	/** 剩余查询次数,-1为不限制 */
 	private String count;
-
+	
+	/** 每日查询 上限 */
+	private String visitCount;
+	
 	/** 计费类型 0 count 1 price */
 	private String costType;
 	
@@ -72,6 +75,14 @@ public class Relation implements Serializable {
 
 	public void setCount(String count) {
 		this.count = count;
+	}
+	
+	public String getVisitCount() {
+		return visitCount;
+	}
+
+	public void setVisitCount(String visitCount) {
+		this.visitCount = visitCount;
 	}
 
 	public String getCostType() {
