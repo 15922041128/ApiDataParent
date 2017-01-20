@@ -70,6 +70,7 @@ public class MyProductController {
 		// 根据queryType为api分组
 		JSONArray apiArray = new JSONArray();
 		for (String key : queryTypeMap.keySet()) {  
+			JSONObject apisInfo = new JSONObject();
 			JSONArray apis = new JSONArray();
 			for (Object obj : allApi) {
 				JSONObject api = (JSONObject) JSONObject.toJSON(obj);
@@ -78,8 +79,10 @@ public class MyProductController {
 					apis.add(obj);
 				}
 			}
-			apiArray.add(apis);
-		} 
+			apisInfo.put("array", apis);
+			apisInfo.put("queryType", key);
+			apiArray.add(apisInfo);
+		}
 		object.put("apiArray", apiArray);
 		
 		// relation

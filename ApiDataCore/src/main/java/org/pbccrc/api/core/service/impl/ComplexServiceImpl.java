@@ -113,7 +113,7 @@ public class ComplexServiceImpl implements ComplexService{
 			String[] returnParams = new String[paramArray.size()];
 			for (int i = 0; i < paramArray.size(); i++) {
 				JSONObject object = (JSONObject) JSONObject.toJSON(paramArray.get(i));
-				returnParams[i] = object.getString("en_name");
+				returnParams[i] = object.getString(Constants.EN_NAME);
 			}
 			
 			// 内码

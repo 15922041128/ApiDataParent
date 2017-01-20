@@ -50,8 +50,8 @@ public class UtilController {
 			JSONObject jsonObject = JSONObject.parseObject(jsonStr);
 			for (int i = 0; i < paramArray.size(); i++) {
 				JSONObject object = (JSONObject) JSONObject.toJSON(paramArray.get(i));
-				String enName = object.getString("en_name");
-				String chName = object.getString("ch_name");
+				String enName = object.getString(Constants.EN_NAME);
+				String chName = object.getString(Constants.CH_NAME);
 				
 				String value = jsonObject.getString(enName);
 				jsonObject.put(chName, value);
@@ -68,8 +68,8 @@ public class UtilController {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
 				for (int j = 0; j < paramArray.size(); j++) {
 					JSONObject object = (JSONObject) JSONObject.toJSON(paramArray.get(j));
-					String enName = object.getString("en_name");
-					String chName = object.getString("ch_name");
+					String enName = object.getString(Constants.EN_NAME);
+					String chName = object.getString(Constants.CH_NAME);
 					
 					String value = jsonObject.getString(enName);
 					jsonObject.put(chName, value);
