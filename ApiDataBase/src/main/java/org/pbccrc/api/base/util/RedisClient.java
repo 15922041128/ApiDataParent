@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import org.apache.commons.beanutils.BeanUtils;
+
 import com.alibaba.fastjson.JSON;
 
 import redis.clients.jedis.Jedis;
@@ -97,7 +99,33 @@ public class RedisClient {
 			jedisPool.returnResource(jedis);
 		}
 	}
-
+	
+	/**
+	 * 向缓存中设置对象
+	 * 
+	 * @param key
+	 * @param value
+	 * @return
+	 */
+	public static boolean setObject(String key, Object value) {
+		Jedis jedis = null;
+		try {
+			
+			Map<String, String> map = BeanUtils.describe(value);
+			map.remove("class");
+			
+			String objectJson = JSON.toJSONString(map);
+			jedis = jedisPool.getResource();
+			jedis.set(key, objectJson);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			jedisPool.returnResource(jedis);
+		}
+	}
+	
 	/**
 	 * 删除缓存中得对象，根据key
 	 * 

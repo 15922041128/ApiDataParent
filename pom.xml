@@ -60,6 +60,8 @@
 		<aspectj.version>1.8.9</aspectj.version>
 		
 		<pagehelper.version>4.1.0</pagehelper.version>
+		
+		<beanutils.version>1.9.3</beanutils.version>
 	</properties>
 
 	<dependencyManagement>
@@ -372,6 +374,13 @@
 				<groupId>com.github.pagehelper</groupId>
 				<artifactId>pagehelper</artifactId>
 				<version>${pagehelper.version}</version>
+			</dependency>
+			
+			<!-- BeanUtils -->
+			<dependency>
+			    <groupId>commons-beanutils</groupId>
+			    <artifactId>commons-beanutils</artifactId>
+			    <version>${beanutils.version}</version>
 			</dependency>
 	        
 		</dependencies>
