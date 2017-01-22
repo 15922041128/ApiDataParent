@@ -6,7 +6,7 @@
 	<select id="query" parameterType="java.lang.String" resultType="java.util.HashMap">
 		select 
 	        p.innerID,
-	        ddfin.corporatename as corporateName,
+	        ddfin.corporatename as financecode,
 	        ddg.genderName as gender,
 	        to_char(p.birthday, 'yyyy-mm-dd') as birthday,
 	        ddm.marriageName as marriage,
@@ -14,6 +14,7 @@
 	        ddedud.degreeName as eduDegree,
 	        p.SPOUSENAME,
 	        p.spousecertType,
+	        p.spousecertNo,
 	        p.spouseOffice,
 	        p.spouseTel,
 	        p.homeTel,

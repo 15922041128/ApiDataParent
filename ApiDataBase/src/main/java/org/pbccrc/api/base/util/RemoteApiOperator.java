@@ -86,4 +86,27 @@ public class RemoteApiOperator {
 	}
 	
 	// 内部访问
+	public String insideAccess(String userID, String apiKey, String url, String service, Map<String, String> paramMap) throws Exception {
+		
+		ClientConfig config = new DefaultClientConfig();
+		config.getProperties().put(ClientConfig.PROPERTY_CONNECT_TIMEOUT, 10 * 1000);
+		Client client = Client.create(config);
+		
+		StringBuffer requestUrl = new StringBuffer(url);
+		requestUrl.append("?service=" + service);
+		for (Map.Entry<String, String> param : paramMap.entrySet()) {  
+			requestUrl.append("&" + param.getKey() + "=" + java.net.URLEncoder.encode(param.getValue(), "utf-8"));
+		}  
+		
+		WebResource resource = client.resource(requestUrl.toString());
+		
+		String result = Constants.BLANK;
+		try {
+			result = resource.accept(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE).header("apiKey", apiKey).header("userID", userID).get(String.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return StringUtil.decodeUnicode(result);
+	}
 }

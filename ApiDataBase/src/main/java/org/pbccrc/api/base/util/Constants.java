@@ -175,6 +175,10 @@ public class Constants {
 	public static final String COST_TYPE_COUNT = "0";
 	public static final String COST_TYPE_PRICE = "1";
 	
+	/** localApi return type */
+	public static final String RETURN_TYPE_OBJECT = "1";
+	public static final String RETURN_TYPE_ARRAY = "2";
+	
 	/** 本地访问用service */
 	// 个人信用分
 	public static final String SERVICE_L_SCORE2 = "l-score2";
@@ -298,5 +302,29 @@ public class Constants {
 	/** localApi.returnParam 中英文key */
 	public static final String EN_NAME = "EN_NAME";
 	public static final String CH_NAME = "CH_NAME";
+	
+	/** api前缀  */
+	// 综合查询
+	public static final String API_PREFIX_ZH = "zh";
+	// 身份证认证
+	public static final String API_PREFIX_SF = "sf";
+	
+	/** oracle table name */
+	// 人员基本信息
+	public static final String ORA_TBL_NAME_PERSON = "person";
+	// 居住信息
+	public static final String ORA_TBL_NAME_ADDRESS = "address";
+	// 职业信息
+	public static final String ORA_TBL_NAME_EMPLOYMENT = "employment";
+	// 信用卡信息
+	public static final String ORA_TBL_NAME_CREDITCARD = "creditcard";
+	// 贷款信息
+	public static final String ORA_TBL_NAME_LOAN = "loan";
+	// 担保信息
+	public static final String ORA_TBL_NAME_GUARANTEE = "guarantee";
+	// 信用分
+	public static final String ORA_TBL_NAME_SCORE = "score";
+	// 黑名单
+	public static final String ORA_TBL_NAME_BLACK = "black";
 	
 }

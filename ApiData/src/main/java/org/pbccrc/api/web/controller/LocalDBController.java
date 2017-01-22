@@ -220,7 +220,7 @@ public class LocalDBController {
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
 		// 验证service格式
-		if (StringUtil.isNull(service) || service.split(Constants.CONNECTOR_LINE).length != 2) {
+		if (StringUtil.isNull(service)) {
 			resultContent.setCode(Constants.ERR_SERVICE);
 			resultContent.setRetMsg(Constants.RET_MSG_SERVICE);
 			return (JSONObject) JSONObject.toJSON(resultContent);
@@ -268,7 +268,15 @@ public class LocalDBController {
 		boolean isSuccess = (boolean) map.get("isSuccess");
 		Object result = map.get("result");
 		
-		JSONObject resultJson = (JSONObject) JSONObject.toJSON(result);
+		// 返回类型
+		String returnType = String.valueOf(localApi.get("returnType"));
+		
+		Object resultJson = null;
+		if (Constants.RETURN_TYPE_ARRAY.equals(returnType)) {
+			resultJson = JSONArray.toJSON(result);
+		} else {
+			resultJson = JSONObject.toJSON(result);
+		}
 		
 		// 判断是否成功
 		if (isSuccess) {

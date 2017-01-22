@@ -1,39 +1,23 @@
-package org.pbccrc.api.portal.controller;
+package org.pbccrc.api.base.adapter;
 
 import java.util.Map;
-
-import javax.ws.rs.GET;
 
 import org.pbccrc.api.base.service.LocalApiService;
 import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.base.util.StringUtil;
 import org.pbccrc.api.base.util.StringUtil.JSON_TYPE;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
-@Controller
-public class UtilController {
-	
+@Service
+public class JsonAdapter {
+
 	@Autowired
 	private LocalApiService localApiService;
-
-	/**
-	 * 中英文转换
-	 * @param service
-	 * @param jsonStr
-	 * @return
-	 * @throws Exception
-	 */
-	@GET
-	@CrossOrigin
-	@ResponseBody
-	@RequestMapping("/change2Ch")
+	
 	public String change2Ch(String service, String jsonStr) throws Exception {
 		
 		Map<String, Object> localApi = localApiService.queryByService(service);

@@ -126,169 +126,169 @@ public class ComplexController {
 //	}
 	
 
-	/**
-	 * 查询pdf单项
-	 * @param service
-	 * @param identifier
-	 * @param request
-	 * @return
-	 * @throws Exception
-	 */
-	@GET
-	@CrossOrigin
-	@ResponseBody
-	@RequestMapping(value="/getPdfItem", produces={"application/json;charset=UTF-8"})
-	public String query(String service, String name, String identifier, HttpServletRequest request) throws Exception {
-		
-		// 获取apiKey
-		String apiKey = request.getHeader(Constants.HEAD_APIKEY);
-		// 获得用ID
-		String userID = request.getHeader(Constants.HEAD_USER_ID);
-		
-		ResultContent resultContent = new ResultContent();
-		resultContent.setCode(Constants.ERR_NO_RESULT);
-		resultContent.setRetMsg(Constants.RET_MSG_NO_RESULT);
-		
-		Map<String, Object> localApi = localApiService.queryByService(service);
-		
-		// 验证本地是否有该api
-		if (null == localApi) {
-			resultContent.setCode(Constants.ERR_NO_SERVICE);
-			resultContent.setRetMsg(Constants.RET_MSG_NO_SERVICE);
-			return JSONObject.toJSONString(resultContent);
-		}
-		
-		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, String.valueOf(localApi.get("ID")), resultContent)) {
-			return JSONObject.toJSONString(resultContent);
-		}
-		
-		// 生成UUID
-		String uuid = StringUtil.createUUID();
-		
-		Map<String, Object> returnMap = complexService.getPdfItem(uuid, userID, service, name, identifier, localApi);
-		
-		String isNull = String.valueOf(returnMap.get("isNull"));
-		// 判断是否为空
-		if ("N".equals(isNull)) {
-			JSONArray jsonArray = (JSONArray) JSONArray.toJSON(returnMap.get("returnStr"));
-			if (!jsonArray.isEmpty()) {
-				resultContent.setCode(Constants.CODE_ERR_SUCCESS);
-				resultContent.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);				
-			}
-			resultContent.setRetData(returnMap.get("returnStr"));
-			// 计费
-			Map<String, Object> costRetMap = costService.cost(userID, apiKey);
-			String queryCount = String.valueOf(costRetMap.get("queryCount"));
-			// 查询次数
-			resultContent.setQueryCount(queryCount);
-		} else {
-			resultContent.setCode(Constants.ERR_NO_RESULT);
-			resultContent.setRetMsg(Constants.RET_MSG_NO_RESULT);
-		}
-		
-		// 记录日志
-		SystemLog systemLog = new SystemLog();
-		// uuid
-		systemLog.setUuid(uuid);
-		// ip地址
-		systemLog.setIpAddress(request.getRemoteAddr());
-		// apiKey
-		systemLog.setApiKey(apiKey);
-		// localApiID
-		systemLog.setLocalApiID(String.valueOf(localApi.get("ID")));
-		// 参数
-		JSONObject params = new JSONObject();
-		params.put("identifier", identifier);
-		systemLog.setParams(params.toJSONString());
-		// 用户ID
-		systemLog.setUserID(userID);
-		// 是否成功
-		systemLog.setIsSuccess(String.valueOf(!"Y".equals(isNull)));
-		// 是否计费
-		systemLog.setIsCount(String.valueOf(!"Y".equals(isNull)));
-		// 查询时间
-		systemLog.setQueryDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-		systemLogService.addLog(systemLog);
-		
-		return JSONObject.toJSONString(resultContent);
-	}
+//	/**
+//	 * 查询pdf单项
+//	 * @param service
+//	 * @param identifier
+//	 * @param request
+//	 * @return
+//	 * @throws Exception
+//	 */
+//	@GET
+//	@CrossOrigin
+//	@ResponseBody
+//	@RequestMapping(value="/getPdfItem", produces={"application/json;charset=UTF-8"})
+//	public JSONObject query(String service, String name, String identifier, String telNum, HttpServletRequest request) throws Exception {
+//		
+//		// 获取apiKey
+//		String apiKey = request.getHeader(Constants.HEAD_APIKEY);
+//		// 获得用ID
+//		String userID = request.getHeader(Constants.HEAD_USER_ID);
+//		
+//		ResultContent resultContent = new ResultContent();
+//		resultContent.setCode(Constants.ERR_NO_RESULT);
+//		resultContent.setRetMsg(Constants.RET_MSG_NO_RESULT);
+//		
+//		Map<String, Object> localApi = localApiService.queryByService(service);
+//		
+//		// 验证本地是否有该api
+//		if (null == localApi) {
+//			resultContent.setCode(Constants.ERR_NO_SERVICE);
+//			resultContent.setRetMsg(Constants.RET_MSG_NO_SERVICE);
+//			return (JSONObject) JSONObject.toJSON(resultContent);
+//		}
+//		
+//		// 请求参数验证
+//		if (!validator.validateRequest(userID, apiKey, localApi, name, identifier, telNum, resultContent)) {
+//			return (JSONObject) JSONObject.toJSON(resultContent);
+//		}
+//		
+//		// 生成UUID
+//		String uuid = StringUtil.createUUID();
+//		
+//		Map<String, Object> returnMap = complexService.getPdfItem(uuid, userID, service, name, identifier, telNum, localApi);
+//		
+//		String isNull = String.valueOf(returnMap.get("isNull"));
+//		// 判断是否为空
+//		if ("N".equals(isNull)) {
+//			JSONArray jsonArray = (JSONArray) JSONArray.toJSON(returnMap.get("returnStr"));
+//			if (!jsonArray.isEmpty()) {
+//				resultContent.setCode(Constants.CODE_ERR_SUCCESS);
+//				resultContent.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);				
+//			}
+//			resultContent.setRetData(returnMap.get("returnStr"));
+//			// 计费
+//			Map<String, Object> costRetMap = costService.cost(userID, apiKey);
+//			String queryCount = String.valueOf(costRetMap.get("queryCount"));
+//			// 查询次数
+//			resultContent.setQueryCount(queryCount);
+//		} else {
+//			resultContent.setCode(Constants.ERR_NO_RESULT);
+//			resultContent.setRetMsg(Constants.RET_MSG_NO_RESULT);
+//		}
+//		
+//		// 记录日志
+//		SystemLog systemLog = new SystemLog();
+//		// uuid
+//		systemLog.setUuid(uuid);
+//		// ip地址
+//		systemLog.setIpAddress(request.getRemoteAddr());
+//		// apiKey
+//		systemLog.setApiKey(apiKey);
+//		// localApiID
+//		systemLog.setLocalApiID(String.valueOf(localApi.get("ID")));
+//		// 参数
+//		JSONObject params = new JSONObject();
+//		params.put("identifier", identifier);
+//		systemLog.setParams(params.toJSONString());
+//		// 用户ID
+//		systemLog.setUserID(userID);
+//		// 是否成功
+//		systemLog.setIsSuccess(String.valueOf(!"Y".equals(isNull)));
+//		// 是否计费
+//		systemLog.setIsCount(String.valueOf(!"Y".equals(isNull)));
+//		// 查询时间
+//		systemLog.setQueryDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+//		systemLogService.addLog(systemLog);
+//		
+//		return (JSONObject) JSONObject.toJSON(resultContent);
+//	}
 	
-	/**
-	 * 自定义查询pdf
-	 * @param service
-	 * @param identifier
-	 * @param request
-	 * @return
-	 * @throws Exception
-	 */
-	@GET
-	@CrossOrigin
-	@ResponseBody
-	@RequestMapping(value="/getPdfCustom", produces={"application/json;charset=UTF-8"})
-	public String queryCustom(String service, String name, String identifier, HttpServletRequest request) throws Exception {
-		
-		// 获取apiKey
-		String apiKey = request.getHeader(Constants.HEAD_APIKEY);
-		// 获得用ID
-		String userID = request.getHeader(Constants.HEAD_USER_ID);
-		
-		ResultContent resultContent = new ResultContent();
-		resultContent.setCode(Constants.CODE_ERR_SUCCESS);
-		resultContent.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);
-		
-		Map<String, Object> localApi = localApiService.queryByService(service);
-		
-		// 验证本地是否有该api
-		if (null == localApi) {
-			resultContent.setCode(Constants.ERR_NO_SERVICE);
-			resultContent.setRetMsg(Constants.RET_MSG_NO_SERVICE);
-			return JSONObject.toJSONString(resultContent);
-		}
-		
-		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, String.valueOf(localApi.get("ID")), resultContent)) {
-			return JSONObject.toJSONString(resultContent);
-		}
-		
-		// 生成UUID
-		String uuid = StringUtil.createUUID();
-		
-		Map<String, Object> returnMap = complexService.getPdfCustom(uuid, userID, name, identifier, localApi);
-		
-		String isNull = String.valueOf(returnMap.get("isNull"));
-		// 判断是否为空
-		if ("Y".equals(isNull)) {
-			resultContent.setCode(Constants.CODE_ERR_FAIL);
-			resultContent.setRetMsg(Constants.CODE_ERR_FAIL_MSG);
-		} else {
-			resultContent.setRetData(returnMap.get("returnStr"));
-		}
-		
-		// 记录日志
-		SystemLog systemLog = new SystemLog();
-		// uuid
-		systemLog.setUuid(uuid);
-		// ip地址
-		systemLog.setIpAddress(request.getRemoteAddr());
-		// apiKey
-		systemLog.setApiKey(apiKey);
-		// localApiID
-		systemLog.setLocalApiID(String.valueOf(localApi.get("ID")));
-		// 参数
-		JSONObject params = new JSONObject();
-		params.put("identifier", identifier);
-		systemLog.setParams(params.toJSONString());
-		// 用户ID
-		systemLog.setUserID(userID);
-		// 是否成功
-		systemLog.setIsSuccess(String.valueOf(!"Y".equals(isNull)));
-		// 是否计费
-		systemLog.setIsCount(String.valueOf(!"Y".equals(isNull)));
-		// 查询时间
-		systemLog.setQueryDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-		systemLogService.addLog(systemLog);
-		
-		return JSONObject.toJSONString(resultContent);
-	}
+//	/**
+//	 * 自定义查询pdf
+//	 * @param service
+//	 * @param identifier
+//	 * @param request
+//	 * @return
+//	 * @throws Exception
+//	 */
+//	@GET
+//	@CrossOrigin
+//	@ResponseBody
+//	@RequestMapping(value="/getPdfCustom", produces={"application/json;charset=UTF-8"})
+//	public String queryCustom(String service, String name, String identifier, HttpServletRequest request) throws Exception {
+//		
+//		// 获取apiKey
+//		String apiKey = request.getHeader(Constants.HEAD_APIKEY);
+//		// 获得用ID
+//		String userID = request.getHeader(Constants.HEAD_USER_ID);
+//		
+//		ResultContent resultContent = new ResultContent();
+//		resultContent.setCode(Constants.CODE_ERR_SUCCESS);
+//		resultContent.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);
+//		
+//		Map<String, Object> localApi = localApiService.queryByService(service);
+//		
+//		// 验证本地是否有该api
+//		if (null == localApi) {
+//			resultContent.setCode(Constants.ERR_NO_SERVICE);
+//			resultContent.setRetMsg(Constants.RET_MSG_NO_SERVICE);
+//			return JSONObject.toJSONString(resultContent);
+//		}
+//		
+//		// 请求参数验证
+//		if (!validator.validateRequest(userID, apiKey, String.valueOf(localApi.get("ID")), resultContent)) {
+//			return JSONObject.toJSONString(resultContent);
+//		}
+//		
+//		// 生成UUID
+//		String uuid = StringUtil.createUUID();
+//		
+//		Map<String, Object> returnMap = complexService.getPdfCustom(uuid, userID, name, identifier, localApi);
+//		
+//		String isNull = String.valueOf(returnMap.get("isNull"));
+//		// 判断是否为空
+//		if ("Y".equals(isNull)) {
+//			resultContent.setCode(Constants.CODE_ERR_FAIL);
+//			resultContent.setRetMsg(Constants.CODE_ERR_FAIL_MSG);
+//		} else {
+//			resultContent.setRetData(returnMap.get("returnStr"));
+//		}
+//		
+//		// 记录日志
+//		SystemLog systemLog = new SystemLog();
+//		// uuid
+//		systemLog.setUuid(uuid);
+//		// ip地址
+//		systemLog.setIpAddress(request.getRemoteAddr());
+//		// apiKey
+//		systemLog.setApiKey(apiKey);
+//		// localApiID
+//		systemLog.setLocalApiID(String.valueOf(localApi.get("ID")));
+//		// 参数
+//		JSONObject params = new JSONObject();
+//		params.put("identifier", identifier);
+//		systemLog.setParams(params.toJSONString());
+//		// 用户ID
+//		systemLog.setUserID(userID);
+//		// 是否成功
+//		systemLog.setIsSuccess(String.valueOf(!"Y".equals(isNull)));
+//		// 是否计费
+//		systemLog.setIsCount(String.valueOf(!"Y".equals(isNull)));
+//		// 查询时间
+//		systemLog.setQueryDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+//		systemLogService.addLog(systemLog);
+//		
+//		return JSONObject.toJSONString(resultContent);
+//	}
 }

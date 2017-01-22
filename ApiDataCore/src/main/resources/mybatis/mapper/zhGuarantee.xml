@@ -6,7 +6,7 @@
 	<select id="query" parameterType="java.lang.String" resultType="java.util.HashMap">
 		select
 	     g.innerID,
-	     ddfin.corporatename as corporateName,
+	     ddfin.corporatename as financecode,
 	     g.guaranteeSum,
 	     ddgs.statName as guaranteeStat,
 	     g.origincertno

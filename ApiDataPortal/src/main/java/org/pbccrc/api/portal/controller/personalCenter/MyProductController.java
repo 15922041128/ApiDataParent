@@ -4,12 +4,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 
+import org.pbccrc.api.base.adapter.JsonAdapter;
 import org.pbccrc.api.base.bean.QueryType;
+import org.pbccrc.api.base.service.LocalApiService;
 import org.pbccrc.api.base.service.ProductService;
 import org.pbccrc.api.base.service.QueryTypeService;
 import org.pbccrc.api.base.service.RelationService;
+import org.pbccrc.api.base.util.Constants;
+import org.pbccrc.api.base.util.RemoteApiOperator;
+import org.pbccrc.api.base.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,6 +36,15 @@ public class MyProductController {
 	
 	@Autowired
 	private QueryTypeService queryTypeService;
+	
+	@Autowired
+	private LocalApiService localApiService;
+	
+	@Autowired
+	private RemoteApiOperator remoteApiOperator;
+	
+	@Autowired
+	private JsonAdapter jsonAdapter;
 	
 	@GET
 	@CrossOrigin
@@ -90,5 +105,57 @@ public class MyProductController {
 		object.put("relation", relation);
 		
 		return object;
+	}
+	
+	@GET
+	@CrossOrigin
+	@ResponseBody
+	@RequestMapping(value="/myProduct/getResult", produces={"application/json;charset=UTF-8"})
+	public JSONArray getResult(String serviceStr, HttpServletRequest request) throws Exception{
+		
+		JSONArray resultArray = new JSONArray();
+		
+		// 获取apiKey
+		String apiKey = request.getHeader(Constants.HEAD_APIKEY);
+		// 获得用ID
+		String userID = request.getHeader(Constants.HEAD_USER_ID);
+		
+		// 获取参数
+		// 两标
+		String name = request.getParameter("name");
+		String identifier = request.getParameter("identifier");
+		// 电话号码
+		String telNum = request.getParameter("telNum");
+		
+		
+		// 查询参数(记录日志用)
+		// 查询参数(查询用)
+		Map<String, String> paramMap = new HashMap<String, String>();
+		// 判断查询方式
+		if (!StringUtil.isNull(telNum)) {
+			paramMap.put("telNum", telNum);
+		} else {
+			paramMap.put("name", name);
+			paramMap.put("identifier", identifier);
+		}
+		
+		// 遍历service
+		String[] services = serviceStr.split(Constants.COMMA);
+		for (String service : services) {
+			Map<String, Object> localApi = localApiService.queryByService(service);
+			String url = String.valueOf(localApi.get("url"));
+			JSONObject returnJson = null;
+			returnJson = JSONObject.parseObject(remoteApiOperator.insideAccess(userID, apiKey, url, service, paramMap));
+			// 返回参数英文转中文
+			String retData = returnJson.getString("retData");
+			retData = jsonAdapter.change2Ch(service, retData);
+			returnJson.put("retData", retData);
+			// 返回类型
+			returnJson.put("returnType", String.valueOf(localApi.get("returnType")));
+			
+			resultArray.add(returnJson);
+		}
+		
+		return resultArray;
 	}
 }

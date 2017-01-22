@@ -6,6 +6,7 @@ import org.pbccrc.api.base.bean.ApiUser;
 import org.pbccrc.api.base.bean.Pagination;
 import org.pbccrc.api.base.bean.User;
 import org.pbccrc.api.base.service.UserService;
+import org.pbccrc.api.base.util.RedisClient;
 import org.pbccrc.api.base.util.StringUtil;
 import org.pbccrc.api.core.dao.ApiUserDao;
 import org.pbccrc.api.core.dao.UserDao;
@@ -42,6 +43,8 @@ public class UserServiceImpl implements UserService{
 		apiUser.setID(userID);
 		apiUser.setBlance(new BigDecimal("0.00"));
 		apiUser.setCreditLimit(new BigDecimal("0.00"));
+		
+		RedisClient.setObject("apiUser_" + userID, apiUser);
 		
 		apiUserDao.addApiUser(apiUser);
 	}

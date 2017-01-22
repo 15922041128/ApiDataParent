@@ -13,7 +13,7 @@ public interface ComplexService {
 	 * @return
 	 * @throws Exception
 	 */
-	public Map<String, Object> getPdfItem(String uuid, String userID, String item, String name, String identifier, Map<String, Object> localApi) throws Exception;
+//	public Map<String, Object> getPdfItem(String uuid, String userID, String item, String name, String identifier,  String telNum, Map<String, Object> localApi) throws Exception;
 	
 	/**
 	 * PDF自定义查询
@@ -24,7 +24,7 @@ public interface ComplexService {
 	 * @return
 	 * @throws Exception
 	 */
-	public Map<String, Object> getPdfCustom(String uuid, String userID, String name, String identifier, Map<String, Object> localApi) throws Exception;
+//	public Map<String, Object> getPdfCustom(String uuid, String userID, String name, String identifier, Map<String, Object> localApi) throws Exception;
 	
 	/**
 	 * 失信人查询验证

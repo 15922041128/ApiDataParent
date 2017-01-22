@@ -19,7 +19,13 @@ import org.pbccrc.api.core.dao.LdbApiDao;
 import org.pbccrc.api.core.dao.LocalApiDao;
 import org.pbccrc.api.core.dao.ScoreDao;
 import org.pbccrc.api.core.dao.TelPersonDao;
+import org.pbccrc.api.core.dao.ZhAddressDao;
+import org.pbccrc.api.core.dao.ZhCreditCardDao;
+import org.pbccrc.api.core.dao.ZhEmploymentDao;
+import org.pbccrc.api.core.dao.ZhGuaranteeDao;
 import org.pbccrc.api.core.dao.ZhIdentificationDao;
+import org.pbccrc.api.core.dao.ZhLoanDao;
+import org.pbccrc.api.core.dao.ZhPersonDao;
 import org.pbccrc.api.core.dao.datasource.DynamicDataSourceHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,6 +60,24 @@ public class LocalDBServiceImpl implements LocalDBService {
 	
 	@Autowired
 	private ApiLogDao apiLogDao;
+	
+	@Autowired
+	private ZhAddressDao zhAddressDao;
+	
+	@Autowired
+	private ZhEmploymentDao zhEmploymentDao;
+	
+	@Autowired
+	private ZhCreditCardDao zhCreditCardDao;
+	
+	@Autowired
+	private ZhLoanDao zhLoanDao;
+	
+	@Autowired
+	private ZhGuaranteeDao zhGuaranteeDao;
+	
+	@Autowired
+	private ZhPersonDao zhPersonDao;
 	
 	/***
 	 * 根据身份证和姓名查询信贷信息
@@ -319,6 +343,9 @@ public class LocalDBServiceImpl implements LocalDBService {
 		
 		Map<String, Object> localApi = localApiDao.queryByService(service);
 		
+		// 获取返回类型
+		String returnType = String.valueOf(localApi.get("returnType"));
+		
 		// 获取表名
 		String tblName = String.valueOf(localApi.get("tblName"));
 		
@@ -332,35 +359,84 @@ public class LocalDBServiceImpl implements LocalDBService {
 			returnParams[i] = object.getString(Constants.EN_NAME);
 		}
 		
-		// 设置DBEntity
-		DBEntity entity = new DBEntity();
-		// 表名
-		entity.setTableName(tblName);
-		// 查询条件
-		List<String> fields = new ArrayList<String>();
-		List<String> values = new ArrayList<String>();
-		fields.add("INNERID");
-		values.add(innerID);
-		entity.setFields(fields);
-		entity.setValues(values);
-		// 返回值
-		String[] selectItems = new String[returnParams.length];
-		for (int i = 0; i < returnParams.length; i++) {
-			selectItems[i] = returnParams[i].toUpperCase();
-		}
-		entity.setSelectItems(selectItems);
-		// 数据库类型
-		entity.setDataBaseType(Constants.DATABASE_TYPE_ORACLE);
-		
 		DynamicDataSourceHolder.change2oracle();
-		Map<String, Object> dbMap = dbOperatorDao.queryData(entity);
+		if (Constants.ORA_TBL_NAME_PERSON.equals(tblName) 
+				|| Constants.ORA_TBL_NAME_ADDRESS.equals(tblName)
+				|| Constants.ORA_TBL_NAME_EMPLOYMENT.equals(tblName)
+				|| Constants.ORA_TBL_NAME_CREDITCARD.equals(tblName)
+				|| Constants.ORA_TBL_NAME_LOAN.equals(tblName)
+				|| Constants.ORA_TBL_NAME_GUARANTEE.equals(tblName)) {
+			// DB返回结果集
+			List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
+			// 根据返回配置信息返回的结果集
+			Map<String, Object> returnResult = new HashMap<String, Object>();
+			if (Constants.ORA_TBL_NAME_PERSON.equals(tblName)) {
+				returnList = zhPersonDao.query(innerID);
+			} else if (Constants.ORA_TBL_NAME_ADDRESS.equals(tblName)) {
+				returnList = zhAddressDao.query(innerID);
+			} else if (Constants.ORA_TBL_NAME_EMPLOYMENT.equals(tblName)) {
+				returnList = zhEmploymentDao.query(innerID);
+			} else if (Constants.ORA_TBL_NAME_CREDITCARD.equals(tblName)) {
+				returnList = zhCreditCardDao.query(innerID);
+			} else if (Constants.ORA_TBL_NAME_LOAN.equals(tblName)) {
+				returnList = zhLoanDao.query(innerID);
+			} else if (Constants.ORA_TBL_NAME_GUARANTEE.equals(tblName)) {
+				returnList = zhGuaranteeDao.query(innerID);
+			}
+			JSONArray jsonArray = new JSONArray();
+			// 根据配置返回信息
+			if (null != returnList && returnList.size() != 0) {
+				for (Map<String, Object> returnMap : returnList) {
+					for (String key : returnParams) {
+						returnResult.put(key, returnMap.get(key.toUpperCase()));
+					}
+					jsonArray.add(returnResult);
+					returnResult = new HashMap<String, Object>();
+				}
+			} else {
+				map.put("isSuccess", false);
+			}
+			// 判断返回类型
+			if (returnType.equals(Constants.RETURN_TYPE_ARRAY)) {
+				map.put("result", jsonArray);
+			} else {
+				map.put("result", jsonArray.get(0));
+			}
+		} else {
+			// 设置DBEntity
+			DBEntity entity = new DBEntity();
+			// 表名
+			entity.setTableName(tblName);
+			// 查询条件
+			List<String> fields = new ArrayList<String>();
+			List<String> values = new ArrayList<String>();
+			fields.add("INNERID");
+			values.add(innerID);
+			entity.setFields(fields);
+			entity.setValues(values);
+			// 返回值
+			String[] selectItems = new String[returnParams.length];
+			for (int i = 0; i < returnParams.length; i++) {
+				selectItems[i] = returnParams[i].toUpperCase();
+			}
+			entity.setSelectItems(selectItems);
+			// 数据库类型
+			entity.setDataBaseType(Constants.DATABASE_TYPE_ORACLE);
+			List<Map<String, Object>> dbMapList = dbOperatorDao.queryDatas(entity);
+			if (null == dbMapList || dbMapList.size() == 0) {
+				map.put("isSuccess", false);
+			} else {
+				// 判断返回类型
+				if (returnType.equals(Constants.RETURN_TYPE_ARRAY)) {
+					map.put("result", JSONArray.toJSON(dbMapList));
+				} else {
+					map.put("result", ((JSONArray)JSONArray.toJSON(dbMapList)).get(0));
+				}
+			}
+		}
 		DynamicDataSourceHolder.change2mysql();
 		
-		if (null == dbMap || dbMap.size() == 0) {
-			map.put("isSuccess", false);
-		} else {
-			map.put("result", JSONObject.toJSON(dbMap));
-		}
+		
 		
 		// 记录日志
 		ApiLog apiLog = new ApiLog();

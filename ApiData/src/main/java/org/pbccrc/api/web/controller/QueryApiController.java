@@ -8,9 +8,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 
 import org.pbccrc.api.base.bean.ResultContent;
 import org.pbccrc.api.base.bean.SystemLog;
@@ -19,7 +17,6 @@ import org.pbccrc.api.base.service.LocalApiService;
 import org.pbccrc.api.base.service.QueryApiService;
 import org.pbccrc.api.base.service.SystemLogService;
 import org.pbccrc.api.base.util.Constants;
-import org.pbccrc.api.base.util.RemoteApiOperator;
 import org.pbccrc.api.base.util.StringUtil;
 import org.pbccrc.api.base.util.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +44,6 @@ public class QueryApiController {
 	
 	@Autowired
 	private CostService costService;
-	
-	@Autowired
-	private RemoteApiOperator remoteApiOperator;
 	
 	@Autowired
 	private SystemLogService systemLogService;
@@ -226,42 +220,6 @@ public class QueryApiController {
 	}
 	
 	/**
-	 * 个人信用分查询(不通过api直接访问)
-	 * @param request
-	 * @return
-	 * @throws Exception
-	 */
-	@GET
-	@RequestMapping(value="/score", produces={"application/json;charset=UTF-8"})
-	@Produces(MediaType.APPLICATION_JSON)
-	public String score(@Context HttpServletRequest request) throws Exception {
-		
-		ResultContent content = new ResultContent();
-		content.setCode(Constants.CODE_ERR_SUCCESS);
-		content.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);
-		
-		String url = Constants.REMOTE_URL_SCORE;
-		
-		String queryString = new String(request.getQueryString().getBytes("ISO-8859-1"), "utf-8");
-		
-		String appKey = "&appkey=SVXcpvaHNw";
-		
-		String result = remoteApiOperator.remoteAccept(url + Constants.URL_PARAM_CONNECTOR + queryString + appKey);
-		
-		JSONObject obj = JSONObject.parseObject(result);
-		String score = obj.getString("score");
-		// 判断是否成功
-		if (StringUtil.isNull(score)) {
-			content.setCode(Constants.CODE_ERR_FAIL);
-			content.setRetMsg(Constants.CODE_ERR_FAIL_MSG);
-		} else {
-			content.setRetData(result);
-		}
-		
-		return JSONObject.toJSONString(content);
-	}
-	
-	/**
 	 * 身份证认证
 	 * @param request
 	 * @return
@@ -271,10 +229,7 @@ public class QueryApiController {
 	@CrossOrigin
 	@RequestMapping(value="/querySfz", produces={"application/json;charset=UTF-8"})
 	@ResponseBody
-	public String querySfz(@Context HttpServletRequest request) throws Exception {
-		
-		String name = request.getParameter("name");
-		String identifier = request.getParameter("identifier");
+	public String querySfz(String name, String identifier, @Context HttpServletRequest request) throws Exception {
 		
 		ResultContent resultContent = new ResultContent();
 		
