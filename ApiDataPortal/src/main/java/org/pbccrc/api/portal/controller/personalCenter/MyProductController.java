@@ -148,10 +148,22 @@ public class MyProductController {
 			returnJson = JSONObject.parseObject(remoteApiOperator.insideAccess(userID, apiKey, url, service, paramMap));
 			// 返回参数英文转中文
 			String retData = returnJson.getString("retData");
-			retData = jsonAdapter.change2Ch(service, retData);
-			returnJson.put("retData", retData);
+			
+			if (StringUtil.isNull(retData)) {
+				returnJson.put("retData", new JSONArray());
+			} else {
+				retData = jsonAdapter.change2Ch(service, retData);
+				returnJson.put("retData", JSONObject.parse(retData));
+			}
+			
+			
 			// 返回类型
-			returnJson.put("returnType", String.valueOf(localApi.get("returnType")));
+			String queryType = String.valueOf(localApi.get("returnType"));
+			returnJson.put("returnType", queryType);
+			
+			// table名称
+			String apiName = String.valueOf(localApi.get("apiName"));
+			returnJson.put("tableName", apiName);
 			
 			resultArray.add(returnJson);
 		}

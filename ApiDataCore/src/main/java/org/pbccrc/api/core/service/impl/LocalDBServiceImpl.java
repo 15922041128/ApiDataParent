@@ -400,7 +400,10 @@ public class LocalDBServiceImpl implements LocalDBService {
 			if (returnType.equals(Constants.RETURN_TYPE_ARRAY)) {
 				map.put("result", jsonArray);
 			} else {
-				map.put("result", jsonArray.get(0));
+				// 判断是否成功
+				if (Boolean.parseBoolean(String.valueOf(map.get("isSuccess")))) {
+					map.put("result", jsonArray.get(0));
+				} 
 			}
 		} else {
 			// 设置DBEntity

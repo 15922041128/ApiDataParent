@@ -264,19 +264,8 @@ public class LocalDBController {
 		
 		Map<String, Object> map = localDBService.getResult(uuid, userID, service, innerID, paramObj);
 		
-		// 查询结果
+		// 是否成功
 		boolean isSuccess = (boolean) map.get("isSuccess");
-		Object result = map.get("result");
-		
-		// 返回类型
-		String returnType = String.valueOf(localApi.get("returnType"));
-		
-		Object resultJson = null;
-		if (Constants.RETURN_TYPE_ARRAY.equals(returnType)) {
-			resultJson = JSONArray.toJSON(result);
-		} else {
-			resultJson = JSONObject.toJSON(result);
-		}
 		
 		// 判断是否成功
 		if (isSuccess) {
@@ -285,6 +274,16 @@ public class LocalDBController {
 			String queryCount = String.valueOf(costRetMap.get("queryCount"));
 			// 查询次数
 			resultContent.setQueryCount(queryCount);
+			// 根据返回类型获取查询结果
+			Object result = map.get("result");
+			String returnType = String.valueOf(localApi.get("returnType"));
+			Object resultJson = null;
+			if (Constants.RETURN_TYPE_ARRAY.equals(returnType)) {
+				resultJson = JSONArray.toJSON(result);
+			} else {
+				resultJson = JSONObject.toJSON(result);
+			}
+			// 返回数据
 			resultContent.setRetData(resultJson);
 			
 		} else {
