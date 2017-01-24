@@ -16,9 +16,7 @@ import org.apache.commons.fileupload.DiskFileUpload;
 import org.apache.commons.fileupload.FileItem;
 import org.pbccrc.api.base.bean.User;
 import org.pbccrc.api.base.service.UserService;
-import org.pbccrc.api.base.util.CacheUtil;
 import org.pbccrc.api.base.util.Constants;
-import org.pbccrc.api.base.util.MyCookie;
 import org.pbccrc.api.base.util.RedisClient;
 import org.pbccrc.api.base.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +33,6 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private CacheUtil cacheUtil;
 	
 	@GET
 	@CrossOrigin
@@ -125,10 +120,9 @@ public class UserController {
 	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/r/user/getUser", produces={"application/json;charset=UTF-8"})
-	public String getUser(@Context HttpServletRequest request){
+	public String getUser(String userID, @Context HttpServletRequest request){
 		
-		String userID = MyCookie.getCookie(Constants.COOKIE_USERID, true, request);
-		User currentUser = (User)cacheUtil.getObj(Constants.CACHE_USER + Constants.UNDERLINE  + userID);
+		User currentUser = userService.getUserByID(userID);
 		
 		return JSONObject.toJSONString(currentUser);
 	}
@@ -174,8 +168,6 @@ public class UserController {
 	@RequestMapping(value="/r/user/loginOut")
 	public void loginOut(@Context HttpServletRequest request) {
 		
-		String userID = MyCookie.getCookie(Constants.COOKIE_USERID, true, request);
-		cacheUtil.delObj(Constants.CACHE_USER + Constants.UNDERLINE  + userID);
 	}
 	
 	@GET

@@ -263,6 +263,10 @@ public class Constants {
 	// 页面pdf
 	public static final String API_ID_PAGE_PDF = "99999999999";
 	
+	/** productID */
+	// 页面pdf
+	public static final String PRODUCT_ID_PAGE_PDF = "99999999999";
+	
 	/** remote访问接口 */
 	// 全联
 	public static final String REMOTE_URL_QL = "http://www.uniocredit.com/nuapi/UService.do"; 

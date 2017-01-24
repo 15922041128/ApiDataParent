@@ -17,7 +17,9 @@ import org.pbccrc.api.base.service.LocalApiService;
 import org.pbccrc.api.base.service.LocalDBService;
 import org.pbccrc.api.base.service.SystemLogService;
 import org.pbccrc.api.base.util.Constants;
+import org.pbccrc.api.base.util.RedisClient;
 import org.pbccrc.api.base.util.StringUtil;
+import org.pbccrc.api.base.util.SystemUtil;
 import org.pbccrc.api.base.util.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -296,9 +298,13 @@ public class LocalDBController {
 		// uuid
 		systemLog.setUuid(uuid);
 		// ip地址
-		systemLog.setIpAddress(request.getRemoteAddr());
+		systemLog.setIpAddress(SystemUtil.getIpAddress(request));
 		// apiKey
 		systemLog.setApiKey(apiKey);
+		// 产品ID
+		// 从缓存中获取relation对象
+		JSONObject relation = (JSONObject) JSONObject.toJSON(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey));
+		systemLog.setLocalApiID(relation.getString("productID"));
 		// localApiID
 		systemLog.setLocalApiID(String.valueOf(localApi.get("id")));
 		// 参数

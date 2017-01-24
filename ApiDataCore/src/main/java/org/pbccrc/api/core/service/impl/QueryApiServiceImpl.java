@@ -188,14 +188,14 @@ public class QueryApiServiceImpl implements QueryApiService{
 		resultJson.put("name", name);
 		resultJson.put("identifier", identifier);
 		
-		String isSuccess = "Y";
+		String isSuccess = "true";
 		
 		// 根据身份证号获取内码信息
 		DynamicDataSourceHolder.change2oracle();
 		Map<String, Object> insideCodeMap = zhIdentificationDao.getInnerID(name, identifier);
 		DynamicDataSourceHolder.change2mysql();
 		if (null == insideCodeMap) {
-			isSuccess = "N";
+			isSuccess = "false";
 			resultJson.put("result", "不一致");
 		} else {
 			resultJson.put("result", "一致");

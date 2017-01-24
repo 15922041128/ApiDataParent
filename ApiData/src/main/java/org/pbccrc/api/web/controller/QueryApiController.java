@@ -17,7 +17,9 @@ import org.pbccrc.api.base.service.LocalApiService;
 import org.pbccrc.api.base.service.QueryApiService;
 import org.pbccrc.api.base.service.SystemLogService;
 import org.pbccrc.api.base.util.Constants;
+import org.pbccrc.api.base.util.RedisClient;
 import org.pbccrc.api.base.util.StringUtil;
+import org.pbccrc.api.base.util.SystemUtil;
 import org.pbccrc.api.base.util.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -187,9 +189,13 @@ public class QueryApiController {
 		// uuid
 		systemLog.setUuid(uuid);
 		// ip地址
-		systemLog.setIpAddress(request.getRemoteAddr());
+		systemLog.setIpAddress(SystemUtil.getIpAddress(request));
 		// apiKey
 		systemLog.setApiKey(apiKey);
+		// 产品ID
+		// 从缓存中获取relation对象
+		JSONObject relation = (JSONObject) JSONObject.toJSON(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey));
+		systemLog.setLocalApiID(relation.getString("productID"));
 		// localApiID
 		systemLog.setLocalApiID(String.valueOf(localApi.get("id")));
 		// 参数
@@ -253,7 +259,7 @@ public class QueryApiController {
 		JSONObject resultJson = (JSONObject) JSONObject.toJSON(result);
 		
 		// 判断是否计费
-		if("Y".equals(resultJson.getString("isSuccess"))) {
+		if("true".equals(resultJson.getString("isSuccess"))) {
 			costService.cost(userID, apiKey);
 		}
 		
@@ -262,9 +268,13 @@ public class QueryApiController {
 		// uuid
 		systemLog.setUuid(uuid);
 		// ip地址
-		systemLog.setIpAddress(request.getRemoteAddr());
+		systemLog.setIpAddress(SystemUtil.getIpAddress(request));
 		// apiKey
 		systemLog.setApiKey(apiKey);
+		// 产品ID
+		// 从缓存中获取relation对象
+		JSONObject relation = (JSONObject) JSONObject.toJSON(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey));
+		systemLog.setLocalApiID(relation.getString("productID"));
 		// localApiID
 		systemLog.setLocalApiID(Constants.API_ID_SFZRZ);
 		// 参数

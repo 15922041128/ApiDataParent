@@ -13,6 +13,7 @@ import org.pbccrc.api.base.service.ComplexService;
 import org.pbccrc.api.base.service.SystemLogService;
 import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.base.util.StringUtil;
+import org.pbccrc.api.base.util.SystemUtil;
 import org.pbccrc.api.base.util.pdf.PdfBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -93,9 +94,11 @@ public class ComplexController {
  		// uuid
  		systemLog.setUuid(uuid);
  		// ip地址
- 		systemLog.setIpAddress(request.getRemoteAddr());
+ 		systemLog.setIpAddress(SystemUtil.getIpAddress(request));
  		// apiKey
  		systemLog.setApiKey(Constants.BLANK);
+ 		// 产品ID
+ 		systemLog.setProductID(Constants.PRODUCT_ID_PAGE_PDF);
  		// localApiID
  		systemLog.setLocalApiID(Constants.API_ID_PAGE_PDF);
  		// 参数

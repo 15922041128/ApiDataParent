@@ -8,9 +8,7 @@ import javax.ws.rs.core.Context;
 
 import org.pbccrc.api.base.bean.User;
 import org.pbccrc.api.base.service.UserService;
-import org.pbccrc.api.base.util.CacheUtil;
 import org.pbccrc.api.base.util.Constants;
-import org.pbccrc.api.base.util.MyCookie;
 import org.pbccrc.api.base.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,9 +22,6 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private CacheUtil cacheUtil;
 	
 	@GET
 	@ResponseBody
@@ -84,9 +79,6 @@ public class UserController {
 			retData = Constants.RET_STAT_SUCCESS;
 			retrunJson.put("loginUser", user);
 			
-			// 将用户信息存入缓存
-			MyCookie.addCookie(Constants.COOKIE_USERID, String.valueOf(user.getId()), true, response);
-			cacheUtil.setObj(Constants.CACHE_USER + Constants.UNDERLINE + user.getId(), user, -1);
 		}
 		
 		retrunJson.put("isSuccess", retData);
@@ -97,11 +89,9 @@ public class UserController {
 	@GET
 	@ResponseBody
 	@RequestMapping(value="/r/user/resetPassword", produces={"text/html;charset=UTF-8"})
-	public String resetPassword(@QueryParam("password") String password, @Context HttpServletRequest request){
+	public String resetPassword(@QueryParam("userID") String userID, @QueryParam("password") String password, @Context HttpServletRequest request){
 		
 		String retData = Constants.RET_STAT_ERROR;
-		
-		String userID = MyCookie.getCookie(Constants.COOKIE_USERID, true, request);
 		
 		userService.resetPassword(Integer.parseInt(userID), password);
 		
@@ -111,10 +101,9 @@ public class UserController {
 	@GET
 	@ResponseBody
 	@RequestMapping(value="/r/user/getUser", produces={"application/json;charset=UTF-8"})
-	public String getUser(@Context HttpServletRequest request){
+	public String getUser(@QueryParam("userID") String userID, @Context HttpServletRequest request){
 		
-		String userID = MyCookie.getCookie(Constants.COOKIE_USERID, true, request);
-		User currentUser = (User)cacheUtil.getObj(Constants.CACHE_USER + Constants.UNDERLINE  + userID);
+		User currentUser = userService.getUserByID(userID);
 		
 		return JSONObject.toJSONString(currentUser);
 	}
@@ -123,14 +112,13 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value="/r/user/modifyUser", produces={"text/html;charset=UTF-8"})
 	public String modifyUser(
+			@QueryParam("userID") String userID,
 			@QueryParam("compName") String compName,
 			@QueryParam("compTel") String compTel,
 			@QueryParam("contactName") String contactName,
 			@QueryParam("contactTel") String contactTel, @Context HttpServletRequest request){
 		
 		String retData = Constants.RET_STAT_ERROR;
-		
-		String userID = MyCookie.getCookie(Constants.COOKIE_USERID, true, request);
 		
 		User user = new User();
 		user.setId(Integer.parseInt(userID));

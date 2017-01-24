@@ -18,6 +18,9 @@ public class SystemLog implements Serializable{
 	/** 用户ID */
 	private String userID;
 	
+	/** 产品ID */
+	private String productID;
+
 	/** 本地apiID */
 	private String localApiID;
 	
@@ -72,6 +75,14 @@ public class SystemLog implements Serializable{
 
 	public void setUserID(String userID) {
 		this.userID = userID;
+	}
+	
+	public String getProductID() {
+		return productID;
+	}
+
+	public void setProductID(String productID) {
+		this.productID = productID;
 	}
 
 	public String getLocalApiID() {

@@ -17,8 +17,8 @@
 	</resultMap>
 	
 	<insert id="addLog" parameterType="org.pbccrc.api.base.bean.SystemLog">
-		insert into systemLog(uuid, ipAddress, userID, localApiID, params, apiKey, isSuccess, isCount, queryDate) 
-			values(#{uuid}, #{ipAddress}, #{userID}, #{localApiID}, #{params}, #{apiKey}, #{isSuccess}, #{isCount}, #{queryDate})
+		insert into systemLog(uuid, ipAddress, userID, productID, localApiID, params, apiKey, isSuccess, isCount, queryDate) 
+			values(#{uuid}, #{ipAddress}, #{userID}, #{productID}, #{localApiID}, #{params}, #{apiKey}, #{isSuccess}, #{isCount}, #{queryDate})
 	</insert>
 	
 	<select id="queryLog" parameterType="org.pbccrc.api.base.bean.SystemLog" resultMap="systemLog">
