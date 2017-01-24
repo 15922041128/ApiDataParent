@@ -95,17 +95,18 @@ public class UserController {
 		User user = userService.login(userName, password);
 		
 		if (null != user && null != user.getID()) {
-			retData = Constants.RET_STAT_SUCCESS;
-			retrunJson.put("loginUser", user);
-			
-			// 将用户信息存入缓存
-			MyCookie.addCookie(Constants.COOKIE_USERID, String.valueOf(user.getID()), true, response);
-			cacheUtil.setObj(Constants.CACHE_USER + Constants.UNDERLINE + user.getID(), user, -1);
+			if(user.getUserState() != 1){
+				retrunJson.put("errorMsg", "用户已被停用，请联系管理员");
+			}else{
+				retData = Constants.RET_STAT_SUCCESS;
+				retrunJson.put("loginUser", user);
+			}
+		}else{
+			retrunJson.put("errorMsg", "用户名密码不正确");
 		}
-		
 		retrunJson.put("isSuccess", retData);
-		
 		return retrunJson;
+		
 	}
 	
 	@GET
@@ -258,4 +259,19 @@ public class UserController {
 		
 		return JSONObject.parseObject(String.valueOf(RedisClient.get("apiUser_" + userID)));
 	}
-}
+	
+	@GET
+	@CrossOrigin
+	@ResponseBody
+	@RequestMapping(value="/r/user/updateUserState", produces={"text/html;charset=UTF-8"})
+	public String updateUserState(@QueryParam("userState") Integer id, @QueryParam("userState") Integer userState){
+		String retData = Constants.RET_STAT_ERROR;
+		if(userState != null && (userState == 1|| userState == 0)){
+			User user = new User();
+			user.setID(id);
+			user.setUserState(userState);
+			userService.modifyUser(user);
+			retData = Constants.RET_STAT_SUCCESS;
+		}
+		return retData;
+	}}

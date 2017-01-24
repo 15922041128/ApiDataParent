@@ -96,17 +96,18 @@ public class UserController {
 		User user = userService.login(userName, password);
 		
 		if (null != user && null != user.getID()) {
-			retData = Constants.RET_STAT_SUCCESS;
-			retrunJson.put("loginUser", user);
-			
-			// 将用户信息存入缓存
-			MyCookie.addCookie(Constants.COOKIE_USERID, String.valueOf(user.getID()), true, response);
-			cacheUtil.setObj(Constants.CACHE_USER + Constants.UNDERLINE + user.getID(), user, -1);
+			if(user.getUserState() != 1){
+				retrunJson.put("errorMsg", "用户已被停用，请联系管理员");
+			}else{
+				retData = Constants.RET_STAT_SUCCESS;
+				retrunJson.put("loginUser", user);
+			}
+		}else{
+			retrunJson.put("errorMsg", "用户名密码不正确");
 		}
-		
 		retrunJson.put("isSuccess", retData);
-		
 		return retrunJson;
+		
 	}
 	
 	@GET

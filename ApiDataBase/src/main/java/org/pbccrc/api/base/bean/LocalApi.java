@@ -43,7 +43,7 @@ public class LocalApi implements Serializable{
 	private BigDecimal basePrice;
 	
 	/** 发布状态(1 开启, 2 停用) */
-	private int isOpen;
+	private String isOpen;
 	
 	/** 创建时间 */
 	private String createDate;
@@ -131,11 +131,11 @@ public class LocalApi implements Serializable{
 		this.basePrice = basePrice;
 	}
 
-	public int getIsOpen() {
+	public String getIsOpen() {
 		return isOpen;
 	}
 
-	public void setIsOpen(int isOpen) {
+	public void setIsOpen(String isOpen) {
 		this.isOpen = isOpen;
 	}
 

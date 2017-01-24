@@ -6,7 +6,6 @@ import javax.ws.rs.POST;
 
 import org.pbccrc.api.base.bean.LocalApi;
 import org.pbccrc.api.base.bean.Pagination;
-import org.pbccrc.api.base.bean.Product;
 import org.pbccrc.api.base.service.DataBaseService;
 import org.pbccrc.api.base.service.LocalApiService;
 import org.pbccrc.api.base.util.Constants;

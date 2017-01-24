@@ -1,5 +1,7 @@
 package org.pbccrc.api.core.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -49,8 +51,10 @@ public class LocalApiServiceImpl implements LocalApiService{
 	 */
 	@Transactional
 	public void addLocalApi(LocalApi localApi){
+		SimpleDateFormat dateFormat = new SimpleDateFormat("YYYYMMDD");
+		localApi.setCreateDate(dateFormat.format(new Date()));
 		localApiDao.addLocalApi(localApi);
-		RedisClient.set("localApi_" + localApi.getID(), localApi);
+		RedisClient.setObject("localApi_" + localApi.getID(), localApi);
 	}
 	
 	/**
@@ -60,7 +64,7 @@ public class LocalApiServiceImpl implements LocalApiService{
 	@Transactional
 	public void updateLocalApi(LocalApi localApi){
 		localApiDao.updateLocalApi(localApi);
-		RedisClient.set("localApi_" + localApi.getID(), localApi);
+		RedisClient.setObject("localApi_" + localApi.getID(), localApi);
 	}
 
 }

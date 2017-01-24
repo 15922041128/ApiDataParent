@@ -30,7 +30,7 @@ public class UserDao{
 	}
 	
 	public void updateUser(User user){
-		userMapper.updateUser(user);;
+		userMapper.updateUser(user);
 	}
 	
 	public User getUserByID(String userID) {

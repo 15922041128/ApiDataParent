@@ -60,6 +60,9 @@ public class User implements Serializable{
 	
 	/** 审核信息 */
 	private String message;
+
+	/** 用户状态 0-停用 1-启用 */
+	private Integer userState;
 	
 	public Integer getID() {
 		return ID;
@@ -195,5 +198,13 @@ public class User implements Serializable{
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public Integer getUserState() {
+		return userState;
+	}
+
+	public void setUserState(Integer userState) {
+		this.userState = userState;
 	}
 }
