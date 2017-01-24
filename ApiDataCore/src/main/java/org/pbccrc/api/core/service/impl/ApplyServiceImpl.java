@@ -85,7 +85,7 @@ public class ApplyServiceImpl implements ApplyService {
 		relation.put("costType", Constants.COST_TYPE_COUNT);
 		relation.put("count", initCount);
 		relation.put("visitCount", "1000");
-		relation.put("ID", relationID);
+		relation.put("id", relationID);
 		relation.put("userID", userID);
 		relation.put("createDate", createDate);
 		

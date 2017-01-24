@@ -22,7 +22,7 @@ public class RemoteApiDao {
 	public int updateCnt(int id, int count){
 		
 		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("ID", id);
+		param.put("id", id);
 		param.put("count", count);
 		
 		return remoteApiMapper.updateCnt(id, count);

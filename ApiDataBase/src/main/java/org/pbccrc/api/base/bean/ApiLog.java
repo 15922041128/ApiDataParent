@@ -8,7 +8,7 @@ public class ApiLog implements Serializable{
 	private static final long serialVersionUID = -608342296352201188L;
 
 	/** 主键 */
-	private int ID;
+	private int id;
 	
 	/** 与systemLog关联用uuid */
 	private String uuid;
@@ -31,24 +31,16 @@ public class ApiLog implements Serializable{
 	/** 查询日期 */
 	private String queryDate;
 
-	public int getID() {
-		return ID;
+	public int getId() {
+		return id;
 	}
 
-	public void setID(int iD) {
-		ID = iD;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getUserID() {
 		return userID;
-	}
-	
-	public String getUuid() {
-		return uuid;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
 	}
 
 	public void setUserID(String userID) {
@@ -62,6 +54,15 @@ public class ApiLog implements Serializable{
 	public void setLocalApiID(String localApiID) {
 		this.localApiID = localApiID;
 	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+
 
 	public String getParams() {
 		return params;

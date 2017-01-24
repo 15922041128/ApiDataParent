@@ -103,7 +103,7 @@ public class ProductServiceImpl implements ProductService{
 	@Transactional
 	public void updateProduct(Product product){
 		productDao.updateProduct(product);
-		RedisClient.setObject("product_" + product.getID(), product);
+		RedisClient.setObject("product_" + product.getId(), product);
 	}
 	
 	/**
@@ -123,7 +123,7 @@ public class ProductServiceImpl implements ProductService{
 	public void addProduct(Product product){
 		int id = productDao.addProduct(product);
 		if(id!=0){
-			RedisClient.setObject("product_" + product.getID(), product);
+			RedisClient.setObject("product_" + product.getId(), product);
 		}
 	}
 	

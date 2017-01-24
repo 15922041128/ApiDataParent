@@ -8,7 +8,7 @@ public class ProductType implements Serializable {
 	private static final long serialVersionUID = 808911728927307796L;
 
 	/** 主键  */
-	private int ID;
+	private int id;
 	
 	/** 产品类型 */
 	private int type;
@@ -16,12 +16,12 @@ public class ProductType implements Serializable {
 	/** 产品类型名称 */
 	private String typeName;
 
-	public int getID() {
-		return ID;
+	public int getId() {
+		return id;
 	}
 
-	public void setID(int iD) {
-		ID = iD;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getType() {

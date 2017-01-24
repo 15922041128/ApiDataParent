@@ -8,7 +8,7 @@
 	</select>
 	
 	<insert id="addApiUser" parameterType="org.pbccrc.api.base.bean.ApiUser">
-		insert into apiUser(ID, blance, creditLimit) values(#{ID}, #{blance}, #{creditLimit})
+		insert into apiUser(id, blance, creditLimit) values(#{id}, #{blance}, #{creditLimit})
 	</insert>
 	
 </mapper>

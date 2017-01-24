@@ -58,7 +58,7 @@ public class QueryApiMultiple implements QueryApi {
 		JSONArray localParamArray = JSONArray.parseArray(localParams);
 		
 		// 获得远程api
-		List<Map<String, Object>> remoteApiList = remoteApiDao.getRemoteApiByLocal(Integer.parseInt(String.valueOf(localApi.get("ID"))));
+		List<Map<String, Object>> remoteApiList = remoteApiDao.getRemoteApiByLocal(Integer.parseInt(String.valueOf(localApi.get("id"))));
 		
 		// 查询成功标识
 		boolean isSuccess = false;
@@ -488,11 +488,11 @@ public class QueryApiMultiple implements QueryApi {
 		DBEntity dbEntity = new DBEntity();
 		dbEntity.setTableName("d_" + "m_" + tableName);
 		List<String> fields = new ArrayList<String>();
-		fields.add("localApiID");
+		fields.add("localApiId");
 		fields.add("returnTyp");
 		fields.add("returnCode");
 		List<String> values = new ArrayList<String>();
-		values.add(String.valueOf(localApi.get("ID")));
+		values.add(String.valueOf(localApi.get("id")));
 		values.add(String.valueOf(localApi.get("returnType")));
 		values.add(returnCode);
 		

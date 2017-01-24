@@ -53,7 +53,7 @@ public class QueryApiSingle implements QueryApi {
 		JSONArray localParamArray = JSONArray.parseArray(localParams);
 		
 		// 获得远程api
-		List<Map<String, Object>> remoteApiList = remoteApiDao.getRemoteApiByLocal(Integer.parseInt(String.valueOf(localApi.get("ID"))));
+		List<Map<String, Object>> remoteApiList = remoteApiDao.getRemoteApiByLocal(Integer.parseInt(String.valueOf(localApi.get("id"))));
 		Map<String, Object> remoteApi = remoteApiList.get(0);
 		
 		// url
@@ -449,7 +449,7 @@ public class QueryApiSingle implements QueryApi {
 		fields.add("returnTyp");
 		fields.add("returnVal");
 		List<String> values = new ArrayList<String>();
-		values.add(String.valueOf(localApi.get("ID")));
+		values.add(String.valueOf(localApi.get("id")));
 		values.add(String.valueOf(localApi.get("returnType")));
 		values.add(resultStr);
 		

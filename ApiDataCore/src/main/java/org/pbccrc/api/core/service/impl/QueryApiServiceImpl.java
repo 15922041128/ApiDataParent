@@ -154,7 +154,7 @@ public class QueryApiServiceImpl implements QueryApiService{
 		// uuid
 		apiLog.setUuid(uuid);
 		apiLog.setUserID(userID);
-		apiLog.setLocalApiID(String.valueOf(localApi.get("ID")));
+		apiLog.setLocalApiID(String.valueOf(localApi.get("id")));
 		// 参数
 		JSONObject params = new JSONObject();
 		for (Object o : localParamArray) {

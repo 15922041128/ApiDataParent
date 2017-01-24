@@ -4,7 +4,7 @@
 <mapper namespace="org.pbccrc.api.core.mapper.SystemLogMapper">
 
 	<resultMap type="org.pbccrc.api.base.bean.SystemLog" id="systemLog">
-		<id property="ID" column="ID" />
+		<id property="id" column="id" />
 		<result property="uuid" column="uuid" />
 		<result property="ipAddress" column="ipAddress" />
 		<result property="userID" column="userID" />

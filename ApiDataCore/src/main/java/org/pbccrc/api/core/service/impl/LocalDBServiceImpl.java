@@ -446,7 +446,7 @@ public class LocalDBServiceImpl implements LocalDBService {
 		// uuid
 		apiLog.setUuid(uuid);
 		apiLog.setUserID(userID);
-		apiLog.setLocalApiID(String.valueOf(localApi.get("ID")));
+		apiLog.setLocalApiID(String.valueOf(localApi.get("id")));
 		apiLog.setParams(params.toJSONString());
 		apiLog.setDataFrom(Constants.DATA_FROM_LOCAL);
 		apiLog.setIsSuccess(String.valueOf(map.get("isSuccess")));

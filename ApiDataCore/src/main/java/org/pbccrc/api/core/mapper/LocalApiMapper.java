@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.pbccrc.api.base.bean.LocalApi;
-import org.pbccrc.api.base.bean.User;
 import org.springframework.stereotype.Repository;
 
 @Repository

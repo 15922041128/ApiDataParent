@@ -31,7 +31,7 @@
 		select count(1) from localApi where service = #{service}
 	</select>
 	
-	<insert id="addLocalApi" keyProperty="ID" parameterType="org.pbccrc.api.base.bean.LocalApi">
+	<insert id="addLocalApi" keyProperty="id" parameterType="org.pbccrc.api.base.bean.LocalApi">
 		insert into localApi(apiName, service, tblName, url, params, returnType, returnParam, costCondition, basePrice, isOpen, createDate, stopDate) 
 			values(#{apiName}, #{service}, #{tblName}, #{url}, #{params}, #{returnType}, #{returnParam}, #{costCondition}, #{basePrice}, #{isOpen}, #{createDate}, #{stopDate})
 	</insert>
@@ -77,7 +77,7 @@
         	</if>
         </set>
         <where>
-			ID = #{ID}
+			id = #{id}
 		</where>	
 		
 	</update>

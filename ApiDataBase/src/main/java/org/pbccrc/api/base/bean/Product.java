@@ -7,7 +7,7 @@ public class Product implements Serializable{
 	private static final long serialVersionUID = -6228787629678154122L;
 
 	/** 主键  */
-	private int ID;
+	private int id;
 	
 	/** 产品名称 */
 	private String name;
@@ -36,12 +36,12 @@ public class Product implements Serializable{
 	/** 初始赠送描述 */
 	private String initNote;
 	
-	public int getID() {
-		return ID;
+	public int getId() {
+		return id;
 	}
 
-	public void setID(int iD) {
-		ID = iD;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {

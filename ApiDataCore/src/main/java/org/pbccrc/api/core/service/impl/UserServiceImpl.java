@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService{
 		int userID = userDao.addUser(user);
 		
 		ApiUser apiUser = new ApiUser();
-		apiUser.setID(userID);
+		apiUser.setId(userID);
 		apiUser.setBlance(new BigDecimal("0.00"));
 		apiUser.setCreditLimit(new BigDecimal("0.00"));
 		
@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService{
 	 */
 	public void resetPassword(Integer userID, String password) {
 		User user = new User();
-		user.setID(userID);
+		user.setId(userID);
 		user.setPassword(StringUtil.string2MD5(password));
 		userDao.updateUser(user);
 	}

@@ -30,7 +30,7 @@
         	</if>
 	</select>
 	
-	<insert id="addProduct" useGeneratedKeys="true" keyProperty="ID" parameterType="org.pbccrc.api.base.bean.Product">
+	<insert id="addProduct" useGeneratedKeys="true" keyProperty="id" parameterType="org.pbccrc.api.base.bean.Product">
 		insert into Product(name, image, type, price, apis, status, initCount, initNote, isShow) 
 			values(#{name}, #{image}, #{type}, #{price}, #{apis}, #{status}, #{initCount}, #{initNote}, #{isShow})
 	</insert>
@@ -67,7 +67,7 @@
         	</if>
         </set>
         <where>
-			ID = #{ID}
+			id = #{id}
 		</where>	
 		
 	</update>

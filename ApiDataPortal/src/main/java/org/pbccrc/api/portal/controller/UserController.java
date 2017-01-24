@@ -95,7 +95,7 @@ public class UserController {
 		
 		User user = userService.login(userName, password);
 		
-		if (null != user && null != user.getID()) {
+		if (null != user && null != user.getId()) {
 			if(user.getUserState() != 1){
 				retrunJson.put("errorMsg", "用户已被停用，请联系管理员");
 			}else{
@@ -149,6 +149,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value="/r/user/modifyUser", produces={"text/html;charset=UTF-8"})
 	public String modifyUser(
+			@QueryParam("userID") String userID,
 			@QueryParam("compName") String compName,
 			@QueryParam("compTel") String compTel,
 			@QueryParam("contactName") String contactName,
@@ -156,10 +157,8 @@ public class UserController {
 		
 		String retData = Constants.RET_STAT_ERROR;
 		
-		String userID = MyCookie.getCookie(Constants.COOKIE_USERID, true, request);
-		
 		User user = new User();
-		user.setID(Integer.parseInt(userID));
+		user.setId(Integer.parseInt(userID));
 		user.setCompName(compName);
 		user.setCompTel(compTel);
 		user.setContactName(contactName);

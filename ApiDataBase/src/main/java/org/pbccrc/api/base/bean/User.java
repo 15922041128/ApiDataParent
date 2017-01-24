@@ -11,7 +11,7 @@ public class User implements Serializable{
 	private static final long serialVersionUID = -7313847131251988603L;
 
 	/** 主键 */
-	private Integer ID;
+	private Integer id;
 	
 	/** 帐号 */
 	private String userName;
@@ -64,12 +64,12 @@ public class User implements Serializable{
 	/** 用户状态 0-停用 1-启用 */
 	private Integer userState;
 	
-	public Integer getID() {
-		return ID;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setID(Integer iD) {
-		ID = iD;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getUserName() {

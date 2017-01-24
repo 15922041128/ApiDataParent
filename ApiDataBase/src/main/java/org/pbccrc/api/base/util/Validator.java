@@ -47,7 +47,6 @@ public class Validator {
 		StringBuilder relationKey = new StringBuilder("relation");
 		relationKey.append(Constants.UNDERLINE + userID);
 		relationKey.append(Constants.UNDERLINE + apiKey);
-//		relationKey.append(Constants.UNDERLINE + String.valueOf(localApi.get("ID")));
 		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get(relationKey.toString())));
 		
 		// 验证APIKEY是否有效
@@ -58,7 +57,7 @@ public class Validator {
 		}
 		
 		// 获取localApiID
-		String localApiID = String.valueOf(localApi.get("ID"));
+		String localApiID = String.valueOf(localApi.get("id"));
 		
 		// 验证apiKey所属产品是否包含查询api
 		// 获取productID
@@ -245,7 +244,7 @@ public class Validator {
 		}
 		
 		// 获取localApiID
-		String localApiID = String.valueOf(localApi.get("ID"));
+		String localApiID = String.valueOf(localApi.get("id"));
 		
 		// 验证apiKey所属产品是否包含查询api
 		// 获取productID

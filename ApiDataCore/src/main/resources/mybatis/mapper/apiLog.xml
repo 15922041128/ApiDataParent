@@ -4,7 +4,7 @@
 <mapper namespace="org.pbccrc.api.core.mapper.ApiLogMapper">
 
 	<resultMap type="org.pbccrc.api.base.bean.ApiLog" id="apiLog">
-		<id property="ID" column="ID" />
+		<id property="id" column="id" />
 		<result property="userID" column="userID" />
 		<result property="uuid" column="uuid" />
 		<result property="localApiID" column="localApiID" />

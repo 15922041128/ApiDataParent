@@ -191,7 +191,7 @@ public class QueryApiController {
 		// apiKey
 		systemLog.setApiKey(apiKey);
 		// localApiID
-		systemLog.setLocalApiID(String.valueOf(localApi.get("ID")));
+		systemLog.setLocalApiID(String.valueOf(localApi.get("id")));
 		// 参数
 		JSONObject params = new JSONObject();
 		String localParams = String.valueOf(localApi.get("params"));

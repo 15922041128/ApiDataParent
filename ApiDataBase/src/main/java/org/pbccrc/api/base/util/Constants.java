@@ -164,7 +164,7 @@ public class Constants {
 	public static final String LDB_DISHONEST_INFO_DISREPUT_TYPE_NAME = "DISREPUT_TYPE_NAME";
 	
 	// person
-	public static final String PERSON_ID = "ID";
+	public static final String PERSON_ID = "id";
 	
 	/** conditionType */
 	public static final String CONDITION_TYPE_NOTNULL = "notNull";

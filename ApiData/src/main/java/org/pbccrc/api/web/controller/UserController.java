@@ -80,13 +80,13 @@ public class UserController {
 		
 		User user = userService.login(userName, password);
 		
-		if (null != user && null != user.getID()) {
+		if (null != user && null != user.getId()) {
 			retData = Constants.RET_STAT_SUCCESS;
 			retrunJson.put("loginUser", user);
 			
 			// 将用户信息存入缓存
-			MyCookie.addCookie(Constants.COOKIE_USERID, String.valueOf(user.getID()), true, response);
-			cacheUtil.setObj(Constants.CACHE_USER + Constants.UNDERLINE + user.getID(), user, -1);
+			MyCookie.addCookie(Constants.COOKIE_USERID, String.valueOf(user.getId()), true, response);
+			cacheUtil.setObj(Constants.CACHE_USER + Constants.UNDERLINE + user.getId(), user, -1);
 		}
 		
 		retrunJson.put("isSuccess", retData);
@@ -133,7 +133,7 @@ public class UserController {
 		String userID = MyCookie.getCookie(Constants.COOKIE_USERID, true, request);
 		
 		User user = new User();
-		user.setID(Integer.parseInt(userID));
+		user.setId(Integer.parseInt(userID));
 		user.setCompName(compName);
 		user.setCompTel(compTel);
 		user.setContactName(contactName);
@@ -148,7 +148,5 @@ public class UserController {
 	@RequestMapping(value="/r/user/loginOut")
 	public void loginOut(@Context HttpServletRequest request) {
 		
-		String userID = MyCookie.getCookie(Constants.COOKIE_USERID, true, request);
-		cacheUtil.delObj(Constants.CACHE_USER + Constants.UNDERLINE  + userID);
 	}
 }

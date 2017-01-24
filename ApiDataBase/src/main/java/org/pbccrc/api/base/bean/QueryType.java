@@ -8,7 +8,7 @@ public class QueryType implements Serializable {
 	private static final long serialVersionUID = -4933508227358166530L;
 
 	/** 主键 */
-	private int ID;
+	private int id;
 	
 	/** 查询类型1两标查询2电话号码查询 */
 	private int typeCode;
@@ -16,12 +16,12 @@ public class QueryType implements Serializable {
 	/** 查询类型名称 */
 	private String typeName;
 
-	public int getID() {
-		return ID;
+	public int getId() {
+		return id;
 	}
 
-	public void setID(int iD) {
-		ID = iD;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getTypeCode() {

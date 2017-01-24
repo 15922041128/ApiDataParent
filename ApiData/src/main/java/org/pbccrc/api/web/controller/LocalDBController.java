@@ -300,7 +300,7 @@ public class LocalDBController {
 		// apiKey
 		systemLog.setApiKey(apiKey);
 		// localApiID
-		systemLog.setLocalApiID(String.valueOf(localApi.get("ID")));
+		systemLog.setLocalApiID(String.valueOf(localApi.get("id")));
 		// 参数
 		systemLog.setParams(paramObj.toJSONString());
 		// 用户ID

@@ -13,7 +13,7 @@ public class LocalApi implements Serializable{
 	private static final long serialVersionUID = -915738031210139391L;
 	
 	/** 主键  */
-	private int ID;
+	private int id;
 	
 	/** API名称 */
 	private String apiName;
@@ -51,12 +51,12 @@ public class LocalApi implements Serializable{
 	/** 停用时间 */
 	private String stopDate;
 
-	public int getID() {
-		return ID;
+	public int getId() {
+		return id;
 	}
 
-	public void setID(int iD) {
-		ID = iD;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getApiName() {

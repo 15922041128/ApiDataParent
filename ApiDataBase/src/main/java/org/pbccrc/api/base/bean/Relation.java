@@ -8,7 +8,7 @@ public class Relation implements Serializable {
 	private static final long serialVersionUID = 8706759007270151944L;
 
 	/** 主键 */
-	private Integer ID;
+	private Integer id;
 	
 	/** 用户ID */
 	private String userID;
@@ -37,12 +37,12 @@ public class Relation implements Serializable {
 	/** 允许IP*/
 	private String allowIps;
 
-	public Integer getID() {
-		return ID;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setID(Integer iD) {
-		ID = iD;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getUserID() {

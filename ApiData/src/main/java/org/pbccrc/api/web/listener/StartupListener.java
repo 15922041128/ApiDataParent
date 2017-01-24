@@ -56,21 +56,21 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
 		// product
 		List<Map<String, Object>> productList = productService.queryAll();
 		for (Map<String, Object> product : productList) {
-			String key = "product" + Constants.UNDERLINE + String.valueOf(product.get("ID"));
+			String key = "product" + Constants.UNDERLINE + String.valueOf(product.get("id"));
 			RedisClient.set(key, product);
 		}
 		
 		// localApi
 		List<Map<String, Object>> localApiList = localApiService.queryAll();
 		for (Map<String, Object> localApi : localApiList) {
-			String key = "localApi" + Constants.UNDERLINE + String.valueOf(localApi.get("ID"));
+			String key = "localApi" + Constants.UNDERLINE + String.valueOf(localApi.get("id"));
 			RedisClient.set(key, localApi);
 		}
 		
 		// apiUser
 		List<Map<String, Object>> apiUserList = apiUserService.queryAll();
 		for (Map<String, Object> apiUser : apiUserList) {
-			String key = "apiUser" + Constants.UNDERLINE + String.valueOf(apiUser.get("ID"));
+			String key = "apiUser" + Constants.UNDERLINE + String.valueOf(apiUser.get("id"));
 			RedisClient.set(key, apiUser);
 		}
 		
@@ -80,7 +80,6 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
 			StringBuilder key = new StringBuilder("relation");
 			key.append(Constants.UNDERLINE + String.valueOf(relation.get("userID")));
 			key.append(Constants.UNDERLINE + String.valueOf(relation.get("apiKey")));
-//			key.append(Constants.UNDERLINE + String.valueOf(relation.get("productID")));
 			RedisClient.set(key.toString(), relation);
 		}
 		
@@ -106,7 +105,7 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
 			// 表名
 			entity.setTableName(tableName);
 			// where条件
-			String whereSql = " where ID = " + jsonObject.getString("ID");
+			String whereSql = " where id = " + jsonObject.getString("id");
 			// 更新字段
 			StringBuffer sb = new StringBuffer();
 			Set<String> keySet = jsonObject.keySet();

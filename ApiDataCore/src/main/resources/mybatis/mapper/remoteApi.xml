@@ -8,7 +8,7 @@
 	</select>
 	
 	<update id="updateCnt" parameterType="java.util.HashMap">
-		update remoteApi set count = #{count} where ID = ${ID}
+		update remoteApi set count = #{count} where id = ${id}
 	</update>
 	
 </mapper>

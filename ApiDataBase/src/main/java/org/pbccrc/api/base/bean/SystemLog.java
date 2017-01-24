@@ -7,7 +7,7 @@ public class SystemLog implements Serializable{
 	private static final long serialVersionUID = 6798031777223836704L;
 
 	/** 主键 */
-	private int ID;
+	private int id;
 	
 	/** 与apiLog关联用uuid */
 	private String uuid;
@@ -42,14 +42,14 @@ public class SystemLog implements Serializable{
 	/** 查询结束时间 */
 	private String endDate;
 	
-	public int getID() {
-		return ID;
+	public int getId() {
+		return id;
 	}
 
-	public void setID(int iD) {
-		ID = iD;
+	public void setId(int id) {
+		this.id = id;
 	}
-	
+
 	public String getUuid() {
 		return uuid;
 	}

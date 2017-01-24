@@ -21,6 +21,6 @@ public class RelationDao {
 	
 	public int addRelation(Relation relation){
 		relationMapper.addRelation(relation);
-		return relation.getID();
+		return relation.getId();
 	}
 }

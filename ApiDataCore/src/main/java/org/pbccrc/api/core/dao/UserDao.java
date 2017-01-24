@@ -22,7 +22,7 @@ public class UserDao{
 	
 	public int addUser(User user){
 		userMapper.addUser(user);
-		return user.getID();
+		return user.getId();
 	}
 	
 	public User login(User user){
