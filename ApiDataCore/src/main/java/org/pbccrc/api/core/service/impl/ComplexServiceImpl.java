@@ -545,7 +545,7 @@ public class ComplexServiceImpl implements ComplexService{
 		apiLog.setParams(insDBParams.toJSONString());
 		apiLog.setDataFrom(Constants.DATA_FROM_LOCAL);
 		apiLog.setIsSuccess(String.valueOf(!"Y".equals(String.valueOf(returnMap.get("isNull")))));
-		apiLog.setQueryDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+		apiLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FROMAT_APILOG).format(new Date()));
 		apiLogService.addLog(apiLog);
 		
 		return returnMap;

@@ -113,7 +113,7 @@ public class ComplexController {
  		// 是否计费
  		systemLog.setIsCount(String.valueOf(!"Y".equals(isNull)));
  		// 查询时间
- 		systemLog.setQueryDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+ 		systemLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FORMAT_SYSTEMLOG).format(new Date()));
  		systemLogService.addLog(systemLog);
 		
 		return object;

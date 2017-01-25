@@ -15,6 +15,7 @@ public class Constants {
 	public static final String EQUAL = "=";
 	public static final String SINGLE_QUOTES = "'";
 	public static final String SPACE = " ";
+	public static final String ENTER = "\n";
 	
 	public static final String STR_NULL = "null";
 	
@@ -132,7 +133,7 @@ public class Constants {
 	
 	// IP受限
 	public static final String ERR_RESTRICTED_IP = "100111";
-	public static final String RET_MSG_RESTRICTED_IP = "IP受限";
+	public static final String RET_MSG_RESTRICTED_IP = "IP受限,请联系管理员";
 	
 	// 缺少service或service格式不正确
 	public static final String ERR_SERVICE = "101001";
@@ -335,4 +336,9 @@ public class Constants {
 	// 黑名单
 	public static final String ORA_TBL_NAME_BLACK = "black";
 	
+	/** 日期格式化 */
+	// systemLog
+	public static final String DATE_FORMAT_SYSTEMLOG = "yyyy-MM-dd HH:mm:ss";
+	// apiLog
+	public static final String DATE_FROMAT_APILOG = "yyyy-MM-dd HH:mm:ss";
 }

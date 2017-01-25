@@ -96,7 +96,7 @@ public class QueryApiController {
 		}
 		
 		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, localApi, urlParams, resultContent)) {
+		if (!validator.validateRequest(userID, apiKey, localApi, urlParams, ipAddress, resultContent)) {
 			return JSONObject.toJSONString(resultContent);
 		}
 		
@@ -223,7 +223,7 @@ public class QueryApiController {
 		// 是否计费
 		systemLog.setIsCount(String.valueOf(isCost));
 		// 查询时间
-		systemLog.setQueryDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+		systemLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FORMAT_SYSTEMLOG).format(new Date()));
 		systemLogService.addLog(systemLog);
 		
 		return resultJson.toJSONString();
@@ -255,7 +255,7 @@ public class QueryApiController {
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
 		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_SFZRZ, resultContent)) {
+		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_SFZRZ, ipAddress, resultContent)) {
 			return JSONObject.toJSONString(resultContent);
 		}
 		
@@ -297,7 +297,7 @@ public class QueryApiController {
 		// 是否计费
 		systemLog.setIsCount("true");
 		// 查询时间
-		systemLog.setQueryDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+		systemLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FORMAT_SYSTEMLOG).format(new Date()));
 		systemLogService.addLog(systemLog);
 		
 		return JSONObject.toJSONString(result);

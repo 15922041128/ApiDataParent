@@ -24,11 +24,12 @@ public class Validator {
 	 * @param apiKey     		apiKey
 	 * @param localApi     		本地api
 	 * @param urlParams  		url参数
+	 * @param ipAddress  		ip地址
 	 * @param resultContent     查询返回对象
 	 * @return           		是否通过验证
 	 */
 	@SuppressWarnings("rawtypes")
-	public boolean validateRequest(String userID, String apiKey, Map<String, Object> localApi, Map urlParams, ResultContent resultContent) {
+	public boolean validateRequest(String userID, String apiKey, Map<String, Object> localApi, Map urlParams, String ipAddress, ResultContent resultContent) {
 		
 		// 验证userID是否存在
 		if (StringUtil.isNull(userID)) {
@@ -54,6 +55,30 @@ public class Validator {
 			resultContent.setCode(Constants.ERR_APIKEY_USER_INVALID);
 			resultContent.setRetMsg(Constants.RET_MSG_APIKEY_USER_INVALID);
 			return false;
+		}
+		
+		// 验证ip地址
+		String allowIps = relation.getString("allowIps");
+		// 检查allowIps是否为空
+		if (StringUtil.isNull(allowIps)) {
+			// 如果为空则将ip地址存入该字段
+			relation.put("allowIps", ipAddress);
+			RedisClient.set(relationKey.toString(), relation);
+		} else {
+			// 如果不为空则进行ip地址验证
+			String[] ipArray = allowIps.split(Constants.ENTER);
+			boolean ipIsOk = false;
+			for (int i = 0; i < ipArray.length; i++) {
+				if (ipArray[i].equals(ipAddress)) {
+					ipIsOk = true;
+					break;
+				}
+			}
+			if (!ipIsOk) {
+				resultContent.setCode(Constants.ERR_RESTRICTED_IP);
+				resultContent.setRetMsg(Constants.RET_MSG_RESTRICTED_IP);
+				return false;
+			}
 		}
 		
 		// 获取localApiID
@@ -151,7 +176,7 @@ public class Validator {
 	 * @param resultContent     查询返回对象
 	 * @return           		是否通过验证
 	 */
-	public boolean validateRequest(String userID, String apiKey, String localApiID, ResultContent resultContent) {
+	public boolean validateRequest(String userID, String apiKey, String localApiID, String ipAddress, ResultContent resultContent) {
 		
 		// 验证userID是否存在
 		if (StringUtil.isNull(userID)) {
@@ -177,6 +202,30 @@ public class Validator {
 			resultContent.setCode(Constants.ERR_APIKEY_USER_INVALID);
 			resultContent.setRetMsg(Constants.RET_MSG_APIKEY_USER_INVALID);
 			return false;
+		}
+		
+		// 验证ip地址
+		String allowIps = relation.getString("allowIps");
+		// 检查allowIps是否为空
+		if (StringUtil.isNull(allowIps)) {
+			// 如果为空则将ip地址存入该字段
+			relation.put("allowIps", ipAddress);
+			RedisClient.set(relationKey.toString(), relation);
+		} else {
+			// 如果不为空则进行ip地址验证
+			String[] ipArray = allowIps.split(Constants.ENTER);
+			boolean ipIsOk = false;
+			for (int i = 0; i < ipArray.length; i++) {
+				if (ipArray[i].equals(ipAddress)) {
+					ipIsOk = true;
+					break;
+				}
+			}
+			if (!ipIsOk) {
+				resultContent.setCode(Constants.ERR_RESTRICTED_IP);
+				resultContent.setRetMsg(Constants.RET_MSG_RESTRICTED_IP);
+				return false;
+			}
 		}
 		
 		// 验证apiKey所属产品是否包含查询api
@@ -215,7 +264,7 @@ public class Validator {
 	 * @return           		是否通过验证
 	 */
 	public boolean validateRequest(String userID, String apiKey, Map<String, Object> localApi, 
-			String name, String identifier, String telNum, ResultContent resultContent) {
+			String name, String identifier, String telNum, String ipAddress, ResultContent resultContent) {
 		
 		// 验证userID是否存在
 		if (StringUtil.isNull(userID)) {
@@ -241,6 +290,30 @@ public class Validator {
 			resultContent.setCode(Constants.ERR_APIKEY_USER_INVALID);
 			resultContent.setRetMsg(Constants.RET_MSG_APIKEY_USER_INVALID);
 			return false;
+		}
+		
+		// 验证ip地址
+		String allowIps = relation.getString("allowIps");
+		// 检查allowIps是否为空
+		if (StringUtil.isNull(allowIps)) {
+			// 如果为空则将ip地址存入该字段
+			relation.put("allowIps", ipAddress);
+			RedisClient.set(relationKey.toString(), relation);
+		} else {
+			// 如果不为空则进行ip地址验证
+			String[] ipArray = allowIps.split(Constants.ENTER);
+			boolean ipIsOk = false;
+			for (int i = 0; i < ipArray.length; i++) {
+				if (ipArray[i].equals(ipAddress)) {
+					ipIsOk = true;
+					break;
+				}
+			}
+			if (!ipIsOk) {
+				resultContent.setCode(Constants.ERR_RESTRICTED_IP);
+				resultContent.setRetMsg(Constants.RET_MSG_RESTRICTED_IP);
+				return false;
+			}
 		}
 		
 		// 获取localApiID

@@ -243,7 +243,7 @@ public class LocalDBController {
 		}
 		
 		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, localApi, name, identifier, telNum, resultContent)) {
+		if (!validator.validateRequest(userID, apiKey, localApi, name, identifier, telNum, ipAddress, resultContent)) {
 			return (JSONObject) JSONObject.toJSON(resultContent);
 		}
 		
@@ -320,7 +320,7 @@ public class LocalDBController {
 		// 是否计费
 		systemLog.setIsCount(String.valueOf(isSuccess));
 		// 查询时间
-		systemLog.setQueryDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+		systemLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FORMAT_SYSTEMLOG).format(new Date()));
 		systemLogService.addLog(systemLog);
 		
 		return (JSONObject) JSONObject.toJSON(resultContent);

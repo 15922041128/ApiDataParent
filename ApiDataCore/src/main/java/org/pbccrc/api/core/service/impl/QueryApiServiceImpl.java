@@ -169,7 +169,7 @@ public class QueryApiServiceImpl implements QueryApiService{
 		apiLog.setParams(params.toJSONString());
 		apiLog.setDataFrom(dataFrom);
 		apiLog.setIsSuccess(String.valueOf(map.get("isSuccess")));
-		apiLog.setQueryDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+		apiLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FROMAT_APILOG).format(new Date()));
 		apiLogService.addLog(apiLog);
 		
 		return map;
@@ -221,7 +221,7 @@ public class QueryApiServiceImpl implements QueryApiService{
 		apiLog.setParams(params.toJSONString());
 		apiLog.setDataFrom(dataFrom);
 		apiLog.setIsSuccess(String.valueOf(map.get("isSuccess")));
-		apiLog.setQueryDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+		apiLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FROMAT_APILOG).format(new Date()));
 		apiLogService.addLog(apiLog);
 		
 		return map;

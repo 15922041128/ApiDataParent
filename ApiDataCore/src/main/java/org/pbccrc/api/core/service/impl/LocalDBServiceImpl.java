@@ -450,7 +450,7 @@ public class LocalDBServiceImpl implements LocalDBService {
 		apiLog.setParams(params.toJSONString());
 		apiLog.setDataFrom(Constants.DATA_FROM_LOCAL);
 		apiLog.setIsSuccess(String.valueOf(map.get("isSuccess")));
-		apiLog.setQueryDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+		apiLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FROMAT_APILOG).format(new Date()));
 		apiLogDao.addLog(apiLog);
 		
 		return map;

@@ -112,9 +112,14 @@ public class MyProductController {
 	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/myProduct/getResult", produces={"application/json;charset=UTF-8"})
-	public JSONArray getResult(String serviceStr, HttpServletRequest request) throws Exception{
+	public JSONObject getResult(String serviceStr, HttpServletRequest request) throws Exception{
 		
+		// 返回对象
+		JSONObject resultObject = new JSONObject();
+		// 返回数据集合
 		JSONArray resultArray = new JSONArray();
+		// 返回提示信息
+		String resultMessage = Constants.BLANK;
 		
 		// 获取apiKey
 		String apiKey = request.getHeader(Constants.HEAD_APIKEY);
@@ -155,6 +160,7 @@ public class MyProductController {
 			
 			if (StringUtil.isNull(retData)) {
 				returnJson.put("retData", new JSONArray());
+				resultMessage = returnJson.getString("retMsg");
 			} else {
 				retData = jsonAdapter.change2Ch(service, retData);
 				returnJson.put("retData", JSONObject.parse(retData));
@@ -172,6 +178,9 @@ public class MyProductController {
 			resultArray.add(returnJson);
 		}
 		
-		return resultArray;
+		resultObject.put("resultMessage", resultMessage);
+		resultObject.put("resultArray", resultArray);
+		
+		return resultObject;
 	}
 }
