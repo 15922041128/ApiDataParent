@@ -62,7 +62,11 @@ public class QueryApiController {
 	@RequestMapping(value="/get", produces={"application/json;charset=UTF-8"})
 	@ResponseBody
 	@SuppressWarnings("rawtypes")
-	public String query(String service, HttpServletRequest request) throws Exception {
+	public String query(String service, String ipAddress, HttpServletRequest request) throws Exception {
+		
+		if (StringUtil.isNull(ipAddress)) {
+			ipAddress = SystemUtil.getIpAddress(request);
+		}
 		
 		ResultContent resultContent = new ResultContent();
 		
@@ -189,13 +193,13 @@ public class QueryApiController {
 		// uuid
 		systemLog.setUuid(uuid);
 		// ip地址
-		systemLog.setIpAddress(SystemUtil.getIpAddress(request));
+		systemLog.setIpAddress(ipAddress);
 		// apiKey
 		systemLog.setApiKey(apiKey);
 		// 产品ID
 		// 从缓存中获取relation对象
-		JSONObject relation = (JSONObject) JSONObject.toJSON(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey));
-		systemLog.setLocalApiID(relation.getString("productID"));
+		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
+		systemLog.setProductID(relation.getString("productID"));
 		// localApiID
 		systemLog.setLocalApiID(String.valueOf(localApi.get("id")));
 		// 参数
@@ -235,7 +239,11 @@ public class QueryApiController {
 	@CrossOrigin
 	@RequestMapping(value="/querySfz", produces={"application/json;charset=UTF-8"})
 	@ResponseBody
-	public String querySfz(String name, String identifier, @Context HttpServletRequest request) throws Exception {
+	public String querySfz(String name, String identifier, String ipAddress, @Context HttpServletRequest request) throws Exception {
+		
+		if (StringUtil.isNull(ipAddress)) {
+			ipAddress = SystemUtil.getIpAddress(request);
+		}
 		
 		ResultContent resultContent = new ResultContent();
 		
@@ -268,13 +276,13 @@ public class QueryApiController {
 		// uuid
 		systemLog.setUuid(uuid);
 		// ip地址
-		systemLog.setIpAddress(SystemUtil.getIpAddress(request));
+		systemLog.setIpAddress(ipAddress);
 		// apiKey
 		systemLog.setApiKey(apiKey);
 		// 产品ID
 		// 从缓存中获取relation对象
-		JSONObject relation = (JSONObject) JSONObject.toJSON(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey));
-		systemLog.setLocalApiID(relation.getString("productID"));
+		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
+		systemLog.setProductID(relation.getString("productID"));
 		// localApiID
 		systemLog.setLocalApiID(Constants.API_ID_SFZRZ);
 		// 参数

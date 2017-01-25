@@ -16,6 +16,7 @@ import org.pbccrc.api.base.service.RelationService;
 import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.base.util.RemoteApiOperator;
 import org.pbccrc.api.base.util.StringUtil;
+import org.pbccrc.api.base.util.SystemUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -139,13 +140,16 @@ public class MyProductController {
 			paramMap.put("identifier", identifier);
 		}
 		
+		// 获取ip
+		String ipAddress = SystemUtil.getIpAddress(request);
+		
 		// 遍历service
 		String[] services = serviceStr.split(Constants.COMMA);
 		for (String service : services) {
 			Map<String, Object> localApi = localApiService.queryByService(service);
 			String url = String.valueOf(localApi.get("url"));
 			JSONObject returnJson = null;
-			returnJson = JSONObject.parseObject(remoteApiOperator.insideAccess(userID, apiKey, url, service, paramMap));
+			returnJson = JSONObject.parseObject(remoteApiOperator.insideAccess(userID, apiKey, url, service, ipAddress, paramMap));
 			// 返回参数英文转中文
 			String retData = returnJson.getString("retData");
 			

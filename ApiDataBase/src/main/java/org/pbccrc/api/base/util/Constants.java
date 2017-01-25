@@ -130,6 +130,10 @@ public class Constants {
 	public static final String ERR_BLANCE_NOT_ENOUGH = "100110";
 	public static final String RET_MSG_BLANCE_NOT_ENOUGH = "余额或信用额不足";
 	
+	// IP受限
+	public static final String ERR_RESTRICTED_IP = "100111";
+	public static final String RET_MSG_RESTRICTED_IP = "IP受限";
+	
 	// 缺少service或service格式不正确
 	public static final String ERR_SERVICE = "101001";
 	public static final String RET_MSG_SERVICE = "缺少service或service格式不正确";

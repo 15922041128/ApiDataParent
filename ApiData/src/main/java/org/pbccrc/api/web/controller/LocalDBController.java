@@ -209,7 +209,11 @@ public class LocalDBController {
 	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/getResult", produces={"application/json;charset=UTF-8"})
-	public JSONObject getResult(String service, String name, String identifier, String telNum, HttpServletRequest request) throws Exception {
+	public JSONObject getResult(String service, String name, String identifier, String telNum, String ipAddress, HttpServletRequest request) throws Exception {
+		
+		if (StringUtil.isNull(ipAddress)) {
+			ipAddress = SystemUtil.getIpAddress(request);
+		}
 		
 		ResultContent resultContent = new ResultContent();
 		resultContent.setCode(Constants.CODE_ERR_SUCCESS);
@@ -298,13 +302,13 @@ public class LocalDBController {
 		// uuid
 		systemLog.setUuid(uuid);
 		// ip地址
-		systemLog.setIpAddress(SystemUtil.getIpAddress(request));
+		systemLog.setIpAddress(ipAddress);
 		// apiKey
 		systemLog.setApiKey(apiKey);
 		// 产品ID
 		// 从缓存中获取relation对象
-		JSONObject relation = (JSONObject) JSONObject.toJSON(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey));
-		systemLog.setLocalApiID(relation.getString("productID"));
+		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
+		systemLog.setProductID(relation.getString("productID"));
 		// localApiID
 		systemLog.setLocalApiID(String.valueOf(localApi.get("id")));
 		// 参数

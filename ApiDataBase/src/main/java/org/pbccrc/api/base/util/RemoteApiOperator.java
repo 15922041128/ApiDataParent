@@ -86,7 +86,7 @@ public class RemoteApiOperator {
 	}
 	
 	// 内部访问
-	public String insideAccess(String userID, String apiKey, String url, String service, Map<String, String> paramMap) throws Exception {
+	public String insideAccess(String userID, String apiKey, String url, String service, String ipAddress, Map<String, String> paramMap) throws Exception {
 		
 		ClientConfig config = new DefaultClientConfig();
 		config.getProperties().put(ClientConfig.PROPERTY_CONNECT_TIMEOUT, 10 * 1000);
@@ -94,6 +94,7 @@ public class RemoteApiOperator {
 		
 		StringBuffer requestUrl = new StringBuffer(url);
 		requestUrl.append("?service=" + service);
+		requestUrl.append("&ipAddress=" + ipAddress);
 		for (Map.Entry<String, String> param : paramMap.entrySet()) {  
 			requestUrl.append("&" + param.getKey() + "=" + java.net.URLEncoder.encode(param.getValue(), "utf-8"));
 		}  
