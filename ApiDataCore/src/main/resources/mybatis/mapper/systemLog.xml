@@ -43,5 +43,99 @@
 		</where>
 	</select>
 	
+	<select id="sumLog" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT
+		localApiID,
+		productID,
+		userID,
+		u.userName as userName,
+		p.name as productName,
+		count(1) AS totalNum,
+		sum(
+			CASE
+			WHEN isSuccess = 'true' THEN
+				1
+			ELSE
+				0
+			END
+		) AS successNum,
+		sum(
+			CASE
+			WHEN isCount = 'true' THEN
+				1
+			ELSE
+				0
+			END
+		) AS countNum
+		FROM
+			systemlog s
+		LEFT JOIN `user` u ON s.userID = u.id
+		LEFT JOIN `product` p ON s.productID = p.id
+		<where>
+		    1=1
+			<if test="userName !=null and userName != '' ">
+            	and userName like CONCAT('%',#{userName},'%') 
+        	</if>
+        	<if test="productName !=null and productName != '' ">
+            	and p.name like CONCAT('%',#{productName},'%') 
+        	</if>
+			<if test="startDate != null and endDate != ''">
+				<![CDATA[
+					and s.queryDate >= #{startDate}  
+				]]>
+			</if>
+			<if test="endDate != null and endDate != ''">
+				<![CDATA[
+					and s.queryDate <= #{endDate}  
+				]]>
+			</if>
+		</where>
+		GROUP BY
+			userId,
+			localApiID
+		
+	</select>
+	
+	<select id="queryLogDetail" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT
+		ipAddress,
+		userID,
+		u.userName as userName,
+		p.name as productName,
+		l.apiName as apiName,
+		s.params,
+		apiKey,
+		isSuccess,
+		isCount,
+		queryDate
+		FROM
+			systemlog s
+		LEFT JOIN `user` u ON s.userID = u.id
+		LEFT JOIN `product` p ON s.productID = p.id
+		LEFT JOIN `localApi` l ON s.localApiID = l.id
+		<where>
+		    1=1
+			<if test="userID !=null and userID != '' ">
+            	and userID = #{userID} 
+        	</if>
+        	<if test="productID !=null and productID != '' ">
+            	and productID = #{productID}
+        	</if>
+        		<if test="startDate != null and endDate != ''">
+				<![CDATA[
+					and s.queryDate >= #{startDate}  
+				]]>
+			</if>
+			<if test="endDate != null and endDate != ''">
+				<![CDATA[
+					and s.queryDate <= #{endDate}  
+				]]>
+			</if>
+		</where>
+		order BY
+			queryDate desc
+		
+	</select>
+	
 	
 </mapper>

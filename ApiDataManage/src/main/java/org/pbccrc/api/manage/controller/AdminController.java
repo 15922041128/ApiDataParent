@@ -8,7 +8,6 @@ import org.pbccrc.api.base.bean.User;
 import org.pbccrc.api.base.service.ProductService;
 import org.pbccrc.api.base.service.UserService;
 import org.pbccrc.api.base.util.Constants;
-import org.pbccrc.api.base.util.MyCookie;
 import org.pbccrc.api.base.util.RedisClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -72,7 +71,7 @@ public class AdminController {
 		response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 		JSONObject result = new JSONObject();
 		User user = new User();
-		user.setID(Integer.valueOf(id));
+		user.setId(Integer.valueOf(id));
 		user.setAuth(auth);
 		user.setMessage(message);
 		userService.modifyUser(user);

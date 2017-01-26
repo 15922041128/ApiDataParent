@@ -1,12 +1,17 @@
 package org.pbccrc.api.core.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.pbccrc.api.base.bean.Pagination;
 import org.pbccrc.api.base.bean.SystemLog;
 import org.pbccrc.api.core.mapper.SystemLogMapper;
 import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 
 @Service
 public class SystemLogDao{
@@ -20,6 +25,24 @@ public class SystemLogDao{
 	
 	public void addLog(SystemLog systemLog) {
 		systemLogMapper.addLog(systemLog);
+	}
+	
+	public Pagination sumLog(Map<String, String> queryMap, Pagination pagination) {
+		PageHelper.startPage(pagination.getCurrentPage(), pagination.getPageSize());
+		Page<Map<String, Object>> logs = (Page<Map<String, Object>>) systemLogMapper.sumLog(queryMap);
+		Pagination logsPagination = new Pagination();
+		logsPagination.setResult(logs.getResult());
+		logsPagination.setTotalCount(logs.getTotal());
+		return logsPagination;
+	}
+	
+	public Pagination queryLogDetail(Map<String, String> queryMap, Pagination pagination) {
+		PageHelper.startPage(pagination.getCurrentPage(), pagination.getPageSize());
+		Page<Map<String, Object>> logs = (Page<Map<String, Object>>) systemLogMapper.queryLogDetail(queryMap);
+		Pagination logsPagination = new Pagination();
+		logsPagination.setResult(logs.getResult());
+		logsPagination.setTotalCount(logs.getTotal());
+		return logsPagination;
 	}
 	
 }

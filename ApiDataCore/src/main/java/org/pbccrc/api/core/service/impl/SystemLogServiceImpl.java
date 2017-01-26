@@ -1,7 +1,9 @@
 package org.pbccrc.api.core.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
+import org.pbccrc.api.base.bean.Pagination;
 import org.pbccrc.api.base.bean.SystemLog;
 import org.pbccrc.api.core.dao.SystemLogDao;
 import org.pbccrc.api.base.service.SystemLogService;
@@ -20,6 +22,14 @@ public class SystemLogServiceImpl implements SystemLogService{
 
 	public void addLog(SystemLog systemLog) {
 		systemLogDao.addLog(systemLog);
+	}
+
+	public Pagination sumLog(Map<String, String> queryMap, Pagination pagination) {
+		return systemLogDao.sumLog(queryMap, pagination);
+	}
+	
+	public Pagination queryLogDetail(Map<String, String> queryMap, Pagination pagination) {
+		return systemLogDao.queryLogDetail(queryMap, pagination);
 	}
 
 }

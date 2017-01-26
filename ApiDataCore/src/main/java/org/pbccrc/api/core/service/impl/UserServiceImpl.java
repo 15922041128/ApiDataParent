@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService{
 		apiUser.setBlance(new BigDecimal("0.00"));
 		apiUser.setCreditLimit(new BigDecimal("0.00"));
 		
-		RedisClient.setObject("apiUser_" + userID, apiUser);
+		RedisClient.set("apiUser_" + userID, apiUser);
 		
 		apiUserDao.addApiUser(apiUser);
 	}

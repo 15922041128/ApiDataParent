@@ -54,7 +54,7 @@ public class LocalApiServiceImpl implements LocalApiService{
 		SimpleDateFormat dateFormat = new SimpleDateFormat("YYYYMMDD");
 		localApi.setCreateDate(dateFormat.format(new Date()));
 		localApiDao.addLocalApi(localApi);
-		RedisClient.setObject("localApi_" + localApi.getId(), localApi);
+		RedisClient.set("localApi_" + localApi.getId(), localApi);
 	}
 	
 	/**
@@ -64,7 +64,7 @@ public class LocalApiServiceImpl implements LocalApiService{
 	@Transactional
 	public void updateLocalApi(LocalApi localApi){
 		localApiDao.updateLocalApi(localApi);
-		RedisClient.setObject("localApi_" + localApi.getId(), localApi);
+		RedisClient.set("localApi_" + localApi.getId(), localApi);
 	}
 
 }

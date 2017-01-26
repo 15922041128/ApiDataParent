@@ -64,6 +64,9 @@ public class User implements Serializable{
 	/** 用户状态 0-停用 1-启用 */
 	private Integer userState;
 	
+	/** 角色 0-普通用户 9999-管理员 */
+	private String role;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -206,5 +209,13 @@ public class User implements Serializable{
 
 	public void setUserState(Integer userState) {
 		this.userState = userState;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 }

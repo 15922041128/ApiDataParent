@@ -47,7 +47,7 @@ public class ProductController {
 		response.setHeader("Access-Control-Max-Age", "3600");
 		response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 		JSONObject result = new JSONObject();
-		if(product.getID()==0){
+		if(product.getId()==0){
 			productService.addProduct(product);
 		}else {
 			productService.updateProduct(product);

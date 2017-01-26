@@ -15,9 +15,7 @@ import javax.ws.rs.core.Context;
 import org.pbccrc.api.base.bean.Pagination;
 import org.pbccrc.api.base.bean.User;
 import org.pbccrc.api.base.service.UserService;
-import org.pbccrc.api.base.util.CacheUtil;
 import org.pbccrc.api.base.util.Constants;
-import org.pbccrc.api.base.util.MyCookie;
 import org.pbccrc.api.base.util.RedisClient;
 import org.pbccrc.api.base.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +32,6 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private CacheUtil cacheUtil;
 	
 	@GET
 	@CrossOrigin
@@ -94,9 +89,11 @@ public class UserController {
 		
 		User user = userService.login(userName, password);
 		
-		if (null != user && null != user.getID()) {
+		if (null != user && null != user.getId()) {
 			if(user.getUserState() != 1){
 				retrunJson.put("errorMsg", "用户已被停用，请联系管理员");
+			}else if(!user.getRole().equals("9999")){
+				retrunJson.put("errorMsg", "用户权限不足");
 			}else{
 				retData = Constants.RET_STAT_SUCCESS;
 				retrunJson.put("loginUser", user);
@@ -124,10 +121,9 @@ public class UserController {
 	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/r/user/getUser", produces={"application/json;charset=UTF-8"})
-	public String getUser(@Context HttpServletRequest request){
+	public String getUser(String userID, @Context HttpServletRequest request){
 		
-		String userID = MyCookie.getCookie(Constants.COOKIE_USERID, true, request);
-		User currentUser = (User)cacheUtil.getObj(Constants.CACHE_USER + Constants.UNDERLINE  + userID);
+		User currentUser = userService.getUserByID(userID);
 		
 		return JSONObject.toJSONString(currentUser);
 	}
@@ -169,6 +165,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value="/r/user/modifyUser", produces={"text/html;charset=UTF-8"})
 	public String modifyUser(
+			@QueryParam("userID") String userID,
 			@QueryParam("compName") String compName,
 			@QueryParam("compTel") String compTel,
 			@QueryParam("contactName") String contactName,
@@ -176,10 +173,8 @@ public class UserController {
 		
 		String retData = Constants.RET_STAT_ERROR;
 		
-		String userID = MyCookie.getCookie(Constants.COOKIE_USERID, true, request);
-		
 		User user = new User();
-		user.setID(Integer.parseInt(userID));
+		user.setId(Integer.parseInt(userID));
 		user.setCompName(compName);
 		user.setCompTel(compTel);
 		user.setContactName(contactName);
@@ -189,16 +184,7 @@ public class UserController {
 		
 		return retData;
 	}
-	
-	@GET
-	@CrossOrigin
-	@RequestMapping(value="/r/user/loginOut")
-	public void loginOut(@Context HttpServletRequest request) {
 		
-		String userID = MyCookie.getCookie(Constants.COOKIE_USERID, true, request);
-		cacheUtil.delObj(Constants.CACHE_USER + Constants.UNDERLINE  + userID);
-	}
-	
 	@GET
 	@CrossOrigin
 	@ResponseBody
@@ -268,7 +254,7 @@ public class UserController {
 		String retData = Constants.RET_STAT_ERROR;
 		if(userState != null && (userState == 1|| userState == 0)){
 			User user = new User();
-			user.setID(id);
+			user.setId(id);
 			user.setUserState(userState);
 			userService.modifyUser(user);
 			retData = Constants.RET_STAT_SUCCESS;
