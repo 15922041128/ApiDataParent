@@ -24,7 +24,11 @@
 		<com.google.guava.version>19.0</com.google.guava.version>
 		<org.mybatis.version>3.4.0</org.mybatis.version>
 		<mybatis-spring.version>1.3.0</mybatis-spring.version>
+		<!--
 		<mysql-connector-java.version>6.0.2</mysql-connector-java.version>
+		-->
+		<mysql-connector-java.version>5.1.40</mysql-connector-java.version>
+		
 		<c3p0.version>0.9.1.2</c3p0.version>
 
 		<zkClient.101tec.version>0.5</zkClient.101tec.version>

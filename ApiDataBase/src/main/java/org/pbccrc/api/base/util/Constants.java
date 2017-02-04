@@ -335,6 +335,8 @@ public class Constants {
 	public static final String ORA_TBL_NAME_SCORE = "score";
 	// 黑名单
 	public static final String ORA_TBL_NAME_BLACK = "black";
+	// 失信人
+	public static final String ORA_TBL_DISHONEST_INFO = "dishonest_info";
 	
 	/** 日期格式化 */
 	// systemLog

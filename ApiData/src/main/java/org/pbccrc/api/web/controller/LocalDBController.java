@@ -2,7 +2,6 @@ package org.pbccrc.api.web.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -74,35 +73,35 @@ public class LocalDBController {
 		return result;
 	}
 	
-	/**
-	 * 失信人查询
-	 * @param idCardNo
-	 * @return
-	 * @throws Exception
-	 */
-	@GET
-	@CrossOrigin
-	@ResponseBody
-	@RequestMapping(value="/getSxr", produces={"application/json;charset=UTF-8"})
-	public JSONObject getSxr(@QueryParam("idCardNo") String idCardNo) throws Exception {
-		
-		JSONObject object = new JSONObject();
-		object.put("errNum", Constants.CODE_ERR_SUCCESS);
-		object.put("retMsg", Constants.CODE_ERR_SUCCESS_MSG);
-		object.put("retData", Constants.BLANK);
-		
-		List<Map<String, Object>> dishonestList = localDBService.getSxr(idCardNo);
-		
-		if (null == dishonestList || dishonestList.size() == 0) {
-			object.put("errNum", Constants.ERR_NO_RESULT);
-			object.put("retMsg", Constants.RET_MSG_NO_RESULT);
-			return object;
-		}
-		
-		object.put("retData", dishonestList);
-		
-		return object;
-	}
+//	/**
+//	 * 失信人查询
+//	 * @param idCardNo
+//	 * @return
+//	 * @throws Exception
+//	 */
+//	@GET
+//	@CrossOrigin
+//	@ResponseBody
+//	@RequestMapping(value="/getSxr", produces={"application/json;charset=UTF-8"})
+//	public JSONObject getSxr(@QueryParam("idCardNo") String idCardNo) throws Exception {
+//		
+//		JSONObject object = new JSONObject();
+//		object.put("errNum", Constants.CODE_ERR_SUCCESS);
+//		object.put("retMsg", Constants.CODE_ERR_SUCCESS_MSG);
+//		object.put("retData", Constants.BLANK);
+//		
+//		List<Map<String, Object>> dishonestList = localDBService.getSxr(idCardNo);
+//		
+//		if (null == dishonestList || dishonestList.size() == 0) {
+//			object.put("errNum", Constants.ERR_NO_RESULT);
+//			object.put("retMsg", Constants.RET_MSG_NO_RESULT);
+//			return object;
+//		}
+//		
+//		object.put("retData", dishonestList);
+//		
+//		return object;
+//	}
 	
 	@GET
 	@ResponseBody
@@ -125,76 +124,6 @@ public class LocalDBController {
 		result.put("result", resultMap.get("result"));
 		
 		return result;
-	}
-	
-	@GET
-	@CrossOrigin
-	@ResponseBody
-	@RequestMapping(value="/getBlack", produces={"application/json;charset=UTF-8"})
-	public JSONObject getBlack(@QueryParam("name") String name, @QueryParam("identifier") String identifier) throws Exception {
-		
-		JSONObject object = new JSONObject();
-		
-		ResultContent resultContent = new ResultContent();
-		resultContent.setCode(Constants.CODE_ERR_SUCCESS);
-		resultContent.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);
-		resultContent.setRetData(Constants.BLANK);
-		
-		// 查询内码
-		String innerID = localDBService.getInnerID(identifier);
-		// 判断内码是否存在
-		if (StringUtil.isNull(innerID)) {
-			resultContent.setCode(Constants.ERR_NO_RESULT);
-			resultContent.setRetMsg(Constants.RET_MSG_NO_RESULT);
-			return (JSONObject) JSONObject.toJSON(resultContent);
-		}
-		
-		// 获取黑名单数据
-		object = localDBService.getBlack(innerID);
-		if (null == object) {
-			resultContent.setCode(Constants.ERR_NO_RESULT);
-			resultContent.setRetMsg(Constants.RET_MSG_NO_RESULT);
-			return (JSONObject) JSONObject.toJSON(resultContent);
-		}
-		resultContent.setRetData(object);
-		
-		return (JSONObject) JSONObject.toJSON(resultContent);
-		
-	}
-	
-	@GET
-	@CrossOrigin
-	@ResponseBody
-	@RequestMapping(value="/getScore", produces={"application/json;charset=UTF-8"})
-	public JSONObject getScore(@QueryParam("name") String name, @QueryParam("identifier") String identifier) throws Exception {
-		
-		JSONObject object = new JSONObject();
-		
-		ResultContent resultContent = new ResultContent();
-		resultContent.setCode(Constants.CODE_ERR_SUCCESS);
-		resultContent.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);
-		resultContent.setRetData(Constants.BLANK);
-		
-		// 查询内码
-		String innerID = localDBService.getInnerID(identifier);
-		// 判断内码是否存在
-		if (StringUtil.isNull(innerID)) {
-			resultContent.setCode(Constants.ERR_NO_RESULT);
-			resultContent.setRetMsg(Constants.RET_MSG_NO_RESULT);
-			return (JSONObject) JSONObject.toJSON(resultContent);
-		}
-		
-		// 获取黑名单数据
-		object = localDBService.getScore(innerID);
-		if (null == object) {
-			resultContent.setCode(Constants.ERR_NO_RESULT);
-			resultContent.setRetMsg(Constants.RET_MSG_NO_RESULT);
-			return (JSONObject) JSONObject.toJSON(resultContent);
-		}
-		resultContent.setRetData(object);
-		
-		return (JSONObject) JSONObject.toJSON(resultContent);
-		
 	}
 	
 	/**

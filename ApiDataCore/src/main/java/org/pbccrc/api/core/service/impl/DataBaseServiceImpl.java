@@ -27,9 +27,17 @@ public class DataBaseServiceImpl implements DataBaseService {
 		
 		JSONArray jsonArray = new JSONArray();
 		
-		DynamicDataSourceHolder.change2oracle();
-		List<Map<String, Object>> columns = dataBaseDao.queryColumnByTable(tableName);
-		DynamicDataSourceHolder.change2mysql();
+		List<Map<String, Object>> columns = null;
+		
+		try {
+			DynamicDataSourceHolder.change2oracle();
+			columns = dataBaseDao.queryColumnByTable(tableName);
+			DynamicDataSourceHolder.change2mysql();	
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DynamicDataSourceHolder.change2mysql();
+		}
 		
 		for (Map<String, Object> column : columns) {
 			jsonArray.add(JSONObject.toJSON(column));
@@ -46,9 +54,17 @@ public class DataBaseServiceImpl implements DataBaseService {
 		
 		JSONArray jsonArray = new JSONArray();
 		
-		DynamicDataSourceHolder.change2oracle();
-		List<Map<String, Object>> tables = dataBaseDao.queryAllTable();
-		DynamicDataSourceHolder.change2mysql();
+		List<Map<String, Object>> tables = null;
+		
+		try {
+			DynamicDataSourceHolder.change2oracle();
+			tables = dataBaseDao.queryAllTable();
+			DynamicDataSourceHolder.change2mysql();	
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DynamicDataSourceHolder.change2mysql();
+		}
 		
 		for (Map<String, Object> table : tables) {
 			jsonArray.add(JSONObject.toJSON(table));
