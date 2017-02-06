@@ -335,10 +335,18 @@ public class Constants {
 	public static final String ORA_TBL_NAME_SCORE = "score";
 	// 黑名单
 	public static final String ORA_TBL_NAME_BLACK = "black";
+	// 失信人
+	public static final String ORA_TBL_DISHONEST_INFO = "dishonest_info";
 	
 	/** 日期格式化 */
 	// systemLog
 	public static final String DATE_FORMAT_SYSTEMLOG = "yyyy-MM-dd HH:mm:ss";
 	// apiLog
 	public static final String DATE_FROMAT_APILOG = "yyyy-MM-dd HH:mm:ss";
+	
+	/** 日期格式化 */
+	// 启用
+	public static final int USER_STATE_OPEN = 1;
+	// 停用
+	public static final int USER_STATE_CLOSE = 0;
 }
