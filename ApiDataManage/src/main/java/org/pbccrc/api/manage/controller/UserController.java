@@ -53,6 +53,7 @@ public class UserController {
 		user.setContactName(contactName);
 		user.setContactTel(contactTel);
 		user.setAuth(Constants.AUTH_STATUS_NO);
+		user.setUserState(Constants.USER_STATE_OPEN); // 设置用户状态为启用
 		
 		userService.addUser(user);
 		
