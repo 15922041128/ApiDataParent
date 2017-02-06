@@ -60,20 +60,6 @@ public interface LocalDBService {
 	public String getInnerIDByTelNum(String telNum) throws Exception;
 	
 	/**
-	 * 根据内码获得黑名单
-	 * @param innerID
-	 * @return
-	 */
-	public JSONObject getBlack(String innerID);
-	
-	/**
-	 * 根据内码获得信用分
-	 * @param innerID
-	 * @return
-	 */
-	public JSONObject getScore(String innerID);
-	
-	/**
 	 * 查询本地数据库
 	 * @param uuid
 	 * @param userID

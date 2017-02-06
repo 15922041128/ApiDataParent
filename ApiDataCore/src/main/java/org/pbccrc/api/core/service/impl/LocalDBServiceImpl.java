@@ -13,11 +13,9 @@ import org.pbccrc.api.base.bean.ResultContent;
 import org.pbccrc.api.base.service.LocalDBService;
 import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.core.dao.ApiLogDao;
-import org.pbccrc.api.core.dao.BlackDao;
 import org.pbccrc.api.core.dao.DBOperatorDao;
 import org.pbccrc.api.core.dao.LdbApiDao;
 import org.pbccrc.api.core.dao.LocalApiDao;
-import org.pbccrc.api.core.dao.ScoreDao;
 import org.pbccrc.api.core.dao.TelPersonDao;
 import org.pbccrc.api.core.dao.ZhAddressDao;
 import org.pbccrc.api.core.dao.ZhCreditCardDao;
@@ -48,12 +46,6 @@ public class LocalDBServiceImpl implements LocalDBService {
 	
 	@Autowired
 	private TelPersonDao telPersonDao;
-	
-	@Autowired
-	private BlackDao blackDao;
-	
-	@Autowired
-	private ScoreDao scoreDao;
 	
 	@Autowired
 	private LocalApiDao localApiDao;
@@ -179,9 +171,17 @@ public class LocalDBServiceImpl implements LocalDBService {
 		returnMap.put("isNull", "N");
 		
 		// 根据身份证号获取内码信息
-		DynamicDataSourceHolder.change2oracle();
-		Map<String, Object> insideCodeMap = zhIdentificationDao.getInnerID(name, idCardNo);
-		DynamicDataSourceHolder.change2mysql();
+		Map<String, Object> insideCodeMap = null;
+		try {
+			DynamicDataSourceHolder.change2oracle();
+			insideCodeMap = zhIdentificationDao.getInnerID(name, idCardNo);
+			DynamicDataSourceHolder.change2mysql();
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			DynamicDataSourceHolder.change2mysql();
+		}
+		
 		if (null == insideCodeMap) {
 			returnMap.put("isNull", "Y");
 			return returnMap;
@@ -228,9 +228,17 @@ public class LocalDBServiceImpl implements LocalDBService {
 		
 		String innerID = Constants.BLANK;
 		
-		DynamicDataSourceHolder.change2oracle();
-		Map<String, Object> returnMap = zhIdentificationDao.getInnerID(name, identifier);
-		DynamicDataSourceHolder.change2mysql();
+		Map<String, Object> returnMap = null;
+		
+		try {
+			DynamicDataSourceHolder.change2oracle();
+			returnMap = zhIdentificationDao.getInnerID(name, identifier);
+			DynamicDataSourceHolder.change2mysql();
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			DynamicDataSourceHolder.change2mysql();
+		}
 		
 		if (null == returnMap) {
 			return innerID;
@@ -251,9 +259,17 @@ public class LocalDBServiceImpl implements LocalDBService {
 		
 		String innerID = Constants.BLANK;
 		
-		DynamicDataSourceHolder.change2oracle();
-		Map<String, Object> returnMap = zhIdentificationDao.getInnerID(identifier);
-		DynamicDataSourceHolder.change2mysql();
+		Map<String, Object> returnMap = null;
+		
+		try {
+			DynamicDataSourceHolder.change2oracle();
+			returnMap = zhIdentificationDao.getInnerID(identifier);
+			DynamicDataSourceHolder.change2mysql();	
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			DynamicDataSourceHolder.change2mysql();
+		}
 		
 		if (null == returnMap) {
 			return innerID;
@@ -274,10 +290,18 @@ public class LocalDBServiceImpl implements LocalDBService {
 		
 		String innerID = Constants.BLANK;
 		
-		DynamicDataSourceHolder.change2oracle();
-		Map<String, Object> returnMap = telPersonDao.getInnerID(telNum);
-		DynamicDataSourceHolder.change2mysql();
+		Map<String, Object> returnMap = null;
 		
+		try {
+			DynamicDataSourceHolder.change2oracle();
+			returnMap = telPersonDao.getInnerID(telNum);
+			DynamicDataSourceHolder.change2mysql();	
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			DynamicDataSourceHolder.change2mysql();	
+		}
+		 
 		if (null == returnMap) {
 			return innerID;
 		}
@@ -287,45 +311,6 @@ public class LocalDBServiceImpl implements LocalDBService {
 		return innerID;
 	}
 	
-	/**
-	 * 根据内码获得黑名单
-	 * @param innerID
-	 * @return
-	 */
-	public JSONObject getBlack(String innerID) {
-		
-		DynamicDataSourceHolder.change2oracle();
-		List<Map<String, Object>> blackMapList = blackDao.getBlack(innerID);
-		DynamicDataSourceHolder.change2mysql();
-		
-		if (blackMapList.size() == 0) {
-			return null;
-		}
-		
-		JSONObject object = (JSONObject) JSONObject.toJSON(blackMapList.get(0));
-		
-		return object;
-	}
-	
-	/**
-	 * 根据内码获得信用分
-	 * @param innerID
-	 * @return
-	 */
-	public JSONObject getScore(String innerID) {
-		
-		DynamicDataSourceHolder.change2oracle();
-		List<Map<String, Object>> scoreMapList = scoreDao.getScore(innerID);
-		DynamicDataSourceHolder.change2mysql();
-		
-		if (scoreMapList.size() == 0) {
-			return null;
-		}
-		
-		JSONObject object = (JSONObject) JSONObject.toJSON(scoreMapList.get(0));
-		
-		return object;
-	}
 	
 	/**
 	 * 查询本地数据库
@@ -359,87 +344,91 @@ public class LocalDBServiceImpl implements LocalDBService {
 			returnParams[i] = object.getString(Constants.EN_NAME);
 		}
 		
-		DynamicDataSourceHolder.change2oracle();
-		if (Constants.ORA_TBL_NAME_PERSON.equals(tblName) 
-				|| Constants.ORA_TBL_NAME_ADDRESS.equals(tblName)
-				|| Constants.ORA_TBL_NAME_EMPLOYMENT.equals(tblName)
-				|| Constants.ORA_TBL_NAME_CREDITCARD.equals(tblName)
-				|| Constants.ORA_TBL_NAME_LOAN.equals(tblName)
-				|| Constants.ORA_TBL_NAME_GUARANTEE.equals(tblName)) {
-			// DB返回结果集
-			List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
-			// 根据返回配置信息返回的结果集
-			Map<String, Object> returnResult = new HashMap<String, Object>();
-			if (Constants.ORA_TBL_NAME_PERSON.equals(tblName)) {
-				returnList = zhPersonDao.query(innerID);
-			} else if (Constants.ORA_TBL_NAME_ADDRESS.equals(tblName)) {
-				returnList = zhAddressDao.query(innerID);
-			} else if (Constants.ORA_TBL_NAME_EMPLOYMENT.equals(tblName)) {
-				returnList = zhEmploymentDao.query(innerID);
-			} else if (Constants.ORA_TBL_NAME_CREDITCARD.equals(tblName)) {
-				returnList = zhCreditCardDao.query(innerID);
-			} else if (Constants.ORA_TBL_NAME_LOAN.equals(tblName)) {
-				returnList = zhLoanDao.query(innerID);
-			} else if (Constants.ORA_TBL_NAME_GUARANTEE.equals(tblName)) {
-				returnList = zhGuaranteeDao.query(innerID);
-			}
-			JSONArray jsonArray = new JSONArray();
-			// 根据配置返回信息
-			if (null != returnList && returnList.size() != 0) {
-				for (Map<String, Object> returnMap : returnList) {
-					for (String key : returnParams) {
-						returnResult.put(key, returnMap.get(key.toUpperCase()));
-					}
-					jsonArray.add(returnResult);
-					returnResult = new HashMap<String, Object>();
+		try {
+			DynamicDataSourceHolder.change2oracle();
+			if (Constants.ORA_TBL_NAME_PERSON.equals(tblName) 
+					|| Constants.ORA_TBL_NAME_ADDRESS.equals(tblName)
+					|| Constants.ORA_TBL_NAME_EMPLOYMENT.equals(tblName)
+					|| Constants.ORA_TBL_NAME_CREDITCARD.equals(tblName)
+					|| Constants.ORA_TBL_NAME_LOAN.equals(tblName)
+					|| Constants.ORA_TBL_NAME_GUARANTEE.equals(tblName)) {
+				// DB返回结果集
+				List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
+				// 根据返回配置信息返回的结果集
+				Map<String, Object> returnResult = new HashMap<String, Object>();
+				if (Constants.ORA_TBL_NAME_PERSON.equals(tblName)) {
+					returnList = zhPersonDao.query(innerID);
+				} else if (Constants.ORA_TBL_NAME_ADDRESS.equals(tblName)) {
+					returnList = zhAddressDao.query(innerID);
+				} else if (Constants.ORA_TBL_NAME_EMPLOYMENT.equals(tblName)) {
+					returnList = zhEmploymentDao.query(innerID);
+				} else if (Constants.ORA_TBL_NAME_CREDITCARD.equals(tblName)) {
+					returnList = zhCreditCardDao.query(innerID);
+				} else if (Constants.ORA_TBL_NAME_LOAN.equals(tblName)) {
+					returnList = zhLoanDao.query(innerID);
+				} else if (Constants.ORA_TBL_NAME_GUARANTEE.equals(tblName)) {
+					returnList = zhGuaranteeDao.query(innerID);
 				}
-			} else {
-				map.put("isSuccess", false);
-			}
-			// 判断返回类型
-			if (returnType.equals(Constants.RETURN_TYPE_ARRAY)) {
-				map.put("result", jsonArray);
-			} else {
-				// 判断是否成功
-				if (Boolean.parseBoolean(String.valueOf(map.get("isSuccess")))) {
-					map.put("result", jsonArray.get(0));
-				} 
-			}
-		} else {
-			// 设置DBEntity
-			DBEntity entity = new DBEntity();
-			// 表名
-			entity.setTableName(tblName);
-			// 查询条件
-			List<String> fields = new ArrayList<String>();
-			List<String> values = new ArrayList<String>();
-			fields.add("INNERID");
-			values.add(innerID);
-			entity.setFields(fields);
-			entity.setValues(values);
-			// 返回值
-			String[] selectItems = new String[returnParams.length];
-			for (int i = 0; i < returnParams.length; i++) {
-				selectItems[i] = returnParams[i].toUpperCase();
-			}
-			entity.setSelectItems(selectItems);
-			// 数据库类型
-			entity.setDataBaseType(Constants.DATABASE_TYPE_ORACLE);
-			List<Map<String, Object>> dbMapList = dbOperatorDao.queryDatas(entity);
-			if (null == dbMapList || dbMapList.size() == 0) {
-				map.put("isSuccess", false);
-			} else {
+				JSONArray jsonArray = new JSONArray();
+				// 根据配置返回信息
+				if (null != returnList && returnList.size() != 0) {
+					for (Map<String, Object> returnMap : returnList) {
+						for (String key : returnParams) {
+							returnResult.put(key, returnMap.get(key.toUpperCase()));
+						}
+						jsonArray.add(returnResult);
+						returnResult = new HashMap<String, Object>();
+					}
+				} else {
+					map.put("isSuccess", false);
+				}
 				// 判断返回类型
 				if (returnType.equals(Constants.RETURN_TYPE_ARRAY)) {
-					map.put("result", JSONArray.toJSON(dbMapList));
+					map.put("result", jsonArray);
 				} else {
-					map.put("result", ((JSONArray)JSONArray.toJSON(dbMapList)).get(0));
+					// 判断是否成功
+					if (Boolean.parseBoolean(String.valueOf(map.get("isSuccess")))) {
+						map.put("result", jsonArray.get(0));
+					} 
+				}
+			} else {
+				// 设置DBEntity
+				DBEntity entity = new DBEntity();
+				// 表名
+				entity.setTableName(tblName);
+				// 查询条件
+				List<String> fields = new ArrayList<String>();
+				List<String> values = new ArrayList<String>();
+				fields.add("INNERID");
+				values.add(innerID);
+				entity.setFields(fields);
+				entity.setValues(values);
+				// 返回值
+				String[] selectItems = new String[returnParams.length];
+				for (int i = 0; i < returnParams.length; i++) {
+					selectItems[i] = returnParams[i].toUpperCase();
+				}
+				entity.setSelectItems(selectItems);
+				// 数据库类型
+				entity.setDataBaseType(Constants.DATABASE_TYPE_ORACLE);
+				List<Map<String, Object>> dbMapList = dbOperatorDao.queryDatas(entity);
+				if (null == dbMapList || dbMapList.size() == 0) {
+					map.put("isSuccess", false);
+				} else {
+					// 判断返回类型
+					if (returnType.equals(Constants.RETURN_TYPE_ARRAY)) {
+						map.put("result", JSONArray.toJSON(dbMapList));
+					} else {
+						map.put("result", ((JSONArray)JSONArray.toJSON(dbMapList)).get(0));
+					}
 				}
 			}
+			DynamicDataSourceHolder.change2mysql();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DynamicDataSourceHolder.change2mysql();
 		}
-		DynamicDataSourceHolder.change2mysql();
-		
-		
 		
 		// 记录日志
 		ApiLog apiLog = new ApiLog();

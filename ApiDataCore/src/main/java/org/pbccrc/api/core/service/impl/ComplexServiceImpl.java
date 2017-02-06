@@ -74,9 +74,17 @@ public class ComplexServiceImpl implements ComplexService{
 	public String validateSxr(String name, String identifier) throws Exception {
 		String isNull = "N";
 		// 根据身份证号获取内码信息
-		DynamicDataSourceHolder.change2oracle();
-		Map<String, Object> insideCodeMap = zhIdentificationDao.getInnerID(name, identifier);
-		DynamicDataSourceHolder.change2mysql();
+		Map<String, Object> insideCodeMap = null;
+		try {
+			DynamicDataSourceHolder.change2oracle();
+			insideCodeMap = zhIdentificationDao.getInnerID(name, identifier);
+			DynamicDataSourceHolder.change2mysql();
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			DynamicDataSourceHolder.change2mysql();
+		}
+		
 		if (null == insideCodeMap) {
 			isNull = "Y";
 		}
@@ -291,9 +299,17 @@ public class ComplexServiceImpl implements ComplexService{
 		returnMap.put("isNull", "N");
 		
 		// 根据身份证号获取内码信息
-		DynamicDataSourceHolder.change2oracle();
-		Map<String, Object> insideCodeMap = zhIdentificationDao.getInnerID(name, identifier);
-		DynamicDataSourceHolder.change2mysql();
+		Map<String, Object> insideCodeMap = null;
+		try {
+			DynamicDataSourceHolder.change2oracle();
+			insideCodeMap = zhIdentificationDao.getInnerID(name, identifier);
+			DynamicDataSourceHolder.change2mysql();
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			DynamicDataSourceHolder.change2mysql();
+		}
+	
 		if (null == insideCodeMap) {
 			returnMap.put("isNull", "Y");
 		} else {
@@ -325,85 +341,127 @@ public class ComplexServiceImpl implements ComplexService{
 			for (String queryItem : queryItems) {
 				// 人员基本信息
 				if (Constants.ITEM_PERSON.equals(queryItem)) {
-					DynamicDataSourceHolder.change2oracle();
-					Map<String, Object> personMap = null;
-					List<Map<String, Object>> personMapList = zhPersonDao.query(innerID);
-					if (null == personMapList || personMapList.size() == 0) {
-						personMap = new HashMap<String, Object>();
-					} else {
-						personMap = personMapList.get(0);
+					try {
+						DynamicDataSourceHolder.change2oracle();
+						Map<String, Object> personMap = null;
+						List<Map<String, Object>> personMapList = zhPersonDao.query(innerID);
+						if (null == personMapList || personMapList.size() == 0) {
+							personMap = new HashMap<String, Object>();
+						} else {
+							personMap = personMapList.get(0);
+						}
+						personMap.put("name", name);
+						personMap.put("idCardNo", identifier);
+						returnMap.put("person", personMap);
+						DynamicDataSourceHolder.change2mysql();
+					} catch (Exception e) {
+						throw e;
+					} finally {
+						DynamicDataSourceHolder.change2mysql();
 					}
-					personMap.put("name", name);
-					personMap.put("idCardNo", identifier);
-					returnMap.put("person", personMap);
-					DynamicDataSourceHolder.change2mysql();
+					
 					continue;
 				}
 				// 居住信息
 				if (Constants.ITEM_ADDRESS.equals(queryItem)) {
-					DynamicDataSourceHolder.change2oracle();
-					Map<String, Object> addressMap = null;
-					List<Map<String, Object>> addressMapList = zhAddressDao.query(innerID);
-					if (null == addressMapList || addressMapList.size() == 0) {
-						addressMap = new HashMap<String, Object>();
-					} else {
-						addressMap = addressMapList.get(0);
+					try {
+						DynamicDataSourceHolder.change2oracle();
+						Map<String, Object> addressMap = null;
+						List<Map<String, Object>> addressMapList = zhAddressDao.query(innerID);
+						if (null == addressMapList || addressMapList.size() == 0) {
+							addressMap = new HashMap<String, Object>();
+						} else {
+							addressMap = addressMapList.get(0);
+						}
+						returnMap.put("address", addressMap);
+						DynamicDataSourceHolder.change2mysql();
+					} catch (Exception e) {
+						throw e;
+					} finally {
+						DynamicDataSourceHolder.change2mysql();
 					}
-					returnMap.put("address", addressMap);
-					DynamicDataSourceHolder.change2mysql();
+					
 					continue;
 				}
 				// 就业信息
 				if (Constants.ITEM_EMPLOYMENT.equals(queryItem)) {
-					DynamicDataSourceHolder.change2oracle();
-					Map<String, Object> employmentMap = null;
-					List<Map<String, Object>> employmentMapList = zhEmploymentDao.query(innerID);
-					if (null == employmentMapList || employmentMapList.size() == 0) {
-						employmentMap = new HashMap<String, Object>();
-					} else {
-						employmentMap = employmentMapList.get(0);
+					try {
+						DynamicDataSourceHolder.change2oracle();
+						Map<String, Object> employmentMap = null;
+						List<Map<String, Object>> employmentMapList = zhEmploymentDao.query(innerID);
+						if (null == employmentMapList || employmentMapList.size() == 0) {
+							employmentMap = new HashMap<String, Object>();
+						} else {
+							employmentMap = employmentMapList.get(0);
+						}
+						returnMap.put("employment", employmentMap);
+						DynamicDataSourceHolder.change2mysql();
+					} catch (Exception e) {
+						throw e;
+					} finally {
+						DynamicDataSourceHolder.change2mysql();
 					}
-					returnMap.put("employment", employmentMap);
-					DynamicDataSourceHolder.change2mysql();
+				
 					continue;
 				}
 				// 贷款信息
 				if (Constants.ITEM_LOAN.equals(queryItem)) {
-					DynamicDataSourceHolder.change2oracle();
-					Map<String, Object> loanMap = null;
-					List<Map<String, Object>> loanMapList = zhLoanDao.query(innerID);
-					if (null == loanMapList || loanMapList.size() == 0) {
-						loanMap = new HashMap<String, Object>();
-					} else {
-						loanMap = loanMapList.get(0);
+					try {
+						DynamicDataSourceHolder.change2oracle();
+						Map<String, Object> loanMap = null;
+						List<Map<String, Object>> loanMapList = zhLoanDao.query(innerID);
+						if (null == loanMapList || loanMapList.size() == 0) {
+							loanMap = new HashMap<String, Object>();
+						} else {
+							loanMap = loanMapList.get(0);
+						}
+						returnMap.put("loan", loanMap);
+						DynamicDataSourceHolder.change2mysql();
+					} catch (Exception e) {
+						throw e;
+					} finally {
+						DynamicDataSourceHolder.change2mysql();
 					}
-					returnMap.put("loan", loanMap);
-					DynamicDataSourceHolder.change2mysql();
+					
 					continue;
 				}
 				// 信用卡信息
 				if (Constants.ITEM_CREDITCARD.equals(queryItem)) {
-					DynamicDataSourceHolder.change2oracle();
-					Map<String, Object> creditCardMap = null;
-					List<Map<String, Object>> creditCardMapList = zhCreditCardDao.query(innerID);
-					if (null == creditCardMapList || creditCardMapList.size() == 0) {
-						creditCardMap = new HashMap<String, Object>();
-					} else {
-						creditCardMap = creditCardMapList.get(0);
+					try {
+						DynamicDataSourceHolder.change2oracle();
+						Map<String, Object> creditCardMap = null;
+						List<Map<String, Object>> creditCardMapList = zhCreditCardDao.query(innerID);
+						if (null == creditCardMapList || creditCardMapList.size() == 0) {
+							creditCardMap = new HashMap<String, Object>();
+						} else {
+							creditCardMap = creditCardMapList.get(0);
+						}
+						returnMap.put("creditCard", creditCardMap);
+						DynamicDataSourceHolder.change2mysql();
+					} catch (Exception e) {
+						throw e;
+					} finally {
+						DynamicDataSourceHolder.change2mysql();
 					}
-					returnMap.put("creditCard", creditCardMap);
-					DynamicDataSourceHolder.change2mysql();
+					
 					continue;
 				}
 				// 担保信息
 				if (Constants.ITEM_GUARANTEE.equals(queryItem)) {
-					DynamicDataSourceHolder.change2oracle();
-					List<Map<String, Object>> guaranteeList = zhGuaranteeDao.query(innerID);
-					if (null == guaranteeList) {
-						guaranteeList = new ArrayList<Map<String, Object>>();
+					try {
+						DynamicDataSourceHolder.change2oracle();
+						List<Map<String, Object>> guaranteeList = zhGuaranteeDao.query(innerID);
+						if (null == guaranteeList) {
+							guaranteeList = new ArrayList<Map<String, Object>>();
+						}
+						returnMap.put("guarantee", guaranteeList);
+						DynamicDataSourceHolder.change2mysql();
+					} catch (Exception e) {
+						throw e;
+					} finally {
+						DynamicDataSourceHolder.change2mysql();
 					}
-					returnMap.put("guarantee", guaranteeList);
-					DynamicDataSourceHolder.change2mysql();
+					
 					continue;
 				}
 				// 公积金信息
