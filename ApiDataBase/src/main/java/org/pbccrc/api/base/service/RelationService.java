@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.pbccrc.api.base.bean.Relation;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 public interface RelationService {
@@ -20,4 +21,11 @@ public interface RelationService {
 	 * @return
 	 */
 	JSONObject getRelation(String userID, String productID);
+	
+	/**
+	 * 根据用户ID查询该用户所有relation对象
+	 * @param userID
+	 * @return
+	 */
+	JSONArray getRelation(String userID);
 }
