@@ -23,10 +23,16 @@ public interface SystemLogMapper {
 	void addLog(SystemLog systemLog);
 	
 	/**
-	 * 添加日志
+	 * 查询汇总日志（用户、产品、时间维度）
 	 * @param systemLog
 	 */
 	List<Map<String, Object>> sumLog(Map<String, String> queryMap);
+	
+	/**
+	 * 查询汇总日志（用户、产品、时间、API维度）
+	 * @param systemLog
+	 */
+	List<Map<String, Object>> sumApiLog(Map<String, String> queryMap);
 	
 	/**
 	 * 查询日志详情

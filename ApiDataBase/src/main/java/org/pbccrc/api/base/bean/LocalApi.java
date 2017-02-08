@@ -24,6 +24,9 @@ public class LocalApi implements Serializable{
 	/** 数据库表名称 */
 	private String tblName;
 	
+	/** 查询类型 1-两标查询 2-电话号码查询*/
+	private int queryType;
+	
 	/** 服务url */
 	private String url;
 	
@@ -153,6 +156,14 @@ public class LocalApi implements Serializable{
 
 	public void setStopDate(String stopDate) {
 		this.stopDate = stopDate;
+	}
+
+	public int getQueryType() {
+		return queryType;
+	}
+
+	public void setQueryType(int queryType) {
+		this.queryType = queryType;
 	}
 	
 }

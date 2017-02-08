@@ -51,7 +51,7 @@ public class LocalApiServiceImpl implements LocalApiService{
 	 */
 	@Transactional
 	public void addLocalApi(LocalApi localApi){
-		SimpleDateFormat dateFormat = new SimpleDateFormat("YYYYMMDD");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 		localApi.setCreateDate(dateFormat.format(new Date()));
 		localApiDao.addLocalApi(localApi);
 		RedisClient.set("localApi_" + localApi.getId(), localApi);

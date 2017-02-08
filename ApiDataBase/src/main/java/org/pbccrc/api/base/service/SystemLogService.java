@@ -14,6 +14,8 @@ public interface SystemLogService {
 	
 	Pagination sumLog(Map<String, String> queryMap, Pagination pagination);
 	
+	Pagination sumApiLog(Map<String, String> queryMap, Pagination pagination);
+	
 	Pagination queryLogDetail(Map<String, String> queryMap, Pagination pagination);
 
 }

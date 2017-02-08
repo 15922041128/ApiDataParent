@@ -28,6 +28,10 @@ public class SystemLogServiceImpl implements SystemLogService{
 		return systemLogDao.sumLog(queryMap, pagination);
 	}
 	
+	public Pagination sumApiLog(Map<String, String> queryMap, Pagination pagination) {
+		return systemLogDao.sumApiLog(queryMap, pagination);
+	}
+	
 	public Pagination queryLogDetail(Map<String, String> queryMap, Pagination pagination) {
 		return systemLogDao.queryLogDetail(queryMap, pagination);
 	}

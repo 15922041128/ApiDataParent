@@ -32,8 +32,8 @@
 	</select>
 	
 	<insert id="addLocalApi" keyProperty="id" parameterType="org.pbccrc.api.base.bean.LocalApi">
-		insert into localApi(apiName, service, tblName, url, params, returnType, returnParam, costCondition, basePrice, isOpen, createDate, stopDate) 
-			values(#{apiName}, #{service}, #{tblName}, #{url}, #{params}, #{returnType}, #{returnParam}, #{costCondition}, #{basePrice}, #{isOpen}, #{createDate}, #{stopDate})
+		insert into localApi(apiName, service, tblName, queryType, url, params, returnType, returnParam, costCondition, basePrice, isOpen, createDate, stopDate) 
+			values(#{apiName}, #{service}, #{tblName}, #{queryType}, #{url}, #{params}, #{returnType}, #{returnParam}, #{costCondition}, #{basePrice}, #{isOpen}, #{createDate}, #{stopDate})
 	</insert>
 	
 	<update id="updateLocalApi" parameterType="org.pbccrc.api.base.bean.LocalApi">
@@ -53,6 +53,9 @@
         	</if>
         	<if test="params !=null and params != '' ">
             	params = #{params},
+        	</if>
+        	<if test="queryType !=null and queryType != '' ">
+            	queryType = #{queryType},
         	</if>
         	<if test="returnType !=null and returnType != '' ">
             	returnType = #{returnType},

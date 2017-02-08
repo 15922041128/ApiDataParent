@@ -36,6 +36,15 @@ public class SystemLogDao{
 		return logsPagination;
 	}
 	
+	public Pagination sumApiLog(Map<String, String> queryMap, Pagination pagination) {
+		PageHelper.startPage(pagination.getCurrentPage(), pagination.getPageSize());
+		Page<Map<String, Object>> logs = (Page<Map<String, Object>>) systemLogMapper.sumApiLog(queryMap);
+		Pagination logsPagination = new Pagination();
+		logsPagination.setResult(logs.getResult());
+		logsPagination.setTotalCount(logs.getTotal());
+		return logsPagination;
+	}
+	
 	public Pagination queryLogDetail(Map<String, String> queryMap, Pagination pagination) {
 		PageHelper.startPage(pagination.getCurrentPage(), pagination.getPageSize());
 		Page<Map<String, Object>> logs = (Page<Map<String, Object>>) systemLogMapper.queryLogDetail(queryMap);
