@@ -78,12 +78,16 @@ public class UserController {
 		return retData;
 	}
 	
-	@GET
-	@CrossOrigin
+	@POST
 	@ResponseBody
 	@RequestMapping(value="/login", produces={"application/json;charset=UTF-8"})
 	public JSONObject login(@QueryParam("userName") String userName, @QueryParam("password") String password, 
 			@Context HttpServletRequest request, @Context HttpServletResponse response){
+		
+	    response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 		
 		JSONObject retrunJson = new JSONObject();
 		
