@@ -81,5 +81,18 @@ public class ProductController {
 		return product;
 	}
 	
+	@GET
+	@CrossOrigin
+	@ResponseBody
+	@RequestMapping(value="/deleteProduct", produces={"application/json;charset=UTF-8"})
+	public JSONObject deleteProduct(@QueryParam("productID") String productID){
+		Product product = new Product();
+		product.setStatus(Constants.DELETE);
+		productService.updateProduct(product);
+		JSONObject result = new JSONObject();
+		result.put("isSuccess", Constants.RET_STAT_SUCCESS);
+		return result;
+	}
+	
 
 }

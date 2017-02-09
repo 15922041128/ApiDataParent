@@ -33,7 +33,8 @@
     <dubbo:reference id="productServiceImpl" interface="org.pbccrc.api.base.service.ProductService" lazy="false" check="false"/>
     <dubbo:reference id="testServiceImpl" interface="org.pbccrc.api.base.service.TestService" lazy="false" check="false"/>
     <dubbo:reference id="dataBaseServiceImpl" interface="org.pbccrc.api.base.service.DataBaseService" lazy="false" check="false"/>
-     <dubbo:reference id="productTypeServiceImpl" interface="org.pbccrc.api.base.service.ProductTypeService" lazy="false" check="false"/>
-     <dubbo:reference id="applyServiceImpl" interface="org.pbccrc.api.base.service.ApplyService" lazy="false" check="false"/>
+    <dubbo:reference id="productTypeServiceImpl" interface="org.pbccrc.api.base.service.ProductTypeService" lazy="false" check="false"/>
+    <dubbo:reference id="applyServiceImpl" interface="org.pbccrc.api.base.service.ApplyService" lazy="false" check="false"/>
+    <dubbo:reference id="codeService" interface="org.pbccrc.api.base.service.CodeService" lazy="false" check="false"/>
 </beans>
 

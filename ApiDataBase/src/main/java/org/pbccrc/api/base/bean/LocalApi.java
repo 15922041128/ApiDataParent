@@ -45,7 +45,7 @@ public class LocalApi implements Serializable{
 	/** 基础价格 */
 	private BigDecimal basePrice;
 	
-	/** 发布状态(1 开启, 2 停用) */
+	/** 发布状态(1 开启, 2 停用, 3删除) */
 	private String isOpen;
 	
 	/** 创建时间 */

@@ -3,6 +3,7 @@ package org.pbccrc.api.base.util;
 public class Constants {
 	
 	public static final String PDF_FILE_PATH = PropertiesUtil.getStringByKey("pdfFilePath");
+	public static final String WEB_URL = PropertiesUtil.getStringByKey("webUrl");
 	
 	public static final int COUNT_MAX = -1;
 	
@@ -286,11 +287,13 @@ public class Constants {
 	
 	/** 产品状态 */
 	// 待发布
-	public static final int TO_BE_PUBLISH  = 0; 
+	public static final String TO_BE_PUBLISH  = "0"; 
 	// 发布
-	public static final int PUBLISHED = 1; 
+	public static final String PUBLISHED = "1"; 
 	// 下架
-	public static final int REMOVED = 2;
+	public static final String REMOVED = "2";
+	// 删除
+	public static final String DELETE = "3";
 	
 	/** 产品可见状态 */
 	// 可见

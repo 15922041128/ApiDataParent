@@ -24,7 +24,7 @@ public class Product implements Serializable{
 	/** 产品包含apiID */
 	private String apis;
 	
-	/** 产品状态(0待发布,1发布,2下架) */
+	/** 产品状态(0待发布,1发布,2下架,3删除) */
 	private String status;
 	
 	/** 产品是否可见(0不可见,1可见) */
