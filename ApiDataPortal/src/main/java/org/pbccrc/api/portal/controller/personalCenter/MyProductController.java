@@ -9,11 +9,11 @@ import javax.ws.rs.GET;
 
 import org.pbccrc.api.base.adapter.JsonAdapter;
 import org.pbccrc.api.base.bean.QueryType;
-import org.pbccrc.api.base.service.LocalApiService;
 import org.pbccrc.api.base.service.ProductService;
 import org.pbccrc.api.base.service.QueryTypeService;
 import org.pbccrc.api.base.service.RelationService;
 import org.pbccrc.api.base.util.Constants;
+import org.pbccrc.api.base.util.RedisClient;
 import org.pbccrc.api.base.util.RemoteApiOperator;
 import org.pbccrc.api.base.util.StringUtil;
 import org.pbccrc.api.base.util.SystemUtil;
@@ -37,9 +37,6 @@ public class MyProductController {
 	
 	@Autowired
 	private QueryTypeService queryTypeService;
-	
-	@Autowired
-	private LocalApiService localApiService;
 	
 	@Autowired
 	private RemoteApiOperator remoteApiOperator;
@@ -112,7 +109,7 @@ public class MyProductController {
 	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/myProduct/getResult", produces={"application/json;charset=UTF-8"})
-	public JSONObject getResult(String serviceStr, HttpServletRequest request) throws Exception{
+	public JSONObject getResult(String apiIds, HttpServletRequest request) throws Exception{
 		
 		// 返回对象
 		JSONObject resultObject = new JSONObject();
@@ -149,10 +146,13 @@ public class MyProductController {
 		String ipAddress = SystemUtil.getIpAddress(request);
 		
 		// 遍历service
-		String[] services = serviceStr.split(Constants.COMMA);
-		for (String service : services) {
-			Map<String, Object> localApi = localApiService.queryByService(service);
-			String url = String.valueOf(localApi.get("url"));
+		String[] apiIdArray = apiIds.split(Constants.COMMA);
+		for (String apiId : apiIdArray) {
+			// 从缓存中读取localApi
+			JSONObject localApi = JSONObject.parseObject(String.valueOf(RedisClient.get("localApi_" + apiId)));
+			// 获取service
+			String service = localApi.getString("service");
+			String url = Constants.WEB_URL + String.valueOf(localApi.get("url"));
 			JSONObject returnJson = null;
 			returnJson = JSONObject.parseObject(remoteApiOperator.insideAccess(userID, apiKey, url, service, ipAddress, paramMap));
 			// 返回参数英文转中文
