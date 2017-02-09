@@ -3,6 +3,7 @@ package org.pbccrc.api.base.util;
 public class Constants {
 	
 	public static final String PDF_FILE_PATH = PropertiesUtil.getStringByKey("pdfFilePath");
+	public static final String WEB_URL = PropertiesUtil.getStringByKey("webUrl");
 	
 	public static final int COUNT_MAX = -1;
 	
