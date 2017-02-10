@@ -4,11 +4,11 @@
 <mapper namespace="org.pbccrc.api.core.mapper.DataBaseMapper">
 	
 	<select id="queryAllTable" resultType="java.util.HashMap">
-		select table_name, comments from user_tab_comments 
+		select table_name as TABLE_NAME, comments as COMMENTS from user_tab_comments 
 	</select>
 	
 	<select id="queryColumnByTable" parameterType="java.lang.String" resultType="java.util.HashMap">
-		select column_name as en_name, comments as ch_name from user_col_comments where Table_Name  = #{tableName}
+		select column_name as EN_NAME, comments as CH_NAME from user_col_comments where Table_Name  = #{tableName}
 	</select>
 	
 </mapper>

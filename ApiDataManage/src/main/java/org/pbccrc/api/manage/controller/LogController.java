@@ -67,11 +67,12 @@ public class LogController {
 	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/getLogDetail", produces={"application/json;charset=UTF-8"})
-	public Pagination getLogDetail(String userID, String productID, String dateRange, String isSuccess, Pagination pagination){
+	public Pagination getLogDetail(String userID, String productID, String dateRange, String apiId, String isSuccess, Pagination pagination){
 		Map<String, String> queryMap = new HashMap<String, String>();
 		queryMap.put("userID", userID);
 		queryMap.put("productID", productID);
 		queryMap.put("isSuccess", isSuccess);
+		queryMap.put("localApiID", apiId);
 		
 		String[] dataArray = dateRange.split(",");
 		

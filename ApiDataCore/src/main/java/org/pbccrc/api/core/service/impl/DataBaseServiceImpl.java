@@ -30,13 +30,9 @@ public class DataBaseServiceImpl implements DataBaseService {
 		List<Map<String, Object>> columns = null;
 		
 		try {
-			DynamicDataSourceHolder.change2oracle();
 			columns = dataBaseDao.queryColumnByTable(tableName);
-			DynamicDataSourceHolder.change2mysql();	
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			DynamicDataSourceHolder.change2mysql();
 		}
 		
 		for (Map<String, Object> column : columns) {
@@ -57,13 +53,9 @@ public class DataBaseServiceImpl implements DataBaseService {
 		List<Map<String, Object>> tables = null;
 		
 		try {
-			DynamicDataSourceHolder.change2oracle();
 			tables = dataBaseDao.queryAllTable();
-			DynamicDataSourceHolder.change2mysql();	
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			DynamicDataSourceHolder.change2mysql();
 		}
 		
 		for (Map<String, Object> table : tables) {
