@@ -29,8 +29,9 @@ public class RedisClient {
         int maxActive = 0;
 		int maxIdle = 0;
 		int maxWait = 0;
-		String ip = "";
+		String ip = Constants.BLANK;
 		int port = 0;
+		String auth = Constants.BLANK;
         try {
 			prop.load(in);
 			maxActive = Integer.parseInt(prop.getProperty("redis.pool.maxActive"));
@@ -38,6 +39,7 @@ public class RedisClient {
 			maxWait = Integer.parseInt(prop.getProperty("redis.pool.maxWait"));
 			ip = prop.getProperty("redis.ip");
 			port = Integer.parseInt(prop.getProperty("redis.port"));
+			auth = prop.getProperty("redis.auth");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -51,7 +53,7 @@ public class RedisClient {
 		config.setMaxWaitMillis(maxWait);
 
 		// 初始化连接池
-		jedisPool = new JedisPool(config, ip, port);
+		jedisPool = new JedisPool(config, ip, port, 0, auth);
 	}
 
 	/**
