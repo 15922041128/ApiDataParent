@@ -44,14 +44,6 @@ public interface LocalDBService {
 	public String getInnerID(String name, String identifier) throws Exception;
 	
 	/***
-	 * 根据身份证查询内码
-	 * @param identifier	身份证号
-	 * @return
-	 * @throws Exception
-	 */
-	public String getInnerID(String identifier) throws Exception;
-	
-	/***
 	 * 根据手机号查询内码
 	 * @param telNum	手机号码
 	 * @return

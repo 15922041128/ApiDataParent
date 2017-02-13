@@ -191,10 +191,10 @@ public class QueryApiServiceImpl implements QueryApiService{
 		String isSuccess = "true";
 		
 		// 根据身份证号获取内码信息
-		Map<String, Object> insideCodeMap = null;
+		List<Map<String, Object>> insideCodeMapList = null;
 		try {
 			DynamicDataSourceHolder.change2oracle();
-			insideCodeMap = zhIdentificationDao.getInnerID(name, identifier);
+			insideCodeMapList = zhIdentificationDao.getInnerID(identifier);
 			DynamicDataSourceHolder.change2mysql();
 		} catch (Exception e) {
 			throw e;
@@ -202,11 +202,20 @@ public class QueryApiServiceImpl implements QueryApiService{
 			DynamicDataSourceHolder.change2mysql();
 		}
 		
-		if (null == insideCodeMap) {
+		if (null == insideCodeMapList) {
 			isSuccess = "false";
-			resultJson.put("result", "不一致");
+			resultJson.put("result", "未找到数据");
 		} else {
-			resultJson.put("result", "一致");
+			resultJson.put("result", "不一致");
+			for (Map<String, Object> insideCodeMap : insideCodeMapList) {
+				
+				String dbName = String.valueOf(insideCodeMap.get("NAME"));
+				
+				if(StringUtil.MD5Encoder(name).toUpperCase().equals(dbName)) {
+					resultJson.put("result", "一致");
+					break;
+				}
+			}
 		}
 		
 		//  数据来源,记录日志用

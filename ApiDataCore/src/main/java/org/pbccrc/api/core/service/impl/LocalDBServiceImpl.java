@@ -250,37 +250,6 @@ public class LocalDBServiceImpl implements LocalDBService {
 	}
 	
 	/***
-	 * 根据身份证查询内码
-	 * @param idCardNo		身份证号
-	 * @return
-	 * @throws Exception
-	 */
-	public String getInnerID(String identifier) throws Exception {
-		
-		String innerID = Constants.BLANK;
-		
-		Map<String, Object> returnMap = null;
-		
-		try {
-			DynamicDataSourceHolder.change2oracle();
-			returnMap = zhIdentificationDao.getInnerID(identifier);
-			DynamicDataSourceHolder.change2mysql();	
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			DynamicDataSourceHolder.change2mysql();
-		}
-		
-		if (null == returnMap) {
-			return innerID;
-		}
-
-		innerID = String.valueOf(returnMap.get("INNERID"));
-		
-		return innerID;
-	}
-	
-	/***
 	 * 根据手机号查询内码
 	 * @param telNum	手机号码
 	 * @return

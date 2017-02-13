@@ -295,7 +295,7 @@ public class QueryApiController {
 		// 是否成功
 		systemLog.setIsSuccess(String.valueOf(map.get("isSuccess")));
 		// 是否计费
-		systemLog.setIsCount("true");
+		systemLog.setIsCount(String.valueOf(map.get("isSuccess")));
 		// 查询时间
 		systemLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FORMAT_SYSTEMLOG).format(new Date()));
 		systemLogService.addLog(systemLog);

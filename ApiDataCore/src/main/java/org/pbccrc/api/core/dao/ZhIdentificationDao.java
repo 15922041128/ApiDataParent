@@ -28,14 +28,14 @@ public class ZhIdentificationDao {
 		return mapList.get(0);
 	}
 	
-	public Map<String, Object> getInnerID(String identifier){
+	public List<Map<String, Object>> getInnerID(String identifier){
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("identifier", StringUtil.MD5Encoder(identifier).toUpperCase());
 		List<Map<String, Object>> mapList = zhIdentificationMapper.getInnerID(map);
 		if (null == mapList || mapList.size() == 0) {
 			return null;
 		}
-		return mapList.get(0);
+		return mapList;
 	}
 	
 }
