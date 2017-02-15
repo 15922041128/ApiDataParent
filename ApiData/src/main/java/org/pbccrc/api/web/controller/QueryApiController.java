@@ -264,10 +264,10 @@ public class QueryApiController {
 		
 		Map<String, Object> map = queryApiService.querySfz(uuid, userID, name, identifier);
 		result = map.get("result");
-		JSONObject resultJson = (JSONObject) JSONObject.toJSON(result);
+//		JSONObject resultJson = (JSONObject) JSONObject.toJSON(result);
 		
 		// 判断是否计费
-		if("true".equals(resultJson.getString("isSuccess"))) {
+		if("true".equals(String.valueOf(map.get("isSuccess")))) {
 			costService.cost(userID, apiKey);
 		}
 		

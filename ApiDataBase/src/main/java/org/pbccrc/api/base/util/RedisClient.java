@@ -162,7 +162,7 @@ public class RedisClient {
 			return value;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			return null;
 		} finally {
 			jedisPool.returnResource(jedis);
 		}
