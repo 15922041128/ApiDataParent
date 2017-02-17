@@ -147,6 +147,7 @@ public class MyProductController {
 		
 		// 遍历service
 		String[] apiIdArray = apiIds.split(Constants.COMMA);
+		boolean hasData = false;
 		for (String apiId : apiIdArray) {
 			// 从缓存中读取localApi
 			JSONObject localApi = JSONObject.parseObject(String.valueOf(RedisClient.get("localApi_" + apiId)));
@@ -162,10 +163,10 @@ public class MyProductController {
 				returnJson.put("retData", new JSONArray());
 				resultMessage = returnJson.getString("retMsg");
 			} else {
+				hasData = true;
 				retData = jsonAdapter.change2Ch(service, retData);
 				returnJson.put("retData", JSONObject.parse(retData));
 			}
-			
 			
 			// 返回类型
 			String queryType = String.valueOf(localApi.get("returnType"));
@@ -177,8 +178,9 @@ public class MyProductController {
 			
 			resultArray.add(returnJson);
 		}
-		
-		resultObject.put("resultMessage", resultMessage);
+		if (!hasData) {
+			resultObject.put("resultMessage", resultMessage);
+		}
 		resultObject.put("resultArray", resultArray);
 		
 		return resultObject;

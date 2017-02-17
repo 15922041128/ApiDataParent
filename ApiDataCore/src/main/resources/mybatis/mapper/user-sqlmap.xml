@@ -52,12 +52,8 @@
         	<if test="license !=null and license != '' ">
             	license = #{license},
         	</if>
-        	<if test="taxRegCertify !=null and taxRegCertify != '' ">
-            	taxRegCertify = #{taxRegCertify},
-        	</if>
-        	<if test="org !=null and org != '' ">
-            	org = #{org},
-        	</if>
+        	taxRegCertify = #{taxRegCertify},
+        	org = #{org},
         	<if test="licenseImg !=null and licenseImg != '' ">
             	licenseImg = #{licenseImg},
         	</if>

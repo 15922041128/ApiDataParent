@@ -290,7 +290,13 @@ public class UserController {
 		user.setArea(area);
 		user.setAddress(address);
 		user.setLicense(license);
+		if (StringUtil.isNull(taxRegCertify)) {
+			taxRegCertify = Constants.BLANK;
+		}
 		user.setTaxRegCertify(taxRegCertify);
+		if (StringUtil.isNull(org)) {
+			org = Constants.BLANK;
+		}
 		user.setOrg(org);
 		user.setAuth(Constants.AUTH_STATUS_WAIT);
 		// 如果用户重新上传图片,则覆盖当前图片
