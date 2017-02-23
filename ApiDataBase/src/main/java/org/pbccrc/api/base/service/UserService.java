@@ -52,5 +52,13 @@ public interface UserService {
 	 * @return
 	 */
 	public Pagination queryAllUser(User user, Pagination pagination); 
+	
+	/**
+	 * 重置用户密码
+	 * @param userID
+	 * @param password
+	 * @return
+	 */
+	boolean resetPassword(String userID, String password);
 
 }

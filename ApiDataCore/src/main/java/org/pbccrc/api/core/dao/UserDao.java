@@ -46,4 +46,15 @@ public class UserDao{
 		return userPagination;
 	}
 	
+	public boolean resetPassword(String userID, String password) {
+		
+		User user = new User();
+		user.setPassword(password);
+		user.setId(Integer.parseInt(userID));
+		
+		int cnt = userMapper.resetPassword(user);
+		
+		return cnt != 0;
+	}
+	
 }

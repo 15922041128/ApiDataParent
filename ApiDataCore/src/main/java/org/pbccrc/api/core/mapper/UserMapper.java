@@ -19,4 +19,6 @@ public interface UserMapper {
 	User getUserByID(String userID);
 	
 	List<User> getAllUser(User user);
+	
+	int resetPassword(User user);
 }

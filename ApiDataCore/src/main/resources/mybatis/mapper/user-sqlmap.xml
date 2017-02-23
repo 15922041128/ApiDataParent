@@ -67,7 +67,6 @@
         <where>
 			id = #{id}
 		</where>	
-		
 	</update>
 	
 	<select id="getUserByID" parameterType="java.lang.String" resultType="org.pbccrc.api.base.bean.User">
@@ -97,5 +96,9 @@
             	and userState = #{userState}
         	</if>
 	</select>
+	
+	<update id="resetPassword" parameterType="org.pbccrc.api.base.bean.User">
+		update user password = #{password} where id = #{id}
+	</update>
 	
 </mapper>

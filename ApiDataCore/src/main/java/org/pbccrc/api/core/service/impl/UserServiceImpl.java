@@ -106,4 +106,15 @@ public class UserServiceImpl implements UserService{
 	public Pagination queryAllUser(User user, Pagination pagination) {
 		return userDao.getUserByPage(user, pagination);
 	}
+	
+	/**
+	 * 重置用户密码
+	 * @param userID
+	 * @param password
+	 * @return
+	 */
+	public boolean resetPassword(String userID, String password) {
+		
+		return userDao.resetPassword(userID, StringUtil.string2MD5(password));
+	}
 }
