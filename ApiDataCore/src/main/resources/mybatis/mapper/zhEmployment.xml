@@ -18,7 +18,7 @@
 	      e.annualIncome,
 	      e.pin,
 	      e.gettime,
-	      to_char(e.opendate, 'yyyy-mm-dd') opendate 
+	      to_char(e.opendate, 'yyyy-mm-dd') opendate
 	    from employment e
 	    LEFT JOIN dd_financeorg ddfin on e.financecode = ddfin.financecode
 	    LEFT JOIN dd_occupation ddo on e.occupation = ddo.occupationCode

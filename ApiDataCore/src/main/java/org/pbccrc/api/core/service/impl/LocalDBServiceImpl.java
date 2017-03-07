@@ -16,6 +16,7 @@ import org.pbccrc.api.core.dao.ApiLogDao;
 import org.pbccrc.api.core.dao.DBOperatorDao;
 import org.pbccrc.api.core.dao.LdbApiDao;
 import org.pbccrc.api.core.dao.LocalApiDao;
+import org.pbccrc.api.core.dao.ScoreTriDao;
 import org.pbccrc.api.core.dao.TelPersonDao;
 import org.pbccrc.api.core.dao.ZhAddressDao;
 import org.pbccrc.api.core.dao.ZhCreditCardDao;
@@ -70,6 +71,9 @@ public class LocalDBServiceImpl implements LocalDBService {
 	
 	@Autowired
 	private ZhPersonDao zhPersonDao;
+	
+	@Autowired
+	private ScoreTriDao scoreTriDao;
 	
 	/***
 	 * 根据身份证和姓名查询信贷信息
@@ -320,7 +324,8 @@ public class LocalDBServiceImpl implements LocalDBService {
 					|| Constants.ORA_TBL_NAME_EMPLOYMENT.equals(tblName)
 					|| Constants.ORA_TBL_NAME_CREDITCARD.equals(tblName)
 					|| Constants.ORA_TBL_NAME_LOAN.equals(tblName)
-					|| Constants.ORA_TBL_NAME_GUARANTEE.equals(tblName)) {
+					|| Constants.ORA_TBL_NAME_GUARANTEE.equals(tblName)
+					|| Constants.ORA_TBL_SCORE_TRI.equals(tblName)) {
 				// DB返回结果集
 				List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
 				// 根据返回配置信息返回的结果集
@@ -337,6 +342,8 @@ public class LocalDBServiceImpl implements LocalDBService {
 					returnList = zhLoanDao.query(innerID);
 				} else if (Constants.ORA_TBL_NAME_GUARANTEE.equals(tblName)) {
 					returnList = zhGuaranteeDao.query(innerID);
+				} else if (Constants.ORA_TBL_SCORE_TRI.equals(tblName)) {
+					returnList = scoreTriDao.getScore(innerID);
 				}
 				JSONArray jsonArray = new JSONArray();
 				// 根据配置返回信息

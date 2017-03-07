@@ -39,7 +39,9 @@ public class JsonAdapter {
 				
 				String value = jsonObject.getString(enName);
 				jsonObject.put(chName, value);
-				jsonObject.remove(enName);
+				if (!chName.equals(enName)) {
+					jsonObject.remove(enName);	
+				}
 			}
 			
 			returnStr = jsonObject.toJSONString();
@@ -57,7 +59,9 @@ public class JsonAdapter {
 					
 					String value = jsonObject.getString(enName);
 					jsonObject.put(chName, value);
-					jsonObject.remove(enName);
+					if (!chName.equals(enName)) {
+						jsonObject.remove(enName);
+					}
 				}
 				retrunArray.add(jsonObject);
 			}
