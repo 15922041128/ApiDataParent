@@ -55,7 +55,7 @@ public class PdfBuilder {
 		JSONObject obj = JSONObject.parseObject(jsonString);
 		
 		// 信用评分
-		String score = obj.getString("score");
+		String score = obj.getString("SCORE");
 		
 		String basePath = request.getSession().getServletContext().getRealPath(outPath);
 //		String basePath = "D:/pdftest";

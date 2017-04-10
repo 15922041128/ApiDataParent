@@ -7,6 +7,8 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 
+import org.apache.commons.codec.binary.Base64;
+
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
  
@@ -142,4 +144,12 @@ public class DesUtils {
  
         return cipher.doFinal(data);
     }
+    
+    /**
+	 * Base64加密
+	 */
+	public static String Base64Encode(String str) throws Exception {
+	
+		return new String(new Base64().encode(str.getBytes("UTF-8")));
+	}
 }

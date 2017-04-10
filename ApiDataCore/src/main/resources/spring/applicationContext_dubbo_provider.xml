@@ -48,4 +48,12 @@
     <dubbo:service interface="org.pbccrc.api.base.service.ApplyService" ref="applyServiceImpl"/>
     <dubbo:service interface="org.pbccrc.api.base.service.DataBaseService" ref="dataBaseServiceImpl"/>
     <dubbo:service interface="org.pbccrc.api.base.service.QueryTypeService" ref="queryTypeServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.CreditService" ref="creditServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.PersonLogService" ref="personLogServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.PPersonService" ref="pPersonServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.ZhIdentificationService" ref="zhIdentificationServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.ScoreService" ref="scoreServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.PBaseInfoService" ref="pBaseInfoServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.PReditService" ref="pReditServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.BankCardAuthService" ref="bankCardAuthServiceImpl"/>
 </beans>

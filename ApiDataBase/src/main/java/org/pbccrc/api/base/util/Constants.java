@@ -2,8 +2,17 @@ package org.pbccrc.api.base.util;
 
 public class Constants {
 	
+	// pdf导出目录
 	public static final String PDF_FILE_PATH = PropertiesUtil.getStringByKey("pdfFilePath");
+	// portal访问路径
 	public static final String WEB_URL = PropertiesUtil.getStringByKey("webUrl");
+	// 批量报送模板文件
+	public static final String BATCH_ADD_TEMPLATE_FILE = "/files/template/addTemplate.xlsm";
+	// 批量查询模板文件
+	public static final String BATCH_QUERY_TEMPLATE_FILE = "/files/template/queryTemplate.xlsx";
+	
+	public static final String STR_ZERO = "0";
+	public static final String STR_ONE = "1";
 	
 	public static final int COUNT_MAX = -1;
 	
@@ -42,6 +51,8 @@ public class Constants {
 	public static final String UPLOAD_ERROR_FILE = "/files/download/uploadError";
 	// 批量查询文件目录
 	public static final String BATCH_QUERY_FILE = "/files/download/batchQuery";
+	// 批量上传文件目录
+	public static final String BATCH_ADD_FILE = "/files/download/batchAdd";
 	
 	/** 返回code */
 	public static final String RET_CODE_SUCCESS = "success";
@@ -213,9 +224,7 @@ public class Constants {
 	
 	/** 本地访问用url(local DB) */
 	// 失信人被执行信息
-	public static final String URL_LDB_GETSXR = "http://127.0.0.1:8080/ApiData/r/ldb/getSxr";
-	// 本地api查询接口
-	public static final String URL_LDB_QUERY = "http://127.0.0.1:8080/ApiData/r/ldb/query";
+	public static final String URL_LDB_GETSXR = "/ApiData/r/ldb/getSxr";
 	
 	/** 本地访问用service(local DB) */
 	// 授信信息
@@ -256,6 +265,8 @@ public class Constants {
 	public static final String IS_COST_FALSE = "false";
 	// 数据来源-本地
 	public static final String DATA_FROM_LOCAL = "local";
+	// 数据来源-新颜
+	public static final String DATA_FROM_XINYAN = "xinyan";
 	// 数据来源-qilingyz
 	public static final String DATA_FROM_QILINGYZ = "qilingyz";
 	// 数据来源-全联
@@ -354,4 +365,16 @@ public class Constants {
 	public static final int USER_STATE_OPEN = 1;
 	// 停用
 	public static final int USER_STATE_CLOSE = 0;
+	
+	/** 信用风险信息服务平台用户操作类型 */
+	// 单次查询
+	public static final String OPERATOR_TYPE_QUERY = "1";
+	// 单次报送step1
+	public static final String OPERATOR_TYPE_ADD_STEP1 = "2";
+	// 单次报送step2
+	public static final String OPERATOR_TYPE_ADD_STEP2 = "3";
+	// 批量查询
+	public static final String OPERATOR_TYPE_QUERYALL = "4";
+	// 批量报送
+	public static final String OPERATOR_TYPE_ADDALL = "5";
 }

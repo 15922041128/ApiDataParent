@@ -2,6 +2,7 @@ package org.pbccrc.api.web.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -73,35 +74,34 @@ public class LocalDBController {
 		return result;
 	}
 	
-//	/**
-//	 * 失信人查询
-//	 * @param idCardNo
-//	 * @return
-//	 * @throws Exception
-//	 */
-//	@GET
-//	@CrossOrigin
-//	@ResponseBody
-//	@RequestMapping(value="/getSxr", produces={"application/json;charset=UTF-8"})
-//	public JSONObject getSxr(@QueryParam("idCardNo") String idCardNo) throws Exception {
-//		
-//		JSONObject object = new JSONObject();
-//		object.put("errNum", Constants.CODE_ERR_SUCCESS);
-//		object.put("retMsg", Constants.CODE_ERR_SUCCESS_MSG);
-//		object.put("retData", Constants.BLANK);
-//		
-//		List<Map<String, Object>> dishonestList = localDBService.getSxr(idCardNo);
-//		
-//		if (null == dishonestList || dishonestList.size() == 0) {
-//			object.put("errNum", Constants.ERR_NO_RESULT);
-//			object.put("retMsg", Constants.RET_MSG_NO_RESULT);
-//			return object;
-//		}
-//		
-//		object.put("retData", dishonestList);
-//		
-//		return object;
-//	}
+	/**
+	 * 失信人查询(PDF用)
+	 * @param idCardNo
+	 * @return
+	 * @throws Exception
+	 */
+	@GET
+	@CrossOrigin
+	@ResponseBody
+	@RequestMapping(value="/getSxr", produces={"application/json;charset=UTF-8"})
+	public JSONObject getSxr(@QueryParam("name") String name, @QueryParam("identifier") String identifier) throws Exception {
+		
+		JSONObject object = new JSONObject();
+		object.put("errNum", Constants.CODE_ERR_SUCCESS);
+		object.put("retMsg", Constants.CODE_ERR_SUCCESS_MSG);
+		object.put("retData", Constants.BLANK);
+		
+		List<Map<String, Object>> dishonestList = localDBService.getSxr(name, identifier);
+		
+		if (null == dishonestList || dishonestList.size() == 0) {
+			object.put("errNum", Constants.ERR_NO_RESULT);
+			object.put("retMsg", Constants.RET_MSG_NO_RESULT);
+		}
+		
+		object.put("retData", dishonestList);
+		
+		return object;
+	}
 	
 	@GET
 	@ResponseBody

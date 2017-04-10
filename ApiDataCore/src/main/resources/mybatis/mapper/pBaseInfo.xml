@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pbccrc.api.core.mapper.PBaseInfoMapper">
+	
+	<select id="isExist" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(1) from p_baseInfo where personID = #{personID}
+	</select>
+	
+	<insert id="addPBaseInfo" parameterType="java.util.HashMap" useGeneratedKeys="true" keyProperty="ID">
+		insert into p_baseInfo(personID, photo, tel, address, createUser, createTime, updateUser, updateTime) values(
+			#{personID}, #{photo}, #{tel}, #{address}, #{createUser}, #{createTime}, #{updateUser}, #{updateTime})
+	</insert>
+	
+	<update id="updatePBaseInfo" parameterType="java.util.HashMap">
+		update p_baseInfo set photo = #{photo}, tel = #{tel}, address = #{address}, 
+			updateUser = #{updateUser}, updateTime = #{updateTime} where personID = ${personID}
+	</update>
+	
+	<select id="queryByPersonID" parameterType="java.lang.String" resultType="java.util.HashMap">
+		select * from p_baseInfo where personID = #{personID} order by updateTime desc
+	</select>
+	
+</mapper>

@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.pbccrc.api.base.service.DataBaseService;
 import org.pbccrc.api.core.dao.DataBaseDao;
-import org.pbccrc.api.core.dao.datasource.DynamicDataSourceHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
