@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pbccrc.api.core.mapper.PPersonMapper">
+	
+	<select id="isExist" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		select count(1) from p_person where idCardNo = #{idCardNo} and name = #{name}
+	</select>
+	
+	<insert id="addPerson" parameterType="java.util.HashMap" useGeneratedKeys="true" keyProperty="id">
+		insert into p_person(idCardNo, name) values(#{idCardNo}, #{name})
+	</insert>
+	
+	<select id="selectOne" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select * from p_person where idCardNo = #{idCardNo} and name = #{name}
+	</select>
+	
+</mapper>

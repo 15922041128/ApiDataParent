@@ -131,33 +131,79 @@ public class LocalDBServiceImpl implements LocalDBService {
 	
 
 	/***
-	 * 根据身份证和姓名查询失信被执行人信息
-	 * @param idCardNo		身份证号
+	 * 查询失信被执行人信息(PDF用)
+	 * @param name			姓名
+	 * @param identifier	身份证号
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Map<String, Object>> getSxr(String idCardNo) throws Exception {
+	public List<Map<String, Object>> getSxr(String name, String identifier) throws Exception {
 		
-		String tableName = "ldb_dishonest_info";
+		List<Map<String, Object>> dishonestList = new ArrayList<Map<String, Object>>();
+		
+//		String tableName = "ldb_dishonest_info";
+//		DBEntity entity = new DBEntity();
+//		entity.setTableName(tableName);
+//		List<String> fields = new ArrayList<String>();
+//		fields.add("CARDNUM");
+//		List<String> values = new ArrayList<String>();
+//		values.add(identifier);
+//		entity.setFields(fields);
+//		entity.setValues(values);
+//		
+//		String[] selectItems = new String[]{
+//				Constants.LDB_DISHONEST_INFO_CARDNUM, Constants.LDB_DISHONEST_INFO_COURT_NAME, 
+//				Constants.LDB_DISHONEST_INFO_CASE_CODE, Constants.LDB_DISHONEST_INFO_INAME, 
+//				Constants.LDB_DISHONEST_INFO_PERFORMANCE, Constants.LDB_DISHONEST_INFO_PUBLISH_DATE,
+//				Constants.LDB_DISHONEST_INFO_AREA_NAME, Constants.LDB_DISHONEST_INFO_DUTY,
+//				Constants.LDB_DISHONEST_INFO_DISREPUT_TYPE_NAME};
+//		entity.setSelectItems(selectItems);
+//		
+//		dishonestList = dbOperatorDao.queryDatas(entity);
+		
+		String innerID = getInnerID(name, identifier);
+		
+		Map<String, Object> localApi = localApiDao.queryByService("l-sxr2");
+		
+		// 获取返回参数
+		String returnParam = String.valueOf(localApi.get("returnParam"));
+		
+		JSONArray paramArray = JSONArray.parseArray(returnParam);
+		String[] returnParams = new String[paramArray.size()];
+		for (int i = 0; i < paramArray.size(); i++) {
+			JSONObject object = (JSONObject) JSONObject.toJSON(paramArray.get(i));
+			returnParams[i] = object.getString(Constants.EN_NAME);
+		}
+		
+		// 设置DBEntity
 		DBEntity entity = new DBEntity();
-		entity.setTableName(tableName);
+		// 表名
+		entity.setTableName(String.valueOf(localApi.get("tblName")));
+		// 查询条件
 		List<String> fields = new ArrayList<String>();
-		fields.add("CARDNUM");
 		List<String> values = new ArrayList<String>();
-		values.add(idCardNo);
+		fields.add("INNERID");
+		values.add(innerID);
 		entity.setFields(fields);
 		entity.setValues(values);
-		
-		String[] selectItems = new String[]{
-				Constants.LDB_DISHONEST_INFO_CARDNUM, Constants.LDB_DISHONEST_INFO_COURT_NAME, 
-				Constants.LDB_DISHONEST_INFO_CASE_CODE, Constants.LDB_DISHONEST_INFO_INAME, 
-				Constants.LDB_DISHONEST_INFO_PERFORMANCE, Constants.LDB_DISHONEST_INFO_PUBLISH_DATE,
-				Constants.LDB_DISHONEST_INFO_AREA_NAME, Constants.LDB_DISHONEST_INFO_DUTY,
-				Constants.LDB_DISHONEST_INFO_DISREPUT_TYPE_NAME};
+		// 返回值
+		String[] selectItems = new String[returnParams.length];
+		for (int i = 0; i < returnParams.length; i++) {
+			selectItems[i] = returnParams[i].toUpperCase();
+		}
 		entity.setSelectItems(selectItems);
-		
-		List<Map<String, Object>> dishonestList = dbOperatorDao.queryDatas(entity);
-		
+		// 数据库类型
+		entity.setDataBaseType(Constants.DATABASE_TYPE_ORACLE);
+		try {
+			DynamicDataSourceHolder.change2oracle();
+			List<Map<String, Object>> dbMapList = dbOperatorDao.queryDatas(entity);
+			DynamicDataSourceHolder.change2mysql();
+			dishonestList = dbMapList;
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			DynamicDataSourceHolder.change2mysql();
+		}
 		return dishonestList;
 	}
 	

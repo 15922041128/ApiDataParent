@@ -37,5 +37,12 @@
     <dubbo:reference id="dataBaseServiceImpl" interface="org.pbccrc.api.base.service.DataBaseService" lazy="false" check="false"/>
     <dubbo:reference id="codeService" interface="org.pbccrc.api.base.service.CodeService" lazy="false" check="false"/>
     <dubbo:reference id="queryTypeServiceImpl" interface="org.pbccrc.api.base.service.QueryTypeService" lazy="false" check="false"/>
+    <dubbo:reference id="creditServiceImpl" interface="org.pbccrc.api.base.service.CreditService" lazy="false" check="false"/>
+    <dubbo:reference id="personLogServiceImpl" interface="org.pbccrc.api.base.service.PersonLogService" lazy="false" check="false"/>
+    <dubbo:reference id="pPersonServiceImpl" interface="org.pbccrc.api.base.service.PPersonService" lazy="false" check="false"/>
+    <dubbo:reference id="zhIdentificationServiceImpl" interface="org.pbccrc.api.base.service.ZhIdentificationService" lazy="false" check="false"/>
+    <dubbo:reference id="scoreServiceImpl" interface="org.pbccrc.api.base.service.ScoreService" lazy="false" check="false"/>
+    <dubbo:reference id="pBaseInfoServiceImpl" interface="org.pbccrc.api.base.service.PBaseInfoService" lazy="false" check="false"/>
+    <dubbo:reference id="pReditServiceImpl" interface="org.pbccrc.api.base.service.PReditService" lazy="false" check="false"/>
 </beans>
 

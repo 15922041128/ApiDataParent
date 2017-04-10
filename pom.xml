@@ -66,6 +66,10 @@
 		<pagehelper.version>4.1.0</pagehelper.version>
 		
 		<beanutils.version>1.9.3</beanutils.version>
+		
+		<httpclient.version>4.5.3</httpclient.version>
+		
+		<org.apache.commons.pool.version>1.6</org.apache.commons.pool.version>
 	</properties>
 
 	<dependencyManagement>
@@ -385,6 +389,19 @@
 			    <groupId>commons-beanutils</groupId>
 			    <artifactId>commons-beanutils</artifactId>
 			    <version>${beanutils.version}</version>
+			</dependency>
+			
+			<!-- http client -->
+			<dependency>
+			  <groupId>org.apache.httpcomponents</groupId>
+			  <artifactId>httpclient</artifactId>
+			  <version>${httpclient.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.apache.directory.studio</groupId>
+			    <artifactId>org.apache.commons.pool</artifactId>
+			    <version>${org.apache.commons.pool.version}</version>
 			</dependency>
 	        
 		</dependencies>

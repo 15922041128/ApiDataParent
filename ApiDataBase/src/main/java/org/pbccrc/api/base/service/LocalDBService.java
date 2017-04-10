@@ -17,12 +17,13 @@ public interface LocalDBService {
 	public String query(String name, String idCardNo) throws Exception;
 	
 	/***
-	 * 根据身份证和姓名查询失信被执行人信息
-	 * @param idCardNo		身份证号
+	 * 根据身份证和姓名查询失信被执行人信息(PDF用)
+	 * @param name			姓名
+	 * @param identifier	身份证号
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Map<String, Object>> getSxr(String idCardNo) throws Exception;
+	public List<Map<String, Object>> getSxr(String name, String identifier) throws Exception;
 	
 	/**
 	 * 查询本地api

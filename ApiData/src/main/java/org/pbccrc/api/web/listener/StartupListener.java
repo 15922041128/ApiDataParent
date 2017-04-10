@@ -88,6 +88,9 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
 		for (Code code : codeList) {
 			RedisClient.set("code_" + code.getId(), code);
 		}
+		
+		// temp xinyan count 
+		RedisClient.set("xinyanCount", 2000);
 	}
 	
 	// 将缓存中数据加载到数据库

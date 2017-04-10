@@ -1,5 +1,6 @@
 package org.pbccrc.api.core.service.impl;
 
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -578,11 +579,15 @@ public class ComplexServiceImpl implements ComplexService{
 				// 失信被执行人信息
 				if (Constants.ITEM_SXR.equals(queryItem)) {
 					String sxr = "暂无信息";
-					StringBuffer url = new StringBuffer(Constants.URL_LDB_GETSXR);
+					StringBuffer url = new StringBuffer(Constants.WEB_URL + Constants.URL_LDB_GETSXR);
 					url.append(Constants.URL_CONNECTOR);
-					url.append("idCardNo");
+					url.append("identifier");
 					url.append(Constants.EQUAL);
 					url.append(identifier);
+					url.append(Constants.URL_PARAM_CONNECTOR);
+					url.append("name");
+					url.append(Constants.EQUAL);
+					url.append(URLEncoder.encode(name, "UTF-8"));
 					sxr = remoteApiOperator.remoteAccept(url.toString());
 					returnMap.put("sxr", JSONObject.parse(sxr));
 					continue;
