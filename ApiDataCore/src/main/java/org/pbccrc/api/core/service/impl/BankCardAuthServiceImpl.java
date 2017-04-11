@@ -9,9 +9,9 @@ import java.util.Map;
 
 import org.pbccrc.api.base.bean.DBEntity;
 import org.pbccrc.api.base.service.BankCardAuthService;
+import org.pbccrc.api.base.service.HttpService;
 import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.base.util.DesUtils;
-import org.pbccrc.api.base.util.HttpUtil;
 import org.pbccrc.api.base.util.StringUtil;
 import org.pbccrc.api.base.util.rsa.RsaCodingUtil;
 import org.pbccrc.api.core.dao.DBOperatorDao;
@@ -40,6 +40,10 @@ public class BankCardAuthServiceImpl implements BankCardAuthService{
 	
 	@Autowired
 	private DBOperatorDao dbOperatorDao;
+	
+	@Autowired
+	private HttpService httpService;
+	
 	
 	/**
 	 * 认证
@@ -185,7 +189,7 @@ public class BankCardAuthServiceImpl implements BankCardAuthService{
 		    HeadPostParam.put("terminal_id", terminal_id);
 		    HeadPostParam.put("data_type", data_type);
 	        HeadPostParam.put("data_content",data_content);
-	        String PostString = HttpUtil.RequestForm(URL, HeadPostParam);
+	        String PostString = httpService.RequestForm(URL, HeadPostParam);
 	        
 	        // 判断是否查询成功
 	        JSONObject object = JSONObject.parseObject(PostString);
