@@ -428,5 +428,6 @@
     	<module>ApiDataPortal</module>
     <module>ApiDataUser</module>
       <module>ApiDataManage</module>
-  </modules>
+      <module>ApiDataExternal</module>
+	</modules>
 </project>

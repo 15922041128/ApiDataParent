@@ -26,8 +26,6 @@ import org.pbccrc.api.base.util.http.HttpSendModel;
 import org.pbccrc.api.base.util.http.SimpleHttpClient;
 import org.pbccrc.api.base.util.http.SimpleHttpResponse;
 
-
-
 public class HttpUtil{
 	
 	public static String RequestForm(String Url,Map<String,String> Parms){		
@@ -162,8 +160,4 @@ public class HttpUtil{
 	public static boolean isRequestSuccess(int statusCode) {
 		return statusCode == 200;
 	}
-	
-	
-	
-	
 }

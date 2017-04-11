@@ -56,4 +56,5 @@
     <dubbo:service interface="org.pbccrc.api.base.service.PBaseInfoService" ref="pBaseInfoServiceImpl"/>
     <dubbo:service interface="org.pbccrc.api.base.service.PReditService" ref="pReditServiceImpl"/>
     <dubbo:service interface="org.pbccrc.api.base.service.BankCardAuthService" ref="bankCardAuthServiceImpl"/>
+    <dubbo:reference id="httpServiceImpl" interface="org.pbccrc.api.base.service.HttpService" lazy="false" check="false"/>
 </beans>
