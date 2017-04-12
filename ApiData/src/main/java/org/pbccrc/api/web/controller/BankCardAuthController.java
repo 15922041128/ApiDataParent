@@ -39,7 +39,7 @@ public class BankCardAuthController {
 	
 	@GET
 	@ResponseBody
-	@RequestMapping("/auth")
+	@RequestMapping(value="/auth",produces={"application/json;charset=UTF-8"})
 	public String auth(
 			@QueryParam("verify_element") String verify_element, 
 			@QueryParam("id_holder") String id_holder, 
