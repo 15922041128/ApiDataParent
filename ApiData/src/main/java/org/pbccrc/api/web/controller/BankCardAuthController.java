@@ -29,7 +29,7 @@ import com.alibaba.fastjson.JSONObject;
 
 @Controller
 @RequestMapping("/bankCardAuth")
-public class BankCardAuthController {
+public class BankCardAuthController{
 	
 	@Autowired
 	private BankCardAuthService bankCardAuthService;

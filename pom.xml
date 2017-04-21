@@ -69,6 +69,8 @@
 		
 		<httpclient.version>4.5.3</httpclient.version>
 		
+		<codec.version>1.5</codec.version>
+		
 	</properties>
 
 	<dependencyManagement>
@@ -395,6 +397,13 @@
 			  <groupId>org.apache.httpcomponents</groupId>
 			  <artifactId>httpclient</artifactId>
 			  <version>${httpclient.version}</version>
+			</dependency>
+			
+			<!-- commons-codec -->
+			<dependency>
+			    <groupId>commons-codec</groupId>
+			    <artifactId>commons-codec</artifactId>
+			    <version>${codec.version}</version>
 			</dependency>
 	        
 		</dependencies>
