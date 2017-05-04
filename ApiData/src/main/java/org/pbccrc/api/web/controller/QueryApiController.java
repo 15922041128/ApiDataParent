@@ -69,6 +69,8 @@ public class QueryApiController {
 		}
 		
 		ResultContent resultContent = new ResultContent();
+		resultContent.setCode(Constants.CODE_ERR_SUCCESS);
+		resultContent.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);
 		
 		// 获取apiKey
 		String apiKey = request.getHeader(Constants.HEAD_APIKEY);

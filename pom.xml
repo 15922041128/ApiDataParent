@@ -69,7 +69,8 @@
 		
 		<httpclient.version>4.5.3</httpclient.version>
 		
-		<org.apache.commons.pool.version>1.6</org.apache.commons.pool.version>
+		<codec.version>1.5</codec.version>
+		
 	</properties>
 
 	<dependencyManagement>
@@ -398,10 +399,11 @@
 			  <version>${httpclient.version}</version>
 			</dependency>
 			
+			<!-- commons-codec -->
 			<dependency>
-			    <groupId>org.apache.directory.studio</groupId>
-			    <artifactId>org.apache.commons.pool</artifactId>
-			    <version>${org.apache.commons.pool.version}</version>
+			    <groupId>commons-codec</groupId>
+			    <artifactId>commons-codec</artifactId>
+			    <version>${codec.version}</version>
 			</dependency>
 	        
 		</dependencies>

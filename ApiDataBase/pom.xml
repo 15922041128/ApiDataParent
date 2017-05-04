@@ -14,6 +14,7 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 		</dependency>
+		
    
         <!-- log -->
         <dependency>
@@ -197,6 +198,13 @@
 		  <groupId>org.apache.httpcomponents</groupId>
 		  <artifactId>httpclient</artifactId>
 		</dependency>
+		
+		<!-- commons-codec -->
+		<dependency>
+		    <groupId>commons-codec</groupId>
+		    <artifactId>commons-codec</artifactId>
+		</dependency>
+		
     </dependencies>
     
     <build>
