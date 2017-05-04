@@ -115,7 +115,7 @@ public class BankCardAuthController{
 		// uuid
 		apiLog.setUuid(StringUtil.createUUID());
 		apiLog.setUserID(userID);
-		apiLog.setLocalApiID("99999999998");
+		apiLog.setLocalApiID(Constants.API_ID_BANK_CARD_AUTH);
 		// 参数
 		JSONObject params = new JSONObject();
 		params.put("id_holder", id_holder);

@@ -67,17 +67,20 @@ public class Validator {
 		} else {
 			// 如果不为空则进行ip地址验证
 			String[] ipArray = allowIps.split(Constants.ENTER);
-			boolean ipIsOk = false;
-			for (int i = 0; i < ipArray.length; i++) {
-				if (ipArray[i].equals(ipAddress)) {
-					ipIsOk = true;
-					break;
+			// 如果不为-1则进行验证
+			if (!"-1".equals(ipArray[0])) {
+				boolean ipIsOk = false;
+				for (int i = 0; i < ipArray.length; i++) {
+					if (ipArray[i].equals(ipAddress)) {
+						ipIsOk = true;
+						break;
+					}
 				}
-			}
-			if (!ipIsOk) {
-				resultContent.setCode(Constants.ERR_RESTRICTED_IP);
-				resultContent.setRetMsg(Constants.RET_MSG_RESTRICTED_IP);
-				return false;
+				if (!ipIsOk) {
+					resultContent.setCode(Constants.ERR_RESTRICTED_IP);
+					resultContent.setRetMsg(Constants.RET_MSG_RESTRICTED_IP);
+					return false;
+				}
 			}
 		}
 		
@@ -214,17 +217,20 @@ public class Validator {
 		} else {
 			// 如果不为空则进行ip地址验证
 			String[] ipArray = allowIps.split(Constants.ENTER);
-			boolean ipIsOk = false;
-			for (int i = 0; i < ipArray.length; i++) {
-				if (ipArray[i].equals(ipAddress)) {
-					ipIsOk = true;
-					break;
+			// 如果不为-1则进行验证
+			if (!"-1".equals(ipArray[0])) {
+				boolean ipIsOk = false;
+				for (int i = 0; i < ipArray.length; i++) {
+					if (ipArray[i].equals(ipAddress)) {
+						ipIsOk = true;
+						break;
+					}
 				}
-			}
-			if (!ipIsOk) {
-				resultContent.setCode(Constants.ERR_RESTRICTED_IP);
-				resultContent.setRetMsg(Constants.RET_MSG_RESTRICTED_IP);
-				return false;
+				if (!ipIsOk) {
+					resultContent.setCode(Constants.ERR_RESTRICTED_IP);
+					resultContent.setRetMsg(Constants.RET_MSG_RESTRICTED_IP);
+					return false;
+				}
 			}
 		}
 		
@@ -302,17 +308,20 @@ public class Validator {
 		} else {
 			// 如果不为空则进行ip地址验证
 			String[] ipArray = allowIps.split(Constants.ENTER);
-			boolean ipIsOk = false;
-			for (int i = 0; i < ipArray.length; i++) {
-				if (ipArray[i].equals(ipAddress)) {
-					ipIsOk = true;
-					break;
+			// 如果不为-1则进行验证
+			if (!"-1".equals(ipArray[0])) {
+				boolean ipIsOk = false;
+				for (int i = 0; i < ipArray.length; i++) {
+					if (ipArray[i].equals(ipAddress)) {
+						ipIsOk = true;
+						break;
+					}
 				}
-			}
-			if (!ipIsOk) {
-				resultContent.setCode(Constants.ERR_RESTRICTED_IP);
-				resultContent.setRetMsg(Constants.RET_MSG_RESTRICTED_IP);
-				return false;
+				if (!ipIsOk) {
+					resultContent.setCode(Constants.ERR_RESTRICTED_IP);
+					resultContent.setRetMsg(Constants.RET_MSG_RESTRICTED_IP);
+					return false;
+				}
 			}
 		}
 		

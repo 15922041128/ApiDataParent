@@ -279,6 +279,10 @@ public class Constants {
 	public static final String API_ID_SFZRZ = "9999";
 	// 页面pdf
 	public static final String API_ID_PAGE_PDF = "99999999999";
+	// 银行卡三/四要素认证
+	public static final String API_ID_BANK_CARD_AUTH = "99999999998";
+	// 信贷模型
+	public static final String API_ID_CREDIT_MODEL = "99999999997"; 
 	
 	/** productID */
 	// 页面pdf
