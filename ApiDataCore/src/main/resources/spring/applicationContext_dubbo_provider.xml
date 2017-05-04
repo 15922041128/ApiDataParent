@@ -24,7 +24,7 @@
     <!-- 服务配置, 指定端口 -->
 <!--     <dubbo:protocol name="dubbo" port="20881"/> -->
     <!-- 服务配置, 不指定端口 -->
-    <dubbo:protocol name="dubbo" port="-1"/>
+    <dubbo:protocol  host="192.167.223.68" name="dubbo" port="-1"/>
 
     <dubbo:service interface="org.pbccrc.api.base.service.QueryApiService" ref="queryApiServiceImpl"/>
     <dubbo:service interface="org.pbccrc.api.base.service.CostService" ref="costServiceImpl"/>
@@ -56,5 +56,6 @@
     <dubbo:service interface="org.pbccrc.api.base.service.PBaseInfoService" ref="pBaseInfoServiceImpl"/>
     <dubbo:service interface="org.pbccrc.api.base.service.PReditService" ref="pReditServiceImpl"/>
     <dubbo:service interface="org.pbccrc.api.base.service.BankCardAuthService" ref="bankCardAuthServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.CreditModelService" ref="creditModelServiceImpl"/>
     <dubbo:reference id="httpServiceImpl" interface="org.pbccrc.api.base.service.HttpService" lazy="false" check="false"/>
 </beans>

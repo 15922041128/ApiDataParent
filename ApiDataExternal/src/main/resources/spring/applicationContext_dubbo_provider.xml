@@ -16,7 +16,7 @@
     <dubbo:provider timeout="300000"/> 
 
     <!-- 服务配置, 不指定端口 -->
-    <dubbo:protocol name="dubbo" port="-1"/>
+    <dubbo:protocol host="192.167.223.68" name="dubbo" port="-1"/>
 
     <dubbo:service interface="org.pbccrc.api.base.service.HttpService" ref="httpServiceImpl"/>
 </beans>

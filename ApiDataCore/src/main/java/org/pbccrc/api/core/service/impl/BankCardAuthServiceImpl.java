@@ -176,12 +176,6 @@ public class BankCardAuthServiceImpl implements BankCardAuthService{
 			
 			String filePath = this.getClass().getClassLoader().getResource(PFX_NAME).getPath();
 			
-//			File pfxfile = new File(filePath);
-//			if (!pfxfile.exists()) {
-//				System.out.println("私钥文件不存在！");
-//				return null;
-//			}
-			
 			String data_content = RsaCodingUtil.encryptByPriPfxFile(base64str, filePath, PFX_PWD);//加密数据
 			
 			Map<String,String> HeadPostParam = new HashMap<String,String>();   
@@ -189,27 +183,28 @@ public class BankCardAuthServiceImpl implements BankCardAuthService{
 		    HeadPostParam.put("terminal_id", terminal_id);
 		    HeadPostParam.put("data_type", data_type);
 	        HeadPostParam.put("data_content",data_content);
-	        String PostString = httpService.RequestForm(URL, HeadPostParam);
 	        
-	        // 判断是否查询成功
-	        JSONObject object = JSONObject.parseObject(PostString);
-	        boolean success = Boolean.valueOf(String.valueOf(object.get("success")));
-			if (success) {
-				fields.add("result_data");
-				values.add(PostString);
-				dbEntity.setFields(fields);
-				dbEntity.setValues(values);
+	        // 访问远程
+        	String PostString = httpService.RequestForm(URL, HeadPostParam);
+        	JSONObject object = JSONObject.parseObject(PostString);
+        	
+        	boolean success = Boolean.valueOf(String.valueOf(object.get("success")));
+   			if (success) {
+   				fields.add("result_data");
+   				values.add(PostString);
+   				dbEntity.setFields(fields);
+   				dbEntity.setValues(values);
 
-				dbOperatorDao.insertData(dbEntity);
+   				dbOperatorDao.insertData(dbEntity);
 
-				retrunMap.put("isSuccess", "true");
-			} else {
-				retrunMap.put("isSuccess", "false");
-			}
-	        
-			result = PostString;
-			
-			dataFrom = Constants.DATA_FROM_XINYAN;
+   				retrunMap.put("isSuccess", "true");
+   			} else {
+   				retrunMap.put("isSuccess", "false");
+   			}
+   	        
+   			result = PostString;
+   			
+   			dataFrom = Constants.DATA_FROM_XINYAN;
 		}
 		
 		retrunMap.put("result", result);

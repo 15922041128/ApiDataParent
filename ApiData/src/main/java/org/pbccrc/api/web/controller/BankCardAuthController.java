@@ -29,7 +29,7 @@ import com.alibaba.fastjson.JSONObject;
 
 @Controller
 @RequestMapping("/bankCardAuth")
-public class BankCardAuthController {
+public class BankCardAuthController{
 	
 	@Autowired
 	private BankCardAuthService bankCardAuthService;
@@ -39,7 +39,7 @@ public class BankCardAuthController {
 	
 	@GET
 	@ResponseBody
-	@RequestMapping("/auth")
+	@RequestMapping(value="/auth",produces={"application/json;charset=UTF-8"})
 	public String auth(
 			@QueryParam("verify_element") String verify_element, 
 			@QueryParam("id_holder") String id_holder, 
@@ -115,7 +115,7 @@ public class BankCardAuthController {
 		// uuid
 		apiLog.setUuid(StringUtil.createUUID());
 		apiLog.setUserID(userID);
-		apiLog.setLocalApiID("99999999998");
+		apiLog.setLocalApiID(Constants.API_ID_BANK_CARD_AUTH);
 		// 参数
 		JSONObject params = new JSONObject();
 		params.put("id_holder", id_holder);
