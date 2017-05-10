@@ -23,7 +23,12 @@
 
     <!-- 服务配置, 指定端口 -->
     <!--<dubbo:protocol name="dubbo" port="20881"/>-->
-    <dubbo:protocol host="192.167.223.68"/>
+    <!-- local -->
+    <dubbo:protocol  host="localhost" name="dubbo" port="-1"/>
+    <!-- product -->
+    <!--  
+    <dubbo:protocol  host="192.167.223.68" name="dubbo" port="-1"/>
+    -->
     <!-- 服务配置, 不指定端口 -->
     <!--<dubbo:protocol name="dubbo" port="-1"/>-->
 

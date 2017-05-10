@@ -24,7 +24,12 @@
     <!-- 服务配置, 指定端口 -->
 <!--     <dubbo:protocol name="dubbo" port="20881"/> -->
     <!-- 服务配置, 不指定端口 -->
+    <!-- local -->
+    <dubbo:protocol  host="localhost" name="dubbo" port="-1"/>
+    <!-- product -->
+    <!--  
     <dubbo:protocol  host="192.167.223.68" name="dubbo" port="-1"/>
+    -->
 
     <dubbo:service interface="org.pbccrc.api.base.service.QueryApiService" ref="queryApiServiceImpl"/>
     <dubbo:service interface="org.pbccrc.api.base.service.CostService" ref="costServiceImpl"/>
