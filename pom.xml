@@ -71,6 +71,8 @@
 		
 		<codec.version>1.5</codec.version>
 		
+		<commons-pool2.version>2.0</commons-pool2.version>
+		
 	</properties>
 
 	<dependencyManagement>
@@ -404,6 +406,12 @@
 			    <groupId>commons-codec</groupId>
 			    <artifactId>commons-codec</artifactId>
 			    <version>${codec.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.apache.commons</groupId>
+			    <artifactId>commons-pool2</artifactId>
+			    <version>${commons-pool2.version}</version>
 			</dependency>
 	        
 		</dependencies>
