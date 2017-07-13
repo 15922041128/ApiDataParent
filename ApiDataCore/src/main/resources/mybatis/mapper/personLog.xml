@@ -4,8 +4,8 @@
 <mapper namespace="org.pbccrc.api.core.mapper.PersonLogMapper">
 	
 	<insert id="addLog" parameterType="org.pbccrc.api.base.bean.PersonLog">
-		insert into personLog(ipAddress, userID, operatorType, totalCount, successCount, failCount, queryDate, note) 
-			values(#{ipAddress}, #{userID}, #{operatorType}, #{totalCount}, #{successCount}, #{failCount}, #{queryDate}, #{note})
+		insert into personLog(id, ipAddress, userID, operatorType, totalCount, successCount, failCount, queryDate, note) 
+			values(seq_personlog, #{ipAddress}, #{userID}, #{operatorType}, #{totalCount}, #{successCount}, #{failCount}, #{queryDate}, #{note})
 	</insert>
 	
 </mapper>

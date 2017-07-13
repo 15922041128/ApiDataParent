@@ -158,6 +158,10 @@ public class StringUtil {
             return Constants.BLANK;
         }
     }
+	
+	public static String createRandomID() {
+    	return UUID.randomUUID().toString().replaceAll(Constants.CONNECTOR_LINE, Constants.BLANK); 
+    }
     
     public static String createApiKey() {
     	return UUID.randomUUID().toString().replaceAll(Constants.CONNECTOR_LINE, Constants.BLANK); 

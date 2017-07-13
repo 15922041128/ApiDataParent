@@ -7,9 +7,10 @@
 		select count(1) from user where userName = #{userName}
 	</select>
 	
-	<insert id="addUser" parameterType="org.pbccrc.api.base.bean.User" keyProperty="id">
-		insert into user(userName, password, compName, compTel, contactName, contactTel, auth, userState) values(
-			#{userName}, #{password}, #{compName}, #{compTel}, #{contactName}, #{contactTel}, #{auth}, #{userState})
+	<insert id="addUser" parameterType="org.pbccrc.api.base.bean.User">
+		insert into user(id,userName, password, compName, compTel, contactName, contactTel, auth, userState, privateKey) values(
+			#{id}, #{userName}, #{password}, #{compName}, #{compTel}, #{contactName}, #{contactTel}, #{auth}, #{userState}, 
+			#{privateKey,jdbcType=BLOB})
 	</insert>
 	
 	<select id="login" parameterType="org.pbccrc.api.base.bean.User" resultType="org.pbccrc.api.base.bean.User">

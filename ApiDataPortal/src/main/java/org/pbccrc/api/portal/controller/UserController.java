@@ -44,7 +44,7 @@ public class UserController {
 			@QueryParam("compName") String compName,
 			@QueryParam("compTel") String compTel,
 			@QueryParam("contactName") String contactName,
-			@QueryParam("contactTel") String contactTel){
+			@QueryParam("contactTel") String contactTel)  throws Exception {
 		
 		User user = new User();
 		user.setUserName(userName);
@@ -117,7 +117,7 @@ public class UserController {
 	@RequestMapping(value="/r/user/resetPassword", produces={"text/html;charset=UTF-8"})
 	public String resetPassword(@QueryParam("userID") String userID, @QueryParam("password") String password){
 		
-		userService.resetPassword(Integer.parseInt(userID), password);
+		userService.resetPassword(userID, password);
 		
 		return Constants.RET_STAT_SUCCESS;
 	}
@@ -158,7 +158,7 @@ public class UserController {
 		String retData = Constants.RET_STAT_ERROR;
 		
 		User user = new User();
-		user.setId(Integer.parseInt(userID));
+		user.setId(userID);
 		user.setCompName(compName);
 		user.setCompTel(compTel);
 		user.setContactName(contactName);

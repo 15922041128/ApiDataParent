@@ -1,6 +1,12 @@
 package org.pbccrc.api.core.service.impl;
 
+import java.io.File;
 import java.math.BigDecimal;
+import java.sql.Blob;
+import java.sql.SQLException;
+
+import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
 
 import org.pbccrc.api.base.bean.ApiUser;
 import org.pbccrc.api.base.bean.Pagination;
@@ -34,10 +40,20 @@ public class UserServiceImpl implements UserService{
 	 * 
 	 * @param user 用户信息
 	 * @return	      主键
+	 * @throws SQLException 
+	 * @throws SerialException 
 	 */
-	public void addUser(User user) {
+	public void addUser(User user) throws Exception {
 		
-		int userID = userDao.addUser(user);
+		String userID = StringUtil.createRandomID();
+		user.setId(userID);
+		// 设置生成私钥文件并存放
+		File f = new File("D:/privateKeyFile");
+		byte[] keyBytes = new byte[(int)f.length()]; 
+		Blob privateKey = new SerialBlob(keyBytes);
+		user.setPrivateKey(privateKey);
+				
+		userDao.addUser(user);
 		
 		ApiUser apiUser = new ApiUser();
 		apiUser.setId(userID);
@@ -66,17 +82,6 @@ public class UserServiceImpl implements UserService{
 		return user;
 	}
 	
-	/**
-	 * 
-	 * @param userID    用户ID
-	 * @param password  用户新密码
-	 */
-	public void resetPassword(Integer userID, String password) {
-		User user = new User();
-		user.setId(userID);
-		user.setPassword(StringUtil.string2MD5(password));
-		userDao.updateUser(user);
-	}
 	
 	/**
 	 * @param user 	用户信息

@@ -108,7 +108,7 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
 			// 表名
 			entity.setTableName(tableName);
 			// where条件
-			String whereSql = " where id = " + jsonObject.getString("id");
+			String whereSql = " where id = '" + jsonObject.getString("id") + "'";
 			// 更新字段
 			StringBuffer sb = new StringBuffer();
 			Set<String> keySet = jsonObject.keySet();

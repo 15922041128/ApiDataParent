@@ -11,7 +11,7 @@ public class User implements Serializable{
 	private static final long serialVersionUID = -7313847131251988603L;
 
 	/** 主键 */
-	private Integer id;
+	private String id;
 	
 	/** 帐号 */
 	private String userName;
@@ -67,11 +67,14 @@ public class User implements Serializable{
 	/** 角色 0-普通用户 9999-管理员 */
 	private String role;
 	
-	public Integer getId() {
+	/** 私钥文件 */
+	private Object privateKey;
+	
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -217,5 +220,13 @@ public class User implements Serializable{
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+	
+	public Object getPrivateKey() {
+		return privateKey;
+	}
+
+	public void setPrivateKey(Object privateKey) {
+		this.privateKey = privateKey;
 	}
 }

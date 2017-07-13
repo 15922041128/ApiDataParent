@@ -15,8 +15,8 @@
 	</resultMap>
 	
 	<insert id="addLog" parameterType="org.pbccrc.api.base.bean.ApiLog">
-		insert into apiLog(userID, uuid, localApiID, params, dataFrom, isSuccess, queryDate) 
-			values(#{userID}, #{uuid}, #{localApiID}, #{params}, #{dataFrom}, #{isSuccess}, #{queryDate})
+		insert into apiLog(id, userID, uuid, localApiID, params, dataFrom, isSuccess, queryDate) 
+			values(seq_apilog.nextval, #{userID}, #{uuid}, #{localApiID}, #{params}, #{dataFrom}, #{isSuccess}, #{queryDate})
 	</insert>
 	
 	<select id="queryLog" parameterType="org.pbccrc.api.base.bean.ApiLog" resultMap="apiLog">

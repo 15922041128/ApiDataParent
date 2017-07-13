@@ -9,7 +9,7 @@ public class ApiUser implements Serializable{
 	private static final long serialVersionUID = -6788132249424048096L;
 
 	/** 主键 */
-	private Integer id;
+	private String id;
 	
 	/** 余额 */
 	private BigDecimal blance;
@@ -17,11 +17,11 @@ public class ApiUser implements Serializable{
 	/** 信用额度 */
 	private BigDecimal creditLimit;
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

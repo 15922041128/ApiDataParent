@@ -71,7 +71,7 @@ public class AdminController {
 		response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 		JSONObject result = new JSONObject();
 		User user = new User();
-		user.setId(Integer.valueOf(id));
+		user.setId(id);
 		user.setAuth(auth);
 		user.setMessage(message);
 		userService.modifyUser(user);

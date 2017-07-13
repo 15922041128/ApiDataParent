@@ -15,7 +15,7 @@ public interface UserService {
 	 * 
 	 * @param user 用户信息
 	 */
-	public void addUser(User user);
+	public void addUser(User user) throws Exception;
 	
 	/**
 	 * 
@@ -24,13 +24,6 @@ public interface UserService {
 	 * @return			登录帐号
 	 */
 	public User login(String userName, String password);
-	
-	/**
-	 * 
-	 * @param userID    用户ID
-	 * @param password  用户新密码
-	 */
-	public void resetPassword(Integer userID, String password);
 	
 	/**
 	 * @param user 	用户信息

@@ -20,9 +20,8 @@ public class UserDao{
 		return userMapper.isExist(userName);
 	}
 	
-	public int addUser(User user){
+	public void addUser(User user){
 		userMapper.addUser(user);
-		return user.getId();
 	}
 	
 	public User login(User user){
@@ -50,7 +49,7 @@ public class UserDao{
 		
 		User user = new User();
 		user.setPassword(password);
-		user.setId(Integer.parseInt(userID));
+		user.setId(userID);
 		
 		int cnt = userMapper.resetPassword(user);
 		
