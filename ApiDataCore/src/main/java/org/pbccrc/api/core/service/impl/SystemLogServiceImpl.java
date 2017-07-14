@@ -18,36 +18,65 @@ public class SystemLogServiceImpl implements SystemLogService{
 	private SystemLogDao systemLogDao;
 	
 	public List<SystemLog> queryLog(SystemLog systemLog) {
-		DynamicDataSourceHolder.change2oracle();
-		List<SystemLog> list = systemLogDao.queryLog(systemLog);
-		DynamicDataSourceHolder.change2mysql();
+		List<SystemLog> list = null;
+		try {
+			DynamicDataSourceHolder.change2oracle();
+			list = systemLogDao.queryLog(systemLog);
+			DynamicDataSourceHolder.change2mysql();	
+		} catch (Exception e) {
+			DynamicDataSourceHolder.change2mysql();
+		}
+		
 		return list;
 	}
 
 	public void addLog(SystemLog systemLog) {
-		DynamicDataSourceHolder.change2oracle();
-		systemLogDao.addLog(systemLog);
-		DynamicDataSourceHolder.change2mysql();
+		try {
+			DynamicDataSourceHolder.change2oracle();
+			systemLogDao.addLog(systemLog);
+			DynamicDataSourceHolder.change2mysql();
+		} catch (Exception e) {
+			DynamicDataSourceHolder.change2mysql();
+		}
+		
 	}
 
 	public Pagination sumLog(Map<String, String> queryMap, Pagination pagination) {
-		DynamicDataSourceHolder.change2oracle();
-		Pagination result = systemLogDao.sumLog(queryMap, pagination);
-		DynamicDataSourceHolder.change2mysql();
+		Pagination result = null;
+		try {
+			DynamicDataSourceHolder.change2oracle();
+			result = systemLogDao.sumLog(queryMap, pagination);
+			DynamicDataSourceHolder.change2mysql();
+		} catch (Exception e) {
+			DynamicDataSourceHolder.change2mysql();
+		}
+		
 		return result;
 	}
 	
 	public Pagination sumApiLog(Map<String, String> queryMap, Pagination pagination) {
-		DynamicDataSourceHolder.change2oracle();
-		Pagination result =  systemLogDao.sumApiLog(queryMap, pagination);
-		DynamicDataSourceHolder.change2mysql();
+		Pagination result = null;
+		try {
+			DynamicDataSourceHolder.change2oracle();
+			result =  systemLogDao.sumApiLog(queryMap, pagination);
+			DynamicDataSourceHolder.change2mysql();
+		} catch (Exception e) {
+			DynamicDataSourceHolder.change2mysql();
+		}
+		
 		return result;
 	}
 	
 	public Pagination queryLogDetail(Map<String, String> queryMap, Pagination pagination) {
-		DynamicDataSourceHolder.change2oracle();
-		Pagination result = systemLogDao.queryLogDetail(queryMap, pagination);
-		DynamicDataSourceHolder.change2mysql();
+		Pagination result = null;
+		try {
+			DynamicDataSourceHolder.change2oracle();
+			result = systemLogDao.queryLogDetail(queryMap, pagination);
+			DynamicDataSourceHolder.change2mysql();
+		} catch (Exception e) {
+			DynamicDataSourceHolder.change2mysql();
+		}
+		
 		return result;
 	}
 

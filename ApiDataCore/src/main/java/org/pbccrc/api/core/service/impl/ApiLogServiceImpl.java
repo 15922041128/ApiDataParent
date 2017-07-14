@@ -16,16 +16,27 @@ public class ApiLogServiceImpl implements ApiLogService{
 	private ApiLogDao apiLogDao;
 	
 	public List<ApiLog> queryLog(ApiLog apiLog) {
-		DynamicDataSourceHolder.change2oracle();
-		List<ApiLog> list = apiLogDao.queryLog(apiLog);
-		DynamicDataSourceHolder.change2mysql();
+		List<ApiLog> list = null;
+		try {
+			DynamicDataSourceHolder.change2oracle();
+			list = apiLogDao.queryLog(apiLog);
+			DynamicDataSourceHolder.change2mysql();
+		} catch (Exception e) {
+			DynamicDataSourceHolder.change2mysql();
+		}
+		
 		return list;
 	}
 
 	public void addLog(ApiLog apiLog) {
-		DynamicDataSourceHolder.change2oracle();
-		apiLogDao.addLog(apiLog);
-		DynamicDataSourceHolder.change2mysql();
+		try {
+			DynamicDataSourceHolder.change2oracle();
+			apiLogDao.addLog(apiLog);
+			DynamicDataSourceHolder.change2mysql();
+		} catch (Exception e) {
+			DynamicDataSourceHolder.change2mysql();
+		}
+		
 	}
 
 }

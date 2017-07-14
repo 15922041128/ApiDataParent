@@ -16,15 +16,26 @@ public class PersonLogServiceImpl implements PersonLogService {
 	private PersonLogDao personLogDao;
 	
 	public List<PersonLog> queryLog(PersonLog personLog) {
-		DynamicDataSourceHolder.change2oracle();
-		List<PersonLog> list = personLogDao.queryLog(personLog);
-		DynamicDataSourceHolder.change2mysql();
+		List<PersonLog> list = null;
+		try {
+			DynamicDataSourceHolder.change2oracle();
+			list = personLogDao.queryLog(personLog);
+			DynamicDataSourceHolder.change2mysql();
+		} catch (Exception e) {
+			DynamicDataSourceHolder.change2mysql();
+		}
+		
 		return list;
 	}
 	
 	public void addLog(PersonLog personLog) {
-		DynamicDataSourceHolder.change2oracle();
-		personLogDao.addLog(personLog);
-		DynamicDataSourceHolder.change2mysql();
+		try {
+			DynamicDataSourceHolder.change2oracle();
+			personLogDao.addLog(personLog);
+			DynamicDataSourceHolder.change2mysql();
+		} catch (Exception e) {
+			DynamicDataSourceHolder.change2mysql();
+		}
+		
 	}
 }
