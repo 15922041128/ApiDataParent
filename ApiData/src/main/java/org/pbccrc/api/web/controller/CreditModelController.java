@@ -119,6 +119,8 @@ public class CreditModelController {
 		systemLog.setIsCount(String.valueOf(map.get("isSuccess")));
 		// 查询时间
 		systemLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FORMAT_SYSTEMLOG).format(new Date()));
+		
+		
 		systemLogService.addLog(systemLog);
 		
 		return JSONObject.toJSONString(resultContent);

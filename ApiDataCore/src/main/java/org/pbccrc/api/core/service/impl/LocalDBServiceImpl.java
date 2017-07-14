@@ -462,7 +462,9 @@ public class LocalDBServiceImpl implements LocalDBService {
 		apiLog.setDataFrom(Constants.DATA_FROM_LOCAL);
 		apiLog.setIsSuccess(String.valueOf(map.get("isSuccess")));
 		apiLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FROMAT_APILOG).format(new Date()));
+		DynamicDataSourceHolder.change2oracle();
 		apiLogDao.addLog(apiLog);
+		DynamicDataSourceHolder.change2mysql();
 		
 		return map;
 	}
