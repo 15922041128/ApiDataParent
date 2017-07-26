@@ -10,6 +10,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 
+import org.pbccrc.api.base.bean.LocalApi;
 import org.pbccrc.api.base.bean.ResultContent;
 import org.pbccrc.api.base.bean.SystemLog;
 import org.pbccrc.api.base.service.CostService;
@@ -162,7 +163,7 @@ public class LocalDBController {
 		}
 		
 		// 获取本地api
-		Map<String, Object> localApi = localApiService.queryByService(service);
+		LocalApi localApi = localApiService.queryByService(service);
 		
 		// 验证本地是否有该api
 		if (null == localApi) {
@@ -181,7 +182,7 @@ public class LocalDBController {
 		// 查询参数(记录日志用)
 		JSONObject paramObj = new JSONObject();
 		// 判断查询方式
-		String params = (String) localApi.get("params");
+		String params = localApi.getParams();
 		JSONArray array = JSONArray.parseArray(params);
 		if (array.size() == 1) {
 			// size为1 则通过电话号码查询内码
@@ -211,7 +212,7 @@ public class LocalDBController {
 			resultContent.setQueryCount(queryCount);
 			// 根据返回类型获取查询结果
 			Object result = map.get("result");
-			String returnType = String.valueOf(localApi.get("returnType"));
+			String returnType = String.valueOf(localApi.getReturnType());
 			Object resultJson = null;
 			if (Constants.RETURN_TYPE_ARRAY.equals(returnType)) {
 				resultJson = JSONArray.toJSON(result);
@@ -239,7 +240,7 @@ public class LocalDBController {
 		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
 		systemLog.setProductID(relation.getString("productID"));
 		// localApiID
-		systemLog.setLocalApiID(String.valueOf(localApi.get("id")));
+		systemLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		systemLog.setParams(paramObj.toJSONString());
 		// 用户ID

@@ -10,6 +10,7 @@
 
 
     <!-- mysql DataSource -->
+    <!--  
     <bean id="mysqlDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
           destroy-method="close">
         <property name="driverClass" value="${mysql.jdbc.driverClassName}"/>
@@ -23,6 +24,7 @@
         <property name="maxStatements" value="60"/>
         <property name="autoCommitOnClose" value="true"/>
     </bean>
+    -->
     
     <!-- oracle DataSource -->
     <bean id="oracleDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
@@ -40,6 +42,7 @@
     </bean>
     
     <!-- dynamicDataSource -->
+    <!--  
     <bean id="dataSource" class="org.pbccrc.api.core.dao.datasource.DynamicDataSource">  
 	    <property name="targetDataSources">  
 	        <map key-type="java.lang.String">  
@@ -49,14 +52,15 @@
 	    </property>  
 	    <property name="defaultTargetDataSource" ref="mysqlDataSource"></property>     
 	</bean>
+	-->
 	
     <!-- a PlatformTransactionManager is still required -->
     <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
+        <property name="dataSource" ref="oracleDataSource"/>
     </bean>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
+        <property name="dataSource" ref="oracleDataSource"/>
         <property name="mapperLocations" value="classpath:mybatis/mapper/*.xml"/>
         <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
         <property name="plugins">

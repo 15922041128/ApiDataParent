@@ -3,7 +3,7 @@
 
 <mapper namespace="org.pbccrc.api.core.mapper.ApiUserMapper">
 	
-	<select id="queryAll" resultType="java.util.HashMap">
+	<select id="queryAll" resultType="org.pbccrc.api.base.bean.ApiUser">
 		select * from apiUser
 	</select>
 	

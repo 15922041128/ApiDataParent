@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.core.Context;
 
+import org.pbccrc.api.base.bean.LocalApi;
 import org.pbccrc.api.base.bean.ResultContent;
 import org.pbccrc.api.base.bean.SystemLog;
 import org.pbccrc.api.base.service.CostService;
@@ -88,7 +89,7 @@ public class QueryApiController {
 		}
 		
 		// 获取本地api
-		Map<String, Object> localApi = localApiService.queryByService(service);
+		LocalApi localApi = localApiService.queryByService(service);
 		
 		// 验证本地是否有该api
 		if (null == localApi) {
@@ -123,7 +124,7 @@ public class QueryApiController {
 		boolean isCost = true;
 		// 判断是否计费
 		// 获取localApi计费条件
-		String costConditionStr = String.valueOf(localApi.get("costCondition"));
+		String costConditionStr = localApi.getCostCondition();
 		JSONObject costCondition = JSONObject.parseObject(costConditionStr);
 		// 判断是否计费
 		boolean isCount = costCondition.getBooleanValue("isCount");
@@ -203,10 +204,10 @@ public class QueryApiController {
 		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
 		systemLog.setProductID(relation.getString("productID"));
 		// localApiID
-		systemLog.setLocalApiID(String.valueOf(localApi.get("id")));
+		systemLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		JSONObject params = new JSONObject();
-		String localParams = String.valueOf(localApi.get("params"));
+		String localParams = localApi.getParams();
 		JSONArray localParamArray = JSONArray.parseArray(localParams);
 		for (Object o : localParamArray) {
 			JSONObject object = (JSONObject)o;

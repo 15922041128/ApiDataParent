@@ -44,6 +44,7 @@ public class CreditModelController {
 	@Autowired
 	private SystemLogService systemLogService;
 
+	// 暂时没用
 	@SuppressWarnings("unchecked")
 	@GET
 	@ResponseBody

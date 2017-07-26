@@ -3,7 +3,7 @@
 
 <mapper namespace="org.pbccrc.api.core.mapper.ProductMapper">
 	
-	<select id="queryAll" resultType="java.util.HashMap">
+	<select id="queryAll" resultType="org.pbccrc.api.base.bean.Product">
 		select * from product
 	</select>
 	
@@ -31,8 +31,8 @@
 	</select>
 	
 	<insert id="addProduct" useGeneratedKeys="true" keyProperty="id" parameterType="org.pbccrc.api.base.bean.Product">
-		insert into Product(name, image, type, price, apis, status, initCount, initNote, isShow) 
-			values(#{name}, #{image}, #{type}, #{price}, #{apis}, #{status}, #{initCount}, #{initNote}, #{isShow})
+		insert into Product(id, name, image, type, price, apis, status, initCount, initNote, isShow) 
+			values(seq_product.nextval, #{name}, #{image}, #{type}, #{price}, #{apis}, #{status}, #{initCount}, #{initNote}, #{isShow})
 	</insert>
 	
 	<update id="updateProduct" parameterType="org.pbccrc.api.base.bean.Product">

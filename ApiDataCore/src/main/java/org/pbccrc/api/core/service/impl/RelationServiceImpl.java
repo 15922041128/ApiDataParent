@@ -20,7 +20,7 @@ public class RelationServiceImpl implements RelationService{
 	@Autowired
 	private RelationDao relationDao;
 	
-	public List<Map<String, Object>> queryAll() {
+	public List<Relation> queryAll() {
 		return relationDao.queryAll();
 	}
 	

@@ -2,12 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.pbccrc.api.core.mapper.LocalApiMapper">
+
+	<resultMap id="localApiResult" type="org.pbccrc.api.base.bean.LocalApi">
+		<result property="id" column="id"/>
+		<result property="service" column="service"/>
+		<result property="tblName" column="tblName"/>
+		<result property="apiName" column="apiName"/>
+		<result property="queryType" column="queryType"/>
+		<result property="returnType" column="returnType"/>
+		<result property="url" column="url"/>
+		<result property="params" column="params"/>
+		<result property="returnParam" column="returnParam" javaType="java.lang.String" jdbcType="CLOB" typeHandler="org.pbccrc.api.core.dao.util.OracleClobTypeHandler"/>
+		<result property="costCondition" column="costCondition"/>
+		<result property="basePrice" column="basePrice"/>
+		<result property="isOpen" column="isOpen"/>
+		<result property="createDate" column="createDate"/>
+		<result property="stopDate" column="stopDate"/>
+	</resultMap>
 	
-	<select id="queryByService" parameterType="java.lang.String" resultType="java.util.HashMap">
+	<select id="queryByService" parameterType="java.lang.String" resultMap="localApiResult">
 		select * from localApi where service = #{service}
 	</select>
 	
-	<select id="queryAll" resultType="java.util.HashMap">
+	<select id="queryAll" resultMap="localApiResult">
 		select * from localApi
 	</select>
 	

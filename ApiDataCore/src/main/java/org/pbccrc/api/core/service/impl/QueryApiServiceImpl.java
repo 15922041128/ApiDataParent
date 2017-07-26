@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.pbccrc.api.base.bean.ApiLog;
 import org.pbccrc.api.base.bean.DBEntity;
+import org.pbccrc.api.base.bean.LocalApi;
 import org.pbccrc.api.base.bean.ResultContent;
 import org.pbccrc.api.base.service.ApiLogService;
 import org.pbccrc.api.base.service.DBOperatorService;
@@ -18,7 +19,7 @@ import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.base.util.StringUtil;
 import org.pbccrc.api.core.dao.LocalApiDao;
 import org.pbccrc.api.core.dao.ZhIdentificationDao;
-import org.pbccrc.api.core.dao.datasource.DynamicDataSourceHolder;
+//import org.pbccrc.api.core.dao.datasource.DynamicDataSourceHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -72,14 +73,14 @@ public class QueryApiServiceImpl implements QueryApiService{
 		String target = serviceArray[1];
 		
 		// 获取本地api
-		Map<String, Object> localApi = localApiDao.queryByService(service);
+		LocalApi localApi = localApiDao.queryByService(service);
 		
 		// 本地api参数
-		String localParams = String.valueOf(localApi.get("params"));
+		String localParams = localApi.getParams();
 		JSONArray localParamArray = JSONArray.parseArray(localParams);
 		
 		// 本地api返回参数
-		String[] returnParam = String.valueOf(localApi.get("returnParam")).split(Constants.COMMA);
+		String[] returnParam = localApi.getReturnParam().split(Constants.COMMA);
 		
 		// DB操作对象
 		DBEntity entity = new DBEntity();
@@ -116,13 +117,13 @@ public class QueryApiServiceImpl implements QueryApiService{
 			// 本地api有数据 直接返回本地数据
 			if (Constants.PREFIX_SINGLE.equals(isSingle)) {
 				// 唯一外部api
-				String returnVal = String.valueOf(queryData.get("returnVal"));
+				String returnVal = String.valueOf(queryData.get("RETURNVAL"));
 				result = returnVal;
 			} else {
 				// 多个外部api
 				JSONObject retJson = new JSONObject();
 				for (String param : returnParam) {
-					retJson.put(param, queryData.get(param));
+					retJson.put(param, queryData.get(param.toUpperCase()));
 				}
 				resultContent.setRetData(retJson);
 				result = resultContent;
@@ -154,7 +155,7 @@ public class QueryApiServiceImpl implements QueryApiService{
 		// uuid
 		apiLog.setUuid(uuid);
 		apiLog.setUserID(userID);
-		apiLog.setLocalApiID(String.valueOf(localApi.get("id")));
+		apiLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		JSONObject params = new JSONObject();
 		for (Object o : localParamArray) {
@@ -192,15 +193,17 @@ public class QueryApiServiceImpl implements QueryApiService{
 		
 		// 根据身份证号获取内码信息
 		List<Map<String, Object>> insideCodeMapList = null;
-		try {
-			DynamicDataSourceHolder.change2oracle();
-			insideCodeMapList = zhIdentificationDao.getInnerID(identifier);
-			DynamicDataSourceHolder.change2mysql();
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			DynamicDataSourceHolder.change2mysql();
-		}
+//		try {
+//			DynamicDataSourceHolder.change2oracle();
+//			insideCodeMapList = zhIdentificationDao.getInnerID(identifier);
+//			DynamicDataSourceHolder.change2mysql();
+//		} catch (Exception e) {
+//			throw e;
+//		} finally {
+//			DynamicDataSourceHolder.change2mysql();
+//		}
+		
+		insideCodeMapList = zhIdentificationDao.getInnerID(identifier);
 		
 		if (null == insideCodeMapList) {
 			isSuccess = "false";

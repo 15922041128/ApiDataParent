@@ -1,7 +1,6 @@
 package org.pbccrc.api.core.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -19,11 +18,13 @@ public class LocalApiDao {
 	@Resource
 	private LocalApiMapper localApiMapper;
 	
-	public Map<String, Object> queryByService(String service){
+//	public Map<String, Object> queryByService(String service){
+	public LocalApi queryByService(String service){
 		return localApiMapper.queryByService(service);
 	}
 	
-	public List<Map<String, Object>> queryAll() {
+//	public List<Map<String, Object>> queryAll() {
+	public List<LocalApi> queryAll() {
 		return localApiMapper.queryAll();
 	}
 	

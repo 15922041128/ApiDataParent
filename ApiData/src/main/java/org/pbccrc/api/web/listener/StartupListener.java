@@ -4,8 +4,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.pbccrc.api.base.bean.ApiUser;
 import org.pbccrc.api.base.bean.Code;
 import org.pbccrc.api.base.bean.DBEntity;
+import org.pbccrc.api.base.bean.LocalApi;
+import org.pbccrc.api.base.bean.Product;
+import org.pbccrc.api.base.bean.Relation;
 import org.pbccrc.api.base.service.ApiUserService;
 import org.pbccrc.api.base.service.CodeService;
 import org.pbccrc.api.base.service.DBOperatorService;
@@ -54,32 +58,32 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
 		
 		// 将数据库中数据加载到缓存
 		// product
-		List<Map<String, Object>> productList = productService.queryAll();
-		for (Map<String, Object> product : productList) {
-			String key = "product" + Constants.UNDERLINE + String.valueOf(product.get("id"));
+		List<Product> productList = productService.queryAll();
+		for (Product product : productList) {
+			String key = "product" + Constants.UNDERLINE + String.valueOf(product.getId());
 			RedisClient.set(key, product);
 		}
 		
 		// localApi
-		List<Map<String, Object>> localApiList = localApiService.queryAll();
-		for (Map<String, Object> localApi : localApiList) {
-			String key = "localApi" + Constants.UNDERLINE + String.valueOf(localApi.get("id"));
+		List<LocalApi> localApiList = localApiService.queryAll();
+		for (LocalApi localApi : localApiList) {
+			String key = "localApi" + Constants.UNDERLINE + String.valueOf(localApi.getId());
 			RedisClient.set(key, localApi);
 		}
 		
 		// apiUser
-		List<Map<String, Object>> apiUserList = apiUserService.queryAll();
-		for (Map<String, Object> apiUser : apiUserList) {
-			String key = "apiUser" + Constants.UNDERLINE + String.valueOf(apiUser.get("id"));
+		List<ApiUser> apiUserList = apiUserService.queryAll();
+		for (ApiUser apiUser : apiUserList) {
+			String key = "apiUser" + Constants.UNDERLINE + String.valueOf(apiUser.getId());
 			RedisClient.set(key, apiUser);
 		}
 		
 		// relation
-		List<Map<String, Object>> relationList = relationService.queryAll();
-		for (Map<String, Object> relation : relationList) {
+		List<Relation> relationList = relationService.queryAll();
+		for (Relation relation : relationList) {
 			StringBuilder key = new StringBuilder("relation");
-			key.append(Constants.UNDERLINE + String.valueOf(relation.get("userID")));
-			key.append(Constants.UNDERLINE + String.valueOf(relation.get("apiKey")));
+			key.append(Constants.UNDERLINE + String.valueOf(relation.getUserID()));
+			key.append(Constants.UNDERLINE + String.valueOf(relation.getApiKey()));
 			RedisClient.set(key.toString(), relation);
 		}
 		

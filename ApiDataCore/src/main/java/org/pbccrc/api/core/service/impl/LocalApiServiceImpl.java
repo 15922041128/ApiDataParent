@@ -3,13 +3,12 @@ package org.pbccrc.api.core.service.impl;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-import org.pbccrc.api.core.dao.LocalApiDao;
 import org.pbccrc.api.base.bean.LocalApi;
 import org.pbccrc.api.base.bean.Pagination;
 import org.pbccrc.api.base.service.LocalApiService;
 import org.pbccrc.api.base.util.RedisClient;
+import org.pbccrc.api.core.dao.LocalApiDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,11 +19,13 @@ public class LocalApiServiceImpl implements LocalApiService{
 	@Autowired
 	private LocalApiDao localApiDao;
 	
-	public Map<String, Object> queryByService(String service) {
+//	public Map<String, Object> queryByService(String service) {
+	public LocalApi queryByService(String service) {
 		return localApiDao.queryByService(service);
 	}
 
-	public List<Map<String, Object>> queryAll() {
+//	public List<Map<String, Object>> queryAll() {
+	public List<LocalApi> queryAll() {
 		return localApiDao.queryAll();
 	}
 	

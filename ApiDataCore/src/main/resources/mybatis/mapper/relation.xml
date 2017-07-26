@@ -3,7 +3,7 @@
 
 <mapper namespace="org.pbccrc.api.core.mapper.RelationMapper">
 	
-	<select id="queryAll" resultType="java.util.HashMap">
+	<select id="queryAll" resultType="org.pbccrc.api.base.bean.Relation">
 		select * from relation
 	</select>
 	

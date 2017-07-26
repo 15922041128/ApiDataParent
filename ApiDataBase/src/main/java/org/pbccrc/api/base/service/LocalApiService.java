@@ -1,7 +1,6 @@
 package org.pbccrc.api.base.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.pbccrc.api.base.bean.LocalApi;
 import org.pbccrc.api.base.bean.Pagination;
@@ -13,13 +12,15 @@ public interface LocalApiService {
 	 * @param service
 	 * @return
 	 */
-	Map<String, Object> queryByService(String service);
+//	Map<String, Object> queryByService(String service);
+	LocalApi queryByService(String service);
 	
 	/***
 	 * 查询所有api
 	 * @return
 	 */
-	List<Map<String, Object>> queryAll();
+//	List<Map<String, Object>> queryAll();
+	List<LocalApi> queryAll();
 	
 	/***
 	 * 分页条件查询所有api

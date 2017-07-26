@@ -17,7 +17,7 @@ import org.pbccrc.api.core.dao.PPersonDao;
 import org.pbccrc.api.core.dao.PReditDao;
 import org.pbccrc.api.core.dao.ScoreDao;
 import org.pbccrc.api.core.dao.ZhIdentificationDao;
-import org.pbccrc.api.core.dao.datasource.DynamicDataSourceHolder;
+//import org.pbccrc.api.core.dao.datasource.DynamicDataSourceHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -163,15 +163,18 @@ public class CreditServiceImpl implements CreditService{
 		
 		// 根据身份证号获取内码信息
 		Map<String, Object> insideCodeMap = null;
-		try {
-			DynamicDataSourceHolder.change2oracle();
-			insideCodeMap = zhIdentificationDao.getInnerID(name, idCardNo);
-			DynamicDataSourceHolder.change2mysql();
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			DynamicDataSourceHolder.change2mysql();
-		}
+//		try {
+//			DynamicDataSourceHolder.change2oracle();
+//			insideCodeMap = zhIdentificationDao.getInnerID(name, idCardNo);
+//			DynamicDataSourceHolder.change2mysql();
+//		} catch (Exception e) {
+//			throw e;
+//		} finally {
+//			DynamicDataSourceHolder.change2mysql();
+//		}
+		
+		insideCodeMap = zhIdentificationDao.getInnerID(name, idCardNo);
+		
 		if (null == insideCodeMap) {
 			returnObj.put("status", "error");
 			return returnObj;
@@ -181,19 +184,24 @@ public class CreditServiceImpl implements CreditService{
 		
 		// 获取用户信用评分信息
 		String score = "暂无分数";
-		try {
-			DynamicDataSourceHolder.change2oracle();
-			List<Map<String, Object>> scoreList = scoreDao.getScore(innerID);
-			DynamicDataSourceHolder.change2mysql();
-			if (null != scoreList && 0 != scoreList.size()) {
-				Map<String, Object> scoreMap = scoreList.get(0);
-				score = String.valueOf(scoreMap.get("SCORE"));
-			}
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			DynamicDataSourceHolder.change2mysql();
+		List<Map<String, Object>> scoreList = scoreDao.getScore(innerID);
+		if (null != scoreList && 0 != scoreList.size()) {
+			Map<String, Object> scoreMap = scoreList.get(0);
+			score = String.valueOf(scoreMap.get("SCORE"));
 		}
+//		try {
+//			DynamicDataSourceHolder.change2oracle();
+//			List<Map<String, Object>> scoreList = scoreDao.getScore(innerID);
+//			DynamicDataSourceHolder.change2mysql();
+//			if (null != scoreList && 0 != scoreList.size()) {
+//				Map<String, Object> scoreMap = scoreList.get(0);
+//				score = String.valueOf(scoreMap.get("SCORE"));
+//			}
+//		} catch (Exception e) {
+//			throw e;
+//		} finally {
+//			DynamicDataSourceHolder.change2mysql();
+//		}
 		returnObj.put("score", score);
 		
 		// 获取用户基本信息

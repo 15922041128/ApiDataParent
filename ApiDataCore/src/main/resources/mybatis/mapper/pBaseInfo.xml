@@ -8,7 +8,7 @@
 	</select>
 	
 	<insert id="addPBaseInfo" parameterType="java.util.HashMap" useGeneratedKeys="true" keyProperty="ID">
-		insert into p_baseInfo(personID, photo, tel, address, createUser, createTime, updateUser, updateTime) values(
+		insert into p_baseInfo(id, personID, photo, tel, address, createUser, createTime, updateUser, updateTime) values(seq_p_baseinfo.nextval,
 			#{personID}, #{photo}, #{tel}, #{address}, #{createUser}, #{createTime}, #{updateUser}, #{updateTime})
 	</insert>
 	

@@ -1,7 +1,6 @@
 package org.pbccrc.api.core.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -15,7 +14,7 @@ public class ApiUserDao {
 	@Resource
 	private ApiUserMapper apiUserMapper;
 	
-	public List<Map<String, Object>> queryAll() {
+	public List<ApiUser> queryAll() {
 		return apiUserMapper.queryAll();
 	}
 	

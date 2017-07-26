@@ -5,10 +5,10 @@
 	
 	<insert id="addPRedit" parameterType="java.util.HashMap">
 		insert into p_redit(
-			personID, contactDate, hireDate, expireDate, type, loanUsed, 
+			id, personID, contactDate, hireDate, expireDate, type, loanUsed, 
 			totalAmount, balance, status, bizOccurOrg, createUser, createTime, updateUser, updateTime) 
 		values(
-			#{personID}, #{contactDate}, #{hireDate}, #{expireDate}, #{type}, #{loanUsed}, 
+			seq_p_redit.nextval, #{personID}, #{contactDate}, #{hireDate}, #{expireDate}, #{type}, #{loanUsed}, 
 			#{totalAmount}, #{balance}, #{status}, #{bizOccurOrg}, #{createUser}, #{createTime}, #{updateUser}, #{updateTime})
 	</insert>
 	

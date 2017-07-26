@@ -1,9 +1,10 @@
 package org.pbccrc.api.base.service;
 
 import java.util.List;
-import java.util.Map;
+
+import org.pbccrc.api.base.bean.ApiUser;
 
 public interface ApiUserService {
 
-	List<Map<String, Object>> queryAll();
+	List<ApiUser> queryAll();
 }

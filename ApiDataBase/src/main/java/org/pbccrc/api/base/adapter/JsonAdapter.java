@@ -1,7 +1,6 @@
 package org.pbccrc.api.base.adapter;
 
-import java.util.Map;
-
+import org.pbccrc.api.base.bean.LocalApi;
 import org.pbccrc.api.base.service.LocalApiService;
 import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.base.util.StringUtil;
@@ -20,9 +19,9 @@ public class JsonAdapter {
 	
 	public String change2Ch(String service, String jsonStr) throws Exception {
 		
-		Map<String, Object> localApi = localApiService.queryByService(service);
+		LocalApi localApi = localApiService.queryByService(service);
 		// 获得返回值信息
-		String returnParam = String.valueOf(localApi.get("returnParam"));
+		String returnParam = localApi.getReturnParam();
 		JSONArray paramArray = JSONArray.parseArray(returnParam);
 		
 		String returnStr = Constants.BLANK;

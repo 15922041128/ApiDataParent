@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.pbccrc.api.base.bean.ApiLog;
 import org.pbccrc.api.base.bean.DBEntity;
+import org.pbccrc.api.base.bean.LocalApi;
 import org.pbccrc.api.base.bean.ResultContent;
 import org.pbccrc.api.base.service.LocalDBService;
 import org.pbccrc.api.base.util.Constants;
@@ -25,7 +26,7 @@ import org.pbccrc.api.core.dao.ZhGuaranteeDao;
 import org.pbccrc.api.core.dao.ZhIdentificationDao;
 import org.pbccrc.api.core.dao.ZhLoanDao;
 import org.pbccrc.api.core.dao.ZhPersonDao;
-import org.pbccrc.api.core.dao.datasource.DynamicDataSourceHolder;
+//import org.pbccrc.api.core.dao.datasource.DynamicDataSourceHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -163,10 +164,10 @@ public class LocalDBServiceImpl implements LocalDBService {
 		
 		String innerID = getInnerID(name, identifier);
 		
-		Map<String, Object> localApi = localApiDao.queryByService("l-sxr2");
+		LocalApi localApi = localApiDao.queryByService("l-sxr2");
 		
 		// 获取返回参数
-		String returnParam = String.valueOf(localApi.get("returnParam"));
+		String returnParam = localApi.getReturnParam();
 		
 		JSONArray paramArray = JSONArray.parseArray(returnParam);
 		String[] returnParams = new String[paramArray.size()];
@@ -178,7 +179,7 @@ public class LocalDBServiceImpl implements LocalDBService {
 		// 设置DBEntity
 		DBEntity entity = new DBEntity();
 		// 表名
-		entity.setTableName(String.valueOf(localApi.get("tblName")));
+		entity.setTableName(localApi.getTblName());
 		// 查询条件
 		List<String> fields = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
@@ -193,17 +194,19 @@ public class LocalDBServiceImpl implements LocalDBService {
 		}
 		entity.setSelectItems(selectItems);
 		// 数据库类型
-		entity.setDataBaseType(Constants.DATABASE_TYPE_ORACLE);
-		try {
-			DynamicDataSourceHolder.change2oracle();
-			List<Map<String, Object>> dbMapList = dbOperatorDao.queryDatas(entity);
-			DynamicDataSourceHolder.change2mysql();
-			dishonestList = dbMapList;
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			DynamicDataSourceHolder.change2mysql();
-		}
+//		entity.setDataBaseType(Constants.DATABASE_TYPE_ORACLE);
+		List<Map<String, Object>> dbMapList = dbOperatorDao.queryDatas(entity);
+		dishonestList = dbMapList;
+//		try {
+//			DynamicDataSourceHolder.change2oracle();
+//			List<Map<String, Object>> dbMapList = dbOperatorDao.queryDatas(entity);
+//			DynamicDataSourceHolder.change2mysql();
+//			dishonestList = dbMapList;
+//		} catch (Exception e) {
+//			throw e;
+//		} finally {
+//			DynamicDataSourceHolder.change2mysql();
+//		}
 		return dishonestList;
 	}
 	
@@ -222,15 +225,17 @@ public class LocalDBServiceImpl implements LocalDBService {
 		
 		// 根据身份证号获取内码信息
 		Map<String, Object> insideCodeMap = null;
-		try {
-			DynamicDataSourceHolder.change2oracle();
-			insideCodeMap = zhIdentificationDao.getInnerID(name, idCardNo);
-			DynamicDataSourceHolder.change2mysql();
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			DynamicDataSourceHolder.change2mysql();
-		}
+//		try {
+//			DynamicDataSourceHolder.change2oracle();
+//			insideCodeMap = zhIdentificationDao.getInnerID(name, idCardNo);
+//			DynamicDataSourceHolder.change2mysql();
+//		} catch (Exception e) {
+//			throw e;
+//		} finally {
+//			DynamicDataSourceHolder.change2mysql();
+//		}
+		
+		insideCodeMap = zhIdentificationDao.getInnerID(name, idCardNo);
 		
 		if (null == insideCodeMap) {
 			returnMap.put("isNull", "Y");
@@ -280,15 +285,17 @@ public class LocalDBServiceImpl implements LocalDBService {
 		
 		Map<String, Object> returnMap = null;
 		
-		try {
-			DynamicDataSourceHolder.change2oracle();
-			returnMap = zhIdentificationDao.getInnerID(name, identifier);
-			DynamicDataSourceHolder.change2mysql();
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			DynamicDataSourceHolder.change2mysql();
-		}
+//		try {
+//			DynamicDataSourceHolder.change2oracle();
+//			returnMap = zhIdentificationDao.getInnerID(name, identifier);
+//			DynamicDataSourceHolder.change2mysql();
+//		} catch (Exception e) {
+//			throw e;
+//		} finally {
+//			DynamicDataSourceHolder.change2mysql();
+//		}
+		
+		returnMap = zhIdentificationDao.getInnerID(name, identifier);
 		
 		if (null == returnMap) {
 			return innerID;
@@ -311,15 +318,17 @@ public class LocalDBServiceImpl implements LocalDBService {
 		
 		Map<String, Object> returnMap = null;
 		
-		try {
-			DynamicDataSourceHolder.change2oracle();
-			returnMap = telPersonDao.getInnerID(telNum);
-			DynamicDataSourceHolder.change2mysql();	
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			DynamicDataSourceHolder.change2mysql();	
-		}
+//		try {
+//			DynamicDataSourceHolder.change2oracle();
+//			returnMap = telPersonDao.getInnerID(telNum);
+//			DynamicDataSourceHolder.change2mysql();	
+//		} catch (Exception e) {
+//			throw e;
+//		} finally {
+//			DynamicDataSourceHolder.change2mysql();	
+//		}
+		
+		returnMap = telPersonDao.getInnerID(telNum);
 		 
 		if (null == returnMap) {
 			return innerID;
@@ -345,16 +354,16 @@ public class LocalDBServiceImpl implements LocalDBService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("isSuccess", true);
 		
-		Map<String, Object> localApi = localApiDao.queryByService(service);
+		LocalApi localApi = localApiDao.queryByService(service);
 		
 		// 获取返回类型
-		String returnType = String.valueOf(localApi.get("returnType"));
+		String returnType = String.valueOf(localApi.getReturnType());
 		
 		// 获取表名
-		String tblName = String.valueOf(localApi.get("tblName"));
+		String tblName = localApi.getTblName();
 		
 		// 获取返回参数
-		String returnParam = String.valueOf(localApi.get("returnParam"));
+		String returnParam = localApi.getReturnParam();
 		
 		JSONArray paramArray = JSONArray.parseArray(returnParam);
 		String[] returnParams = new String[paramArray.size()];
@@ -364,7 +373,7 @@ public class LocalDBServiceImpl implements LocalDBService {
 		}
 		
 		try {
-			DynamicDataSourceHolder.change2oracle();
+//			DynamicDataSourceHolder.change2oracle();
 			if (Constants.ORA_TBL_NAME_PERSON.equals(tblName) 
 					|| Constants.ORA_TBL_NAME_ADDRESS.equals(tblName)
 					|| Constants.ORA_TBL_NAME_EMPLOYMENT.equals(tblName)
@@ -432,7 +441,7 @@ public class LocalDBServiceImpl implements LocalDBService {
 				}
 				entity.setSelectItems(selectItems);
 				// 数据库类型
-				entity.setDataBaseType(Constants.DATABASE_TYPE_ORACLE);
+//				entity.setDataBaseType(Constants.DATABASE_TYPE_ORACLE);
 				List<Map<String, Object>> dbMapList = dbOperatorDao.queryDatas(entity);
 				if (null == dbMapList || dbMapList.size() == 0) {
 					map.put("isSuccess", false);
@@ -445,11 +454,11 @@ public class LocalDBServiceImpl implements LocalDBService {
 					}
 				}
 			}
-			DynamicDataSourceHolder.change2mysql();
+//			DynamicDataSourceHolder.change2mysql();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DynamicDataSourceHolder.change2mysql();
+//			DynamicDataSourceHolder.change2mysql();
 		}
 		
 		// 记录日志
@@ -457,18 +466,21 @@ public class LocalDBServiceImpl implements LocalDBService {
 		// uuid
 		apiLog.setUuid(uuid);
 		apiLog.setUserID(userID);
-		apiLog.setLocalApiID(String.valueOf(localApi.get("id")));
+		apiLog.setLocalApiID(String.valueOf(localApi.getId()));
 		apiLog.setParams(params.toJSONString());
 		apiLog.setDataFrom(Constants.DATA_FROM_LOCAL);
 		apiLog.setIsSuccess(String.valueOf(map.get("isSuccess")));
 		apiLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FROMAT_APILOG).format(new Date()));
-		try {
-			DynamicDataSourceHolder.change2oracle();
-			apiLogDao.addLog(apiLog);
-			DynamicDataSourceHolder.change2mysql();
-		} catch (Exception e) {
-			DynamicDataSourceHolder.change2mysql();
-		}
+		apiLogDao.addLog(apiLog);
+//		try {
+//			DynamicDataSourceHolder.change2oracle();
+//			apiLogDao.addLog(apiLog);
+//			DynamicDataSourceHolder.change2mysql();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			DynamicDataSourceHolder.change2mysql();
+//		}
 		
 		
 		return map;

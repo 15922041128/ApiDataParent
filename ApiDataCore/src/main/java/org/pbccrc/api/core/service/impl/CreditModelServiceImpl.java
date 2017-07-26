@@ -9,7 +9,7 @@ import org.pbccrc.api.core.dao.BlackListDao;
 import org.pbccrc.api.core.dao.GradeDao;
 import org.pbccrc.api.core.dao.WhiteListDao;
 import org.pbccrc.api.core.dao.ZhIdentificationDao;
-import org.pbccrc.api.core.dao.datasource.DynamicDataSourceHolder;
+//import org.pbccrc.api.core.dao.datasource.DynamicDataSourceHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,15 +50,16 @@ public class CreditModelServiceImpl implements CreditModelService {
 		// 查询内码是否存在
 		Map<String, Object> insideCodeMap = null;
 		// 根据两标进行查询
-		try {
-			DynamicDataSourceHolder.change2oracle();
-			insideCodeMap =  zhIdentificationDao.getInnerID(name, idCardNo);
-			DynamicDataSourceHolder.change2mysql();
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			DynamicDataSourceHolder.change2mysql();
-		}
+		insideCodeMap =  zhIdentificationDao.getInnerID(name, idCardNo);
+//		try {
+//			DynamicDataSourceHolder.change2oracle();
+//			insideCodeMap =  zhIdentificationDao.getInnerID(name, idCardNo);
+//			DynamicDataSourceHolder.change2mysql();
+//		} catch (Exception e) {
+//			throw e;
+//		} finally {
+//			DynamicDataSourceHolder.change2mysql();
+//		}
 		
 		// 如果查询内码失败则返回
 		if (null == insideCodeMap) {
@@ -76,15 +77,16 @@ public class CreditModelServiceImpl implements CreditModelService {
 		// 黑名单
 		Map<String, Object> blackList = null;
 		// 查询白名单
-		try {
-			DynamicDataSourceHolder.change2oracle();
-			whiteList = whiteListDao.getList(innerId);
-			DynamicDataSourceHolder.change2mysql();
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			DynamicDataSourceHolder.change2mysql();
-		}
+		whiteList = whiteListDao.getList(innerId);
+//		try {
+//			DynamicDataSourceHolder.change2oracle();
+//			whiteList = whiteListDao.getList(innerId);
+//			DynamicDataSourceHolder.change2mysql();
+//		} catch (Exception e) {
+//			throw e;
+//		} finally {
+//			DynamicDataSourceHolder.change2mysql();
+//		}
 		
 		// 评级
 		String grade = Constants.BLANK;
@@ -94,15 +96,17 @@ public class CreditModelServiceImpl implements CreditModelService {
 			grade = String.valueOf(whiteList.get("GRADE"));
 		} else {
 			// 为空查询黑名单
-			try {
-				DynamicDataSourceHolder.change2oracle();
-				blackList = blackListDao.getList(innerId);
-				DynamicDataSourceHolder.change2mysql();
-			} catch (Exception e) {
-				throw e;
-			} finally {
-				DynamicDataSourceHolder.change2mysql();
-			}
+//			try {
+//				DynamicDataSourceHolder.change2oracle();
+//				blackList = blackListDao.getList(innerId);
+//				DynamicDataSourceHolder.change2mysql();
+//			} catch (Exception e) {
+//				throw e;
+//			} finally {
+//				DynamicDataSourceHolder.change2mysql();
+//			}
+			
+			blackList = blackListDao.getList(innerId);
 			
 			
 			// 判断黑名单是否为空

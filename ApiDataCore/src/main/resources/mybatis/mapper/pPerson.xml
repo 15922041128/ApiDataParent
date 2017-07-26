@@ -8,7 +8,7 @@
 	</select>
 	
 	<insert id="addPerson" parameterType="java.util.HashMap" useGeneratedKeys="true" keyProperty="id">
-		insert into p_person(idCardNo, name) values(#{idCardNo}, #{name})
+		insert into p_person(id, idCardNo, name) values(seq_p_person.nextval, #{idCardNo}, #{name})
 	</insert>
 	
 	<select id="selectOne" parameterType="java.util.HashMap" resultType="java.util.HashMap">

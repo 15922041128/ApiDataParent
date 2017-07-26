@@ -1,7 +1,6 @@
 package org.pbccrc.api.base.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.pbccrc.api.base.bean.Pagination;
 import org.pbccrc.api.base.bean.Product;
@@ -15,7 +14,7 @@ public interface ProductService {
 	 * 查询所有产品
 	 * @return
 	 */
-	List<Map<String, Object>> queryAll();
+	List<Product> queryAll();
 	
 	/***
 	 * 根据用户ID查询产品信息

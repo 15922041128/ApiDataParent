@@ -162,23 +162,23 @@ public class Constants {
 	public static final String API_KEY = "apiKey";
 	/** ldb_dishonest_info */
 	// 被执行人身份证号码
-	public static final String LDB_DISHONEST_INFO_CARDNUM = "CARDNUM";
-	// 执行法院
-	public static final String LDB_DISHONEST_INFO_COURT_NAME = "COURT_NAME";
-	// 案号
-	public static final String LDB_DISHONEST_INFO_CASE_CODE = "CASE_CODE";
-	// 被执行人姓名
-	public static final String LDB_DISHONEST_INFO_INAME = "INAME";
-	// 执行情况
-	public static final String LDB_DISHONEST_INFO_PERFORMANCE = "PERFORMANCE";
-	// 发布时间
-	public static final String LDB_DISHONEST_INFO_PUBLISH_DATE = "PUBLISH_DATE";
-	// 省份名称
-	public static final String LDB_DISHONEST_INFO_AREA_NAME = "AREA_NAME";
-	// 职责
-	public static final String LDB_DISHONEST_INFO_DUTY = "DUTY";
-	// 失信被执行人行为具体情形
-	public static final String LDB_DISHONEST_INFO_DISREPUT_TYPE_NAME = "DISREPUT_TYPE_NAME";
+//	public static final String LDB_DISHONEST_INFO_CARDNUM = "CARDNUM";
+//	// 执行法院
+//	public static final String LDB_DISHONEST_INFO_COURT_NAME = "COURT_NAME";
+//	// 案号
+//	public static final String LDB_DISHONEST_INFO_CASE_CODE = "CASE_CODE";
+//	// 被执行人姓名
+//	public static final String LDB_DISHONEST_INFO_INAME = "INAME";
+//	// 执行情况
+//	public static final String LDB_DISHONEST_INFO_PERFORMANCE = "PERFORMANCE";
+//	// 发布时间
+//	public static final String LDB_DISHONEST_INFO_PUBLISH_DATE = "PUBLISH_DATE";
+//	// 省份名称
+//	public static final String LDB_DISHONEST_INFO_AREA_NAME = "AREA_NAME";
+//	// 职责
+//	public static final String LDB_DISHONEST_INFO_DUTY = "DUTY";
+//	// 失信被执行人行为具体情形
+//	public static final String LDB_DISHONEST_INFO_DISREPUT_TYPE_NAME = "DISREPUT_TYPE_NAME";
 	
 	// person
 	public static final String PERSON_ID = "id";
@@ -272,7 +272,7 @@ public class Constants {
 	// 数据来源-全联
 	public static final String DATA_FROM_QL = "ql";
 	// 数据库类型-oracle
-	public static final String DATABASE_TYPE_ORACLE = "oracle";
+//	public static final String DATABASE_TYPE_ORACLE = "oracle";
 	
 	/** apiID */
 	// 身份证认证

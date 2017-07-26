@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.pbccrc.api.base.bean.DBEntity;
+import org.pbccrc.api.base.bean.LocalApi;
 import org.pbccrc.api.base.bean.ResultContent;
 import org.pbccrc.api.base.service.QueryApi;
 import org.pbccrc.api.base.util.Constants;
@@ -39,7 +40,7 @@ public class QueryApiSingle implements QueryApi {
 
 	@Override
 	@SuppressWarnings("rawtypes")
-	public Map<String, Object> query(Map<String, Object> localApi, Map urlParams) throws Exception{
+	public Map<String, Object> query(LocalApi localApi, Map urlParams) throws Exception{
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -49,11 +50,11 @@ public class QueryApiSingle implements QueryApi {
 		String dataFrom = Constants.BLANK;
 		
 		// 本地api参数
-		String localParams = String.valueOf(localApi.get("params"));
+		String localParams = localApi.getParams();
 		JSONArray localParamArray = JSONArray.parseArray(localParams);
 		
 		// 获得远程api
-		List<Map<String, Object>> remoteApiList = remoteApiDao.getRemoteApiByLocal(Integer.parseInt(String.valueOf(localApi.get("id"))));
+		List<Map<String, Object>> remoteApiList = remoteApiDao.getRemoteApiByLocal(localApi.getId());
 		Map<String, Object> remoteApi = remoteApiList.get(0);
 		
 		// url
@@ -437,10 +438,10 @@ public class QueryApiSingle implements QueryApi {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private void insertDB(Map<String, Object> localApi, String resultStr, JSONArray localParamArray, Map urlParams) {
+	private void insertDB(LocalApi localApi, String resultStr, JSONArray localParamArray, Map urlParams) {
 		
 		// tableName末段与localApi.service后缀相同
-		String tableName = String.valueOf(localApi.get("service")).split(Constants.CONNECTOR_LINE)[1];
+		String tableName = String.valueOf(localApi.getService()).split(Constants.CONNECTOR_LINE)[1];
 		// DB操作对象
 		DBEntity entity = new DBEntity();
 		entity.setTableName("d_" + "s_" + tableName);
@@ -449,8 +450,8 @@ public class QueryApiSingle implements QueryApi {
 		fields.add("returnTyp");
 		fields.add("returnVal");
 		List<String> values = new ArrayList<String>();
-		values.add(String.valueOf(localApi.get("id")));
-		values.add(String.valueOf(localApi.get("returnType")));
+		values.add(String.valueOf(localApi.getId()));
+		values.add(String.valueOf(localApi.getReturnType()));
 		values.add(resultStr);
 		
 		// insert项

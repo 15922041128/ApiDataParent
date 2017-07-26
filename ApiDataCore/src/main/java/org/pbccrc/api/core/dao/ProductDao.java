@@ -1,7 +1,6 @@
 package org.pbccrc.api.core.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -19,7 +18,7 @@ public class ProductDao {
 	@Resource
 	private ProductMapper productMapper;
 	
-	public List<Map<String, Object>> queryAll() {
+	public List<Product> queryAll() {
 		return productMapper.queryAll();
 	}
 	

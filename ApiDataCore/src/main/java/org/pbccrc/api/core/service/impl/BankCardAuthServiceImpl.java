@@ -117,7 +117,7 @@ public class BankCardAuthServiceImpl implements BankCardAuthService{
 		
 		if (null != queryData) {
 			// 本地有数据 直接返回
-			result = String.valueOf(queryData.get("result_data"));
+			result = String.valueOf(queryData.get("RESULT_DATA"));
 			retrunMap.put("isSuccess", "true");
 		} else {
 			// 本地无数据 访问远程并记录到本地
@@ -190,6 +190,10 @@ public class BankCardAuthServiceImpl implements BankCardAuthService{
         	
         	boolean success = Boolean.valueOf(String.valueOf(object.get("success")));
    			if (success) {
+   				// ID
+   				fields.add("id");
+   				values.add("seq_bankCardAuth.nextval");
+   				
    				fields.add("result_data");
    				values.add(PostString);
    				dbEntity.setFields(fields);

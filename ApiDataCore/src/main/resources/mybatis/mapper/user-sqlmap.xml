@@ -4,21 +4,21 @@
 <mapper namespace="org.pbccrc.api.core.mapper.UserMapper">
 	
 	<select id="isExist" parameterType="java.lang.String" resultType="java.lang.Integer">
-		select count(1) from user where userName = #{userName}
+		select count(1) from iuser where userName = #{userName}
 	</select>
 	
 	<insert id="addUser" parameterType="org.pbccrc.api.base.bean.User">
-		insert into user(id,userName, password, compName, compTel, contactName, contactTel, auth, userState, privateKey) values(
+		insert into iuser(id,userName, password, compName, compTel, contactName, contactTel, auth, userState, privateKey) values(
 			#{id}, #{userName}, #{password}, #{compName}, #{compTel}, #{contactName}, #{contactTel}, #{auth}, #{userState}, 
 			#{privateKey,jdbcType=BLOB})
 	</insert>
 	
 	<select id="login" parameterType="org.pbccrc.api.base.bean.User" resultType="org.pbccrc.api.base.bean.User">
-		select * from user where userName = #{userName} and password = #{password} 
+		select * from iuser where userName = #{userName} and password = #{password} 
 	</select>
 	
 	<update id="updateUser" parameterType="org.pbccrc.api.base.bean.User">
-		update user
+		update iuser
 		<set>  
 			<if test="password !=null and password != '' ">
             	password = #{password},
@@ -71,10 +71,10 @@
 	</update>
 	
 	<select id="getUserByID" parameterType="java.lang.String" resultType="org.pbccrc.api.base.bean.User">
-		select * from user where id = #{userID}
+		select * from iuser where id = #{userID}
 	</select>
 	<select id="getAllUser" parameterType="org.pbccrc.api.base.bean.User" resultType="org.pbccrc.api.base.bean.User">
-		select * from user where 1=1
+		select * from iuser where 1=1
 			<if test="userName !=null and userName != '' ">
             	and userName like CONCAT('%',#{userName},'%') 
         	</if>
@@ -99,7 +99,7 @@
 	</select>
 	
 	<update id="resetPassword" parameterType="org.pbccrc.api.base.bean.User">
-		update user password = #{password} where id = #{id}
+		update iuser password = #{password} where id = #{id}
 	</update>
 	
 </mapper>

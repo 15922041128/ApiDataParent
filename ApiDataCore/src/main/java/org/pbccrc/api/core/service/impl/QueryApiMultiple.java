@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.pbccrc.api.base.bean.DBEntity;
+import org.pbccrc.api.base.bean.LocalApi;
 import org.pbccrc.api.base.bean.ResultContent;
 import org.pbccrc.api.base.service.QueryApi;
 import org.pbccrc.api.base.util.Constants;
@@ -38,7 +39,7 @@ public class QueryApiMultiple implements QueryApi {
 
 	@Override
 	@SuppressWarnings("rawtypes")
-	public Map<String, Object> query(Map<String, Object> localApi, Map urlParams) throws Exception {
+	public Map<String, Object> query(LocalApi localApi, Map urlParams) throws Exception {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -54,11 +55,11 @@ public class QueryApiMultiple implements QueryApi {
 		resultContent.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);
 		
 		// 本地api请求参数
-		String localParams = String.valueOf(localApi.get("params"));
+		String localParams = localApi.getParams();
 		JSONArray localParamArray = JSONArray.parseArray(localParams);
 		
 		// 获得远程api
-		List<Map<String, Object>> remoteApiList = remoteApiDao.getRemoteApiByLocal(Integer.parseInt(String.valueOf(localApi.get("id"))));
+		List<Map<String, Object>> remoteApiList = remoteApiDao.getRemoteApiByLocal(localApi.getId());
 		
 		// 查询成功标识
 		boolean isSuccess = false;
@@ -475,16 +476,16 @@ public class QueryApiMultiple implements QueryApi {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	private JSONObject insertDB (JSONObject returnJson, Map<String, Object> localApi, 
+	private JSONObject insertDB (JSONObject returnJson, LocalApi localApi, 
 			JSONArray localParamArray, Map urlParams, String retParamRel, String returnCode) {
 		
 		JSONObject retObj = new JSONObject();
 		
 		// 本地api返回参数
-		String[] returnParams = String.valueOf(localApi.get("returnParam")).split(Constants.COMMA);
+		String[] returnParams = localApi.getReturnParam().split(Constants.COMMA);
 		
 		// tableName末段与localApi.service后缀相同
-		String tableName = String.valueOf(localApi.get("service")).split(Constants.CONNECTOR_LINE)[1];
+		String tableName = localApi.getService().split(Constants.CONNECTOR_LINE)[1];
 		DBEntity dbEntity = new DBEntity();
 		dbEntity.setTableName("d_" + "m_" + tableName);
 		List<String> fields = new ArrayList<String>();
@@ -492,8 +493,8 @@ public class QueryApiMultiple implements QueryApi {
 		fields.add("returnTyp");
 		fields.add("returnCode");
 		List<String> values = new ArrayList<String>();
-		values.add(String.valueOf(localApi.get("id")));
-		values.add(String.valueOf(localApi.get("returnType")));
+		values.add(String.valueOf(localApi.getId()));
+		values.add(String.valueOf(localApi.getReturnType()));
 		values.add(returnCode);
 		
 		// 查询条件

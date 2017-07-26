@@ -2,6 +2,8 @@ package org.pbccrc.api.base.service;
 
 import java.util.Map;
 
+import org.pbccrc.api.base.bean.LocalApi;
+
 public interface QueryApi {
 
 	/**
@@ -11,5 +13,5 @@ public interface QueryApi {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("rawtypes")
-	public Map<String, Object> query(Map<String, Object> localApi, Map urlParams) throws Exception;
+	public Map<String, Object> query(LocalApi localApi, Map urlParams) throws Exception;
 }

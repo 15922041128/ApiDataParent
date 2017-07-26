@@ -1,7 +1,6 @@
 package org.pbccrc.api.core.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -15,7 +14,7 @@ public class RelationDao {
 	@Resource
 	private RelationMapper relationMapper;
 	
-	public List<Map<String, Object>> queryAll() {
+	public List<Relation> queryAll() {
 		return relationMapper.queryAll();
 	}
 	

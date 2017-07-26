@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.pbccrc.api.base.bean.LocalApi;
 import org.pbccrc.api.base.bean.ResultContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class Validator {
 	 * @return           		是否通过验证
 	 */
 	@SuppressWarnings("rawtypes")
-	public boolean validateRequest(String userID, String apiKey, Map<String, Object> localApi, Map urlParams, String ipAddress, ResultContent resultContent) {
+	public boolean validateRequest(String userID, String apiKey, LocalApi localApi, Map urlParams, String ipAddress, ResultContent resultContent) {
 		
 		// 验证userID是否存在
 		if (StringUtil.isNull(userID)) {
@@ -85,11 +86,11 @@ public class Validator {
 		}
 		
 		// 获取localApiID
-		String localApiID = String.valueOf(localApi.get("id"));
+		String localApiID = String.valueOf(localApi.getId());
 		
 		// 验证apiKey所属产品是否包含查询api
 		// 获取productID
-		String productID = relation.getString("productID");
+		String productID = relation.getString("PRODUCTID");
 		// 获取product信息
 		StringBuilder productKey = new StringBuilder("product");
 		productKey.append(Constants.UNDERLINE + productID);
@@ -150,7 +151,7 @@ public class Validator {
 		}
 		
 		// 验证参数是否与api匹配
-		String params = (String) localApi.get("params");
+		String params = localApi.getParams();
 		JSONArray array = JSONArray.parseArray(params);
 		for (Object o : array) {
 			
@@ -269,7 +270,7 @@ public class Validator {
 	 * @param resultContent     查询返回对象
 	 * @return           		是否通过验证
 	 */
-	public boolean validateRequest(String userID, String apiKey, Map<String, Object> localApi, 
+	public boolean validateRequest(String userID, String apiKey, LocalApi localApi, 
 			String name, String identifier, String telNum, String ipAddress, ResultContent resultContent) {
 		
 		// 验证userID是否存在
@@ -326,7 +327,7 @@ public class Validator {
 		}
 		
 		// 获取localApiID
-		String localApiID = String.valueOf(localApi.get("id"));
+		String localApiID = String.valueOf(localApi.getId());
 		
 		// 验证apiKey所属产品是否包含查询api
 		// 获取productID
@@ -391,7 +392,7 @@ public class Validator {
 		}
 		
 		// 验证参数是否与api匹配
-		String params = (String) localApi.get("params");
+		String params = localApi.getParams();
 		JSONArray array = JSONArray.parseArray(params);
 		if (array.size() == 1) {
 			// size == 1 为电话号码查询

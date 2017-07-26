@@ -27,7 +27,7 @@ public class ProductServiceImpl implements ProductService{
 	 * 查询所有产品
 	 * @return
 	 */
-	public List<Map<String, Object>> queryAll() {
+	public List<Product> queryAll() {
 		return productDao.queryAll();
 	}
 	

@@ -5,7 +5,7 @@ import java.util.List;
 import org.pbccrc.api.base.bean.ApiLog;
 import org.pbccrc.api.base.service.ApiLogService;
 import org.pbccrc.api.core.dao.ApiLogDao;
-import org.pbccrc.api.core.dao.datasource.DynamicDataSourceHolder;
+//import org.pbccrc.api.core.dao.datasource.DynamicDataSourceHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,26 +16,31 @@ public class ApiLogServiceImpl implements ApiLogService{
 	private ApiLogDao apiLogDao;
 	
 	public List<ApiLog> queryLog(ApiLog apiLog) {
-		List<ApiLog> list = null;
-		try {
-			DynamicDataSourceHolder.change2oracle();
-			list = apiLogDao.queryLog(apiLog);
-			DynamicDataSourceHolder.change2mysql();
-		} catch (Exception e) {
-			DynamicDataSourceHolder.change2mysql();
-		}
+//		List<ApiLog> list = null;
+//		try {
+//			DynamicDataSourceHolder.change2oracle();
+//			list = apiLogDao.queryLog(apiLog);
+//			DynamicDataSourceHolder.change2mysql();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			DynamicDataSourceHolder.change2mysql();
+//		}
 		
-		return list;
+		return apiLogDao.queryLog(apiLog);
 	}
 
 	public void addLog(ApiLog apiLog) {
-		try {
-			DynamicDataSourceHolder.change2oracle();
-			apiLogDao.addLog(apiLog);
-			DynamicDataSourceHolder.change2mysql();
-		} catch (Exception e) {
-			DynamicDataSourceHolder.change2mysql();
-		}
+//		try {
+//			DynamicDataSourceHolder.change2oracle();
+//			apiLogDao.addLog(apiLog);
+//			DynamicDataSourceHolder.change2mysql();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			DynamicDataSourceHolder.change2mysql();	
+//		}
+		apiLogDao.addLog(apiLog);
 		
 	}
 
