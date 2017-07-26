@@ -68,15 +68,15 @@
 		) AS countNum
 		FROM
 			systemlog s
-		LEFT JOIN `user` u ON s.userID = u.id
-		LEFT JOIN `product` p ON s.productID = p.id
+		LEFT JOIN user u ON s.userID = u.id
+		LEFT JOIN product p ON s.productID = p.id
 		<where>
 		    1=1
 			<if test="userName !=null and userName != '' ">
-            	and userName like CONCAT('%',#{userName},'%') 
+            	and userName like '%'||#{userName}||'%'
         	</if>
         	<if test="productName !=null and productName != '' ">
-            	and p.name like CONCAT('%',#{productName},'%') 
+            	and p.name like '%'||#{productName}||'%' 
         	</if>
 			<if test="startDate != null and endDate != ''">
 				<![CDATA[
@@ -172,9 +172,9 @@
 		queryDate
 		FROM
 			systemlog s
-		LEFT JOIN `user` u ON s.userID = u.id
-		LEFT JOIN `product` p ON s.productID = p.id
-		LEFT JOIN `localApi` l ON s.localApiID = l.id
+		LEFT JOIN user u ON s.userID = u.id
+		LEFT JOIN product p ON s.productID = p.id
+		LEFT JOIN localApi l ON s.localApiID = l.id
 		<where>
 		    1=1
 			<if test="userID !=null and userID != '' ">

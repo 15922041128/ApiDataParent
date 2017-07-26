@@ -31,13 +31,13 @@
 	<select id="queryApiByPage" parameterType="org.pbccrc.api.base.bean.LocalApi" resultType="org.pbccrc.api.base.bean.LocalApi">
 		select * from localApi where 1=1
 			<if test="apiName !=null and apiName != '' ">
-            	and apiName like CONCAT('%',#{apiName},'%') 
+            	and apiName like '%'||#{apiName}||'%'
         	</if>
         	<if test="tblName !=null and tblName != '' ">
-            	and tblName like CONCAT('%',#{tblName},'%') 
+            	and tblName like '%'||#{tblName}||'%'
         	</if>
 			<if test="service !=null and service != '' ">
-            	and service like CONCAT('%',#{service},'%') 
+            	and service like '%'||#{service}||'%' 
         	</if>
         	<if test="isOpen !=null and isOpen != '' ">
             	and isOpen = #{isOpen}

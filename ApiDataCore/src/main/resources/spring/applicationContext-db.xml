@@ -68,7 +68,7 @@
 				<bean class="com.github.pagehelper.PageHelper">
 					<property name="properties">
 						<value>
-							dialect=mysql
+							dialect=oracle
 							rowBoundsWithCount=true
 							pageSizeZero=true
 						</value>
