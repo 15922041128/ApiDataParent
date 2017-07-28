@@ -282,7 +282,9 @@ public class Constants {
 	// 银行卡三/四要素认证
 	public static final String API_ID_BANK_CARD_AUTH = "99999999998";
 	// 信贷模型
-	public static final String API_ID_CREDIT_MODEL = "99999999997"; 
+	public static final String API_ID_CREDIT_MODEL = "99999999997";
+	// 鹰泽个人信用评分
+	public static final String API_ID_YINGZE_SCORE = "99999999996"; 
 	
 	/** productID */
 	// 页面pdf
