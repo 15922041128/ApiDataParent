@@ -10,7 +10,7 @@
 	<insert id="addUser" parameterType="org.pbccrc.api.base.bean.User">
 		insert into iuser(id,userName, password, compName, compTel, contactName, contactTel, auth, userState, privateKey) values(
 			#{id}, #{userName}, #{password}, #{compName}, #{compTel}, #{contactName}, #{contactTel}, #{auth}, #{userState}, 
-			#{privateKey,jdbcType=BLOB})
+			empty_blob())
 	</insert>
 	
 	<select id="login" parameterType="org.pbccrc.api.base.bean.User" resultType="org.pbccrc.api.base.bean.User">
