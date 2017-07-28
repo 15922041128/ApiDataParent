@@ -148,8 +148,15 @@ public class DesUtils {
     /**
 	 * Base64加密
 	 */
-	public static String Base64Encode(String str) throws Exception {
+	public static String Base64Encode(String inputData) throws Exception {
 	
-		return new String(new Base64().encode(str.getBytes("UTF-8")));
+		return new String(new Base64().encode(inputData.getBytes("UTF-8")));
 	}
+	
+	/**
+     * Base64解密
+     */
+    public static String Base64Decode(String inputData) throws Exception {
+    	return new String(Base64.decodeBase64(inputData.getBytes("UTF-8")), "UTF-8");
+    }
 }

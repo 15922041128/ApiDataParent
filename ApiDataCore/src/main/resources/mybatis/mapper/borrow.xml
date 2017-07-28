@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pbccrc.api.core.mapper.BorrowMapper">
+
+	<resultMap type="org.pbccrc.api.base.bean.Borrow" id="borrow">
+		<id property="id" column="ID" />
+		<result property="borrowType" column="BORROW_TYPE" />
+		<result property="borrowState" column="BORROW_STATE" />
+		<result property="borrowAmount" column="BORROW_AMOUNT" />
+		<result property="contractDate" column="CONTRACT_DATE" />
+		<result property="loanPeriod" column="LOAN_PERIOD" />
+		<result property="repayState" column="REPAY_STATE" />
+		<result property="arrearsAmount" column="ARREARS_AMOUNT" />
+		<result property="companyCode" column="COMPANY_CODE" />
+	</resultMap>
+	
+	<insert id="addBorrows" parameterType="java.util.List" useGeneratedKeys="false">
+	<!--  -->
+	insert into borrow(
+		ID, BORROW_TYPE,
+		BORROW_STATE,
+		BORROW_AMOUNT,
+		CONTRACT_DATE,
+		LOAN_PERIOD,
+		REPAY_STATE,
+		ARREARS_AMOUNT,
+		COMPANY_CODE) (
+	<foreach collection="list" item="item" index="index" separator="union all" >
+		SELECT 
+			#{item.id,jdbcType=VARCHAR},
+			#{item.borrowType,jdbcType=VARCHAR},
+			#{item.borrowState,jdbcType=VARCHAR},
+			#{item.borrowAmount,jdbcType=INTEGER},
+			#{item.contractDate,jdbcType=VARCHAR},
+			#{item.loanPeriod,jdbcType=VARCHAR},
+			#{item.repayState,jdbcType=VARCHAR},
+			#{item.arrearsAmount,jdbcType=VARCHAR},
+			#{item.companyCode,jdbcType=VARCHAR}
+		FROM dual
+	</foreach>
+	)
+	<!--  
+	INSERT ALL   
+	  <foreach collection="list" item="item" index="index">
+		into borrow(
+		ID, BORROW_TYPE,
+		BORROW_STATE,
+		BORROW_AMOUNT,
+		CONTRACT_DATE,
+		LOAN_PERIOD,
+		REPAY_STATE,
+		ARREARS_AMOUNT,
+		COMPANY_CODE)
+		VALUES(#{item.id,jdbcType=VARCHAR},
+		#{item.borrowType,jdbcType=VARCHAR},
+		#{item.borrowState,jdbcType=VARCHAR},
+		#{item.borrowAmount,jdbcType=INTEGER},
+		#{item.contractDate,jdbcType=VARCHAR},
+		#{item.loanPeriod,jdbcType=VARCHAR},
+		#{item.repayState,jdbcType=VARCHAR},
+		#{item.arrearsAmount,jdbcType=VARCHAR},
+		#{item.companyCode,jdbcType=VARCHAR})  
+      </foreach>  
+     SELECT 1 FROM DUAL  
+     -->
+</insert>
+	
+	<select id="getNexSeq" resultType="java.lang.String">
+		select seq_borrow.nextval from dual
+	</select>
+	
+	<select id="getCreditModel" statementType="CALLABLE" parameterType="java.util.HashMap">
+       <![CDATA[
+           {call root.get_credit_model(
+              #{idNo,mode=IN,jdbcType=VARCHAR},
+              #{idCardNo,mode=IN,jdbcType=VARCHAR},
+              #{score,mode=OUT,jdbcType=INTEGER}
+           )}    
+       ]]>
+    </select>
+	
+</mapper>

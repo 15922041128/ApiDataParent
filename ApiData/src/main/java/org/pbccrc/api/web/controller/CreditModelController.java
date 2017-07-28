@@ -1,5 +1,6 @@
 package org.pbccrc.api.web.controller;
 
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,15 +13,19 @@ import javax.ws.rs.core.Context;
 
 import org.pbccrc.api.base.bean.ResultContent;
 import org.pbccrc.api.base.bean.SystemLog;
+import org.pbccrc.api.base.service.BorrowService;
+import org.pbccrc.api.base.service.CostService;
 import org.pbccrc.api.base.service.CreditModelService;
 import org.pbccrc.api.base.service.SystemLogService;
 import org.pbccrc.api.base.util.Constants;
+import org.pbccrc.api.base.util.DesUtils;
 import org.pbccrc.api.base.util.RedisClient;
 import org.pbccrc.api.base.util.StringUtil;
 import org.pbccrc.api.base.util.SystemUtil;
 import org.pbccrc.api.base.util.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -43,6 +48,79 @@ public class CreditModelController {
 	
 	@Autowired
 	private SystemLogService systemLogService;
+	
+	@Autowired
+	private BorrowService borrowService;
+	
+	@Autowired
+	private CostService costService;
+	
+	@SuppressWarnings("deprecation")
+	@GET
+	@CrossOrigin
+	@ResponseBody
+	@RequestMapping(value="/getResult", produces={"application/json;charset=UTF-8"})
+	public JSONObject getResult(String requestStr, HttpServletRequest request) throws Exception{
+		
+		ResultContent resultContent = new ResultContent();
+		resultContent.setCode(Constants.CODE_ERR_SUCCESS);
+		resultContent.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);
+		
+		// 获取IP地址
+		String ipAddress = SystemUtil.getIpAddress(request);
+		// 获取apiKey
+		String apiKey = request.getHeader(Constants.HEAD_APIKEY);
+		// 获得用ID
+		String userID = request.getHeader(Constants.HEAD_USER_ID);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_YINGZE_SCORE, ipAddress, resultContent)) {
+			return (JSONObject)JSONObject.toJSON(resultContent);
+		}
+		
+		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
+		
+		JSONObject json = JSONObject.parseObject(requestStr);
+		
+		String realName = json.getString("realName");
+		String idCard = json.getString("idCard");
+		String trxNo = json.getString("trxNo");
+		String loanInfos = json.getString("loanInfos");
+		
+		JSONObject returnJson = borrowService.getResult(realName, idCard, trxNo, loanInfos);
+		
+		// 记录日志
+		SystemLog systemLog = new SystemLog();
+		// uuid
+		systemLog.setUuid(StringUtil.createUUID());
+		// ip地址
+		systemLog.setIpAddress(ipAddress);
+		// apiKey
+		systemLog.setApiKey(apiKey);
+		// 产品ID
+		// 从缓存中获取relation对象
+		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
+		systemLog.setProductID(relation.getString("productID"));
+		// localApiID
+		systemLog.setLocalApiID(Constants.API_ID_YINGZE_SCORE);
+		// 参数
+		systemLog.setParams(json.toJSONString());
+		// 用户ID
+		systemLog.setUserID(userID);
+		// 是否成功
+		systemLog.setIsSuccess(String.valueOf(Constants.CODE_ERR_SUCCESS.equals(returnJson.getString("code"))));
+		// 是否计费
+		systemLog.setIsCount(systemLog.getIsSuccess());
+		// 查询时间
+		systemLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FORMAT_SYSTEMLOG).format(new Date()));
+		systemLogService.addLog(systemLog);
+		
+		if (Constants.IS_SUCCESS_TRUE.equals(systemLog.getIsCount())) {
+			costService.cost(userID, apiKey);
+		}
+		
+		return returnJson;
+	}
 
 	// 暂时没用
 	@SuppressWarnings("unchecked")
