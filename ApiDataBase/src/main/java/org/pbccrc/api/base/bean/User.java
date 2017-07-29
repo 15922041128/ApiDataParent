@@ -68,7 +68,7 @@ public class User implements Serializable{
 	private String role;
 	
 	/** 私钥文件 */
-	private Object privateKey;
+//	private Object privateKey;
 	
 	public String getId() {
 		return id;
@@ -222,11 +222,11 @@ public class User implements Serializable{
 		this.role = role;
 	}
 	
-	public Object getPrivateKey() {
-		return privateKey;
-	}
-
-	public void setPrivateKey(Object privateKey) {
-		this.privateKey = privateKey;
-	}
+//	public Object getPrivateKey() {
+//		return privateKey;
+//	}
+//
+//	public void setPrivateKey(Object privateKey) {
+//		this.privateKey = privateKey;
+//	}
 }

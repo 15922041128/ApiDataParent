@@ -1,11 +1,8 @@
 package org.pbccrc.api.core.service.impl;
 
-import java.io.File;
 import java.math.BigDecimal;
-import java.sql.Blob;
 import java.sql.SQLException;
 
-import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
 import org.pbccrc.api.base.bean.ApiUser;
@@ -48,10 +45,10 @@ public class UserServiceImpl implements UserService{
 		String userID = StringUtil.createRandomID();
 		user.setId(userID);
 		// 设置生成私钥文件并存放
-		File f = new File("D:/privateKeyFile");
-		byte[] keyBytes = new byte[(int)f.length()]; 
-		Blob privateKey = new SerialBlob(keyBytes);
-		user.setPrivateKey(privateKey);
+//		File f = new File("D:/privateKeyFile");
+//		byte[] keyBytes = new byte[(int)f.length()]; 
+//		Blob privateKey = new SerialBlob(keyBytes);
+//		user.setPrivateKey(privateKey);
 				
 		userDao.addUser(user);
 		
