@@ -45,6 +45,48 @@ public class SystemLog implements Serializable{
 	/** 查询结束时间 */
 	private String endDate;
 	
+	/** 显示用,不在表内字段 */
+	
+	private String userName;
+	
+	private String productName;
+	
+	private String totalNum;
+	
+	private String apiName;
+	
+	public String getApiName() {
+		return apiName;
+	}
+
+	public void setApiName(String apiName) {
+		this.apiName = apiName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public String getTotalNum() {
+		return totalNum;
+	}
+
+	public void setTotalNum(String totalNum) {
+		this.totalNum = totalNum;
+	}
+
 	public int getId() {
 		return id;
 	}

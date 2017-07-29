@@ -26,17 +26,17 @@ public interface SystemLogMapper {
 	 * 查询汇总日志（用户、产品、时间维度）
 	 * @param systemLog
 	 */
-	List<Map<String, Object>> sumLog(Map<String, String> queryMap);
+	List<SystemLog> sumLog(Map<String, String> queryMap);
 	
 	/**
 	 * 查询汇总日志（用户、产品、时间、API维度）
 	 * @param systemLog
 	 */
-	List<Map<String, Object>> sumApiLog(Map<String, String> queryMap);
+	List<SystemLog> sumApiLog(Map<String, String> queryMap);
 	
 	/**
 	 * 查询日志详情
 	 * @param systemLog
 	 */
-	List<Map<String, Object>> queryLogDetail(Map<String, String> queryMap);
+	List<SystemLog> queryLogDetail(Map<String, String> queryMap);
 }
