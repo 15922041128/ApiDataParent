@@ -29,7 +29,7 @@ public class SystemLogDao{
 	
 	public Pagination sumLog(Map<String, String> queryMap, Pagination pagination) {
 		PageHelper.startPage(pagination.getCurrentPage(), pagination.getPageSize());
-		Page<Map<String, Object>> logs = (Page<Map<String, Object>>) systemLogMapper.sumLog(queryMap);
+		Page<SystemLog> logs = (Page<SystemLog>) systemLogMapper.sumLog(queryMap);
 		Pagination logsPagination = new Pagination();
 		logsPagination.setResult(logs.getResult());
 		logsPagination.setTotalCount(logs.getTotal());
@@ -38,7 +38,7 @@ public class SystemLogDao{
 	
 	public Pagination sumApiLog(Map<String, String> queryMap, Pagination pagination) {
 		PageHelper.startPage(pagination.getCurrentPage(), pagination.getPageSize());
-		Page<Map<String, Object>> logs = (Page<Map<String, Object>>) systemLogMapper.sumApiLog(queryMap);
+		Page<SystemLog> logs = (Page<SystemLog>) systemLogMapper.sumApiLog(queryMap);
 		Pagination logsPagination = new Pagination();
 		logsPagination.setResult(logs.getResult());
 		logsPagination.setTotalCount(logs.getTotal());
@@ -47,7 +47,7 @@ public class SystemLogDao{
 	
 	public Pagination queryLogDetail(Map<String, String> queryMap, Pagination pagination) {
 		PageHelper.startPage(pagination.getCurrentPage(), pagination.getPageSize());
-		Page<Map<String, Object>> logs = (Page<Map<String, Object>>) systemLogMapper.queryLogDetail(queryMap);
+		Page<SystemLog> logs = (Page<SystemLog>) systemLogMapper.queryLogDetail(queryMap);
 		Pagination logsPagination = new Pagination();
 		logsPagination.setResult(logs.getResult());
 		logsPagination.setTotalCount(logs.getTotal());
