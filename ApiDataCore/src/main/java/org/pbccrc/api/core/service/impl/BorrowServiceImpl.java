@@ -81,6 +81,7 @@ public class BorrowServiceImpl implements BorrowService{
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("idNo", seq);
 		map.put("idCardNo", idCard);
+		map.put("realName", realName);
 		map.put("score", score);
 		
 		score = borrowDao.getCreditModel(map);
