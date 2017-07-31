@@ -42,8 +42,8 @@ public class UserServiceImpl implements UserService{
 	 */
 	public void addUser(User user) throws Exception {
 		
-		String userID = StringUtil.createRandomID();
-		user.setId(userID);
+//		String userID = StringUtil.createRandomID();
+//		user.setId(userID);
 		// 设置生成私钥文件并存放
 //		File f = new File("D:/privateKeyFile");
 //		byte[] keyBytes = new byte[(int)f.length()]; 
@@ -53,11 +53,11 @@ public class UserServiceImpl implements UserService{
 		userDao.addUser(user);
 		
 		ApiUser apiUser = new ApiUser();
-		apiUser.setId(userID);
+		apiUser.setId(user.getId());
 		apiUser.setBlance(new BigDecimal("0.00"));
 		apiUser.setCreditLimit(new BigDecimal("0.00"));
 		
-		RedisClient.set("apiUser_" + userID, apiUser);
+		RedisClient.set("apiUser_" + user.getId(), apiUser);
 		
 		apiUserDao.addApiUser(apiUser);
 	}
