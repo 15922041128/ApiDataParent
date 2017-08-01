@@ -23,11 +23,13 @@
 		<result property="countNum" column="countNum" />
 		<result property="apiName" column="apiName" />
 		<result property="queryTime" column="queryTime" />
+		<result property="returnData" column="returnData" />
 	</resultMap>
 	
 	<insert id="addLog" parameterType="org.pbccrc.api.base.bean.SystemLog">
-		insert into systemLog(id, uuid, ipAddress, userID, productID, localApiID, params, apiKey, isSuccess, isCount, queryDate, queryTime) 
-			values(seq_systemlog.nextval, #{uuid}, #{ipAddress}, #{userID}, #{productID}, #{localApiID}, #{params}, #{apiKey}, #{isSuccess}, #{isCount}, #{queryDate}, #{queryTime})
+		insert into systemLog(id, uuid, ipAddress, userID, productID, localApiID, params, apiKey, isSuccess, isCount, queryDate, queryTime, returnData) 
+			values(seq_systemlog.nextval, #{uuid}, #{ipAddress}, #{userID}, #{productID}, #{localApiID}, #{params}, 
+				#{apiKey}, #{isSuccess}, #{isCount}, #{queryDate}, #{queryTime}, #{returnData})
 	</insert>
 	
 	<select id="queryLog" parameterType="org.pbccrc.api.base.bean.SystemLog" resultMap="systemLog">

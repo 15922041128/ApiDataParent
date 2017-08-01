@@ -150,6 +150,9 @@ public class CreditModelController {
 		systemLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FORMAT_SYSTEMLOG).format(new Date()));
 		// 查询用时
 		systemLog.setQueryTime(endTime - startTime);
+		// 返回数据
+		JSONObject retData = (JSONObject) returnJson.get("retData");
+		systemLog.setReturnData(retData.getString("score"));
 		systemLogService.addLog(systemLog);
 		
 		return returnJson;
