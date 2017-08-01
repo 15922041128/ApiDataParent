@@ -23,7 +23,7 @@ public class BaseController {
 		object.put("errorCode", "100106");
 		object.put("errorMsg", errMessage);
 		
-//		ex.printStackTrace();
+		ex.printStackTrace();
 		
 		return object.toJSONString();
 	}

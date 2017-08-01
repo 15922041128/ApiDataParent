@@ -44,6 +44,9 @@ public class SystemLog implements Serializable{
 	
 	/** 查询结束时间 */
 	private String endDate;
+
+	/** 查询用时 */
+	private Long queryTime;
 	
 	/** 显示用,不在表内字段 */
 	
@@ -219,5 +222,13 @@ public class SystemLog implements Serializable{
 
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+	
+	public Long getQueryTime() {
+		return queryTime;
+	}
+
+	public void setQueryTime(Long queryTime) {
+		this.queryTime = queryTime;
 	}
 }
