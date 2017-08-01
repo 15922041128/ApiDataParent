@@ -68,6 +68,10 @@ public class BorrowServiceImpl implements BorrowService{
 			borrow.setArrearsAmount(json.getString("arrearsAmount"));
 			// 公司代码
 			borrow.setCompanyCode(json.getString("companyCode"));
+			// 姓名
+			borrow.setRealName(realName);
+			// 身份证号
+			borrow.setIdCard(idCard);
 			
 			// 将borrow对象加入到集合中
 			 borrows.add(borrow);
@@ -109,6 +113,8 @@ public class BorrowServiceImpl implements BorrowService{
 		retData.put("suggest", suggest);
 		
 		returnJson.put("retData", retData);
+		returnJson.put("seq", seq);
+		
 		
 		return returnJson;
 	}

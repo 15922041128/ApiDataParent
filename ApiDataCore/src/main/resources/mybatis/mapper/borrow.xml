@@ -25,7 +25,9 @@
 		LOAN_PERIOD,
 		REPAY_STATE,
 		ARREARS_AMOUNT,
-		COMPANY_CODE) (
+		COMPANY_CODE,
+		REAL_NAME,
+		ID_CARD) (
 	<foreach collection="list" item="item" index="index" separator="union all" >
 		SELECT 
 			#{item.id,jdbcType=VARCHAR},
@@ -36,7 +38,9 @@
 			#{item.loanPeriod,jdbcType=VARCHAR},
 			#{item.repayState,jdbcType=VARCHAR},
 			#{item.arrearsAmount,jdbcType=VARCHAR},
-			#{item.companyCode,jdbcType=VARCHAR}
+			#{item.companyCode,jdbcType=VARCHAR},
+			#{item.realName,jdbcType=VARCHAR},
+			#{item.idCard,jdbcType=VARCHAR}
 		FROM dual
 	</foreach>
 	)

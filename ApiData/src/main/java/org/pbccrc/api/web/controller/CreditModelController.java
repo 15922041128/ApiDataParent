@@ -104,7 +104,13 @@ public class CreditModelController {
 		// localApiID
 		systemLog.setLocalApiID(Constants.API_ID_YINGZE_SCORE);
 		// 参数
-		systemLog.setParams(json.toJSONString());
+		JSONObject paramJson = new JSONObject();
+		paramJson.put("realName", realName);
+		paramJson.put("idCard", idCard);
+		paramJson.put("trxNo", trxNo);
+		paramJson.put("seq", returnJson.get("seq"));
+		returnJson.remove("seq");
+		systemLog.setParams(paramJson.toJSONString());
 		// 用户ID
 		systemLog.setUserID(userID);
 		// 是否成功
