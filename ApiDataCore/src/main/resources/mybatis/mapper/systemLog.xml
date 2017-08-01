@@ -18,6 +18,9 @@
 		<result property="userName" column="userName" />
 		<result property="productName" column="productName" />
 		<result property="totalNum" column="totalNum" />
+		<result property="successNum" column="successNum" />
+		<result property="failureNum" column="failureNum" />
+		<result property="countNum" column="countNum" />
 		<result property="apiName" column="apiName" />
 	</resultMap>
 	
@@ -49,11 +52,10 @@
 	</select>
 	
 	<select id="sumLog" parameterType="java.util.HashMap" resultMap="systemLog">
+	select a1.*, u.username, p.name as productName from (
 		SELECT
 		productID,
 		userID,
-		u.userName as userName,
-		p.name as productName,
 		count(1) AS totalNum,
 		sum(
 			CASE
@@ -73,16 +75,8 @@
 		) AS countNum
 		FROM
 			systemlog s
-		LEFT JOIN user u ON s.userID = u.id
-		LEFT JOIN product p ON s.productID = p.id
 		<where>
 		    1=1
-			<if test="userName !=null and userName != '' ">
-            	and userName like '%'||#{userName}||'%'
-        	</if>
-        	<if test="productName !=null and productName != '' ">
-            	and p.name like '%'||#{productName}||'%' 
-        	</if>
 			<if test="startDate != null and endDate != ''">
 				<![CDATA[
 					and s.queryDate >= #{startDate}  
@@ -97,17 +91,25 @@
 		GROUP BY
 			userId,
 			productID
-		
+	) a1 LEFT JOIN iuser u ON a1.userID = u.id
+		LEFT JOIN product p ON a1.productID = p.id
+		<where>
+		    1=1
+			<if test="userName !=null and userName != '' ">
+            	and userName like '%'||#{userName}||'%'
+        	</if>
+        	<if test="productName !=null and productName != '' ">
+            	and p.name like '%'||#{productName}||'%' 
+        	</if>
+		</where>
 	</select>
 	
 	<select id="sumApiLog" parameterType="java.util.HashMap" resultMap="systemLog">
+	select a1.*, l.apiName, u.userName, p.name as productName from (
 		SELECT
 		productID,
 		userID,
 		localApiID,
-		l.apiName,
-		u.userName,
-		p.name as productName,
 		count(1) AS totalNum,
 		sum(
 			CASE
@@ -135,17 +137,8 @@
 		) AS countNum
 		FROM
 			systemlog s
-		LEFT JOIN user u ON s.userID = u.id
-		LEFT JOIN product p ON s.productID = p.id
-		LEFT JOIN localApi l ON s.localApiID = l.id
 		<where>
 		    1=1
-			<if test="userID !=null and userID != '' ">
-            	and userID = #{userID} 
-        	</if>
-        	<if test="productID !=null and productID != '' ">
-            	and productID = #{productID}
-        	</if>
 			<if test="startDate != null and endDate != ''">
 				<![CDATA[
 					and s.queryDate >= #{startDate}  
@@ -158,7 +151,19 @@
 			</if>
 		</where>
 		GROUP BY
-			userId , productID , localApiID
+			userId , productID , localApiID ) a1 
+		LEFT JOIN iuser u ON a1.userID = u.id
+		LEFT JOIN product p ON a1.productID = p.id
+		LEFT JOIN localApi l ON a1.localApiID = l.id
+		<where>
+		    1=1
+			<if test="userID !=null and userID != '' ">
+            	and userID = #{userID} 
+        	</if>
+        	<if test="productID !=null and productID != '' ">
+            	and productID = #{productID}
+        	</if>
+		</where>
 			
 		
 	</select>
@@ -177,7 +182,7 @@
 		queryDate
 		FROM
 			systemlog s
-		LEFT JOIN user u ON s.userID = u.id
+		LEFT JOIN iuser u ON s.userID = u.id
 		LEFT JOIN product p ON s.productID = p.id
 		LEFT JOIN localApi l ON s.localApiID = l.id
 		<where>

@@ -7,9 +7,12 @@
 		select * from relation
 	</select>
 	
-	<insert id="addRelation" parameterType="org.pbccrc.api.base.bean.Relation" keyProperty="id">
-		insert into relation(userID, apiKey, productID, count, costType, price, createDate, allowIps)
-			values(#{userID}, #{apiKey}, #{productID}, #{count}, #{costType}, #{price}, #{createDate}, #{allowIps})
+	<insert id="addRelation" parameterType="org.pbccrc.api.base.bean.Relation" >
+		<selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="id">  
+	        SELECT seq_relation.nextval as id from dual
+	    </selectKey>  
+		insert into relation(id, userID, apiKey, productID, count, costType, price, createDate, allowIps)
+			values(#{id}, #{userID, jdbcType=INTEGER}, #{apiKey, jdbcType=VARCHAR}, #{productID, jdbcType=INTEGER}, #{count, jdbcType=INTEGER}, #{costType, jdbcType=INTEGER}, #{price, jdbcType=FLOAT}, #{createDate, jdbcType=VARCHAR}, #{allowIps, jdbcType=VARCHAR})
 	</insert>
 	
 </mapper>

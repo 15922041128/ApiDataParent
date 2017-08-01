@@ -53,6 +53,36 @@ public class SystemLog implements Serializable{
 	
 	private String totalNum;
 	
+	private String successNum;
+	
+	public String getSuccessNum() {
+		return successNum;
+	}
+
+	public void setSuccessNum(String successNum) {
+		this.successNum = successNum;
+	}
+
+	public String getFailureNum() {
+		return failureNum;
+	}
+
+	public void setFailureNum(String failureNum) {
+		this.failureNum = failureNum;
+	}
+
+	public String getCountNum() {
+		return countNum;
+	}
+
+	public void setCountNum(String countNum) {
+		this.countNum = countNum;
+	}
+
+	private String failureNum;
+	
+	private String countNum;
+	
 	private String apiName;
 	
 	public String getApiName() {
