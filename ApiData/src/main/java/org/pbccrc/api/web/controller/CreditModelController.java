@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 
@@ -61,6 +62,8 @@ public class CreditModelController {
 	@ResponseBody
 	@RequestMapping(value="/getResult", produces={"application/json;charset=UTF-8"})
 	public JSONObject getResult(String requestStr, HttpServletRequest request) throws Exception{
+		
+		String method = request.getMethod();
 		
 		ResultContent resultContent = new ResultContent();
 		resultContent.setCode(Constants.CODE_ERR_SUCCESS);
