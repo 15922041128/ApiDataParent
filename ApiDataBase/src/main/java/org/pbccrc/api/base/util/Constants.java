@@ -150,6 +150,10 @@ public class Constants {
 	// 缺少service或service格式不正确
 	public static final String ERR_SERVICE = "101001";
 	public static final String RET_MSG_SERVICE = "缺少service或service格式不正确";
+	
+	// 参数格式不正确
+	public static final String CODE_ERR_PARAM_FORMAT = "102007";
+	public static final String CODE_ERR_PARAM_FORMAT_MSG = "参数格式不正确";
 
 	// 查询成功
 	public static final String CODE_ERR_SUCCESS = "102000";

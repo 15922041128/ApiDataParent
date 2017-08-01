@@ -168,9 +168,9 @@ public class StringUtil {
     }
       
     public static void main(String[] args) {
-//    	String str = "庄传礼";
-//    	String md5Str = MD5Encoder(str);
-//		System.out.println(str + " : " + md5Str);  
-    	System.out.println(createApiKey());
+    	String str = "130105198310192128";
+    	String md5Str = MD5Encoder(str);
+		System.out.println(str + " : " + md5Str);  
+//    	System.out.println(createApiKey());
     }  
 }
