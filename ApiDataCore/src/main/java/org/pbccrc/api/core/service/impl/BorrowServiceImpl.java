@@ -9,7 +9,6 @@ import java.util.Map;
 
 import org.pbccrc.api.base.bean.Borrow;
 import org.pbccrc.api.base.service.BorrowService;
-import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.core.dao.BorrowDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +38,7 @@ public class BorrowServiceImpl implements BorrowService{
 		
 		// 用户以json形式传入的borrow对象
 		JSONArray loanInfoArray = JSONArray.parseArray(loanInfos);
+		// TODO 判断loanInfoArray是否为空
 		
 		// 获取下一个sequences
 		String seq = borrowDao.getNexSeq();
@@ -90,20 +90,11 @@ public class BorrowServiceImpl implements BorrowService{
 		
 		score = borrowDao.getCreditModel(map);
 		
-		String retMsg = Constants.CODE_ERR_SUCCESS_MSG;
-		String code = Constants.CODE_ERR_SUCCESS;
-		
-		if (score == 0) {
-			retMsg = Constants.CODE_ERR_FAIL_MSG;
-			code = Constants.CODE_ERR_FAIL;
-		}
-		
 		JSONObject returnJson = new JSONObject();
 		returnJson.put("realName", realName);
 		returnJson.put("idCard", idCard);
 		returnJson.put("trxNo", trxNo);
-		returnJson.put("retMsg", retMsg);
-		returnJson.put("code", code);
+		returnJson.put("seq", seq);
 		
 		// TODO
 		String suggest = "";

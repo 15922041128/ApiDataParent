@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 /**
@@ -83,6 +84,7 @@ public class CreditModelController {
 		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
 		
 		JSONObject json = null;
+		// 验证json格式
 		try {
 			json = JSONObject.parseObject(requestStr);
 		} catch (Exception e) {
@@ -91,6 +93,7 @@ public class CreditModelController {
 			return (JSONObject)JSONObject.toJSON(resultContent);
 		}
 		
+		// 验证realName是否为空
 		String realName = json.getString("realName");
 		if (StringUtil.isNull(realName)) {
 			resultContent.setCode(Constants.ERR_URL_INVALID);
@@ -98,6 +101,7 @@ public class CreditModelController {
 			return (JSONObject)JSONObject.toJSON(resultContent);
 		}
 		
+		// 验证idCard是否为空
 		String idCard = json.getString("idCard");
 		if (StringUtil.isNull(idCard)) {
 			resultContent.setCode(Constants.ERR_URL_INVALID);
@@ -105,6 +109,7 @@ public class CreditModelController {
 			return (JSONObject)JSONObject.toJSON(resultContent);
 		}
 		
+		// 验证loanInfos是否为空
 		String loanInfos = json.getString("loanInfos");
 		if (StringUtil.isNull(loanInfos)) {
 			resultContent.setCode(Constants.ERR_URL_INVALID);
@@ -113,12 +118,37 @@ public class CreditModelController {
 		}
 		String trxNo = json.getString("trxNo");
 		
+		// 验证loanInfos格式是否正确
+		try {
+			JSONArray.parseArray(loanInfos);
+		} catch (Exception e) {
+			resultContent.setCode(Constants.CODE_ERR_PARAM_FORMAT);
+			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_FORMAT_MSG);
+			return (JSONObject)JSONObject.toJSON(resultContent);
+		}
+		
 		
 		JSONObject returnJson = borrowService.getResult(realName, idCard, trxNo, loanInfos);
 		
-		String isSuccess = String.valueOf(Constants.CODE_ERR_SUCCESS.equals(returnJson.getString("code")));
+		String retMsg = Constants.CODE_ERR_SUCCESS_MSG;
+		String code = Constants.CODE_ERR_SUCCESS;
 		
-		if (Constants.IS_SUCCESS_TRUE.equals(isSuccess)) {
+		JSONObject retData = (JSONObject) returnJson.get("retData");
+		int score = retData.getIntValue("score");
+		
+		boolean isSuccess = false;
+		
+		if (score == 0) {
+			retMsg = Constants.CODE_ERR_FAIL_MSG;
+			code = Constants.CODE_ERR_FAIL;
+		} else {
+			isSuccess = true;
+		}
+		
+		returnJson.put("retMsg", retMsg);
+		returnJson.put("code", code);
+		
+		if (isSuccess) {
 			costService.cost(userID, apiKey);
 		}
 		
@@ -126,8 +156,9 @@ public class CreditModelController {
 		
 		// 记录日志
 		SystemLog systemLog = new SystemLog();
-		// uuid
-		systemLog.setUuid(StringUtil.createUUID());
+		// 该APIuuid为borrow.seq
+		systemLog.setUuid(returnJson.getString("seq"));
+		returnJson.remove("seq");
 		// ip地址
 		systemLog.setIpAddress(ipAddress);
 		// apiKey
@@ -149,16 +180,15 @@ public class CreditModelController {
 		// 用户ID
 		systemLog.setUserID(userID);
 		// 是否成功
-		systemLog.setIsSuccess(isSuccess);
+		systemLog.setIsSuccess(String.valueOf(isSuccess));
 		// 是否计费
-		systemLog.setIsCount(isSuccess);
+		systemLog.setIsCount(String.valueOf(isSuccess));
 		// 查询时间
 		systemLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FORMAT_SYSTEMLOG).format(new Date()));
 		// 查询用时
 		systemLog.setQueryTime(endTime - startTime);
 		// 返回数据
-		JSONObject retData = (JSONObject) returnJson.get("retData");
-		systemLog.setReturnData(retData.getString("score"));
+		systemLog.setReturnData(String.valueOf(score));
 		systemLogService.addLog(systemLog);
 		
 		return returnJson;
