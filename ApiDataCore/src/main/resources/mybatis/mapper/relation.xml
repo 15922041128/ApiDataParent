@@ -11,8 +11,9 @@
 		<selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="id">  
 	        SELECT seq_relation.nextval as id from dual
 	    </selectKey>  
-		insert into relation(id, userID, apiKey, productID, count, costType, price, createDate, allowIps)
-			values(#{id}, #{userID, jdbcType=INTEGER}, #{apiKey, jdbcType=VARCHAR}, #{productID, jdbcType=INTEGER}, #{count, jdbcType=INTEGER}, #{costType, jdbcType=INTEGER}, #{price, jdbcType=FLOAT}, #{createDate, jdbcType=VARCHAR}, #{allowIps, jdbcType=VARCHAR})
+		insert into relation(id, userID, apiKey, productID, count, costType, price, createDate, allowIps, visitCount)
+			values(#{id}, #{userID, jdbcType=INTEGER}, #{apiKey, jdbcType=VARCHAR}, #{productID, jdbcType=INTEGER}, #{count, jdbcType=INTEGER}, 
+			#{costType, jdbcType=INTEGER}, #{price, jdbcType=FLOAT}, #{createDate, jdbcType=VARCHAR}, #{allowIps, jdbcType=VARCHAR}, #{visitCount, jdbcType=INTEGER})
 	</insert>
 	
 </mapper>
