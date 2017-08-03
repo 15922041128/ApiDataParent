@@ -257,6 +257,37 @@ public class Validator {
 			return false;
 		}
 		
+		// 获取计费方式
+		String costType = relation.getString("costType");
+		// 判断计费类型
+		if (Constants.COST_TYPE_COUNT.equals(costType)) {
+			// 按次数计费
+			// 验证访问次数
+			int count = Integer.parseInt(String.valueOf(relation.get("count")));
+			if (count == 0) {
+				resultContent.setCode(Constants.ERR_CNT);
+				resultContent.setRetMsg(Constants.RET_MSG_CNT);
+				return false;
+			}
+		} else if (Constants.COST_TYPE_PRICE.equals(costType)) {
+			// 按金额计费
+			// 验证余额和信用额
+			// 获取apiUser
+			String apiUserKey = "apiUser" + Constants.UNDERLINE + userID;
+			JSONObject apiUser = JSONObject.parseObject(String.valueOf(RedisClient.get(apiUserKey).toString()));
+			// 余额
+			BigDecimal blance = new BigDecimal(apiUser.getString("blance"));
+			// 获取用户价格
+			BigDecimal price = new BigDecimal(relation.getString("price"));
+			if (blance.compareTo(price) < 0) {
+				resultContent.setCode(Constants.ERR_BLANCE_NOT_ENOUGH);
+				resultContent.setRetMsg(Constants.RET_MSG_BLANCE_NOT_ENOUGH);
+				return false;
+			}
+		} else {
+			// to be extended
+		}
+		
 		return true;
 	}
 	
