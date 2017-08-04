@@ -7,4 +7,8 @@
 		select score from score where innerID = #{innerID}
 	</select>
 	
+	<select id="getScore201705" parameterType="java.lang.String" resultType="java.util.HashMap">
+		select score from SCORE201705 where innerID = #{innerID}
+	</select>
+	
 </mapper>

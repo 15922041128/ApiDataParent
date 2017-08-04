@@ -21,4 +21,12 @@ public class ScoreDao {
 	public List<Map<String, Object>> getScore(String innerID) {
 		return scoreMapper.getScore(innerID);
 	}
+	
+	/***
+	 * 根据内码获取信用分(Score201705)
+	 * @return
+	 */
+	public List<Map<String, Object>> getScore201705(String innerID) {
+		return scoreMapper.getScore201705(innerID);
+	}
 }
