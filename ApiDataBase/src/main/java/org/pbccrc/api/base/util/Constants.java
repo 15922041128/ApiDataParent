@@ -332,6 +332,12 @@ public class Constants {
 	// 认证失败
 	public static final String AUTH_STATUS_ERROR = "3";
 	
+	/** 账户角色*/
+	// 普通用户
+	public static final String USER_ROLE_NORMAL = "0";
+	// 管理员
+	public static final String USER_ROLE_ADMIN = "9999";
+		
 	/** localApi.returnParam 中英文key */
 	public static final String EN_NAME = "EN_NAME";
 	public static final String CH_NAME = "CH_NAME";

@@ -11,8 +11,8 @@
 		<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">  
 	        SELECT seq_iuser.nextval as id from dual
 	    </selectKey>  
-		insert into iuser(id,userName, password, compName, compTel, contactName, contactTel, auth, userState) values(
-			#{id}, #{userName}, #{password}, #{compName}, #{compTel}, #{contactName}, #{contactTel}, #{auth}, #{userState})
+		insert into iuser(id,userName, password, compName, compTel, contactName, contactTel, auth, userState, role) values(
+			#{id}, #{userName}, #{password}, #{compName}, #{compTel}, #{contactName}, #{contactTel}, #{auth}, #{userState}, #{role})
 
 	</insert>
 	

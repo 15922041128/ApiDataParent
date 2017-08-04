@@ -315,8 +315,8 @@ public class TempClient {
 		Client client = Client.create(config);
 		
 		StringBuffer url = new StringBuffer();
-		url.append("http://222.128.127.219:8989/ApiData/creditModel/getResult");
-//		url.append("http://localhost:8080/ApiData/creditModel/getResult");
+//		url.append("http://222.128.127.219:8989/ApiData/creditModel/getResult");
+		url.append("http://localhost:8080/ApiData/creditModel/getResult");
 		url.append("?requestStr=" + str );
 		
 		URL u = new URL(url.toString());

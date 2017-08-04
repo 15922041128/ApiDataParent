@@ -54,6 +54,7 @@ public class UserController {
 		user.setContactTel(contactTel);
 		user.setAuth(Constants.AUTH_STATUS_NO);
 		user.setUserState(Constants.USER_STATE_OPEN); // 设置用户状态为启用
+		user.setRole(Constants.USER_ROLE_NORMAL);
 		
 		userService.addUser(user);
 		
