@@ -9,7 +9,11 @@ import java.util.Map;
 
 import org.pbccrc.api.base.bean.Borrow;
 import org.pbccrc.api.base.service.BorrowService;
+import org.pbccrc.api.base.util.Constants;
+import org.pbccrc.api.base.util.StringUtil;
 import org.pbccrc.api.core.dao.BorrowDao;
+import org.pbccrc.api.core.dao.ScoreDao;
+import org.pbccrc.api.core.dao.ZhIdentificationDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +25,12 @@ public class BorrowServiceImpl implements BorrowService{
 
 	@Autowired
 	private BorrowDao borrowDao;
+	
+	@Autowired
+	private ScoreDao scoreDao;
+	
+	@Autowired
+	private ZhIdentificationDao zhIdentificationDao;
 	
 	/**
 	 * 
@@ -36,68 +46,92 @@ public class BorrowServiceImpl implements BorrowService{
 		// borrow对象集合
 		List<Borrow> borrows = new ArrayList<Borrow>();
 		
+		// 返回分数
+		int score = 0;
+		// TODO
+		// 评分建议
+		String suggest = "";
+		// seq
+		String seq = Constants.BLANK;
+		
 		// 用户以json形式传入的borrow对象
 		JSONArray loanInfoArray = JSONArray.parseArray(loanInfos);
-		// TODO 判断loanInfoArray是否为空
-		
-		// 获取下一个sequences
-		String seq = borrowDao.getNexSeq();
-		
-		// 将json对象转为borrow对象
-		for (Object object : loanInfoArray) {
+		// 判断loanInfoArray是否为空 
+		if (null == loanInfoArray || 0 == loanInfoArray.size()) {
+			// 若为空则从表【SCORE201705】中查询分数
+			// 根据身份证号获取内码信息
+			Map<String, Object> insideCodeMap = zhIdentificationDao.getInnerID(realName, idCard);
+			// 内码
+			String innerID = String.valueOf(insideCodeMap.get("INNERID"));
+			// 分数
+			String score201705 = Constants.BLANK;
+			List<Map<String, Object>> scoreList = scoreDao.getScore201705(innerID);
+			if (null != scoreList && 0 != scoreList.size()) {
+				Map<String, Object> scoreMap = scoreList.get(0);
+				score201705 = String.valueOf(scoreMap.get("SCORE"));
+			}
 			
-			JSONObject json = (JSONObject)object;
+			// 判断是否查询成功
+			if (!StringUtil.isNull(score201705)) {
+				score = Integer.parseInt(score201705);
+			}
+		} else {
 			
-			Borrow borrow = new Borrow();
-			// ID
-			borrow.setId(Integer.parseInt(seq));
-			// 借款类型
-			borrow.setBorrowType(json.getString("borrowType"));
-			// 借款状态
-			borrow.setBorrowState(json.getString("borrowState"));
-			// 合同金额
-			borrow.setBorrowAmount(json.getIntValue("borrowAmount"));
-			// 合同日期
-			String contractDate = new SimpleDateFormat("yyyy/MM/dd").format(new Date(Long.parseLong(json.getString("contractDate"))));
-			borrow.setContractDate(contractDate);
-			// 批贷期数
-			borrow.setLoanPeriod(json.getString("loanPeriod"));
-			// 还款状态
-			borrow.setRepayState(json.getString("repayState"));
-			// 欠款金额
-			borrow.setArrearsAmount(json.getString("arrearsAmount"));
-			// 公司代码
-			borrow.setCompanyCode(json.getString("companyCode"));
-			// 姓名
-			borrow.setRealName(realName);
-			// 身份证号
-			borrow.setIdCard(idCard);
+			// 获取下一个sequences
+			seq = borrowDao.getNexSeq();
 			
-			// 将borrow对象加入到集合中
-			 borrows.add(borrow);
+			// 将json对象转为borrow对象
+			for (Object object : loanInfoArray) {
+				
+				JSONObject json = (JSONObject)object;
+				
+				Borrow borrow = new Borrow();
+				// ID
+				borrow.setId(Integer.parseInt(seq));
+				// 借款类型
+				borrow.setBorrowType(json.getString("borrowType"));
+				// 借款状态
+				borrow.setBorrowState(json.getString("borrowState"));
+				// 合同金额
+				borrow.setBorrowAmount(json.getIntValue("borrowAmount"));
+				// 合同日期
+				String contractDate = new SimpleDateFormat("yyyy/MM/dd").format(new Date(Long.parseLong(json.getString("contractDate"))));
+				borrow.setContractDate(contractDate);
+				// 批贷期数
+				borrow.setLoanPeriod(json.getString("loanPeriod"));
+				// 还款状态
+				borrow.setRepayState(json.getString("repayState"));
+				// 欠款金额
+				borrow.setArrearsAmount(json.getString("arrearsAmount"));
+				// 公司代码
+				borrow.setCompanyCode(json.getString("companyCode"));
+				// 姓名
+				borrow.setRealName(realName);
+				// 身份证号
+				borrow.setIdCard(idCard);
+				
+				// 将borrow对象加入到集合中
+				 borrows.add(borrow);
+			}
+			
+			// 向borrow表中插入数据
+			borrowDao.addBorrows(borrows);
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("idNo", seq);
+			map.put("idCardNo", idCard);
+			map.put("realName", realName);
+			map.put("score", score);
+			
+			score = borrowDao.getCreditModel(map);
 		}
 		
-		// 向borrow表中插入数据
-		borrowDao.addBorrows(borrows);
-		
-		int score = 0;
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("idNo", seq);
-		map.put("idCardNo", idCard);
-		map.put("realName", realName);
-		map.put("score", score);
-		
-		score = borrowDao.getCreditModel(map);
 		
 		JSONObject returnJson = new JSONObject();
 		returnJson.put("realName", realName);
 		returnJson.put("idCard", idCard);
 		returnJson.put("trxNo", trxNo);
 		returnJson.put("seq", seq);
-		
-		// TODO
-		String suggest = "";
 		
 		JSONObject retData = new JSONObject();
 		retData.put("score", score);
