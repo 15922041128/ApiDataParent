@@ -33,6 +33,29 @@ public class Borrow implements Serializable {
 	
 	/** 公司代码 */
 	private String companyCode;
+	
+	/** 身份证号 */
+	private String idCard;
+	
+	/** 姓名 */
+	private String realName;
+	
+
+	public String getIdCard() {
+		return idCard;
+	}
+
+	public void setIdCard(String idCard) {
+		this.idCard = idCard;
+	}
+
+	public String getRealName() {
+		return realName;
+	}
+
+	public void setRealName(String realName) {
+		this.realName = realName;
+	}
 
 	public int getId() {
 		return id;
