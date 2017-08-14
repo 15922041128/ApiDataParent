@@ -56,7 +56,8 @@
               #{idNo,mode=IN,jdbcType=VARCHAR},
               #{idCardNo,mode=IN,jdbcType=VARCHAR},
               #{realName,mode=IN,jdbcType=VARCHAR},
-              #{score,mode=OUT,jdbcType=INTEGER}
+              #{score,mode=OUT,jdbcType=INTEGER},
+              #{errorMessage,mode=OUT,jdbcType=VARCHAR}
            )}    
        ]]>
     </select>

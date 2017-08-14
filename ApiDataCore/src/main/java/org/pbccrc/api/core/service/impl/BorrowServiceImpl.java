@@ -53,6 +53,8 @@ public class BorrowServiceImpl implements BorrowService{
 		String suggest = "";
 		// seq
 		String seq = Constants.BLANK;
+		// errorMessage
+		String errorMessage = Constants.BLANK;
 		
 		// 用户以json形式传入的borrow对象
 		JSONArray loanInfoArray = JSONArray.parseArray(loanInfos);
@@ -125,8 +127,11 @@ public class BorrowServiceImpl implements BorrowService{
 			map.put("idCardNo", idCard);
 			map.put("realName", realName);
 			map.put("score", score);
+			map.put("errorMessage", errorMessage);
 			
-			score = borrowDao.getCreditModel(map);
+			map = borrowDao.getCreditModel(map);
+			score = Integer.parseInt(String.valueOf(map.get("score")));
+			errorMessage = String.valueOf(map.get("errorMessage"));
 		}
 		
 		
@@ -142,6 +147,7 @@ public class BorrowServiceImpl implements BorrowService{
 		
 		returnJson.put("retData", retData);
 		returnJson.put("seq", seq);
+		returnJson.put("errorMessage", errorMessage);
 		
 		
 		return returnJson;

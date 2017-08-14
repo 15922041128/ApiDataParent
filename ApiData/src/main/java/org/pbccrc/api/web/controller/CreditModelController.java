@@ -138,7 +138,7 @@ public class CreditModelController {
 		
 		boolean isSuccess = false;
 		
-		if (score == 0) {
+		if (score <= 0) {
 			retMsg = Constants.CODE_ERR_FAIL_MSG;
 			code = Constants.CODE_ERR_FAIL;
 		} else {
@@ -188,9 +188,16 @@ public class CreditModelController {
 		// 查询用时
 		systemLog.setQueryTime(endTime - startTime);
 		// 返回数据
-		systemLog.setReturnData(String.valueOf(score));
+		if (score == -90) {
+			systemLog.setReturnData(returnJson.getString("errorMessage"));
+			retData.put("score", Constants.BLANK);
+			returnJson.put("retData", retData);
+		} else {
+			systemLog.setReturnData(String.valueOf(score));
+		}
 		systemLogService.addLog(systemLog);
 		
+		returnJson.remove("errorMessage");
 		return returnJson;
 	}
 

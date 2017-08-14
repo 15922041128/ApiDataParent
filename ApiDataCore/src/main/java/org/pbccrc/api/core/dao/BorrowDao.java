@@ -23,9 +23,9 @@ public class BorrowDao {
 		borrowMapper.addBorrows(borrows);
 	}
 	
-	public int getCreditModel(Map<String, Object> map) {
+	public Map<String, Object> getCreditModel(Map<String, Object> map) {
 		borrowMapper.getCreditModel(map);
-		return Integer.parseInt(String.valueOf(map.get("score")));
+		return map;
 	}
 	
 }
