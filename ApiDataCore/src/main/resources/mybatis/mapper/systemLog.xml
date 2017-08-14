@@ -29,7 +29,7 @@
 	<insert id="addLog" parameterType="org.pbccrc.api.base.bean.SystemLog">
 		insert into systemLog(id, uuid, ipAddress, userID, productID, localApiID, params, apiKey, isSuccess, isCount, queryDate, queryTime, returnData) 
 			values(seq_systemlog.nextval, #{uuid}, #{ipAddress}, #{userID}, #{productID}, #{localApiID}, #{params}, 
-				#{apiKey}, #{isSuccess}, #{isCount}, #{queryDate}, #{queryTime}, #{returnData})
+				#{apiKey}, #{isSuccess}, #{isCount}, #{queryDate}, #{queryTime,jdbcType=BIGINT}, #{returnData,jdbcType=VARCHAR})
 	</insert>
 	
 	<select id="queryLog" parameterType="org.pbccrc.api.base.bean.SystemLog" resultMap="systemLog">
