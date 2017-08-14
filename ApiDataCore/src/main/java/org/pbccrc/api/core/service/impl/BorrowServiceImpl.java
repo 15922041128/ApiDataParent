@@ -61,20 +61,23 @@ public class BorrowServiceImpl implements BorrowService{
 			// 若为空则从表【SCORE201705】中查询分数
 			// 根据身份证号获取内码信息
 			Map<String, Object> insideCodeMap = zhIdentificationDao.getInnerID(realName, idCard);
-			// 内码
-			String innerID = String.valueOf(insideCodeMap.get("INNERID"));
-			// 分数
-			String score201705 = Constants.BLANK;
-			List<Map<String, Object>> scoreList = scoreDao.getScore201705(innerID);
-			if (null != scoreList && 0 != scoreList.size()) {
-				Map<String, Object> scoreMap = scoreList.get(0);
-				score201705 = String.valueOf(scoreMap.get("SCORE"));
-			}
-			
-			// 判断是否查询成功
-			if (!StringUtil.isNull(score201705)) {
-				score = Integer.parseInt(score201705);
-			}
+			// 判断是否获取成功
+			if (null != insideCodeMap && 0 != insideCodeMap.size()) {
+				// 内码
+				String innerID = String.valueOf(insideCodeMap.get("INNERID"));
+				// 分数
+				String score201705 = Constants.BLANK;
+				List<Map<String, Object>> scoreList = scoreDao.getScore201705(innerID);
+				if (null != scoreList && 0 != scoreList.size()) {
+					Map<String, Object> scoreMap = scoreList.get(0);
+					score201705 = String.valueOf(scoreMap.get("SCORE"));
+				}
+				
+				// 判断是否查询成功
+				if (!StringUtil.isNull(score201705)) {
+					score = Integer.parseInt(score201705);
+				}
+			} 
 		} else {
 			
 			// 获取下一个sequences
