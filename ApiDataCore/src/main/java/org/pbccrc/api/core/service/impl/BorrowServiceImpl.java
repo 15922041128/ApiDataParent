@@ -78,6 +78,16 @@ public class BorrowServiceImpl implements BorrowService{
 				// 判断是否查询成功
 				if (!StringUtil.isNull(score201705)) {
 					score = Integer.parseInt(score201705);
+					
+					// 分数处理
+					if (300 > score) {
+						score = 300;
+					}
+					
+					if (850 < score) {
+						score = 850;
+					}
+					
 				}
 			} 
 		} else {
