@@ -26,4 +26,11 @@ public interface BorrowMapper {
 	 * @return
 	 */
 	void getCreditModel(Map<String, Object> map);
+	
+	/**
+	 * 
+	 * @param map
+	 * @return
+	 */
+	void getCreditModelTri(Map<String, Object> map);
 }

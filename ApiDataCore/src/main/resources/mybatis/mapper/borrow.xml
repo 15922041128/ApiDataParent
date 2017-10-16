@@ -61,5 +61,17 @@
            )}    
        ]]>
     </select>
+    
+    <select id="getCreditModelTri" statementType="CALLABLE" parameterType="java.util.HashMap">
+       <![CDATA[
+           {call root.get_credit_model_Tri(
+              #{idNo,mode=IN,jdbcType=VARCHAR},
+              #{idCardNo,mode=IN,jdbcType=VARCHAR},
+              #{realName,mode=IN,jdbcType=VARCHAR},
+              #{score,mode=OUT,jdbcType=INTEGER},
+              #{errorMessage,mode=OUT,jdbcType=VARCHAR}
+           )}    
+       ]]>
+    </select>
 	
 </mapper>

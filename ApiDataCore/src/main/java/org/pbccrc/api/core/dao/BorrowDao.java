@@ -28,4 +28,9 @@ public class BorrowDao {
 		return map;
 	}
 	
+	public Map<String, Object> getCreditModelTri(Map<String, Object> map) {
+		borrowMapper.getCreditModelTri(map);
+		return map;
+	}
+	
 }

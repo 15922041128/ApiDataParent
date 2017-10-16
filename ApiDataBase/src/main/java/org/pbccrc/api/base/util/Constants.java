@@ -154,6 +154,10 @@ public class Constants {
 	// 参数格式不正确
 	public static final String CODE_ERR_PARAM_FORMAT = "102007";
 	public static final String CODE_ERR_PARAM_FORMAT_MSG = "参数格式不正确";
+	
+	// 请求参数错误
+	public static final String CODE_ERR_REQ_PARAM = "102002";
+	public static final String CODE_ERR_REQ_PARAM_MSG = "请求参数错误";
 
 	// 查询成功
 	public static final String CODE_ERR_SUCCESS = "102000";
@@ -288,7 +292,11 @@ public class Constants {
 	// 信贷模型
 	public static final String API_ID_CREDIT_MODEL = "99999999997";
 	// 鹰泽个人信用评分
-	public static final String API_ID_YINGZE_SCORE = "99999999996"; 
+	public static final String API_ID_YINGZE_SCORE = "99999999996";
+	// 鹰泽个人信用评分TRI
+	public static final String API_ID_YINGZE_SCORE_TRI = "99999999995";
+	// 借贷需求用户查询
+	public static final String API_ID_YINGZE_DATA_QUERY = "99999999994";
 	
 	/** productID */
 	// 页面pdf

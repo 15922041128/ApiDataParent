@@ -36,6 +36,28 @@ public class Relation implements Serializable {
 	
 	/** 允许IP*/
 	private String allowIps;
+	
+	/** 查询次数 */
+	private String queryCount;
+	
+	/** 每日查询次数 */
+	private String dailyQueryCount;
+	
+	public String getQueryCount() {
+		return queryCount;
+	}
+
+	public void setQueryCount(String queryCount) {
+		this.queryCount = queryCount;
+	}
+
+	public String getDailyQueryCount() {
+		return dailyQueryCount;
+	}
+
+	public void setDailyQueryCount(String dailyQueryCount) {
+		this.dailyQueryCount = dailyQueryCount;
+	}
 
 	public Integer getId() {
 		return id;
