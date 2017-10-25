@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface TelPersonMapper {
 
 	List<Map<String, Object>> getInnerID(String telNum);
+	
+	List<Map<String, Object>> getTelPerson(String innerID);
 }

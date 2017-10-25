@@ -25,6 +25,15 @@ public interface LocalDBService {
 	 */
 	public List<Map<String, Object>> getSxr(String name, String identifier) throws Exception;
 	
+	/***
+	 * 根据身份证和姓名查询电话号码
+	 * @param name			姓名
+	 * @param identifier	身份证号
+	 * @return
+	 * @throws Exception
+	 */
+	public Map<String, Object> getTel(String uuid, String userID, String name, String identifier) throws Exception;
+	
 	/**
 	 * 查询本地api
 	 * @param service

@@ -297,6 +297,8 @@ public class Constants {
 	public static final String API_ID_YINGZE_SCORE_TRI = "99999999995";
 	// 借贷需求用户查询
 	public static final String API_ID_YINGZE_DATA_QUERY = "99999999994";
+	// 根据两标查询电话号码
+	public static final String API_ID_GET_TEL = "99999999993";
 	
 	/** productID */
 	// 页面pdf

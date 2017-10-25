@@ -21,7 +21,8 @@
             <pattern>[%date{yyyy-MM-dd HH:mm:ss}] [%-5level] [%logger:%line] --%mdc{client} %msg%n</pattern>  
         </encoder>  
     </appender>  
-    <root level="ERROR">
+    <root>
+    	<level value="error" />  
         <appender-ref ref="file" />  
     </root>  
 </configuration>    

@@ -485,4 +485,39 @@ public class LocalDBServiceImpl implements LocalDBService {
 		
 		return map;
 	}
+	
+	/***
+	 * 根据身份证和姓名查询电话号码
+	 * @param name			姓名
+	 * @param identifier	身份证号
+	 * @return
+	 * @throws Exception
+	 */
+	public Map<String, Object> getTel(String uuid, String userID, String name, String identifier) throws Exception {
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		String innerID = getInnerID(name, identifier);
+		
+		returnMap = telPersonDao.getTelPerson(innerID);
+		
+		
+		JSONObject params = new JSONObject();
+		params.put("name", name);
+		params.put("identifier", identifier);
+		
+		// 记录日志
+		ApiLog apiLog = new ApiLog();
+		// uuid
+		apiLog.setUuid(uuid);
+		apiLog.setUserID(userID);
+		apiLog.setLocalApiID(Constants.API_ID_GET_TEL);
+		apiLog.setParams(params.toJSONString());
+		apiLog.setDataFrom(Constants.DATA_FROM_LOCAL);
+		apiLog.setIsSuccess(String.valueOf(!(null == returnMap || returnMap.isEmpty())));
+		apiLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FROMAT_APILOG).format(new Date()));
+		apiLogDao.addLog(apiLog);
+		
+		return returnMap;
+	}
 }

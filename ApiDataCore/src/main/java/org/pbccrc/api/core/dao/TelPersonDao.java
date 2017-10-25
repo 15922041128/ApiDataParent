@@ -23,5 +23,12 @@ public class TelPersonDao {
 		return mapList.get(0);
 	}
 	
-	
+	public Map<String, Object> getTelPerson(String innerID){
+		
+		List<Map<String, Object>> mapList = telPersonMapper.getTelPerson(innerID);
+		if (null == mapList || mapList.size() == 0) {
+			return null;
+		}
+		return mapList.get(0);
+	}
 }

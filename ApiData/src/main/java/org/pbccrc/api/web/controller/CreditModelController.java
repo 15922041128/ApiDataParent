@@ -56,6 +56,13 @@ public class CreditModelController {
 	@Autowired
 	private CostService costService;
 	
+	/** 
+	 * 非现金贷
+	 * @param requestStr
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
 	@SuppressWarnings("deprecation")
 	@GET
 	@CrossOrigin
@@ -201,14 +208,19 @@ public class CreditModelController {
 		return returnJson;
 	}
 	
-	
+	/**
+	 * 现金贷
+	 * @param requestStr
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
 	@SuppressWarnings("deprecation")
 	@GET
 	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/getResultTri", produces={"application/json;charset=UTF-8"})
 	public JSONObject getResultTri(String requestStr, HttpServletRequest request) throws Exception{
-		// TODO
 		long startTime = System.currentTimeMillis();
 		
 		ResultContent resultContent = new ResultContent();

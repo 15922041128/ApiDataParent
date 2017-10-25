@@ -256,5 +256,89 @@ public class LocalDBController {
 		return (JSONObject) JSONObject.toJSON(resultContent);
 		
 	}
+	
+	/**
+	 * 根据两标查询电话号码
+	 * @param name
+	 * @param identifier
+	 * @return
+	 * @throws Exception
+	 */
+	@GET
+	@CrossOrigin
+	@ResponseBody
+	@RequestMapping(value="/getTel", produces={"application/json;charset=UTF-8"})
+	public JSONObject getTel(@QueryParam("name") String name, @QueryParam("identifier") String identifier, HttpServletRequest request) throws Exception {
+		
+		long startTime = System.currentTimeMillis();
+		
+		ResultContent resultContent = new ResultContent();
+		resultContent.setCode(Constants.CODE_ERR_SUCCESS);
+		resultContent.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);
+		
+		// 获取ip地址
+		String ipAddress = SystemUtil.getIpAddress(request);
+		// 获取apiKey
+		String apiKey = request.getHeader(Constants.HEAD_APIKEY);
+		// 获得用ID
+		String userID = request.getHeader(Constants.HEAD_USER_ID);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_GET_TEL, ipAddress, resultContent)) {
+			return (JSONObject)JSONObject.toJSON(resultContent);
+		}
+		
+		// 生成UUID
+		String uuid = StringUtil.createUUID();
+		
+		Map<String, Object> telPerson = localDBService.getTel(uuid, userID, name, identifier);
+		
+		if (null == telPerson || telPerson.size() == 0) {
+			resultContent.setCode(Constants.ERR_NO_RESULT);
+			resultContent.setRetMsg(Constants.RET_MSG_NO_RESULT);
+		}
+		
+		JSONObject retData = new JSONObject();
+		retData.put("telNum", telPerson.get("TELNUM"));
+		
+		resultContent.setRetData(retData);
+		
+		long endTime = System.currentTimeMillis();
+		
+		// 记录日志
+		SystemLog systemLog = new SystemLog();
+		// uuid
+		systemLog.setUuid(uuid);
+		// ip地址
+		systemLog.setIpAddress(ipAddress);
+		// apiKey
+		systemLog.setApiKey(apiKey);
+		// 产品ID
+		// 从缓存中获取relation对象
+		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
+		systemLog.setProductID(relation.getString("productID"));
+		// localApiID
+		systemLog.setLocalApiID(Constants.API_ID_YINGZE_SCORE);
+		// 参数
+		JSONObject paramJson = new JSONObject();
+		paramJson.put("name", name);
+		paramJson.put("identifier", identifier);
+		systemLog.setParams(paramJson.toJSONString());
+		// 用户ID
+		systemLog.setUserID(userID);
+		// 是否成功
+		systemLog.setIsSuccess(String.valueOf(!(null == telPerson || telPerson.isEmpty())));
+		// 是否计费
+		systemLog.setIsCount(String.valueOf(!(null == telPerson || telPerson.isEmpty())));
+		// 查询时间
+		systemLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FORMAT_SYSTEMLOG).format(new Date()));
+		// 查询用时
+		systemLog.setQueryTime(endTime - startTime);
+		// 返回数据
+		systemLog.setReturnData(retData.toJSONString());
+		systemLogService.addLog(systemLog);
+		
+		return (JSONObject) JSONObject.toJSON(resultContent);
+	}
 
 }

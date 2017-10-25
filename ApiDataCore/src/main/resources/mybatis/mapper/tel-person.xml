@@ -7,4 +7,8 @@
 		select * from tel_person where telNum = #{telNum} 
 	</select>
 	
+	<select id="getTelPerson" parameterType="java.lang.String" resultType="java.util.HashMap">
+		select * from tel_person where innerID = #{innerID} 
+	</select>
+	
 </mapper>
