@@ -33,4 +33,9 @@ public class BorrowDao {
 		return map;
 	}
 	
+	public Map<String, Object> getCreditModelParam(Map<String, Object> map) {
+		borrowMapper.getCreditModelParam(map);
+		return map;
+	}
+	
 }

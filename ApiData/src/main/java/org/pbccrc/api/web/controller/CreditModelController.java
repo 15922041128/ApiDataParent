@@ -500,4 +500,169 @@ public class CreditModelController {
 		
 		return JSONObject.toJSONString(resultContent);
 	}
+	
+	
+	/** 
+	 * 非现金贷(返回参数)
+	 * @param requestStr
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("deprecation")
+	@GET
+	@CrossOrigin
+	@ResponseBody
+	@RequestMapping(value="/getResultParam", produces={"application/json;charset=UTF-8"})
+	public JSONObject getResultParam(String requestStr, HttpServletRequest request) throws Exception{
+		
+		long startTime = System.currentTimeMillis();
+		
+		ResultContent resultContent = new ResultContent();
+		resultContent.setCode(Constants.CODE_ERR_SUCCESS);
+		resultContent.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);
+		
+		// 获取IP地址
+		String ipAddress = SystemUtil.getIpAddress(request);
+		// 获取apiKey
+		String apiKey = request.getHeader(Constants.HEAD_APIKEY);
+		// 获得用ID
+		String userID = request.getHeader(Constants.HEAD_USER_ID);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_YINGZE_SCORE_PARAM, ipAddress, resultContent)) {
+			return (JSONObject)JSONObject.toJSON(resultContent);
+		}
+		
+		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
+		
+		JSONObject json = null;
+		// 验证json格式
+		try {
+			json = JSONObject.parseObject(requestStr);
+		} catch (Exception e) {
+			resultContent.setCode(Constants.CODE_ERR_PARAM_FORMAT);
+			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_FORMAT_MSG);
+			return (JSONObject)JSONObject.toJSON(resultContent);
+		}
+		
+		// 验证realName是否为空
+		String realName = json.getString("realName");
+		if (StringUtil.isNull(realName)) {
+			resultContent.setCode(Constants.ERR_URL_INVALID);
+			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "realName");
+			return (JSONObject)JSONObject.toJSON(resultContent);
+		}
+		
+		// 验证idCard是否为空
+		String idCard = json.getString("idCard");
+		if (StringUtil.isNull(idCard)) {
+			resultContent.setCode(Constants.ERR_URL_INVALID);
+			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "idCard");
+			return (JSONObject)JSONObject.toJSON(resultContent);
+		}
+		
+		// 验证loanInfos是否为空
+		String loanInfos = json.getString("loanInfos");
+		if (StringUtil.isNull(loanInfos)) {
+			resultContent.setCode(Constants.ERR_URL_INVALID);
+			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "loanInfos");
+			return (JSONObject)JSONObject.toJSON(resultContent);
+		}
+		// 验证json格式
+		try {
+			JSONArray loanInfoArray = JSONArray.parseArray(loanInfos);
+			if (loanInfoArray.size() == 0) {
+				resultContent.setCode(Constants.ERR_URL_INVALID);
+				resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "loanInfos");
+				return (JSONObject)JSONObject.toJSON(resultContent);
+			}
+		} catch (Exception e) {
+			resultContent.setCode(Constants.ERR_URL_INVALID);
+			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "loanInfos");
+			return (JSONObject)JSONObject.toJSON(resultContent);
+		}
+		
+		String trxNo = json.getString("trxNo");
+		
+		// 验证loanInfos格式是否正确
+		try {
+			JSONArray.parseArray(loanInfos);
+		} catch (Exception e) {
+			resultContent.setCode(Constants.CODE_ERR_PARAM_FORMAT);
+			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_FORMAT_MSG);
+			return (JSONObject)JSONObject.toJSON(resultContent);
+		}
+		
+		
+		JSONObject returnJson = borrowService.getResultParam(realName, idCard, trxNo, loanInfos);
+		
+		String retMsg = Constants.CODE_ERR_SUCCESS_MSG;
+		String code = Constants.CODE_ERR_SUCCESS;
+		
+		JSONObject retData = (JSONObject) returnJson.get("retData");
+		int returnState = retData.getIntValue("returnState");
+		
+		boolean isSuccess = false;
+		
+		if (returnState < 0) {
+			retMsg = Constants.CODE_ERR_FAIL_MSG;
+			code = Constants.CODE_ERR_FAIL;
+		} else {
+			isSuccess = true;
+		}
+		
+		returnJson.put("retMsg", retMsg);
+		returnJson.put("code", code);
+		
+		if (isSuccess) {
+			costService.cost(userID, apiKey);
+		}
+		
+		long endTime = System.currentTimeMillis();
+		
+		// 记录日志
+		SystemLog systemLog = new SystemLog();
+		// 该APIuuid为borrow.seq
+		systemLog.setUuid(returnJson.getString("seq"));
+		returnJson.remove("seq");
+		// ip地址
+		systemLog.setIpAddress(ipAddress);
+		// apiKey
+		systemLog.setApiKey(apiKey);
+		// 产品ID
+		// 从缓存中获取relation对象
+		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
+		systemLog.setProductID(relation.getString("productID"));
+		// localApiID
+		systemLog.setLocalApiID(Constants.API_ID_YINGZE_SCORE_PARAM);
+		// 参数
+		JSONObject paramJson = new JSONObject();
+		paramJson.put("realName", realName);
+		paramJson.put("idCard", idCard);
+		paramJson.put("trxNo", trxNo);
+		paramJson.put("seq", returnJson.get("seq"));
+		returnJson.remove("seq");
+		systemLog.setParams(paramJson.toJSONString());
+		// 用户ID
+		systemLog.setUserID(userID);
+		// 是否成功
+		systemLog.setIsSuccess(String.valueOf(isSuccess));
+		// 是否计费
+		systemLog.setIsCount(String.valueOf(isSuccess));
+		// 查询时间
+		systemLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FORMAT_SYSTEMLOG).format(new Date()));
+		// 查询用时
+		systemLog.setQueryTime(endTime - startTime);
+		// 返回数据
+		if (returnState == -90) {
+			systemLog.setReturnData(returnJson.getString("errorMessage"));
+		} else {
+			systemLog.setReturnData(retData.toJSONString());
+		}
+		systemLogService.addLog(systemLog);
+		
+		returnJson.remove("errorMessage");
+		return returnJson;
+	}
 }

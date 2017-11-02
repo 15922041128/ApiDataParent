@@ -299,6 +299,8 @@ public class Constants {
 	public static final String API_ID_YINGZE_DATA_QUERY = "99999999994";
 	// 根据两标查询电话号码
 	public static final String API_ID_GET_TEL = "99999999993";
+	// 鹰泽个人信用评分(param)
+	public static final String API_ID_YINGZE_SCORE_PARAM = "99999999992";
 	
 	/** productID */
 	// 页面pdf

@@ -73,5 +73,53 @@
            )}    
        ]]>
     </select>
+    
+     <select id="getCreditModelParam" statementType="CALLABLE" parameterType="java.util.HashMap">
+       <![CDATA[
+           {call root.get_credit_model_Param(
+              #{idNo,mode=IN,jdbcType=VARCHAR},
+              #{idCardNo,mode=IN,jdbcType=VARCHAR},
+              #{realName,mode=IN,jdbcType=VARCHAR},
+              #{total_Apply_Times,mode=OUT,jdbcType=VARCHAR},
+              #{total_Loan_Company,mode=OUT,jdbcType=VARCHAR},
+              #{total_Borrow_Amount,mode=OUT,jdbcType=VARCHAR},
+              #{max_Borrow_Amount,mode=OUT,jdbcType=VARCHAR},
+              #{mix_Borrow_Amount,mode=OUT,jdbcType=VARCHAR},
+              #{avg_Borrow_Amount,mode=OUT,jdbcType=VARCHAR},
+              #{apply_Success_Times,mode=OUT,jdbcType=VARCHAR},
+              #{total_Success_Borrow_Amount,mode=OUT,jdbcType=VARCHAR},
+              #{max_Success_Borrow_Amount,mode=OUT,jdbcType=VARCHAR},
+              #{min_Success_Borrow_Amount,mode=OUT,jdbcType=VARCHAR},
+              #{avg_Success_Borrow_Amount,mode=OUT,jdbcType=VARCHAR},
+              #{apply_Failed_Times,mode=OUT,jdbcType=VARCHAR},
+              #{apply_Cancel_Times,mode=OUT,jdbcType=VARCHAR},
+              #{apply_Times_12m,mode=OUT,jdbcType=VARCHAR},
+              #{loan_Company_12m,mode=OUT,jdbcType=VARCHAR},
+              #{apply_Success_Times_12m,mode=OUT,jdbcType=VARCHAR},
+              #{apply_Success_Amount_12m,mode=OUT,jdbcType=VARCHAR},
+              #{apply_Failed_Times_12m,mode=OUT,jdbcType=VARCHAR},
+              #{apply_Cancel_Times_12m,mode=OUT,jdbcType=VARCHAR},
+              #{total_arrears_Amount,mode=OUT,jdbcType=VARCHAR},
+              #{max_arrears_Amount,mode=OUT,jdbcType=VARCHAR},
+              #{total_good_times,mode=OUT,jdbcType=VARCHAR},
+              #{total_slightbad_times,mode=OUT,jdbcType=VARCHAR},
+              #{total_slightbad_loanperiod,mode=OUT,jdbcType=VARCHAR},
+              #{first_loan_time,mode=OUT,jdbcType=VARCHAR},
+              #{success_apply_company_ratio,mode=OUT,jdbcType=VARCHAR},
+              #{success_apply_ratio,mode=OUT,jdbcType=VARCHAR},
+              #{slightbad_ratio,mode=OUT,jdbcType=VARCHAR},
+              #{good_ratio,mode=OUT,jdbcType=VARCHAR},
+              #{slightbad_arrear_ratio,mode=OUT,jdbcType=VARCHAR},
+              #{slightbad_peroid_ratio,mode=OUT,jdbcType=VARCHAR},
+              #{success_amount_ratio,mode=OUT,jdbcType=VARCHAR},
+              #{age,mode=OUT,jdbcType=VARCHAR},
+              #{gender,mode=OUT,jdbcType=VARCHAR},
+              #{is_good,mode=OUT,jdbcType=VARCHAR},
+              #{is_bad,mode=OUT,jdbcType=VARCHAR},
+              #{returnState,mode=OUT,jdbcType=INTEGER},
+              #{errorMessage,mode=OUT,jdbcType=VARCHAR}
+           )}    
+       ]]>
+    </select>
 	
 </mapper>
