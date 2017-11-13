@@ -301,6 +301,8 @@ public class Constants {
 	public static final String API_ID_GET_TEL = "99999999993";
 	// 鹰泽个人信用评分(param)
 	public static final String API_ID_YINGZE_SCORE_PARAM = "99999999992";
+	// 查询白名单(955钱包)
+	public static final String API_ID_GET_WHITE_LIST = "99999999991";
 	
 	/** productID */
 	// 页面pdf

@@ -50,5 +50,6 @@
     <dubbo:reference id="bankCardAuthServiceImpl" interface="org.pbccrc.api.base.service.BankCardAuthService" lazy="false" check="false"/>
     <dubbo:reference id="creditModelServiceImpl" interface="org.pbccrc.api.base.service.CreditModelService" lazy="false" check="false"/>
     <dubbo:reference id="borrowServiceImpl" interface="org.pbccrc.api.base.service.BorrowService" lazy="false" check="false"/>
+    <dubbo:reference id="borrowDetailServiceImpl" interface="org.pbccrc.api.base.service.BorrowDetailService" lazy="false" check="false"/>
 </beans>
 
