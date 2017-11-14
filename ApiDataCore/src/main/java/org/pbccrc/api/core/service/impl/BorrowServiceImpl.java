@@ -309,9 +309,6 @@ public class BorrowServiceImpl implements BorrowService{
 		// borrow对象集合
 		List<Borrow> borrows = new ArrayList<Borrow>();
 		
-		long startTime = System.currentTimeMillis();
-		StringBuffer note1 = new StringBuffer();
-		
 		// seq
 		String seq = Constants.BLANK;
 		/** 返回参数 */
@@ -396,8 +393,6 @@ public class BorrowServiceImpl implements BorrowService{
 		// 获取下一个sequences
 		seq = borrowDao.getNexSeq();
 		
-		note1.append("【循环开始: " + String.valueOf(System.currentTimeMillis() - startTime));
-		
 		// 将json对象转为borrow对象
 		for (Object object : loanInfoArray) {
 			
@@ -431,103 +426,100 @@ public class BorrowServiceImpl implements BorrowService{
 			// 将borrow对象加入到集合中
 			borrows.add(borrow);
 			
-			// 向borrow表中插入数据
-			borrowDao.addBorrows(borrows);
-			
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("idNo", seq);
-			map.put("idCardNo", idCard);
-			map.put("realName", realName);
-			
-			map.put("total_Apply_Times", total_Apply_Times);
-			map.put("total_Loan_Company", total_Loan_Company);
-			map.put("total_Borrow_Amount", total_Borrow_Amount);
-			map.put("max_Borrow_Amount", max_Borrow_Amount);
-			map.put("mix_Borrow_Amount", mix_Borrow_Amount);
-			map.put("avg_Borrow_Amount", avg_Borrow_Amount);
-			map.put("apply_Success_Times", apply_Success_Times);
-			map.put("total_Success_Borrow_Amount", total_Success_Borrow_Amount);
-			map.put("max_Success_Borrow_Amount", max_Success_Borrow_Amount);
-			map.put("min_Success_Borrow_Amount", min_Success_Borrow_Amount);
-			
-			map.put("avg_Success_Borrow_Amount", avg_Success_Borrow_Amount);
-			map.put("apply_Failed_Times", apply_Failed_Times);
-			map.put("apply_Cancel_Times", apply_Cancel_Times);
-			map.put("apply_Times_12m", apply_Times_12m);
-			map.put("loan_Company_12m", loan_Company_12m);
-			map.put("apply_Success_Times_12m", apply_Success_Times_12m);
-			map.put("apply_Success_Amount_12m", apply_Success_Amount_12m);
-			map.put("apply_Failed_Times_12m", apply_Failed_Times_12m);
-			map.put("apply_Cancel_Times_12m", apply_Cancel_Times_12m);
-			map.put("total_arrears_Amount", total_arrears_Amount);
-			
-			map.put("max_arrears_Amount", max_arrears_Amount);
-			map.put("total_good_times", total_good_times);
-			map.put("total_slightbad_times", total_slightbad_times);
-			map.put("total_slightbad_loanperiod", total_slightbad_loanperiod);
-			map.put("first_loan_time", first_loan_time);
-			map.put("success_apply_company_ratio", success_apply_company_ratio);
-			map.put("success_apply_ratio", success_apply_ratio);
-			map.put("slightbad_ratio", slightbad_ratio);
-			map.put("good_ratio", good_ratio);
-			map.put("slightbad_arrear_ratio", slightbad_arrear_ratio);
-			
-			map.put("slightbad_peroid_ratio", slightbad_peroid_ratio);
-			map.put("success_amount_ratio", success_amount_ratio);
-			map.put("age", age);
-			map.put("gender", gender);
-			map.put("is_good", is_good);
-			map.put("is_bad", is_bad);
-			
-			map.put("returnState", 0);
-			map.put("errorMessage", errorMessage);
-			
-			map = borrowDao.getCreditModelParam(map);
-			errorMessage = String.valueOf(map.get("errorMessage"));
-			
-			total_Apply_Times = String.valueOf(map.get("total_Apply_Times"));
-			total_Loan_Company = String.valueOf(map.get("total_Loan_Company"));
-			total_Borrow_Amount = String.valueOf(map.get("total_Borrow_Amount"));
-			max_Borrow_Amount = String.valueOf(map.get("max_Borrow_Amount"));
-			mix_Borrow_Amount = String.valueOf(map.get("mix_Borrow_Amount"));
-			avg_Borrow_Amount = String.valueOf(map.get("avg_Borrow_Amount"));
-			apply_Success_Times = String.valueOf(map.get("apply_Success_Times"));
-			total_Success_Borrow_Amount = String.valueOf(map.get("total_Success_Borrow_Amount"));
-			max_Success_Borrow_Amount = String.valueOf(map.get("max_Success_Borrow_Amount"));
-			min_Success_Borrow_Amount = String.valueOf(map.get("min_Success_Borrow_Amount"));
-			
-			avg_Success_Borrow_Amount = String.valueOf(map.get("avg_Success_Borrow_Amount"));
-			apply_Failed_Times = String.valueOf(map.get("apply_Failed_Times"));
-			apply_Cancel_Times = String.valueOf(map.get("apply_Cancel_Times"));
-			apply_Times_12m = String.valueOf(map.get("apply_Times_12m"));
-			loan_Company_12m = String.valueOf(map.get("loan_Company_12m"));
-			apply_Success_Times_12m = String.valueOf(map.get("apply_Success_Times_12m"));
-			apply_Success_Amount_12m = String.valueOf(map.get("apply_Success_Amount_12m"));
-			apply_Failed_Times_12m = String.valueOf(map.get("apply_Failed_Times_12m"));
-			apply_Cancel_Times_12m = String.valueOf(map.get("apply_Cancel_Times_12m"));
-			total_arrears_Amount = String.valueOf(map.get("total_arrears_Amount"));
-			
-			max_arrears_Amount = String.valueOf(map.get("max_arrears_Amount"));
-			total_good_times = String.valueOf(map.get("total_good_times"));
-			total_slightbad_times = String.valueOf(map.get("total_slightbad_times"));
-			total_slightbad_loanperiod = String.valueOf(map.get("total_slightbad_loanperiod"));
-			first_loan_time = String.valueOf(map.get("first_loan_time"));
-			success_apply_company_ratio = String.valueOf(map.get("success_apply_company_ratio"));
-			success_apply_ratio = String.valueOf(map.get("success_apply_ratio"));
-			slightbad_ratio = String.valueOf(map.get("slightbad_ratio"));
-			good_ratio = String.valueOf(map.get("good_ratio"));
-			slightbad_arrear_ratio = String.valueOf(map.get("slightbad_arrear_ratio"));
-			
-			slightbad_peroid_ratio = String.valueOf(map.get("slightbad_peroid_ratio"));
-			success_amount_ratio = String.valueOf(map.get("success_amount_ratio"));
-			age = String.valueOf(map.get("age"));
-			gender = String.valueOf(map.get("gender"));
-			is_good = String.valueOf(map.get("is_good"));
-			is_bad = String.valueOf(map.get("is_bad"));
 		}
+		// 向borrow表中插入数据
+		borrowDao.addBorrows(borrows);
 		
-		note1.append("  循环结束: " + String.valueOf(System.currentTimeMillis() - startTime));
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("idNo", seq);
+		map.put("idCardNo", idCard);
+		map.put("realName", realName);
 		
+		map.put("total_Apply_Times", total_Apply_Times);
+		map.put("total_Loan_Company", total_Loan_Company);
+		map.put("total_Borrow_Amount", total_Borrow_Amount);
+		map.put("max_Borrow_Amount", max_Borrow_Amount);
+		map.put("mix_Borrow_Amount", mix_Borrow_Amount);
+		map.put("avg_Borrow_Amount", avg_Borrow_Amount);
+		map.put("apply_Success_Times", apply_Success_Times);
+		map.put("total_Success_Borrow_Amount", total_Success_Borrow_Amount);
+		map.put("max_Success_Borrow_Amount", max_Success_Borrow_Amount);
+		map.put("min_Success_Borrow_Amount", min_Success_Borrow_Amount);
+		
+		map.put("avg_Success_Borrow_Amount", avg_Success_Borrow_Amount);
+		map.put("apply_Failed_Times", apply_Failed_Times);
+		map.put("apply_Cancel_Times", apply_Cancel_Times);
+		map.put("apply_Times_12m", apply_Times_12m);
+		map.put("loan_Company_12m", loan_Company_12m);
+		map.put("apply_Success_Times_12m", apply_Success_Times_12m);
+		map.put("apply_Success_Amount_12m", apply_Success_Amount_12m);
+		map.put("apply_Failed_Times_12m", apply_Failed_Times_12m);
+		map.put("apply_Cancel_Times_12m", apply_Cancel_Times_12m);
+		map.put("total_arrears_Amount", total_arrears_Amount);
+		
+		map.put("max_arrears_Amount", max_arrears_Amount);
+		map.put("total_good_times", total_good_times);
+		map.put("total_slightbad_times", total_slightbad_times);
+		map.put("total_slightbad_loanperiod", total_slightbad_loanperiod);
+		map.put("first_loan_time", first_loan_time);
+		map.put("success_apply_company_ratio", success_apply_company_ratio);
+		map.put("success_apply_ratio", success_apply_ratio);
+		map.put("slightbad_ratio", slightbad_ratio);
+		map.put("good_ratio", good_ratio);
+		map.put("slightbad_arrear_ratio", slightbad_arrear_ratio);
+		
+		map.put("slightbad_peroid_ratio", slightbad_peroid_ratio);
+		map.put("success_amount_ratio", success_amount_ratio);
+		map.put("age", age);
+		map.put("gender", gender);
+		map.put("is_good", is_good);
+		map.put("is_bad", is_bad);
+		
+		map.put("returnState", 0);
+		map.put("errorMessage", errorMessage);
+		
+		map = borrowDao.getCreditModelParam(map);
+		errorMessage = String.valueOf(map.get("errorMessage"));
+		
+		total_Apply_Times = String.valueOf(map.get("total_Apply_Times"));
+		total_Loan_Company = String.valueOf(map.get("total_Loan_Company"));
+		total_Borrow_Amount = String.valueOf(map.get("total_Borrow_Amount"));
+		max_Borrow_Amount = String.valueOf(map.get("max_Borrow_Amount"));
+		mix_Borrow_Amount = String.valueOf(map.get("mix_Borrow_Amount"));
+		avg_Borrow_Amount = String.valueOf(map.get("avg_Borrow_Amount"));
+		apply_Success_Times = String.valueOf(map.get("apply_Success_Times"));
+		total_Success_Borrow_Amount = String.valueOf(map.get("total_Success_Borrow_Amount"));
+		max_Success_Borrow_Amount = String.valueOf(map.get("max_Success_Borrow_Amount"));
+		min_Success_Borrow_Amount = String.valueOf(map.get("min_Success_Borrow_Amount"));
+		
+		avg_Success_Borrow_Amount = String.valueOf(map.get("avg_Success_Borrow_Amount"));
+		apply_Failed_Times = String.valueOf(map.get("apply_Failed_Times"));
+		apply_Cancel_Times = String.valueOf(map.get("apply_Cancel_Times"));
+		apply_Times_12m = String.valueOf(map.get("apply_Times_12m"));
+		loan_Company_12m = String.valueOf(map.get("loan_Company_12m"));
+		apply_Success_Times_12m = String.valueOf(map.get("apply_Success_Times_12m"));
+		apply_Success_Amount_12m = String.valueOf(map.get("apply_Success_Amount_12m"));
+		apply_Failed_Times_12m = String.valueOf(map.get("apply_Failed_Times_12m"));
+		apply_Cancel_Times_12m = String.valueOf(map.get("apply_Cancel_Times_12m"));
+		total_arrears_Amount = String.valueOf(map.get("total_arrears_Amount"));
+		
+		max_arrears_Amount = String.valueOf(map.get("max_arrears_Amount"));
+		total_good_times = String.valueOf(map.get("total_good_times"));
+		total_slightbad_times = String.valueOf(map.get("total_slightbad_times"));
+		total_slightbad_loanperiod = String.valueOf(map.get("total_slightbad_loanperiod"));
+		first_loan_time = String.valueOf(map.get("first_loan_time"));
+		success_apply_company_ratio = String.valueOf(map.get("success_apply_company_ratio"));
+		success_apply_ratio = String.valueOf(map.get("success_apply_ratio"));
+		slightbad_ratio = String.valueOf(map.get("slightbad_ratio"));
+		good_ratio = String.valueOf(map.get("good_ratio"));
+		slightbad_arrear_ratio = String.valueOf(map.get("slightbad_arrear_ratio"));
+		
+		slightbad_peroid_ratio = String.valueOf(map.get("slightbad_peroid_ratio"));
+		success_amount_ratio = String.valueOf(map.get("success_amount_ratio"));
+		age = String.valueOf(map.get("age"));
+		gender = String.valueOf(map.get("gender"));
+		is_good = String.valueOf(map.get("is_good"));
+		is_bad = String.valueOf(map.get("is_bad"));
 		
 		JSONObject returnJson = new JSONObject();
 		returnJson.put("realName", realName);
@@ -579,9 +571,6 @@ public class BorrowServiceImpl implements BorrowService{
 		returnJson.put("retData", retData);
 		returnJson.put("seq", seq);
 		returnJson.put("errorMessage", errorMessage);
-		
-		note1.append("  返回controller前: " + String.valueOf(System.currentTimeMillis() - startTime) + "】");
-		returnJson.put("note1", note1);
 		
 		return returnJson;
 	}

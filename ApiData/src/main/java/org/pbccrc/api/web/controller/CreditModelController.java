@@ -520,8 +520,6 @@ public class CreditModelController {
 	@RequestMapping(value="/getResultParam", produces={"application/json;charset=UTF-8"})
 	public JSONObject getResultParam(String requestStr, HttpServletRequest request) throws Exception{
 		
-		StringBuffer note1 = new StringBuffer();
-		
 		long startTime = System.currentTimeMillis();
 		
 		ResultContent resultContent = new ResultContent();
@@ -600,11 +598,7 @@ public class CreditModelController {
 			return (JSONObject)JSONObject.toJSON(resultContent);
 		}
 		
-		note1.append("参数验证: " + String.valueOf(System.currentTimeMillis() - startTime));
-		
 		JSONObject returnJson = borrowService.getResultParam(realName, idCard, trxNo, loanInfos);
-		
-		note1.append(" service调用: " + String.valueOf(System.currentTimeMillis() - startTime));
 		
 		String retMsg = Constants.CODE_ERR_SUCCESS_MSG;
 		String code = Constants.CODE_ERR_SUCCESS;
@@ -669,11 +663,8 @@ public class CreditModelController {
 		} else {
 			systemLog.setReturnData(retData.toJSONString());
 		}
-		note1.append(returnJson.getString("note1"));
-		systemLog.setNote1(note1.toString());
 		systemLogService.addLog(systemLog);
 		
-		returnJson.remove("note1");
 		returnJson.remove("errorMessage");
 		return returnJson;
 	}
