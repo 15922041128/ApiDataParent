@@ -24,12 +24,13 @@
 		<result property="apiName" column="apiName" />
 		<result property="queryTime" column="queryTime" />
 		<result property="returnData" column="returnData" />
+		<result property="note1" column="note1" />
 	</resultMap>
 	
 	<insert id="addLog" parameterType="org.pbccrc.api.base.bean.SystemLog">
-		insert into systemLog(id, uuid, ipAddress, userID, productID, localApiID, params, apiKey, isSuccess, isCount, queryDate, queryTime, returnData) 
+		insert into systemLog(id, uuid, ipAddress, userID, productID, localApiID, params, apiKey, isSuccess, isCount, queryDate, queryTime, returnData, note1) 
 			values(seq_systemlog.nextval, #{uuid}, #{ipAddress}, #{userID}, #{productID}, #{localApiID}, #{params}, 
-				#{apiKey}, #{isSuccess}, #{isCount}, #{queryDate}, #{queryTime,jdbcType=BIGINT}, #{returnData,jdbcType=VARCHAR})
+				#{apiKey}, #{isSuccess}, #{isCount}, #{queryDate}, #{queryTime,jdbcType=BIGINT}, #{returnData,jdbcType=VARCHAR},#{note1,jdbcType=VARCHAR})
 	</insert>
 	
 	<select id="queryLog" parameterType="org.pbccrc.api.base.bean.SystemLog" resultMap="systemLog">
@@ -182,7 +183,8 @@
 		apiKey,
 		isSuccess,
 		isCount,
-		queryDate
+		queryDate,
+		note1,
 		FROM
 			systemlog s
 		LEFT JOIN iuser u ON s.userID = u.id

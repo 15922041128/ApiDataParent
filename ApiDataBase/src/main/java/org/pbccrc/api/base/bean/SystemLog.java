@@ -61,6 +61,8 @@ public class SystemLog implements Serializable{
 	
 	private String successNum;
 	
+	private String note1;
+
 	public String getSuccessNum() {
 		return successNum;
 	}
@@ -241,5 +243,13 @@ public class SystemLog implements Serializable{
 
 	public void setReturnData(String returnData) {
 		this.returnData = returnData;
+	}
+	
+	public String getNote1() {
+		return note1;
+	}
+
+	public void setNote1(String note1) {
+		this.note1 = note1;
 	}
 }

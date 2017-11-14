@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.sun.jersey.core.spi.scanning.Scanner;
 
 @Service
 public class BorrowServiceImpl implements BorrowService{
@@ -308,6 +309,9 @@ public class BorrowServiceImpl implements BorrowService{
 		// borrow对象集合
 		List<Borrow> borrows = new ArrayList<Borrow>();
 		
+		long startTime = System.currentTimeMillis();
+		StringBuffer note1 = new StringBuffer();
+		
 		// seq
 		String seq = Constants.BLANK;
 		/** 返回参数 */
@@ -391,6 +395,8 @@ public class BorrowServiceImpl implements BorrowService{
 			
 		// 获取下一个sequences
 		seq = borrowDao.getNexSeq();
+		
+		note1.append("【循环开始: " + String.valueOf(System.currentTimeMillis() - startTime));
 		
 		// 将json对象转为borrow对象
 		for (Object object : loanInfoArray) {
@@ -520,6 +526,8 @@ public class BorrowServiceImpl implements BorrowService{
 			is_bad = String.valueOf(map.get("is_bad"));
 		}
 		
+		note1.append("  循环结束: " + String.valueOf(System.currentTimeMillis() - startTime));
+		
 		
 		JSONObject returnJson = new JSONObject();
 		returnJson.put("realName", realName);
@@ -572,6 +580,8 @@ public class BorrowServiceImpl implements BorrowService{
 		returnJson.put("seq", seq);
 		returnJson.put("errorMessage", errorMessage);
 		
+		note1.append("  返回controller前: " + String.valueOf(System.currentTimeMillis() - startTime) + "】");
+		returnJson.put("note1", note1);
 		
 		return returnJson;
 	}
