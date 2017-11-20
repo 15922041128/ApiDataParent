@@ -65,4 +65,6 @@
     <dubbo:reference id="httpServiceImpl" interface="org.pbccrc.api.base.service.HttpService" lazy="false" check="false"/>
     <dubbo:service interface="org.pbccrc.api.base.service.BorrowService" ref="borrowServiceImpl"/>
     <dubbo:service interface="org.pbccrc.api.base.service.BorrowDetailService" ref="borrowDetailServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.SendMsgRefService" ref="sendMsgRefServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.SendMessageService" ref="sendMessageServiceImpl"/>
 </beans>

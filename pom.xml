@@ -73,6 +73,8 @@
 		
 		<commons-pool2.version>2.0</commons-pool2.version>
 		
+		<dom4j.version>1.6.1</dom4j.version>
+		
 	</properties>
 
 	<dependencyManagement>
@@ -413,7 +415,14 @@
 			    <artifactId>commons-pool2</artifactId>
 			    <version>${commons-pool2.version}</version>
 			</dependency>
-	        
+			
+			<!-- dom4j -->
+	        <dependency>
+			    <groupId>dom4j</groupId>
+			    <artifactId>dom4j</artifactId>
+			    <version>${dom4j.version}</version>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 
