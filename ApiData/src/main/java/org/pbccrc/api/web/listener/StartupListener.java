@@ -10,12 +10,14 @@ import org.pbccrc.api.base.bean.DBEntity;
 import org.pbccrc.api.base.bean.LocalApi;
 import org.pbccrc.api.base.bean.Product;
 import org.pbccrc.api.base.bean.Relation;
+import org.pbccrc.api.base.bean.SendMsgRef;
 import org.pbccrc.api.base.service.ApiUserService;
 import org.pbccrc.api.base.service.CodeService;
 import org.pbccrc.api.base.service.DBOperatorService;
 import org.pbccrc.api.base.service.LocalApiService;
 import org.pbccrc.api.base.service.ProductService;
 import org.pbccrc.api.base.service.RelationService;
+import org.pbccrc.api.base.service.SendMsgRefService;
 import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.base.util.RedisClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,9 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
 	
 	@Autowired
 	private CodeService codeService;
+	
+	@Autowired
+	private SendMsgRefService sendMsgRefService;
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event){
@@ -91,6 +96,12 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
 		List<Code> codeList = codeService.queryAll();
 		for (Code code : codeList) {
 			RedisClient.set("code_" + code.getId(), code);
+		}
+		
+		// send_msg_ref
+		List<SendMsgRef> sendMsgRefList = sendMsgRefService.queryAll();
+		for (SendMsgRef sendMsgRef : sendMsgRefList) {
+			RedisClient.set("sendMsgRef_" + sendMsgRef.getType(), sendMsgRef);
 		}
 		
 		// temp xinyan count 

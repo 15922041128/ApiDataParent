@@ -166,6 +166,19 @@ public class Constants {
 	public static final String CODE_ERR_FAIL = "102001";
 	public static final String CODE_ERR_FAIL_MSG = "查询失败";
 	
+	/** 发送短信用code */
+	// 发送成功
+	public static final String CODE_ERR_SEND_MESSAGE_SUCCESS = "202000";
+	public static final String CODE_ERR_SEND_MESSAGE_SUCCESS_MSG = "发送成功";
+	
+	// 发送失败
+	public static final String CODE_ERR_SEND_MESSAGE_FAIL = "202001";
+	public static final String CODE_ERR_SEND_MESSAGE_FAIL_MSG = "发送失败";
+	
+	// 类型不正确
+	public static final String CODE_ERR_SEND_MESSAGE_ERR = "202002";
+	public static final String CODE_ERR_SEND_MESSAGE_ERR_MSG = "类型不正确";
+	
 	/**  table filed   */
 	public static final String API_KEY = "apiKey";
 	/** ldb_dishonest_info */
@@ -303,10 +316,15 @@ public class Constants {
 	public static final String API_ID_YINGZE_SCORE_PARAM = "99999999992";
 	// 查询白名单(955钱包)
 	public static final String API_ID_GET_WHITE_LIST = "99999999991";
+<<<<<<< HEAD
 	// 短信营销接口(查询符合条件营销对象数量)
 	public static final String API_ID_GET_MARKETEE_COUNT = "99999999990";
 	// 短信营销接口(发送信息)
 	public static final String API_ID_SEND_MESG = "99999999989";
+=======
+	// 发送短信
+	public static final String API_ID_SEND_MESSAGE = "99999999990";
+>>>>>>> branch 'DynamicDataSource' of https://github.com/15922041128/ApiDataParent.git
 	
 	/** productID */
 	// 页面pdf
