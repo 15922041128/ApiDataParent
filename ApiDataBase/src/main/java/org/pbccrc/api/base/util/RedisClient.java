@@ -79,6 +79,53 @@ public class RedisClient {
 			jedisPool.returnResource(jedis);
 		}
 	}
+	
+	/**
+	 * 查看key是否已经在缓存中
+	 * 
+	 * @param key
+	 *            key
+	 * @param value
+	 *            value
+	 * @return
+	 * @throws Exception
+	 */
+	public static boolean exists(String key) {
+		Jedis jedis = null;
+		try {
+			jedis = jedisPool.getResource();
+			return jedis.exists(key);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			jedisPool.returnResource(jedis);
+		}
+	}
+	
+	/**
+	 * 设置缓存字符串过期时间
+	 * 
+	 * @param key
+	 *            key
+	 * @param times
+	 *            times
+	 * @return
+	 * @throws Exception
+	 */
+	public static boolean setExpireTime(String key, int times) {
+		Jedis jedis = null;
+		try {
+			jedis = jedisPool.getResource();
+			jedis.expire(key, times);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			jedisPool.returnResource(jedis);
+		}
+	}
 
 	/**
 	 * 向缓存中设置对象

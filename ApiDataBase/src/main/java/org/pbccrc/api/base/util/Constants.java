@@ -303,6 +303,10 @@ public class Constants {
 	public static final String API_ID_YINGZE_SCORE_PARAM = "99999999992";
 	// 查询白名单(955钱包)
 	public static final String API_ID_GET_WHITE_LIST = "99999999991";
+	// 短信营销接口(查询符合条件营销对象数量)
+	public static final String API_ID_GET_MARKETEE_COUNT = "99999999990";
+	// 短信营销接口(发送信息)
+	public static final String API_ID_SEND_MESG = "99999999989";
 	
 	/** productID */
 	// 页面pdf

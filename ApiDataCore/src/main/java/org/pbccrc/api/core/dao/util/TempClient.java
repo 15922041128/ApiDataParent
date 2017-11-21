@@ -294,7 +294,7 @@ public class TempClient {
 	
 	public static void test9() throws Exception {
 		
-		String apiKey = "17f11ef84b714581b64d5bd38a56a0e4";
+		String apiKey = "9ce6d25d900f49b1877acb3a02101b1e";
 		String userID = "27";
 		
 		JSONObject json = new JSONObject();
@@ -315,8 +315,8 @@ public class TempClient {
 		Client client = Client.create(config);
 		
 		StringBuffer url = new StringBuffer();
-//		url.append("http://222.128.127.219:8989/ApiData/creditModel/getResult");
-		url.append("http://localhost:8080/ApiData/creditModel/getResult");
+		url.append("http://www.qilingyz.com:8989/ApiData/creditModel/getResultParam");
+//		url.append("http://localhost:8080/ApiData/creditModel/getResult");
 		url.append("?requestStr=" + str );
 		
 		URL u = new URL(url.toString());
