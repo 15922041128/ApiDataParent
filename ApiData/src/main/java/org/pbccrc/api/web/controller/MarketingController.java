@@ -164,7 +164,7 @@ public class MarketingController {
 		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
 		systemLog.setProductID(relation.getString("productID"));
 		// localApiID
-		systemLog.setLocalApiID(Constants.API_ID_YINGZE_SCORE);
+		systemLog.setLocalApiID(Constants.API_ID_GET_MARKETEE_COUNT);
 		// 参数
 		JSONObject paramJson = new JSONObject();
 		paramJson.put("seq", returnJson.get("seq"));
@@ -184,7 +184,6 @@ public class MarketingController {
 		systemLog.setReturnData(String.valueOf(marketeeNum));
 		systemLogService.addLog(systemLog);
 		
-		returnJson.remove("errorMessage");
 		return returnJson;
 	}
 	
@@ -205,8 +204,8 @@ public class MarketingController {
 		long startTime = System.currentTimeMillis();
 		
 		ResultContent resultContent = new ResultContent();
-		resultContent.setCode(Constants.CODE_ERR_SUCCESS);
-		resultContent.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);
+		resultContent.setCode(Constants.CODE_ERR_SEND_MESSAGE_SUCCESS);
+		resultContent.setRetMsg(Constants.CODE_ERR_SEND_MESSAGE_SUCCESS_MSG);
 		
 		// 获取IP地址
 		String ipAddress = SystemUtil.getIpAddress(request);
@@ -280,8 +279,8 @@ public class MarketingController {
 		
 		JSONObject returnJson = marketingService.sendMesg(smsCondition);
 		
-		String retMsg = Constants.CODE_ERR_SUCCESS_MSG;
-		String code = Constants.CODE_ERR_SUCCESS;
+		String retMsg = Constants.CODE_ERR_SEND_MESSAGE_SUCCESS_MSG;
+		String code = Constants.CODE_ERR_SEND_MESSAGE_SUCCESS;
 		
 		boolean isSuccess = true;
 		
@@ -296,7 +295,7 @@ public class MarketingController {
 		
 		// 记录日志
 		SystemLog systemLog = new SystemLog();
-		// 该APIuuid为borrow.seq
+		// 该APIuuid为seq
 		systemLog.setUuid(returnJson.getString("seq"));
 		// ip地址
 		systemLog.setIpAddress(ipAddress);
@@ -307,7 +306,7 @@ public class MarketingController {
 		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
 		systemLog.setProductID(relation.getString("productID"));
 		// localApiID
-		systemLog.setLocalApiID(Constants.API_ID_YINGZE_SCORE);
+		systemLog.setLocalApiID(Constants.API_ID_SEND_MESG);
 		// 参数
 		systemLog.setParams(JSON.toJSONString(smsCondition));
 		// 用户ID
@@ -324,7 +323,6 @@ public class MarketingController {
 		// 返回数据
 		systemLogService.addLog(systemLog);
 		
-		returnJson.remove("errorMessage");
 		return returnJson;
 	}
 }
