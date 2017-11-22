@@ -19,10 +19,12 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
 import org.pbccrc.api.base.service.SendMessageCoreService;
-import org.pbccrc.api.base.util.StringUtil;
+import org.pbccrc.api.base.util.Constants;
+import org.pbccrc.api.base.util.RedisClient;
 import org.springframework.stereotype.Service;
+
+import com.alibaba.fastjson.JSONObject;
 
 @Service
 public class SendMessageYunxinServiceImpl implements SendMessageCoreService{
@@ -31,23 +33,31 @@ public class SendMessageYunxinServiceImpl implements SendMessageCoreService{
 	public Map<String, Object> sendMessage(String telNos, String msgContent) throws Exception{
 		
 		String url = "http://112.124.24.5/api/MsgSend.asmx/SendMsg";
+		
+		JSONObject object = JSONObject.parseObject(String.valueOf(RedisClient.get("sendMsgRef_" + "yunxin")));
 
 		List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-		nvps.add(new BasicNameValuePair("userCode", "JQXLYX"));
-		nvps.add(new BasicNameValuePair("userPass", "JQXLyx1231"));
+//		nvps.add(new BasicNameValuePair("userCode", "JQXLYX"));
+//		nvps.add(new BasicNameValuePair("userPass", "JQXLyx1231"));
+//		nvps.add(new BasicNameValuePair("Channel", "86"));
+		nvps.add(new BasicNameValuePair("userCode", object.getString("userName")));
+		nvps.add(new BasicNameValuePair("userPass", object.getString("password")));
+		nvps.add(new BasicNameValuePair("Channel", object.getString("channel")));
 		nvps.add(new BasicNameValuePair("DesNo", telNos));
-		nvps.add(new BasicNameValuePair("Msg", msgContent + "【云信留客】"));
-		nvps.add(new BasicNameValuePair("Channel", "86"));
+		nvps.add(new BasicNameValuePair("Msg", msgContent));
 		String post = httpPost(url, nvps);
 
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
 		Document document = DocumentHelper.parseText(post);
 		String root = document.getRootElement().getText();
-		if (!StringUtil.isNull(root)) {
-			returnMap.put("isSuccess", true);
-		} else {
+		
+		String firstLetter = root.substring(0, 1);
+		
+		if (Constants.CONNECTOR_LINE.equals(firstLetter)) {
 			returnMap.put("isSuccess", false);
+		} else {
+			returnMap.put("isSuccess", true);
 		}
 		
 		return returnMap;

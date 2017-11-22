@@ -15,7 +15,10 @@ import java.util.Map;
 
 import org.pbccrc.api.base.service.SendMessageCoreService;
 import org.pbccrc.api.base.util.Constants;
+import org.pbccrc.api.base.util.RedisClient;
 import org.springframework.stereotype.Service;
+
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * 1信息
@@ -28,16 +31,20 @@ public class SendMessage1XinxiServiceImpl implements SendMessageCoreService{
 	@Override
 	public Map<String, Object> sendMessage(String telNos, String msgContent) throws Exception {
 		
+		JSONObject object = JSONObject.parseObject(String.valueOf(RedisClient.get("sendMsgRef_" + "1xinxi")));
+		
 		// 用户名
-		String name = "15574962764"; 
+//		String name = "15574962764"; 
+		String name = object.getString("userName"); 
 		// 密码
-		String pwd = "B7CD457C7A3CBA944F7861EFAC03"; 
+//		String pwd = "B7CD457C7A3CBA944F7861EFAC03"; 
+		String pwd = object.getString("password");
 		// 电话号码字符串，中间用英文逗号间隔
 		StringBuffer mobileString = new StringBuffer(telNos);
 		// 内容字符串
 		StringBuffer contextString = new StringBuffer(msgContent);
 		// 签名
-		String sign = "签名";
+		String sign = contextString.substring(contextString.indexOf("【"), contextString.indexOf("】") + 1);
 		// 追加发送时间，可为空，为空为及时发送
 		String stime = Constants.BLANK;
 		// 扩展码，必须为数字 可为空

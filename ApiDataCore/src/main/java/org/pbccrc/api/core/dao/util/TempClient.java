@@ -300,10 +300,10 @@ public class TempClient {
 		
 		JSONObject json = new JSONObject();
 		json.put("province", "天津");
-		json.put("operator", "cm");
+		json.put("operator", "cu");
 		json.put("productType", "xjd");
 		json.put("age_max", "38");
-		json.put("content", "京东iphone8,优惠享不停！ http://dwz.cn/6HIBuI 退订回T【云信留客】");
+		json.put("content", "您已获得一笔2000元可用额度，还有1天过期，速领请点 http://suo.im/1gf9P6 微信公众号：955钱包.退回T【955钱包】");
 		json.put("sendNum", "2");
 		json.put("smsTunnel", "yunxin");
 		
