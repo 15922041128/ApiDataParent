@@ -3,19 +3,14 @@ package org.pbccrc.api.web.controller;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 
 import org.pbccrc.api.base.bean.ResultContent;
 import org.pbccrc.api.base.bean.SmsCondition;
 import org.pbccrc.api.base.bean.SystemLog;
 import org.pbccrc.api.base.service.BorrowDetailService;
-import org.pbccrc.api.base.service.BorrowService;
 import org.pbccrc.api.base.service.CostService;
 import org.pbccrc.api.base.service.CreditModelService;
 import org.pbccrc.api.base.service.MarketingService;
@@ -33,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 /**

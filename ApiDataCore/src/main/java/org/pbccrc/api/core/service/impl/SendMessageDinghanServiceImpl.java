@@ -12,7 +12,10 @@ import java.util.Map;
 
 import org.pbccrc.api.base.service.SendMessageCoreService;
 import org.pbccrc.api.base.util.Constants;
+import org.pbccrc.api.base.util.RedisClient;
 import org.springframework.stereotype.Service;
+
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * 鼎汉
@@ -25,9 +28,13 @@ public class SendMessageDinghanServiceImpl implements SendMessageCoreService{
 	@Override
 	public Map<String, Object> sendMessage(String telNos, String msgContent) throws Exception {
 		
+		JSONObject object = JSONObject.parseObject(String.valueOf(RedisClient.get("sendMsgRef_" + "dinghan")));
+		
 		String host = "112.74.179.106:8080";
-        String userCode = "xzs001";
-        String userPwd = "xzs001cxx";
+//        String userCode = "xzs001";
+//        String userPwd = "xzs001cxx";
+		String userCode = object.getString("userName");
+	    String userPwd = object.getString("password");
         String numbers = telNos;
         msgContent = msgContent + "【鼎汉】";
         String charset = "GBK";

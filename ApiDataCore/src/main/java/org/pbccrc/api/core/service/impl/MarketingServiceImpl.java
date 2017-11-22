@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.pbccrc.api.base.bean.ApiLog;
-import org.pbccrc.api.base.bean.Marketee;
 import org.pbccrc.api.base.bean.SmsCondition;
 import org.pbccrc.api.base.service.MarketingService;
 import org.pbccrc.api.base.service.SendMessageCoreService;

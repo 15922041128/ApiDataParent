@@ -14,6 +14,37 @@ public class SendMsgRef implements Serializable {
 	private String type;
 	
 	private String className;
+	
+	private String userName;
+	
+	private String password;
+	
+	private String channel;
+	
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getChannel() {
+		return channel;
+	}
+
+	public void setChannel(String channel) {
+		this.channel = channel;
+	}
 
 	public String getType() {
 		return type;

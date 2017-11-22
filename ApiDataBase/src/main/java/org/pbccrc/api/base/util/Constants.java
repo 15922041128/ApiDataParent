@@ -427,4 +427,5 @@ public class Constants {
 	public static final String OPERATOR_TYPE_QUERYALL = "4";
 	// 批量报送
 	public static final String OPERATOR_TYPE_ADDALL = "5";
+	
 }
