@@ -34,7 +34,7 @@ public class MarketeeDao {
 	 * @param map
 	 * @return
 	 */
-	public List<Marketee> getMarketeeTelNums(SmsCondition smsCondition) {
+	public List<String> getMarketeeTelNums(SmsCondition smsCondition) {
 		return marketeeMapper.getMarketeeTelNums(smsCondition);
 		
 	}

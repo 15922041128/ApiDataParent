@@ -294,13 +294,18 @@ public class TempClient {
 	
 	public static void test9() throws Exception {
 		
-		String apiKey = "9ce6d25d900f49b1877acb3a02101b1e";
+		String apiKey = "3fdfcd7fa7bc4948820e6f5822f64e98";
+//		String apiKey = "3fdfcd7fa7bc4948820e6f5822f64e97";
 		String userID = "27";
 		
 		JSONObject json = new JSONObject();
-		json.put("realName", "陈成明");
-		json.put("idCard", "452524196905140616");
-		json.put("trxNo", "1234567890");
+		json.put("province", "天津");
+		json.put("operator", "cm");
+		json.put("productType", "xjd");
+		json.put("age_max", "38");
+		json.put("content", "京东iphone8,优惠享不停！ http://dwz.cn/6HIBuI 退订回T【云信留客】");
+		json.put("sendNum", "2");
+		json.put("smsTunnel", "yunxin");
 		
 		
 		json.put("loanInfos", getC2());
@@ -315,8 +320,9 @@ public class TempClient {
 		Client client = Client.create(config);
 		
 		StringBuffer url = new StringBuffer();
-		url.append("http://www.qilingyz.com:8989/ApiData/creditModel/getResultParam");
-//		url.append("http://localhost:8080/ApiData/creditModel/getResult");
+//		url.append("http://www.qilingyz.com:8989/ApiData/creditModel/getResultParam");
+//		url.append("http://localhost:8080/ApiData/marketing/getMarketeeCount");
+		url.append("http://localhost:8080/ApiData/marketing/sendMesg");
 		url.append("?requestStr=" + str );
 		
 		URL u = new URL(url.toString());

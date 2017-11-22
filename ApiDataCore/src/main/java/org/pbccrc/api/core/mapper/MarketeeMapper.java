@@ -17,6 +17,6 @@ public interface MarketeeMapper {
 	/**
 	 * @param map
 	 */
-	List<Marketee> getMarketeeTelNums(SmsCondition smsCondition);
+	List<String> getMarketeeTelNums(SmsCondition smsCondition);
 	
 }

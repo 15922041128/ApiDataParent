@@ -21,6 +21,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.pbccrc.api.base.service.SendMessageCoreService;
+import org.pbccrc.api.base.util.StringUtil;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,7 +34,7 @@ public class SendMessageYunxinServiceImpl implements SendMessageCoreService{
 
 		List<NameValuePair> nvps = new ArrayList<NameValuePair>();
 		nvps.add(new BasicNameValuePair("userCode", "JQXLYX"));
-		nvps.add(new BasicNameValuePair("userPass", "JQXLyx123"));
+		nvps.add(new BasicNameValuePair("userPass", "JQXLyx1231"));
 		nvps.add(new BasicNameValuePair("DesNo", telNos));
 		nvps.add(new BasicNameValuePair("Msg", msgContent + "【云信留客】"));
 		nvps.add(new BasicNameValuePair("Channel", "86"));
@@ -42,9 +43,8 @@ public class SendMessageYunxinServiceImpl implements SendMessageCoreService{
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
 		Document document = DocumentHelper.parseText(post);
-		Element root = document.getRootElement();
-		List strings = root.elements("string");
-		if (null != strings && strings.size() > 0) {
+		String root = document.getRootElement().getText();
+		if (!StringUtil.isNull(root)) {
 			returnMap.put("isSuccess", true);
 		} else {
 			returnMap.put("isSuccess", false);

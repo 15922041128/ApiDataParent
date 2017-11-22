@@ -1,27 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.pbccrc.api.core.mapper.marketeeMapper">
+<mapper namespace="org.pbccrc.api.core.mapper.MarketeeMapper">
 
 	<select id="getMarketeeCount" parameterType="org.pbccrc.api.base.bean.SmsCondition" resultType="java.lang.Integer">
 		select count(1) from marketee where 1=1
 			<if test="province !=null and province != '' ">
-            	and province = #{province}
+            	and province in 
+				<foreach collection="provinces" item="pId" index="index"
+	                open="(" close=")" separator=",">
+	                '${pId}'
+	            </foreach>
         	</if>
 			<if test="city !=null and city != '' ">
-            	and city = #{city}
+            	and city = in
+            	<foreach collection="citys" item="pId" index="index"
+	                open="(" close=")" separator=",">
+	                '${pId}'
+	            </foreach>
         	</if>
 			<if test="operator !=null and operator != '' ">
-            	and operator = #{operator}
-        	</if>
-			<if test="operator !=null and operator != '' ">
-            	and operator = #{operator}
+            	and operator in
+            	<foreach collection="operators" item="pId" index="index"
+	                open="(" close=")" separator=",">
+	                '${pId}'
+	            </foreach>
         	</if>
 			<if test="age_max !=null and age_max != '' ">
-            	and age < #{age_max}
+            	and age &lt; #{age_max}
         	</if>
 			<if test="age_min !=null and age_min != '' ">
-            	and age >= #{age_min}
+            	and age &gt;= #{age_min}
         	</if>
 			<if test="productType !=null and productType != '' ">
 				<if test="productType =='xjd'">
@@ -42,20 +51,29 @@
 	        </if>
 	</select>
 	
-	<select id="getMarketeeTelNums" parameterType="org.pbccrc.api.base.bean.SmsCondition" resultType="org.pbccrc.api.base.bean.Marketee">
-		select tt.telNum from
+	<select id="getMarketeeTelNums" parameterType="org.pbccrc.api.base.bean.SmsCondition" resultType="java.lang.String">
+		select * from
 		(select telNum, rownum from marketee where 1=1
 			<if test="province !=null and province != '' ">
-            	and province = #{province}
+            	and province in 
+				<foreach collection="provinces" item="pro" index="index"
+	                open="(" close=")" separator=",">
+	                '${pro}'
+	            </foreach>
         	</if>
 			<if test="city !=null and city != '' ">
-            	and city = #{city}
+            	and city = in
+            	<foreach collection="citys" item="ci" index="index"
+	                open="(" close=")" separator=",">
+	                '${ci}'
+	            </foreach>
         	</if>
 			<if test="operator !=null and operator != '' ">
-            	and operator = #{operator}
-        	</if>
-			<if test="operator !=null and operator != '' ">
-            	and operator = #{operator}
+            	and operator in
+            	<foreach collection="operators" item="oper" index="index"
+	                open="(" close=")" separator=",">
+	                '${oper}'
+	            </foreach>
         	</if>
 			<if test="age_max !=null and age_max != '' ">
             	and age &lt; #{age_max}
@@ -81,8 +99,8 @@
 	            </if>
 	        </if>
 	        and telNum is not null
-	        and rowNum &lt;= #{pageSize}*#{pageNum}) tt 
-	        where tt.rownum > (#{pageNum}-1)*#{pageSize}
+	        and rowNum &lt;= #{pageSize}*#{pageNum})  
+	        where rownum > (#{pageNum}-1)*#{pageSize}
        
 	</select>
 	

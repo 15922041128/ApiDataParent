@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
@@ -117,10 +118,23 @@ public class MarketingController {
 		// 验证年龄是否符合要求
 		Integer age_max = smsCondition.getAge_max();
 		Integer age_min = smsCondition.getAge_min();
-		if (age_max < age_min) {
+		if (age_max != null && age_min != null && age_max < age_min) {
 			resultContent.setCode(Constants.CODE_ERR_REQ_PARAM);
 			resultContent.setRetMsg(Constants.CODE_ERR_REQ_PARAM_MSG + "age_max应大于等于age_min");
 			return (JSONObject)JSONObject.toJSON(resultContent);
+		}
+		
+		String province = smsCondition.getProvince();
+		String city = smsCondition.getCity();
+		String operator = smsCondition.getOperator();
+		if (!StringUtil.isNull(province)) {
+			smsCondition.setProvinces(province.split(","));
+		}
+		if (!StringUtil.isNull(city)) {
+			smsCondition.setCitys(city.split(","));
+		}
+		if (!StringUtil.isNull(operator)) {
+			smsCondition.setOperators(operator.split(","));
 		}
 		
 		JSONObject returnJson = marketingService.getMarketeeCount(smsCondition);
@@ -251,10 +265,23 @@ public class MarketingController {
 		// 验证年龄是否符合要求
 		Integer age_max = smsCondition.getAge_max();
 		Integer age_min = smsCondition.getAge_min();
-		if (age_max < age_min) {
+		if (age_max != null && age_min != null && age_max < age_min) {
 			resultContent.setCode(Constants.CODE_ERR_REQ_PARAM);
 			resultContent.setRetMsg(Constants.CODE_ERR_REQ_PARAM_MSG + "age_max应大于等于age_min");
 			return (JSONObject)JSONObject.toJSON(resultContent);
+		}
+		
+		String province = smsCondition.getProvince();
+		String city = smsCondition.getCity();
+		String operator = smsCondition.getOperator();
+		if (!StringUtil.isNull(province)) {
+			smsCondition.setProvinces(province.split(","));
+		}
+		if (!StringUtil.isNull(city)) {
+			smsCondition.setCitys(city.split(","));
+		}
+		if (!StringUtil.isNull(operator)) {
+			smsCondition.setOperators(operator.split(","));
 		}
 		
 		JSONObject returnJson = marketingService.sendMesg(smsCondition);
@@ -262,17 +289,7 @@ public class MarketingController {
 		String retMsg = Constants.CODE_ERR_SUCCESS_MSG;
 		String code = Constants.CODE_ERR_SUCCESS;
 		
-		JSONObject retData = (JSONObject) returnJson.get("retData");
-		int score = retData.getIntValue("score");
-		
-		boolean isSuccess = false;
-		
-		if (score <= 0) {
-			retMsg = Constants.CODE_ERR_FAIL_MSG;
-			code = Constants.CODE_ERR_FAIL;
-		} else {
-			isSuccess = true;
-		}
+		boolean isSuccess = true;
 		
 		returnJson.put("retMsg", retMsg);
 		returnJson.put("code", code);
@@ -287,7 +304,6 @@ public class MarketingController {
 		SystemLog systemLog = new SystemLog();
 		// 该APIuuid为borrow.seq
 		systemLog.setUuid(returnJson.getString("seq"));
-		returnJson.remove("seq");
 		// ip地址
 		systemLog.setIpAddress(ipAddress);
 		// apiKey
@@ -299,10 +315,7 @@ public class MarketingController {
 		// localApiID
 		systemLog.setLocalApiID(Constants.API_ID_YINGZE_SCORE);
 		// 参数
-		JSONObject paramJson = new JSONObject();
-		paramJson.put("seq", returnJson.get("seq"));
-		returnJson.remove("seq");
-		systemLog.setParams(paramJson.toJSONString());
+		systemLog.setParams(JSON.toJSONString(smsCondition));
 		// 用户ID
 		systemLog.setUserID(userID);
 		// 是否成功
@@ -313,14 +326,8 @@ public class MarketingController {
 		systemLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FORMAT_SYSTEMLOG).format(new Date()));
 		// 查询用时
 		systemLog.setQueryTime(endTime - startTime);
+		systemLog.setNote1(Constants.BLANK);
 		// 返回数据
-		if (score == -90) {
-			systemLog.setReturnData(returnJson.getString("errorMessage"));
-			retData.put("score", Constants.BLANK);
-			returnJson.put("retData", retData);
-		} else {
-			systemLog.setReturnData(String.valueOf(score));
-		}
 		systemLogService.addLog(systemLog);
 		
 		returnJson.remove("errorMessage");
