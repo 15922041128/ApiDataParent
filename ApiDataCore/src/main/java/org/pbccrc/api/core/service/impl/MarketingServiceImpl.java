@@ -40,20 +40,17 @@ public class MarketingServiceImpl implements MarketingService{
 	
 	public JSONObject getMarketeeCount(SmsCondition smsCondition) throws Exception {
 		
-		String errorMessage = Constants.BLANK;
 		Integer marketeeNum = marketeeDao.getMarketeeCount(smsCondition);
 		JSONObject returnJson = new JSONObject();
 		JSONObject retData = new JSONObject();
 		retData.put("marketeeNum", marketeeNum);
 		returnJson.put("retData", retData);
-		returnJson.put("errorMessage", errorMessage);
 		returnJson.put("seq", StringUtil.createUUID());
 		return returnJson;
 	}
 	
 	@Override
 	public JSONObject sendMesg(SmsCondition smsCondition) throws Exception {
-		String errorMessage = Constants.BLANK;
 		int sendNum = smsCondition.getSendNum();
 		int batch = (int) Math.ceil(sendNum/smsCondition.getPageSize());
 		SmsWorkQueue wq = SmsUtil.wq;// 2个工作线程  
@@ -68,7 +65,6 @@ public class MarketingServiceImpl implements MarketingService{
 		
 		JSONObject returnJson = new JSONObject();
 		returnJson.put("seq", seq);
-		returnJson.put("errorMessage", errorMessage);
 		
 		
 		return returnJson;
