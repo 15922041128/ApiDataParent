@@ -166,6 +166,17 @@ public class Constants {
 	public static final String CODE_ERR_FAIL = "102001";
 	public static final String CODE_ERR_FAIL_MSG = "查询失败";
 	
+	// 参数必须为数字
+	public static final String CODE_ERR_PARAM_NUMBER = "102008";
+	public static final String CODE_ERR_PARAM_NUMBER_MSG = "参数必须为数字 : ";
+	
+	public static final String CODE_ERR_PARAM_NUMBER_ZERO = "102009";
+	public static final String CODE_ERR_PARAM_NUMBER_ZERO_MSG = "参数不能为0 : ";
+	
+	/** 企业评分code */
+	public static final String CODE_ERR_ENT_SOCE_FAIL = "103000";
+	public static final String CODE_ERR_ENT_SOCE_FAIL_MSG = "type类型不正确";
+	
 	/** 发送短信用code */
 	// 发送成功
 	public static final String CODE_ERR_SEND_MESSAGE_SUCCESS = "202000";
@@ -316,6 +327,9 @@ public class Constants {
 	public static final String API_ID_YINGZE_SCORE_PARAM = "99999999992";
 	// 查询白名单(955钱包)
 	public static final String API_ID_GET_WHITE_LIST = "99999999991";
+	
+	// 企业评分
+	public static final String API_ID_ENT_SCORE = "99999999987";
 
 	// 短信营销接口(查询符合条件营销对象数量)
 	public static final String API_ID_GET_MARKETEE_COUNT = "99999999989";
