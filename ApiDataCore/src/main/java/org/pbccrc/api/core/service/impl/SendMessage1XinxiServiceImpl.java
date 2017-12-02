@@ -28,6 +28,9 @@ import com.alibaba.fastjson.JSONObject;
 @Service
 public class SendMessage1XinxiServiceImpl implements SendMessageCoreService{
 
+	
+	public final int sendCnt = 500; 
+	
 	@Override
 	public Map<String, Object> sendMessage(String telNos, String msgContent) throws Exception {
 		
