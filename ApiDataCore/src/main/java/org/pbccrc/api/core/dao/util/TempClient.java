@@ -60,6 +60,7 @@ public class TempClient {
 //		test7();
 //		test8();
 		test9();
+//		test10();
 		
 	}
 	
@@ -294,18 +295,67 @@ public class TempClient {
 	
 	public static void test9() throws Exception {
 		
-		String apiKey = "3fdfcd7fa7bc4948820e6f5822f64e98";
-//		String apiKey = "3fdfcd7fa7bc4948820e6f5822f64e97";
+//		String apiKey = "3fdfcd7fa7bc4948820e6f5822f64e98";
+		String apiKey = "7bdca0f1aa3a4b3ea855eea80043aca6";
+//		String apiKey = "f3f5072fdfd342f79f3b52bf93c2b4ec";
+		String userID = "27";
+		
+		JSONObject json = new JSONObject();
+//		json.put("province", "天津");
+//		json.put("operator", "cu,cm");
+		json.put("productType", "xjd");
+//		json.put("age_max", "38");
+		json.put("content", "【百卡汇】恭喜您成为首批体验用户，最高「5000元」免息领 http://suo.im/4ozS65 关注微信公众号：955钱包，退回TD");
+		json.put("sendNum", "20000");
+		json.put("smsTunnel", "dinghan");
+		
+		
+//		json.put("loanInfos", getC2());
+		
+		String str = json.toJSONString();
+//		str = new BASE64Encoder().encode(json.toJSONString().getBytes("UTF-8"));
+		str = new String(new Base64().encode(json.toJSONString().getBytes("UTF-8")));
+		str = URLEncoder.encode(str);
+		
+		ClientConfig config = new DefaultClientConfig();
+		config.getProperties().put(ClientConfig.PROPERTY_CONNECT_TIMEOUT, 10 * 1000);
+		Client client = Client.create(config);
+		
+		StringBuffer url = new StringBuffer();
+		url.append("http://www.qilingyz.com:8989/ApiData/marketing/sendMesg");
+//		url.append("http://www.qilingyz.com:8989/ApiData/marketing/getMarketeeCount");
+//		url.append("http://localhost:8080/ApiData/marketing/getMarketeeCount");
+//		url.append("http://localhost:8080/ApiData/marketing/sendMesg");
+		url.append("?requestStr=" + str );
+		
+		URL u = new URL(url.toString());
+		URI uri = new URI(u.getProtocol(), u.getHost() + ":" + u.getPort(), u.getPath(), u.getQuery(), null);
+		
+		WebResource resource = client.resource(uri);
+		
+		String result = resource.accept(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE).header(
+				"apiKey", apiKey).header("userID", userID).post(String.class);
+		
+		result = StringUtil.decodeUnicode(result);
+		
+		System.out.println(result);
+	}
+	
+	public static void test10() throws Exception {
+		
+//		String apiKey = "3fdfcd7fa7bc4948820e6f5822f64e98";
+//		String apiKey = "7bdca0f1aa3a4b3ea855eea80043aca6";
+		String apiKey = "f3f5072fdfd342f79f3b52bf93c2b4ec";
 		String userID = "27";
 		
 		JSONObject json = new JSONObject();
 		json.put("province", "天津");
-		json.put("operator", "cu");
+		json.put("operator", "ct");
 		json.put("productType", "xjd");
-		json.put("age_max", "38");
-		json.put("content", "您已获得一笔2000元可用额度，还有1天过期，速领请点 http://suo.im/1gf9P6 微信公众号：955钱包.退回T【955钱包】");
+//		json.put("age_max", "38");
+		json.put("content", "【颀灵科技】您的验证码是3123");
 		json.put("sendNum", "2");
-		json.put("smsTunnel", "yunxin");
+		json.put("smsTunnel", "dinghan");
 		
 		
 		json.put("loanInfos", getC2());
@@ -320,9 +370,10 @@ public class TempClient {
 		Client client = Client.create(config);
 		
 		StringBuffer url = new StringBuffer();
-//		url.append("http://www.qilingyz.com:8989/ApiData/creditModel/getResultParam");
+//		url.append("http://www.qilingyz.com:8989/ApiData/marketing/sendMesg");
+		url.append("http://www.qilingyz.com:8989/ApiData/marketing/getMarketeeCount");
 //		url.append("http://localhost:8080/ApiData/marketing/getMarketeeCount");
-		url.append("http://localhost:8080/ApiData/marketing/sendMesg");
+//		url.append("http://localhost:8080/ApiData/marketing/sendMesg");
 		url.append("?requestStr=" + str );
 		
 		URL u = new URL(url.toString());

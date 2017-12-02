@@ -19,4 +19,9 @@ public interface MarketeeMapper {
 	 */
 	List<String> getMarketeeTelNums(SmsCondition smsCondition);
 	
+	/**
+	 * @param telNums
+	 */
+	void updateSendTime(String[] telNums);
+	
 }

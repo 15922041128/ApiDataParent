@@ -48,7 +48,7 @@ public class SendMessageYunxinServiceImpl implements SendMessageCoreService{
 		String post = httpPost(url, nvps);
 
 		Map<String, Object> returnMap = new HashMap<String, Object>();
-		
+		System.out.println("yunxin:"+post);
 		Document document = DocumentHelper.parseText(post);
 		String root = document.getRootElement().getText();
 		
@@ -99,6 +99,11 @@ public class SendMessageYunxinServiceImpl implements SendMessageCoreService{
 			}
 		}
 		return sb.toString();
+	}
+
+	@Override
+	public Integer getSendSize() {
+		return 500;
 	}
 
 }

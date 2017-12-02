@@ -39,4 +39,14 @@ public class MarketeeDao {
 		
 	}
 	
+	/**
+	 * 更新发送时间
+	 * @param map
+	 * @return
+	 */
+	public void updateSendTime(String[] telNums) {
+		marketeeMapper.updateSendTime(telNums);
+		
+	}
+	
 }

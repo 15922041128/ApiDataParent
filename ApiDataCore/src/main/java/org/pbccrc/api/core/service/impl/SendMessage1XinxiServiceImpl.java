@@ -53,7 +53,7 @@ public class SendMessage1XinxiServiceImpl implements SendMessageCoreService{
         String result = doPost(name, pwd, mobileString, contextString, sign, stime, extno);
         
         result = result.split(Constants.COMMA)[0];
-        
+        System.out.println("1xinxi:"+result);
         Map<String, Object> returnMap = new HashMap<String, Object>();
         returnMap.put("isSuccess", "0".equals(result));
         return returnMap;
@@ -169,4 +169,9 @@ public class SendMessage1XinxiServiceImpl implements SendMessageCoreService{
         }    
         return sb1.toString();    
     }
+
+	@Override
+	public Integer getSendSize() {
+		return 500;
+	}
 }

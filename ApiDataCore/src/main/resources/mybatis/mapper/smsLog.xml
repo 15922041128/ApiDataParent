@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pbccrc.api.core.mapper.SmsLogMapper">
+
+	<resultMap type="org.pbccrc.api.base.bean.SmsLog" id="smsLog">
+		<result property="userID" column="userID" />
+		<result property="uuid" column="uuid" />
+		<result property="content" column="content" />
+		<result property="numbers" column="numbers" />
+		<result property="numCount" column="numCount" />
+		<result property="params" column="params" />
+		<result property="feedBack" column="feedBack" />
+		<result property="SmsTunnel" column="SmsTunnel" />
+		<result property="sendDate" column="sendDate" />
+	</resultMap>
+	
+	<insert id="addLog" parameterType="org.pbccrc.api.base.bean.ApiLog">
+		insert into smsLog(userID, uuid, content, numbers, numCount, params, feedBack, sendDate) 
+			values( #{userID}, #{uuid}, #{content}, #{numbers}, #{numCount}, #{params}, #{feedBack}, #{SmsTunnel}, #{sendDate})
+	</insert>
+	
+	<select id="queryLog" parameterType="org.pbccrc.api.base.bean.SmsLog" resultMap="smsLog">
+		select * from smsLog
+		<where>
+			<if test="userID != null">
+				and userID = #{userID}
+			</if>
+		</where>
+	</select>
+	
+	
+</mapper>

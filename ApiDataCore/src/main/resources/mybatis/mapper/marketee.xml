@@ -5,6 +5,8 @@
 
 	<select id="getMarketeeCount" parameterType="org.pbccrc.api.base.bean.SmsCondition" resultType="java.lang.Integer">
 		select count(1) from marketee where 1=1
+			and sendTime  &lt; (Sysdate - 10)
+			and active = 1
 			<if test="province !=null and province != '' ">
             	and province in 
 				<foreach collection="provinces" item="pId" index="index"
@@ -54,6 +56,8 @@
 	<select id="getMarketeeTelNums" parameterType="org.pbccrc.api.base.bean.SmsCondition" resultType="java.lang.String">
 		select * from
 		(select telNum, rownum from marketee where 1=1
+			and sendTime  &lt; (Sysdate - 10)
+			and active = 1
 			<if test="province !=null and province != '' ">
             	and province in 
 				<foreach collection="provinces" item="pro" index="index"
@@ -99,9 +103,21 @@
 	            </if>
 	        </if>
 	        and telNum is not null
-	        and rowNum &lt;= #{pageSize}*#{pageNum})  
-	        where rownum > (#{pageNum}-1)*#{pageSize}
+	        and rowNum &lt;= #{pageSize})  
+	        where rownum > 0
        
 	</select>
+	
+	<update id="updateSendTime" parameterType="java.lang.String">
+		update marketee set sendTime = Sysdate 
+		<where>
+			telnum in 	
+			<foreach collection="telNums" item="pro" index="index"
+	                open="(" close=")" separator=",">
+	                '${pro}'
+	        </foreach>
+		</where>	
+		
+	</update>
 	
 </mapper>
