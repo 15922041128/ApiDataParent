@@ -75,6 +75,10 @@
 		
 		<dom4j.version>1.6.1</dom4j.version>
 		
+		<guava.version>19.0</guava.version>
+		
+		<lombok.version>1.16.18</lombok.version>
+		
 	</properties>
 
 	<dependencyManagement>
@@ -427,8 +431,14 @@
 			<dependency>
 			    <groupId>com.google.guava</groupId>
 			    <artifactId>guava</artifactId>
-			    <version>19.0</version>
+			    <version>${guava.version}</version>
 			</dependency>
+			
+			 <dependency>
+	            <groupId>org.projectlombok</groupId>
+	            <artifactId>lombok</artifactId>
+	            <version>${lombok.version}</version>
+	        </dependency>
 		</dependencies>
 		
 	</dependencyManagement>

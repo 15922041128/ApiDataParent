@@ -303,6 +303,8 @@ public class Constants {
 	public static final String DATA_FROM_QILINGYZ = "qilingyz";
 	// 数据来源-全联
 	public static final String DATA_FROM_QL = "ql";
+	// 数据来源-唯品会
+	public static final String DATA_FROM_VIP = "vip";
 	// 数据库类型-oracle
 //	public static final String DATABASE_TYPE_ORACLE = "oracle";
 	
@@ -337,6 +339,9 @@ public class Constants {
 	public static final String API_ID_SEND_MESG = "99999999988";
 	// 发送短信
 	public static final String API_ID_SEND_MESSAGE = "99999999990";
+	
+	// 唯品会个人风险查询接口
+	public static final String API_ID_VIP_QUERYBLACKLIST = "99999999986";
 	
 	/** productID */
 	// 页面pdf
