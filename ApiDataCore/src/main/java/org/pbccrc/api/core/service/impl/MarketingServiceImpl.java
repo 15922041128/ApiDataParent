@@ -99,7 +99,8 @@ public class MarketingServiceImpl implements MarketingService{
 	        	JSONObject object = JSONObject.parseObject(String.valueOf(RedisClient.get("sendMsgRef_" + condition.getSmsTunnel())));
 	    		String className = object.getString("className");
 	    		sendMessageCoreService = (SendMessageCoreService) Class.forName(className).newInstance();
-	    		Map<String, Object> returnMap = sendMessageCoreService.sendMessage(numString, content);
+	    		// TODO sign
+	    		Map<String, Object> returnMap = sendMessageCoreService.sendMessage(numString, content, null);
 	    		
 	            for (String telNum : telNums) {
 	            	//将发送过的号码记录缓存

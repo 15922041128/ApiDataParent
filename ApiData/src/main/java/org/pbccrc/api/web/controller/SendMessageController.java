@@ -104,6 +104,7 @@ public class SendMessageController {
 		}
 		
 		String trxNo = json.getString("trxNo");
+		String sign = json.getString("sign");
 		String type = json.getString("type");
 		// 验证type是否正确
 		String className = String.valueOf(RedisClient.get("sendMsgRef_" + type));
@@ -126,7 +127,7 @@ public class SendMessageController {
 		// 生成UUID
 		String uuid = StringUtil.createUUID();
 		
-		Map<String, Object> returnMap = sendMessageService.sendMessage(telNos, msgContent, type, trxNo, uuid, userID);
+		Map<String, Object> returnMap = sendMessageService.sendMessage(telNos, msgContent, type, sign, trxNo, uuid, userID);
 		
 		String retMsg = Constants.CODE_ERR_SEND_MESSAGE_SUCCESS;
 		String code = Constants.CODE_ERR_SEND_MESSAGE_SUCCESS_MSG;

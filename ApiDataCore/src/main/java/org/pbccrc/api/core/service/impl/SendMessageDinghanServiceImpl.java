@@ -26,7 +26,7 @@ import com.alibaba.fastjson.JSONObject;
 public class SendMessageDinghanServiceImpl implements SendMessageCoreService{
 
 	@Override
-	public Map<String, Object> sendMessage(String telNos, String msgContent) throws Exception {
+	public Map<String, Object> sendMessage(String telNos, String msgContent, String sign) throws Exception {
 		
 		JSONObject object = JSONObject.parseObject(String.valueOf(RedisClient.get("sendMsgRef_" + "dinghan")));
 		
@@ -36,7 +36,8 @@ public class SendMessageDinghanServiceImpl implements SendMessageCoreService{
 		String userCode = object.getString("userName");
 	    String userPwd = object.getString("password");
         String numbers = telNos;
-        msgContent = msgContent + "【鼎汉】";
+        sign = "【鼎汉】";
+        msgContent = msgContent + sign;
         String charset = "GBK";
 
         StringBuffer urlSb = new StringBuffer();

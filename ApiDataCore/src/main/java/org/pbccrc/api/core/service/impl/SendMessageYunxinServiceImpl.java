@@ -32,7 +32,7 @@ public class SendMessageYunxinServiceImpl implements SendMessageCoreService{
 	public final int sendCnt = 500;
 
 	@Override
-	public Map<String, Object> sendMessage(String telNos, String msgContent) throws Exception{
+	public Map<String, Object> sendMessage(String telNos, String msgContent, String sign) throws Exception{
 		
 		String url = "http://112.124.24.5/api/MsgSend.asmx/SendMsg";
 		
@@ -47,6 +47,7 @@ public class SendMessageYunxinServiceImpl implements SendMessageCoreService{
 		nvps.add(new BasicNameValuePair("Channel", object.getString("channel")));
 		nvps.add(new BasicNameValuePair("DesNo", telNos));
 		nvps.add(new BasicNameValuePair("Msg", msgContent));
+		// TODO sign
 		String post = httpPost(url, nvps);
 
 		Map<String, Object> returnMap = new HashMap<String, Object>();
