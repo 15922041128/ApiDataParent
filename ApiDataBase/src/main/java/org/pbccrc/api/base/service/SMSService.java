@@ -10,5 +10,5 @@ public interface SMSService {
 	 * @return
 	 * @throws Exception
 	 */
-	public void query(String phoneNo, String vCode) throws Exception;
+	public void send(String phoneNo, String vCode) throws Exception;
 }

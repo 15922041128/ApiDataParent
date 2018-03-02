@@ -173,7 +173,7 @@ public class MS_SMSServiceImpl implements SMSService{
 		}
 
 		@Override
-		public void query(String phoneNo, String vCode) throws Exception {
+		public void send(String phoneNo, String vCode) throws Exception {
 			StringBuilder sb = new StringBuilder();
 			sb.append("@1@=" + vCode);
 			sb.append(",@2@=1");
@@ -181,7 +181,7 @@ public class MS_SMSServiceImpl implements SMSService{
 		}
 		
 		public static void main(String[] args) throws Exception {
-			new MS_SMSServiceImpl().query("15652934884", "1231");
+			new MS_SMSServiceImpl().send("15652934884", "1231");
 		}
 
 }

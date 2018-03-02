@@ -24,7 +24,7 @@ public class SendMessageServiceImpl implements SendMessageService{
 	private ApiLogDao apiLogDao;
 
 	@Override
-	public Map<String, Object> sendMessage(String telNos, String msgContent, String type, String trxNo, String uuid, String userID) throws Exception {
+	public Map<String, Object> sendMessage(String telNos, String msgContent, String type, String sign, String trxNo, String uuid, String userID) throws Exception {
 		
 		JSONObject object = JSONObject.parseObject(String.valueOf(RedisClient.get("sendMsgRef_" + type)));
 		
@@ -32,7 +32,7 @@ public class SendMessageServiceImpl implements SendMessageService{
 		
 		sendMessageCoreService = (SendMessageCoreService) Class.forName(className).newInstance();
 		
-		Map<String, Object> returnMap = sendMessageCoreService.sendMessage(telNos, msgContent);
+		Map<String, Object> returnMap = sendMessageCoreService.sendMessage(telNos, msgContent, sign);
 		
 		
 		// 记录日志
@@ -46,6 +46,7 @@ public class SendMessageServiceImpl implements SendMessageService{
 		params.put("telNos", telNos);
 		params.put("msgContent", msgContent);
 		params.put("type", type);
+		params.put("sign", sign);
 		params.put("trxNo", trxNo);
 		apiLog.setParams(params.toJSONString());
 		apiLog.setDataFrom(Constants.DATA_FROM_LOCAL);

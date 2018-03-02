@@ -5,6 +5,6 @@ import java.util.Map;
 public interface SendMessageService {
 	
 	
-	Map<String, Object> sendMessage(String telNos, String msgContent, String type, String trxNo, String uuid, String userID) throws Exception;
+	Map<String, Object> sendMessage(String telNos, String msgContent, String type, String sign, String trxNo, String uuid, String userID) throws Exception;
 
 }

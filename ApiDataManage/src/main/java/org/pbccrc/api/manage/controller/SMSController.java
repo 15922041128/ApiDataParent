@@ -30,7 +30,7 @@ public class SMSController {
 		String vCode = StringUtil.createVCode4();
 		
 		// 将验证码发送至指定用户
-		smsService.query(phoneNo, vCode);
+		smsService.send(phoneNo, vCode);
 		
 		return vCode;
 	}

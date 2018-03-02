@@ -30,6 +30,7 @@
     <dubbo:reference id="apiLogService" interface="org.pbccrc.api.base.service.ApiLogService" lazy="false" check="false"/>
     <dubbo:reference id="dxw_smsServiceImpl" interface="org.pbccrc.api.base.service.SMSService" lazy="false" check="false"/>
     <dubbo:reference id="ms_smsServiceImpl" interface="org.pbccrc.api.base.service.SMSService" lazy="false" check="false"/>
+    <dubbo:reference id="cry_smsServiceImpl" interface="org.pbccrc.api.base.service.SMSService" lazy="false" check="false"/>
     <dubbo:reference id="productServiceImpl" interface="org.pbccrc.api.base.service.ProductService" lazy="false" check="false"/>
     <dubbo:reference id="testServiceImpl" interface="org.pbccrc.api.base.service.TestService" lazy="false" check="false"/>
     <dubbo:reference id="dataBaseServiceImpl" interface="org.pbccrc.api.base.service.DataBaseService" lazy="false" check="false"/>

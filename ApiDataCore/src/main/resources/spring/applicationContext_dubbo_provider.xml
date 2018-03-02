@@ -68,4 +68,5 @@
     <dubbo:service interface="org.pbccrc.api.base.service.SendMsgRefService" ref="sendMsgRefServiceImpl"/>
     <dubbo:service interface="org.pbccrc.api.base.service.SendMessageService" ref="sendMessageServiceImpl"/>
     <dubbo:service interface="org.pbccrc.api.base.service.MarketingService" ref="marketingServiceImpl"/>
+    <dubbo:service interface="org.pbccrc.api.base.service.ExternalService" ref="externalServiceImpl"/>
 </beans>

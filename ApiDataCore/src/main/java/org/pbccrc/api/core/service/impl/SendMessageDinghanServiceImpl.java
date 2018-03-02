@@ -27,7 +27,7 @@ public class SendMessageDinghanServiceImpl implements SendMessageCoreService{
 	
 
 	@Override
-	public Map<String, Object> sendMessage(String telNos, String msgContent) throws Exception {
+	public Map<String, Object> sendMessage(String telNos, String msgContent, String sign) throws Exception {
 		
 		JSONObject object = JSONObject.parseObject(String.valueOf(RedisClient.get("sendMsgRef_" + "dinghan")));
 		
@@ -37,6 +37,11 @@ public class SendMessageDinghanServiceImpl implements SendMessageCoreService{
 		String userCode = object.getString("userName");
 	    String userPwd = object.getString("password");
         String numbers = telNos;
+<<<<<<< HEAD
+=======
+        sign = "【鼎汉】";
+        msgContent = msgContent + sign;
+>>>>>>> ea99450892d2be5994d66f7ad823d33ac5625fec
         String charset = "GBK";
 
         StringBuffer urlSb = new StringBuffer();

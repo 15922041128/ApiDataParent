@@ -28,7 +28,7 @@ public class DXW_SMSServiceImpl implements SMSService{
 		static final String CHARSET_UTF8 = "UTF-8";
 
 		@Override
-		public void query(String phoneNo, String vCode) throws Exception {
+		public void send(String phoneNo, String vCode) throws Exception {
 			
 			/*
 			// 模板内容
@@ -118,7 +118,7 @@ public class DXW_SMSServiceImpl implements SMSService{
 		}
 		
 		public static void main(String[] args) throws Exception {
-			new DXW_SMSServiceImpl().query("15922041128", "8888");
+			new DXW_SMSServiceImpl().send("15922041128", "8888");
 		}
 
 }

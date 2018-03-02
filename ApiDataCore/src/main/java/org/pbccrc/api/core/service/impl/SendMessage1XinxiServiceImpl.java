@@ -32,7 +32,7 @@ public class SendMessage1XinxiServiceImpl implements SendMessageCoreService{
 	public final int sendCnt = 500; 
 	
 	@Override
-	public Map<String, Object> sendMessage(String telNos, String msgContent) throws Exception {
+	public Map<String, Object> sendMessage(String telNos, String msgContent, String sign) throws Exception {
 		
 		JSONObject object = JSONObject.parseObject(String.valueOf(RedisClient.get("sendMsgRef_" + "1xinxi")));
 		
@@ -47,7 +47,7 @@ public class SendMessage1XinxiServiceImpl implements SendMessageCoreService{
 		// 内容字符串
 		StringBuffer contextString = new StringBuffer(msgContent);
 		// 签名
-		String sign = contextString.substring(contextString.indexOf("【"), contextString.indexOf("】") + 1);
+//		String sign = contextString.substring(contextString.indexOf("【"), contextString.indexOf("】") + 1);
 		// 追加发送时间，可为空，为空为及时发送
 		String stime = Constants.BLANK;
 		// 扩展码，必须为数字 可为空
