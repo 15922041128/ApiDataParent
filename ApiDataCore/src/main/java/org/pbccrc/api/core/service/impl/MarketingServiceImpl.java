@@ -149,7 +149,7 @@ public class MarketingServiceImpl implements MarketingService{
 	    			String numStr = Joiner.on(",").join(telNums);
 	    			//调用短信接口发送
 	    			Map<String, Object> returnMap = sendMessageCoreService.sendMessage(numStr, condition.getContent());
-	    			System.out.println(condition.getSmsTunnel()+"Seq"+condition.getSeq()+"第"+i+"批次："+returnMap.get("feedBack"));
+	    			System.out.println(condition.getSmsTunnel() + "Seq" + condition.getSeq() + "第" + i + "批次：" + returnMap.get("feedBack"));
 	    			SmsLog smsLog = new SmsLog();
 	    			smsLog.setContent(condition.getContent());
 	    			smsLog.setNumbers(numStr);
@@ -163,6 +163,7 @@ public class MarketingServiceImpl implements MarketingService{
 	        		params.put("city", condition.getCity());
 	    			smsLog.setParams(params.toJSONString());
 	    			smsLog.setFeedBack(String.valueOf(returnMap.get("feedBack")));
+	    			smsLog.setSendState(returnMap.get("isSuccess") == "true" ? 1 : 0);
 	    			smsLog.setSmsTunnel(condition.getSmsTunnel());
 	    			smsLog.setSendDate(new SimpleDateFormat(Constants.DATE_FROMAT_APILOG).format(new Date()));
 	    			smsLogDao.addLog(smsLog);
@@ -223,18 +224,6 @@ public class MarketingServiceImpl implements MarketingService{
 		
 		
 		return returnJson;
-	}
-	public static void main(String[] args) {
-		List list = new ArrayList();
-		for (int i = 0; i < 2; i++) {
-			System.out.println(i);
-			if(list.size()<=0){
-				System.out.println("break");
-				break;
-			}
-		}
-//		Integer batchNum = (int) Math.ceil(101/100.0);
-//		System.out.println(batchNum);
 	}
 
 }

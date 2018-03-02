@@ -47,6 +47,7 @@ public class SendMessageDinghanServiceImpl implements SendMessageCoreService{
         urlSb.append("&msgContent=").append(URLEncoder.encode(msgContent, charset));
         urlSb.append("&charset=").append(charset);
 
+        Map<String, Object> returnMap = new HashMap<String, Object>();
         String fullUrlStr = urlSb.toString();
         String result = "-1";
         OutputStreamWriter out = null;
@@ -68,20 +69,14 @@ public class SendMessageDinghanServiceImpl implements SendMessageCoreService{
             reader.close();
         } catch (Exception e) {
             e.printStackTrace();
-            try {
-				out.close();
-				reader.close();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			out.close();
+			reader.close();
+			returnMap.put("isSuccess", false);
+			return returnMap;
         }
-        System.out.println("dinghan:"+result);
-        String[] feedback = result.split(Constants.COMMA);
         //返回值格式：[操作结果代码,批次,提交时间(格式为YYMMDDHHmmss)]
-        Map<String, Object> returnMap = new HashMap<String, Object>();
         returnMap.put("feedBack", result);
-        returnMap.put("batchNo", feedback[1]);
-        returnMap.put("isSuccess", "1".equals(feedback[0]));
+        returnMap.put("isSuccess", "1".equals(result.split(Constants.COMMA)));
         return returnMap;
 	}
 

@@ -55,7 +55,7 @@ public class SendMessageYunxinServiceImpl implements SendMessageCoreService{
 		String root = document.getRootElement().getText();
 		
 		String firstLetter = root.substring(0, 1);
-		
+		returnMap.put("feedBack", post);
 		if (Constants.CONNECTOR_LINE.equals(firstLetter)) {
 			returnMap.put("isSuccess", false);
 		} else {

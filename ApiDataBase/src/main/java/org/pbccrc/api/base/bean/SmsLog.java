@@ -33,6 +33,17 @@ public class SmsLog implements Serializable{
 	/** 短信平台ID */
 	private String SmsTunnel;
 	
+	/** 发送状态 */
+	private Integer sendState;
+	
+	public Integer getSendState() {
+		return sendState;
+	}
+
+	public void setSendState(Integer sendState) {
+		this.sendState = sendState;
+	}
+
 	/** 发送时间 */
 	private String sendDate;
 

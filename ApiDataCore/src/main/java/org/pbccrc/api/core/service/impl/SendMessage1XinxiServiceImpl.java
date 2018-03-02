@@ -55,10 +55,9 @@ public class SendMessage1XinxiServiceImpl implements SendMessageCoreService{
 		
         String result = doPost(name, pwd, mobileString, contextString, sign, stime, extno);
         
-        result = result.split(Constants.COMMA)[0];
-        System.out.println("1xinxi:"+result);
         Map<String, Object> returnMap = new HashMap<String, Object>();
-        returnMap.put("isSuccess", "0".equals(result));
+        returnMap.put("feedBack", result);
+        returnMap.put("isSuccess", "0".equals(result.split(Constants.COMMA)[0]));
         return returnMap;
 	}
 	
