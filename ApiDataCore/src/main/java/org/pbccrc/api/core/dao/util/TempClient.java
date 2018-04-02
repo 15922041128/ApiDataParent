@@ -53,21 +53,23 @@ public class TempClient {
 	public static void main(String[] args) throws Exception{
 //		test1();
 //		test2();
-//		test3();
+		test3();
 //		test4();
 //		test5();
 //		test6();
 //		test7();
 //		test8();
-		test9();
+//		test9();
 //		test10();
 		
 	}
 	
 	public static void test3() {
 		
-		String apiKey = "17f11ef84b714581b64d5bd38a56a0e6";
-		String userID = "27";
+		String apiKey = "255b8cdbb2654baaa72ef6081f965e95";
+		String userID = "130";
+//		String apiKey = "17f11ef84b714581b64d5bd38a56a0e6";
+//		String userID = "27";
 
 		ClientConfig config = new DefaultClientConfig();
 		config.getProperties().put(ClientConfig.PROPERTY_CONNECT_TIMEOUT, 10 * 1000);
@@ -91,9 +93,9 @@ public class TempClient {
 //		url.append("?service=m-sfzxx");
 //		url.append("&name=李晓明");
 //		url.append("&idCardNo=132529198103104417");
-		url.append("http://192.168.62.47:8080/ApiData/r/queryApi/querySfz");
-		url.append("?name=李晓明");
-		url.append("&idCardNo=132529198103104417");
+		url.append("http://www.qilingyz.com:8989/ApiData/r/queryApi/querySfz");
+		url.append("?name=张明");
+		url.append("&identifier=34B40250D79C79D04C4872304E933047");
 //		url.append("http://192.168.62.47:8080/ApiData/r/queryApi/get");
 //		url.append("?service=s-pernosql");
 //		url.append("&name=林波");

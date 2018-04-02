@@ -14,7 +14,7 @@ import org.pbccrc.api.base.service.SendMessageCoreService;
 import com.alibaba.fastjson.JSONObject;
 
 /** 短信服务接口(创瑞云实现) */
-public class SendMessageCryServiceImpl implements SendMessageCoreService {
+public class SendMessageCry1ServiceImpl implements SendMessageCoreService {
 	
 		@Override
 		public Map<String, Object> sendMessage(String phoneNos, String content, String sign) throws Exception {
@@ -24,8 +24,8 @@ public class SendMessageCryServiceImpl implements SendMessageCoreService {
 	        postMethod.getParams().setContentCharset("UTF-8");
 	        postMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,new DefaultHttpMethodRetryHandler());
 
-	        String accesskey = "1ORTEiO1JFw2obGz"; //用户开发key
-	        String accessSecret = "Dk5vlIjJnDLoUIoWfuzvGdgXsxUdOPdF"; //用户开发秘钥
+	        String accesskey = "qwjR4OiT4swyxFW3"; //用户开发key
+	        String accessSecret = "PBM2ce02YGxTcrSZwGJ1TzSx3Z4QWN5f"; //用户开发秘钥
 
 	        NameValuePair[] data = {
 	                new NameValuePair("accesskey", accesskey),
@@ -53,7 +53,7 @@ public class SendMessageCryServiceImpl implements SendMessageCoreService {
 		public static void main(String[] args) throws Exception {
 			String content = "http://www.qilingyz.cn";
 			content = "汇逛街邀您一起来逛街，搜罗全网优惠好物，购物享优惠返利，更有积分好礼等你来。http://www.qilingyz.cn";
-			new SendMessageCryServiceImpl().sendMessage("15922041128,13821699236", content, "【955钱包】");
+			new SendMessageCry1ServiceImpl().sendMessage("15922041128,13821699236", content, "【955钱包】");
 		}
 
 		@Override

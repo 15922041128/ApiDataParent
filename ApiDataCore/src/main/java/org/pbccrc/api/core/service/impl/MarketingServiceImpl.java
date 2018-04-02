@@ -70,7 +70,7 @@ public class MarketingServiceImpl implements MarketingService{
 			String className = object.getString("className");
 			sendMessageCoreService = (SendMessageCoreService) Class.forName(className).newInstance();
 			String numStr = Joiner.on(",").join(newList);
-			Map<String, Object> returnMap = sendMessageCoreService.sendMessage(numStr, smsCondition.getContent());
+			Map<String, Object> returnMap = sendMessageCoreService.sendMessage(numStr, smsCondition.getContent(),null);
 			
 			
 			SmsLog smsLog = new SmsLog();
@@ -136,7 +136,6 @@ public class MarketingServiceImpl implements MarketingService{
 	        	System.out.println(condition.getSeq()+"：短信发送任务开始执行");
 	        	//选择短信接口
 	        	JSONObject object = JSONObject.parseObject(String.valueOf(RedisClient.get("sendMsgRef_" + condition.getSmsTunnel())));
-<<<<<<< HEAD
 	        	String className = object.getString("className");
 	        	sendMessageCoreService = (SendMessageCoreService) Class.forName(className).newInstance();
 	        	//获取待发送电话号码
@@ -149,7 +148,7 @@ public class MarketingServiceImpl implements MarketingService{
 	        		}
 	    			String numStr = Joiner.on(",").join(telNums);
 	    			//调用短信接口发送
-	    			Map<String, Object> returnMap = sendMessageCoreService.sendMessage(numStr, condition.getContent());
+	    			Map<String, Object> returnMap = sendMessageCoreService.sendMessage(numStr, condition.getContent(),null);
 	    			System.out.println(condition.getSmsTunnel() + "Seq" + condition.getSeq() + "第" + i + "批次：" + returnMap.get("feedBack"));
 	    			SmsLog smsLog = new SmsLog();
 	    			smsLog.setContent(condition.getContent());
@@ -177,26 +176,6 @@ public class MarketingServiceImpl implements MarketingService{
 	        	apiLog.setUserID("短信");
 	        	apiLog.setLocalApiID(Constants.API_ID_SEND_MESSAGE);
 	        	// 参数
-=======
-	    		String className = object.getString("className");
-	    		sendMessageCoreService = (SendMessageCoreService) Class.forName(className).newInstance();
-	    		// TODO sign
-	    		Map<String, Object> returnMap = sendMessageCoreService.sendMessage(numString, content, null);
-	    		
-	            for (String telNum : telNums) {
-	            	//将发送过的号码记录缓存
-	            	RedisClient.set("marketee_" + telNum, condition.getProductType());
-	            	//设置缓存过期时间为7天
-	            	RedisClient.setExpireTime("marketee_" + telNum, 30);
-	            }
-	            // 记录日志
-	    		ApiLog apiLog = new ApiLog();
-	    		// uuid
-	    		apiLog.setUuid(condition.getSeq());
-	    		apiLog.setUserID("短信");
-	    		apiLog.setLocalApiID(Constants.API_ID_SEND_MESSAGE);
-	    		// 参数
->>>>>>> ea99450892d2be5994d66f7ad823d33ac5625fec
 	    		JSONObject params = new JSONObject();
 	        	params.put("type", JSON.toJSONString(condition));
 	        	apiLog.setParams(params.toJSONString());

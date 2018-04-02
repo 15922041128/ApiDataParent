@@ -43,7 +43,7 @@ public class SendMessageServiceImpl implements SendMessageService{
 		apiLog.setLocalApiID(Constants.API_ID_SEND_MESSAGE);
 		// 参数
 		JSONObject params = new JSONObject();
-		params.put("telNos", telNos);
+		//params.put("telNos", telNos);
 		params.put("msgContent", msgContent);
 		params.put("type", type);
 		params.put("sign", sign);

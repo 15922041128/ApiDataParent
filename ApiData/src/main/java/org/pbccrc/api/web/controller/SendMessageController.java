@@ -129,19 +129,22 @@ public class SendMessageController {
 		
 		Map<String, Object> returnMap = sendMessageService.sendMessage(telNos, msgContent, type, sign, trxNo, uuid, userID);
 		
-		String retMsg = Constants.CODE_ERR_SEND_MESSAGE_SUCCESS;
-		String code = Constants.CODE_ERR_SEND_MESSAGE_SUCCESS_MSG;
+		String retMsg = Constants.CODE_ERR_SEND_MESSAGE_SUCCESS_MSG;
+		String code = Constants.CODE_ERR_SEND_MESSAGE_SUCCESS;
 		
 		boolean isSuccess = (boolean) returnMap.get("isSuccess");
+		String responseBody = (String) returnMap.get("responseBody");
+		Integer sendNum = (Integer) returnMap.get("sendNum");
 		
 		if (!isSuccess) {
-			retMsg = Constants.CODE_ERR_SEND_MESSAGE_FAIL;
-			code = Constants.CODE_ERR_SEND_MESSAGE_FAIL_MSG;
+			retMsg = Constants.CODE_ERR_SEND_MESSAGE_FAIL_MSG + responseBody;
+			code = Constants.CODE_ERR_SEND_MESSAGE_FAIL;
 		}
 		
 		JSONObject returnJson = new JSONObject();
 		returnJson.put("retMsg", retMsg);
 		returnJson.put("code", code);
+		returnJson.put("sendNum", sendNum);
 		
 		if (isSuccess) {
 			costService.cost(userID, apiKey);
@@ -165,7 +168,7 @@ public class SendMessageController {
 		systemLog.setLocalApiID(Constants.API_ID_SEND_MESSAGE);
 		// 参数
 		JSONObject paramJson = new JSONObject();
-		paramJson.put("telNos", telNos);
+//		paramJson.put("telNos", telNos);
 		paramJson.put("msgContent", msgContent);
 		paramJson.put("trxNo", trxNo);
 		systemLog.setParams(paramJson.toJSONString());
@@ -173,6 +176,7 @@ public class SendMessageController {
 		systemLog.setUserID(userID);
 		// 是否成功
 		systemLog.setIsSuccess(String.valueOf(isSuccess));
+		systemLog.setReturnData(responseBody);
 		// 是否计费
 		systemLog.setIsCount(String.valueOf(isSuccess));
 		// 查询时间

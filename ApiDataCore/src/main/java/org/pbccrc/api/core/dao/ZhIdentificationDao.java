@@ -38,4 +38,14 @@ public class ZhIdentificationDao {
 		return mapList;
 	}
 	
+	public List<Map<String, Object>> getInnerIDByMd5(String identifier){
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("identifier", identifier.toUpperCase());
+		List<Map<String, Object>> mapList = zhIdentificationMapper.getInnerID(map);
+		if (null == mapList || mapList.size() == 0) {
+			return null;
+		}
+		return mapList;
+	}
+	
 }
