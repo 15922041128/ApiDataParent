@@ -467,7 +467,7 @@ public class EntScoreController {
 		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
 		systemLog.setProductID(relation.getString("productID"));
 		// localApiID
-		systemLog.setLocalApiID(Constants.API_ID_YINGZE_SCORE);
+		systemLog.setLocalApiID(Constants.API_ID_ENT_SCORE);
 		// 参数
 		JSONObject paramJson = new JSONObject();
 		paramJson.put("type", type);
