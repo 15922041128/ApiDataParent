@@ -27,4 +27,9 @@ public interface RelationService {
 	 * @return
 	 */
 	JSONArray getRelation(String userID);
+	
+	/**
+	 * 重置每日访问次数
+	 */
+	void resetVisitCount();
 }

@@ -123,6 +123,10 @@ public class Constants {
 	public static final String ERR_CNT = "100105";
 	public static final String RET_MSG_CNT = "查询次数达到上限";
 	
+	// 每日查询次数达到上限
+	public static final String ERR_DAY_CNT = "100112";
+	public static final String RET_MSG_DAY_CNT = "每日查询次数达到上限";
+	
 	// 服务器内部错误
 	public static final String ERR_SERVER = "100106";
 	public static final String RET_MSG_SERVER = "服务器内部错误";

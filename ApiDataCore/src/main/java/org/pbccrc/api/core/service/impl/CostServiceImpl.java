@@ -30,15 +30,25 @@ public class CostServiceImpl implements CostService {
 		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get(relationKey.toString())));
 		String costType = relation.getString("costType");
 		
+		
 		// 判断计费类型
 		if (Constants.COST_TYPE_COUNT.equals(costType)) {
 			// 按次数计费
+			// 获得剩余查询次数,-1为免费查询
 			int count = Integer.parseInt(String.valueOf(relation.get("count")));
-			// count为-1免费查询
-			if (-1 != count) {
+			
+			// 每日查询次数-1
+			int visitCount = Integer.parseInt(String.valueOf(relation.get("visitCount")));
+			relation.put("visitCount", --visitCount);
+			if (-1 == count) {
+				// -1为免费查询,不减少count直接保存
+				RedisClient.set(relationKey.toString(), relation);
+			} else {
+				// 不为-1为计次数查询,剩余查询次数-1并提交
 				relation.put("count", --count);
 				RedisClient.set(relationKey.toString(), relation);
 			}
+			
 		} else if (Constants.COST_TYPE_PRICE.equals(costType)) {
 			// 按金额计费
 			// 获取apiUser

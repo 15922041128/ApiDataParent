@@ -16,4 +16,8 @@
 			#{costType, jdbcType=INTEGER}, #{price, jdbcType=FLOAT}, #{createDate, jdbcType=VARCHAR}, #{allowIps, jdbcType=VARCHAR}, #{visitCount, jdbcType=INTEGER})
 	</insert>
 	
+	<update id="resetVisitCount">
+		update relation set visitCount = 1000
+	</update>
+	
 </mapper>

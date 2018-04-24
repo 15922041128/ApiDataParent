@@ -110,7 +110,6 @@ public class Validator {
 			return false;
 		}
 		
-		
 		// 获取计费方式
 		String costType = relation.getString("costType");
 		// 判断计费类型
@@ -122,6 +121,17 @@ public class Validator {
 				resultContent.setCode(Constants.ERR_CNT);
 				resultContent.setRetMsg(Constants.RET_MSG_CNT);
 				return false;
+			}
+			// 验证每日查询次数上限
+			String visitCountStr = relation.getString("visitCount");
+			// 验证visitCount是否为空,不为空则进行每日查询次数验证
+			if (!StringUtil.isNull(visitCountStr)) {
+				int visitCount = Integer.parseInt(relation.getString("visitCount"));
+				if (visitCount == 0) {
+					resultContent.setCode(Constants.ERR_DAY_CNT);
+					resultContent.setRetMsg(Constants.RET_MSG_DAY_CNT);
+					return false;
+				}
 			}
 		} else if (Constants.COST_TYPE_PRICE.equals(costType)) {
 			// 按金额计费
@@ -269,6 +279,17 @@ public class Validator {
 				resultContent.setRetMsg(Constants.RET_MSG_CNT);
 				return false;
 			}
+			// 验证每日查询次数上限
+			String visitCountStr = relation.getString("visitCount");
+			// 验证visitCount是否为空,不为空则进行每日查询次数验证
+			if (!StringUtil.isNull(visitCountStr)) {
+				int visitCount = Integer.parseInt(relation.getString("visitCount"));
+				if (visitCount == 0) {
+					resultContent.setCode(Constants.ERR_DAY_CNT);
+					resultContent.setRetMsg(Constants.RET_MSG_DAY_CNT);
+					return false;
+				}
+			}
 		} else if (Constants.COST_TYPE_PRICE.equals(costType)) {
 			// 按金额计费
 			// 验证余额和信用额
@@ -382,7 +403,6 @@ public class Validator {
 			return false;
 		}
 		
-		
 		// 获取计费方式
 		String costType = relation.getString("costType");
 		// 判断计费类型
@@ -394,6 +414,17 @@ public class Validator {
 				resultContent.setCode(Constants.ERR_CNT);
 				resultContent.setRetMsg(Constants.RET_MSG_CNT);
 				return false;
+			}
+			// 验证每日查询次数上限
+			String visitCountStr = relation.getString("visitCount");
+			// 验证visitCount是否为空,不为空则进行每日查询次数验证
+			if (!StringUtil.isNull(visitCountStr)) {
+				int visitCount = Integer.parseInt(relation.getString("visitCount"));
+				if (visitCount == 0) {
+					resultContent.setCode(Constants.ERR_DAY_CNT);
+					resultContent.setRetMsg(Constants.RET_MSG_DAY_CNT);
+					return false;
+				}
 			}
 		} else if (Constants.COST_TYPE_PRICE.equals(costType)) {
 			// 按金额计费
