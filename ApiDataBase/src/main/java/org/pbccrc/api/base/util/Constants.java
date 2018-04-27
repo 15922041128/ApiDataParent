@@ -309,6 +309,8 @@ public class Constants {
 	public static final String DATA_FROM_QL = "ql";
 	// 数据来源-唯品会
 	public static final String DATA_FROM_VIP = "vip";
+	// 数据来源-凭安
+	public static final String DATA_FROM_PA = "pa";
 	// 数据库类型-oracle
 //	public static final String DATABASE_TYPE_ORACLE = "oracle";
 	
@@ -346,6 +348,24 @@ public class Constants {
 	
 	// 唯品会个人风险查询接口
 	public static final String API_ID_VIP_QUERYBLACKLIST = "99999999986";
+	
+	// 凭安电话号码标记查询接口
+	public static final String API_ID_PA_PHONE_TAG = "99999999985";
+	
+	// 凭安失信被执行人查询接口
+	public static final String API_ID_PA_SHIXIN = "99999999983";
+	
+	// 凭安逾期查询接口
+	public static final String API_ID_PA_OVERDUE = "99999999982";
+	
+	// 凭安借贷查询接口
+	public static final String API_ID_PA_LOAN = "99999999981";
+	
+	// 凭安黑名单查询接口
+	public static final String API_ID_PA_BLACK_LIST = "99999999980";
+	
+	// 凭安申请人属性查询接口
+	public static final String API_ID_PA_PHKJ_MODELER_SCORE = "99999999979";
 	
 	/** productID */
 	// 页面pdf

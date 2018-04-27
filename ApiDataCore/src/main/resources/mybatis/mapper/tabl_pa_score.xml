@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pbccrc.api.core.mapper.TblPaScoreMapper">
+
+	<insert id="addPaScore" parameterType="org.pbccrc.api.base.bean.TblPaScore">
+		insert into tbl_pa_score(id, name, idCard, phone, imsi, imei, orgName, queryDate, apiQueryDate, returnValue) 
+			values(seq_tbl_pa_score.nextval, #{name}, #{idCard}, #{phone}, #{imsi}, #{imei}, #{orgName}, 
+			#{queryDate}, #{apiQueryDate}, #{returnValue})
+	</insert>
+	
+</mapper>
