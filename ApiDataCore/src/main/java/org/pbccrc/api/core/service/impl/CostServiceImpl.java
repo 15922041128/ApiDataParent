@@ -38,8 +38,8 @@ public class CostServiceImpl implements CostService {
 			int count = Integer.parseInt(String.valueOf(relation.get("count")));
 			
 			// 每日查询次数-1
-			int visitCount = Integer.parseInt(String.valueOf(relation.get("visitCount")));
-			relation.put("visitCount", --visitCount);
+			int dailyQueryCount = Integer.parseInt(String.valueOf(relation.get("dailyQueryCount")));
+			relation.put("dailyQueryCount", --dailyQueryCount);
 			if (-1 == count) {
 				// -1为免费查询,不减少count直接保存
 				RedisClient.set(relationKey.toString(), relation);

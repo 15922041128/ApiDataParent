@@ -12,5 +12,4 @@ public interface RelationMapper {
 	
 	void addRelation(Relation relation);
 	
-	void resetVisitCount();
 }

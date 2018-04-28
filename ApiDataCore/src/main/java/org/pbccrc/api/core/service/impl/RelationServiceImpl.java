@@ -82,11 +82,4 @@ public class RelationServiceImpl implements RelationService{
 		return jsonArray;
 	}
 	
-	/**
-	 * 重置每日访问次数
-	 */
-	public void resetVisitCount() {
-		relationDao.resetVisitCount();
-	}
-
 }

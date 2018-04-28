@@ -123,11 +123,11 @@ public class Validator {
 				return false;
 			}
 			// 验证每日查询次数上限
-			String visitCountStr = relation.getString("visitCount");
-			// 验证visitCount是否为空,不为空则进行每日查询次数验证
-			if (!StringUtil.isNull(visitCountStr)) {
-				int visitCount = Integer.parseInt(relation.getString("visitCount"));
-				if (visitCount == 0) {
+			String dailyQueryCountStr = relation.getString("dailyQueryCount");
+			// 验证dailyQueryCount是否为空,不为空则进行每日查询次数验证
+			if (!StringUtil.isNull(dailyQueryCountStr)) {
+				int dailyQueryCount = Integer.parseInt(relation.getString("dailyQueryCount"));
+				if (dailyQueryCount == 0) {
 					resultContent.setCode(Constants.ERR_DAY_CNT);
 					resultContent.setRetMsg(Constants.RET_MSG_DAY_CNT);
 					return false;
@@ -280,11 +280,11 @@ public class Validator {
 				return false;
 			}
 			// 验证每日查询次数上限
-			String visitCountStr = relation.getString("visitCount");
-			// 验证visitCount是否为空,不为空则进行每日查询次数验证
-			if (!StringUtil.isNull(visitCountStr)) {
-				int visitCount = Integer.parseInt(relation.getString("visitCount"));
-				if (visitCount == 0) {
+			String dailyQueryCountStr = relation.getString("dailyQueryCount");
+			// 验证dailyQueryCount是否为空,不为空则进行每日查询次数验证
+			if (!StringUtil.isNull(dailyQueryCountStr)) {
+				int dailyQueryCount = Integer.parseInt(relation.getString("dailyQueryCount"));
+				if (dailyQueryCount == 0) {
 					resultContent.setCode(Constants.ERR_DAY_CNT);
 					resultContent.setRetMsg(Constants.RET_MSG_DAY_CNT);
 					return false;
@@ -416,11 +416,11 @@ public class Validator {
 				return false;
 			}
 			// 验证每日查询次数上限
-			String visitCountStr = relation.getString("visitCount");
-			// 验证visitCount是否为空,不为空则进行每日查询次数验证
-			if (!StringUtil.isNull(visitCountStr)) {
-				int visitCount = Integer.parseInt(relation.getString("visitCount"));
-				if (visitCount == 0) {
+			String dailyQueryCountStr = relation.getString("dailyQueryCount");
+			// 验证dailyQueryCount是否为空,不为空则进行每日查询次数验证
+			if (!StringUtil.isNull(dailyQueryCountStr)) {
+				int dailyQueryCount = Integer.parseInt(relation.getString("dailyQueryCount"));
+				if (dailyQueryCount == 0) {
 					resultContent.setCode(Constants.ERR_DAY_CNT);
 					resultContent.setRetMsg(Constants.RET_MSG_DAY_CNT);
 					return false;

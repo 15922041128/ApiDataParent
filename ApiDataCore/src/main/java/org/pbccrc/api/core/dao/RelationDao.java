@@ -23,7 +23,4 @@ public class RelationDao {
 		return relation.getId();
 	}
 	
-	public void resetVisitCount() {
-		relationMapper.resetVisitCount();
-	}
 }
