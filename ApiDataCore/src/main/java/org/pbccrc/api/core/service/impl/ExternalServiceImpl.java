@@ -292,7 +292,7 @@ public class ExternalServiceImpl implements ExternalService{
 		
 		String vKey = StringUtil.string2MD5(pn_pkey + "_" + ptime + "_" + pn_pkey);
 		
-		String uid = StringUtil.string2MD5(name + idCard);
+		String uid = StringUtil.MD5Encoder(name + idCard, "utf-8");
 		
 		ClientConfig config = new DefaultClientConfig();
 		config.getProperties().put(ClientConfig.PROPERTY_CONNECT_TIMEOUT, 10 * 1000);
@@ -388,7 +388,7 @@ public class ExternalServiceImpl implements ExternalService{
 		
 		String vKey = StringUtil.string2MD5(pn_pkey + "_" + ptime + "_" + pn_pkey);
 		
-		String uid = StringUtil.string2MD5(name + idCard);
+		String uid = StringUtil.MD5Encoder(name + idCard, "utf-8");
 		
 		ClientConfig config = new DefaultClientConfig();
 		config.getProperties().put(ClientConfig.PROPERTY_CONNECT_TIMEOUT, 10 * 1000);
@@ -517,7 +517,7 @@ public class ExternalServiceImpl implements ExternalService{
 		
 		String vKey = StringUtil.string2MD5(pn_pkey + "_" + ptime + "_" + pn_pkey);
 		
-		String uid = StringUtil.string2MD5(name + idCard);
+		String uid = StringUtil.MD5Encoder(name + idCard, "utf-8");
 		
 		ClientConfig config = new DefaultClientConfig();
 		config.getProperties().put(ClientConfig.PROPERTY_CONNECT_TIMEOUT, 10 * 1000);
@@ -645,7 +645,7 @@ public class ExternalServiceImpl implements ExternalService{
 		
 		String vKey = StringUtil.string2MD5(pn_pkey + "_" + ptime + "_" + pn_pkey);
 		
-		String uid = StringUtil.string2MD5(name + idCard);
+		String uid = StringUtil.MD5Encoder(name + idCard, "utf-8");
 		
 		ClientConfig config = new DefaultClientConfig();
 		config.getProperties().put(ClientConfig.PROPERTY_CONNECT_TIMEOUT, 10 * 1000);
@@ -765,7 +765,7 @@ public class ExternalServiceImpl implements ExternalService{
 		
 		String vKey = StringUtil.string2MD5(pn_pkey + "_" + ptime + "_" + pn_pkey);
 		
-		String uid = StringUtil.string2MD5(name + idCard);
+		String uid = StringUtil.MD5Encoder(name + idCard, "utf-8");
 		
 		ClientConfig config = new DefaultClientConfig();
 		config.getProperties().put(ClientConfig.PROPERTY_CONNECT_TIMEOUT, 10 * 1000);
