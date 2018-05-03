@@ -8,4 +8,5 @@ public interface TblPaOverdueMapper {
 	
 	void addPaOverdue(TblPaOverdue tblPaOverdue);
 
+	void addPaOverdueZh(TblPaOverdue tblPaOverdue);
 }

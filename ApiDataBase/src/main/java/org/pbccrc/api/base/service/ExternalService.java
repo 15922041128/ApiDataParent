@@ -100,4 +100,21 @@ public interface ExternalService {
 	 * @throws Exception
 	 */
 	public JSONObject paPhkjModelerScore(String phone, String name, String idCard, String orgName, String imsi, String imei, String queryDate, String userId, String uuid) throws Exception;
+	
+	/**
+	 * 凭安综合查询
+	 * @param phone
+	 * @param name
+	 * @param idCard
+	 * @param orgName
+	 * @param imsi
+	 * @param imei
+	 * @param queryDate
+	 * @param userId
+	 * @param name
+	 * @param idCard
+	 * @return
+	 * @throws Exception
+	 */
+	public JSONObject paZh(String phone, String name, String idCard, String orgName, String imsi, String imei, String queryDate, String userId, String uuid) throws Exception;
 }

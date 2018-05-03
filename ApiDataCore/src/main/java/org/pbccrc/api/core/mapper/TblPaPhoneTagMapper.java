@@ -7,5 +7,7 @@ import org.springframework.stereotype.Repository;
 public interface TblPaPhoneTagMapper {
 	
 	void addPaPhoneTag(TblPaPhoneTag tblPaPhoneTag);
+	
+	void addPaPhoneTagZh(TblPaPhoneTag tblPaPhoneTag);
 
 }

@@ -16,5 +16,7 @@ public class TblPaScoreDao {
 		tblPaScoreMapper.addPaScore(tblPaScore);
 	}
 
-	
+	public void addPaScoreZh(TblPaScore tblPaScore){
+		tblPaScoreMapper.addPaScoreZh(tblPaScore);
+	}
 }

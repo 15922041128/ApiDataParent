@@ -8,4 +8,5 @@ public interface TblPaLoanMapper {
 	
 	void addPaLoan(TblPaLoan tblPaLoan);
 
+	void addPaLoanZh(TblPaLoan tblPaLoan);
 }

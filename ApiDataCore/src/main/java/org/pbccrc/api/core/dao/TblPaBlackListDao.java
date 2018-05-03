@@ -15,6 +15,10 @@ public class TblPaBlackListDao {
 	public void addPaBlackList(TblPaBlackList tblPaBlackList){
 		tblPaBlackListMapper.addPaBlackList(tblPaBlackList);
 	}
+	
+	public void addPaBlackListZh(TblPaBlackList tblPaBlackList){
+		tblPaBlackListMapper.addPaBlackListZh(tblPaBlackList);
+	}
 
 	
 }

@@ -7,5 +7,7 @@ import org.springframework.stereotype.Repository;
 public interface TblPaShixinMapper {
 	
 	void addPaShixin(TblPaShixin tblPaShixin);
+	
+	void addPaShixinZh(TblPaShixin tblPaShixin);
 
 }

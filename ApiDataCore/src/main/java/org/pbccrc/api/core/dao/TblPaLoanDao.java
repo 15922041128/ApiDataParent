@@ -16,5 +16,8 @@ public class TblPaLoanDao {
 		tblPaLoanMapper.addPaLoan(tblPaLoan);
 	}
 
+	public void addPaLoanZh(TblPaLoan tblPaLoan){
+		tblPaLoanMapper.addPaLoanZh(tblPaLoan);
+	}
 	
 }

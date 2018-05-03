@@ -367,6 +367,9 @@ public class Constants {
 	// 凭安申请人属性查询接口
 	public static final String API_ID_PA_PHKJ_MODELER_SCORE = "99999999979";
 	
+	// 凭安综合查询接口
+	public static final String API_ID_PA_ZH = "99999999978";
+	
 	/** productID */
 	// 页面pdf
 	public static final String PRODUCT_ID_PAGE_PDF = "99999999999";

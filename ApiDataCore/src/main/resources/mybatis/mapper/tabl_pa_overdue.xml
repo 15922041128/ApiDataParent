@@ -3,9 +3,9 @@
 
 <mapper namespace="org.pbccrc.api.core.mapper.TblPaOverdueMapper">
 
-	<insert id="addPaOverdue" parameterType="org.pbccrc.api.base.bean.TblPaOverdue">
-		insert into tbl_pa_overdue(id, name, idCard, phone, imsi, imei, orgName, queryDate, apiQueryDate, returnValue) 
-			values(seq_tbl_pa_overdue.nextval, #{name}, #{idCard}, #{phone}, #{imsi}, #{imei}, #{orgName}, 
+	<insert id="addPaOverdueZh" parameterType="org.pbccrc.api.base.bean.TblPaOverdue">
+		insert into tbl_pa_overdue_zh(id, name, idCard, phone, imsi, imei, orgName, queryDate, apiQueryDate, returnValue) 
+			values(seq_tbl_pa_overdue_zh.nextval, #{name}, #{idCard}, #{phone}, #{imsi}, #{imei}, #{orgName}, 
 			#{queryDate}, #{apiQueryDate}, #{returnValue})
 	</insert>
 	

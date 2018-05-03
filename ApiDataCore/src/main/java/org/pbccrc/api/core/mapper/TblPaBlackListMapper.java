@@ -7,5 +7,7 @@ import org.springframework.stereotype.Repository;
 public interface TblPaBlackListMapper {
 	
 	void addPaBlackList(TblPaBlackList tblPaBlackList);
+	
+	void addPaBlackListZh(TblPaBlackList tblPaBlackList);
 
 }

@@ -16,5 +16,7 @@ public class TblPaShixinDao {
 		tblPaShixinMapper.addPaShixin(tblPaShixin);
 	}
 
-	
+	public void addPaShixinZh(TblPaShixin tblPaShixin){
+		tblPaShixinMapper.addPaShixinZh(tblPaShixin);
+	}
 }

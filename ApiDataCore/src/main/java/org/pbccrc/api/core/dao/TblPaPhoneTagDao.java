@@ -16,5 +16,7 @@ public class TblPaPhoneTagDao {
 		tblPaPhoneTagMapper.addPaPhoneTag(tblPaPhoneTag);
 	}
 
-	
+	public void addPaPhoneTagZh(TblPaPhoneTag tblPaPhoneTag){
+		tblPaPhoneTagMapper.addPaPhoneTagZh(tblPaPhoneTag);
+	}
 }

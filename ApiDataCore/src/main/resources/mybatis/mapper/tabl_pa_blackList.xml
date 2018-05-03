@@ -9,4 +9,10 @@
 			 #{apiQueryDate}, #{returnValue})
 	</insert>
 	
+	<insert id="addPaBlackListZh" parameterType="org.pbccrc.api.base.bean.TblPaBlackList">
+		insert into tbl_pa_blacklist_zh(id, name, idCard, phone, imsi, imei, orgName, apiQueryDate, returnValue) 
+			values(seq_tbl_pa_blacklist_zh.nextval, #{name}, #{idCard}, #{phone}, #{imsi}, #{imei}, #{orgName}, 
+			 #{apiQueryDate}, #{returnValue})
+	</insert>
+	
 </mapper>

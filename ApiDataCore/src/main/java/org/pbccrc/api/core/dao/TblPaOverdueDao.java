@@ -16,5 +16,7 @@ public class TblPaOverdueDao {
 		tblPaOverdueMapper.addPaOverdue(tblPaOverdue);
 	}
 
-	
+	public void addPaOverdueZh(TblPaOverdue tblPaOverdue){
+		tblPaOverdueMapper.addPaOverdueZh(tblPaOverdue);
+	}
 }
