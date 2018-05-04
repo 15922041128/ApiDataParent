@@ -3,6 +3,11 @@
 
 <mapper namespace="org.pbccrc.api.core.mapper.TblPaPhoneTagMapper">
 
+	<insert id="addPaPhoneTag" parameterType="org.pbccrc.api.base.bean.TblPaPhoneTag">
+		insert into tbl_pa_phonetag(id, phone, apiQueryDate, returnValue) 
+			values(seq_tbl_pa_phoneTag.nextval, #{phone}, #{apiQueryDate}, #{returnValue})
+	</insert>
+	
 	<insert id="addPaPhoneTagZh" parameterType="org.pbccrc.api.base.bean.TblPaPhoneTag">
 		insert into tbl_pa_phonetag_zh(id, phone, apiQueryDate, returnValue) 
 			values(seq_tbl_pa_phoneTag_zh.nextval, #{phone}, #{apiQueryDate}, #{returnValue})
