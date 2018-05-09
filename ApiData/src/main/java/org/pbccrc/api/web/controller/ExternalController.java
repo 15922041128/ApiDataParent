@@ -59,7 +59,7 @@ public class ExternalController {
 	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/vip/webapp/queryBlackList", produces={"application/json;charset=UTF-8"})
-	public String vipQueryBlackList(String requestStr, HttpServletRequest request) throws Exception{
+	public Object vipQueryBlackList(String requestStr, HttpServletRequest request) throws Exception{
 		
 		long startTime = System.currentTimeMillis();
 		
@@ -172,8 +172,7 @@ public class ExternalController {
  		systemLog.setReturnData(resultObject.toJSONString());
  		systemLogService.addLog(systemLog);
     
-		return ((JSONObject) JSONObject.toJSON(resultContent)).toJSONString().replace("\\", "");
-		
+ 		return JSONObject.toJSON(resultContent);
 	}
 	
 	
@@ -188,7 +187,7 @@ public class ExternalController {
 	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/pa/phoneTag", produces={"application/json;charset=UTF-8"})
-	public String paPhoneTag(String requestStr, HttpServletRequest request) throws Exception{
+	public Object paPhoneTag(String requestStr, HttpServletRequest request) throws Exception{
 		
 		long startTime = System.currentTimeMillis();
 		
@@ -291,7 +290,7 @@ public class ExternalController {
  		systemLog.setReturnData(resultObject.toJSONString().replace("\\", ""));
  		systemLogService.addLog(systemLog);
     
-		return ((JSONObject) JSONObject.toJSON(resultContent)).toJSONString().replace("\\", "");
+ 		return JSONObject.toJSON(resultContent);
 	}
 	
 	/**
@@ -305,7 +304,7 @@ public class ExternalController {
 	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/pa/shixin", produces={"application/json;charset=UTF-8"})
-	public String paShixin(String requestStr, HttpServletRequest request) throws Exception {
+	public Object paShixin(String requestStr, HttpServletRequest request) throws Exception {
 	
 		long startTime = System.currentTimeMillis();
 		
@@ -416,7 +415,7 @@ public class ExternalController {
  		systemLog.setReturnData(resultObject.toJSONString().replace("\\", ""));
  		systemLogService.addLog(systemLog);
     
-		return ((JSONObject) JSONObject.toJSON(resultContent)).toJSONString().replace("\\", "");
+ 		return JSONObject.toJSON(resultContent);
 	}
 	
 	/**
@@ -430,7 +429,7 @@ public class ExternalController {
 	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/pa/overdue", produces={"application/json;charset=UTF-8"})
-	public String paOverdue(String requestStr, HttpServletRequest request) throws Exception{
+	public Object paOverdue(String requestStr, HttpServletRequest request) throws Exception{
 	
 		long startTime = System.currentTimeMillis();
 		
@@ -554,7 +553,7 @@ public class ExternalController {
  		systemLog.setReturnData(resultObject.toJSONString().replace("\\", ""));
  		systemLogService.addLog(systemLog);
     
-		return ((JSONObject) JSONObject.toJSON(resultContent)).toJSONString().replace("\\", "");
+ 		return JSONObject.toJSON(resultContent);
 	}
 	
 	/**
@@ -568,7 +567,7 @@ public class ExternalController {
 	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/pa/loan", produces={"application/json;charset=UTF-8"})
-	public String paLoan(String requestStr, HttpServletRequest request) throws Exception{
+	public Object paLoan(String requestStr, HttpServletRequest request) throws Exception{
 	
 		long startTime = System.currentTimeMillis();
 		
@@ -692,7 +691,7 @@ public class ExternalController {
  		systemLog.setReturnData(resultObject.toJSONString().replace("\\", ""));
  		systemLogService.addLog(systemLog);
     
-		return ((JSONObject) JSONObject.toJSON(resultContent)).toJSONString().replace("\\", "");
+ 		return JSONObject.toJSON(resultContent);
 	}
 	
 	/**
@@ -706,7 +705,7 @@ public class ExternalController {
 	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/pa/blackList", produces={"application/json;charset=UTF-8"})
-	public String paBlackList(String requestStr, HttpServletRequest request) throws Exception{
+	public Object paBlackList(String requestStr, HttpServletRequest request) throws Exception{
 	
 		long startTime = System.currentTimeMillis();
 		
@@ -826,7 +825,9 @@ public class ExternalController {
  		systemLog.setReturnData(resultObject.toJSONString().replace("\\", ""));
  		systemLogService.addLog(systemLog);
     
-		return ((JSONObject) JSONObject.toJSON(resultContent)).toJSONString().replace("\\", "");
+ 		System.out.println(JSONObject.toJSON(resultContent));
+ 		
+ 		return JSONObject.toJSON(resultContent);
 	}
 	
 	/**
@@ -840,7 +841,7 @@ public class ExternalController {
 	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/pa/score", produces={"application/json;charset=UTF-8"})
-	public String paPhkjModelerScore(String requestStr, HttpServletRequest request) throws Exception{
+	public Object paPhkjModelerScore(String requestStr, HttpServletRequest request) throws Exception{
 	
 		long startTime = System.currentTimeMillis();
 		
@@ -964,7 +965,7 @@ public class ExternalController {
  		systemLog.setReturnData(resultObject.toJSONString().replace("\\", ""));
  		systemLogService.addLog(systemLog);
     
-		return ((JSONObject) JSONObject.toJSON(resultContent)).toJSONString().replace("\\", "");
+ 		return JSONObject.toJSON(resultContent);
 	}
 	
 	/**
@@ -978,7 +979,7 @@ public class ExternalController {
 	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/pa/synthesize", produces={"application/json;charset=UTF-8"})
-	public String paZh(String requestStr, HttpServletRequest request) throws Exception {
+	public Object paZh(String requestStr, HttpServletRequest request) throws Exception {
 		
 		long startTime = System.currentTimeMillis();
 		
@@ -1089,6 +1090,6 @@ public class ExternalController {
  		systemLog.setReturnData(resultObject.toJSONString().replace("\\", ""));
  		systemLogService.addLog(systemLog);
  		
-		return ((JSONObject) JSONObject.toJSON(resultContent)).toJSONString().replace("\\", "");
+ 		return JSONObject.toJSON(resultContent);
 	}
 }

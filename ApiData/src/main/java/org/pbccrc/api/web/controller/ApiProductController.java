@@ -62,7 +62,7 @@ public class ApiProductController {
 	@CrossOrigin
 	@ResponseBody
 	@RequestMapping(value="/fraud", produces={"application/json;charset=UTF-8"})
-	public String fraud(String requestStr, HttpServletRequest request) throws Exception {
+	public Object fraud(String requestStr, HttpServletRequest request) throws Exception {
 		
 		
 		long startTime = System.currentTimeMillis();
@@ -157,6 +157,6 @@ public class ApiProductController {
  		systemLog.setReturnData(resultObject.toJSONString().replace("\\", ""));
  		systemLogService.addLog(systemLog);
  		
-		return ((JSONObject) JSONObject.toJSON(resultContent)).toJSONString().replace("\\", "");
+ 		return JSONObject.toJSON(resultContent);
 	}
 }
