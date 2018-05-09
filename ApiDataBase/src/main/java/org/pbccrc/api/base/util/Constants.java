@@ -370,6 +370,9 @@ public class Constants {
 	// 凭安综合查询接口
 	public static final String API_ID_PA_ZH = "99999999978";
 	
+	// 产品-反欺诈服务接口
+	public static final String API_ID_PRODUCT_ANTI_FRAUD = "99999999977";
+	
 	/** productID */
 	// 页面pdf
 	public static final String PRODUCT_ID_PAGE_PDF = "99999999999";
@@ -473,5 +476,12 @@ public class Constants {
 	public static final String OPERATOR_TYPE_QUERYALL = "4";
 	// 批量报送
 	public static final String OPERATOR_TYPE_ADDALL = "5";
+	
+	/** 调后外部参数 */
+	/** 凭安 */
+	// 凭安pname
+	public static String pn_pname = "120180424002";
+	// 凭安pkey
+	public static String pn_pkey = "4ce9548728a2aa4220af150be5bb162a";
 	
 }

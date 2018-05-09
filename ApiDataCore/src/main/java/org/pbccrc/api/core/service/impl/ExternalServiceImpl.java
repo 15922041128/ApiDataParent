@@ -50,12 +50,6 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 @Service
 public class ExternalServiceImpl implements ExternalService{
 
-	/** 凭安 */
-	// 凭安pname
-	private static String pn_pname = "120180424002";
-	// 凭安pkey
-	private static String pn_pkey = "4ce9548728a2aa4220af150be5bb162a";
-	
 	@Autowired
 	private ApiLogDao apiLogDao;
 	
@@ -211,13 +205,13 @@ public class ExternalServiceImpl implements ExternalService{
 		
 		String ptime = String.valueOf(System.currentTimeMillis());
 		
-		String vKey = StringUtil.string2MD5(pn_pkey + "_" + ptime + "_" + pn_pkey);
+		String vKey = StringUtil.string2MD5(Constants.pn_pkey + "_" + ptime + "_" + Constants.pn_pkey);
 		
 		ClientConfig config = new DefaultClientConfig();
 		config.getProperties().put(ClientConfig.PROPERTY_CONNECT_TIMEOUT, 10 * 1000);
 		Client client = Client.create(config);
 		
-		WebResource resource = client.resource("https://jrapi.pacra.cn/phonetag?pname=" + pn_pname + "&vkey=" + vKey + "&ptime=" + ptime + "&phone=" + phone);
+		WebResource resource = client.resource("https://jrapi.pacra.cn/phonetag?pname=" + Constants.pn_pname + "&vkey=" + vKey + "&ptime=" + ptime + "&phone=" + phone);
 		
 		result = resource.accept(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE).get(String.class);
 		
@@ -290,7 +284,7 @@ public class ExternalServiceImpl implements ExternalService{
 		
 		String ptime = String.valueOf(System.currentTimeMillis());
 		
-		String vKey = StringUtil.string2MD5(pn_pkey + "_" + ptime + "_" + pn_pkey);
+		String vKey = StringUtil.string2MD5(Constants.pn_pkey + "_" + ptime + "_" + Constants.pn_pkey);
 		
 		String uid = StringUtil.MD5Encoder(name + idCard, "utf-8");
 		
@@ -300,7 +294,7 @@ public class ExternalServiceImpl implements ExternalService{
 		
 		StringBuilder sb = new StringBuilder("https://jrapi.pacra.cn");
 		sb.append("/b/shixin?");
-		sb.append("pname=" + pn_pname);
+		sb.append("pname=" + Constants.pn_pname);
 		sb.append("&vkey=" + vKey);
 		sb.append("&ptime=" + ptime);
 		sb.append("&uid=" + uid);
@@ -386,7 +380,7 @@ public class ExternalServiceImpl implements ExternalService{
 		
 		String ptime = String.valueOf(System.currentTimeMillis());
 		
-		String vKey = StringUtil.string2MD5(pn_pkey + "_" + ptime + "_" + pn_pkey);
+		String vKey = StringUtil.string2MD5(Constants.pn_pkey + "_" + ptime + "_" + Constants.pn_pkey);
 		
 		String uid = StringUtil.MD5Encoder(name + idCard, "utf-8");
 		
@@ -396,7 +390,7 @@ public class ExternalServiceImpl implements ExternalService{
 		
 		StringBuilder sb = new StringBuilder("https://jrapi.pacra.cn");
 		sb.append("/b/overdueClassify?");
-		sb.append("pname=" + pn_pname);
+		sb.append("pname=" + Constants.pn_pname);
 		sb.append("&vkey=" + vKey);
 		sb.append("&ptime=" + ptime);
 		sb.append("&phone=" + phone);
@@ -515,7 +509,7 @@ public class ExternalServiceImpl implements ExternalService{
 		
 		String ptime = String.valueOf(System.currentTimeMillis());
 		
-		String vKey = StringUtil.string2MD5(pn_pkey + "_" + ptime + "_" + pn_pkey);
+		String vKey = StringUtil.string2MD5(Constants.pn_pkey + "_" + ptime + "_" + Constants.pn_pkey);
 		
 		String uid = StringUtil.MD5Encoder(name + idCard, "utf-8");
 		
@@ -525,7 +519,7 @@ public class ExternalServiceImpl implements ExternalService{
 		
 		StringBuilder sb = new StringBuilder("https://jrapi.pacra.cn");
 		sb.append("/b/loanClassify?");
-		sb.append("pname=" + pn_pname);
+		sb.append("pname=" + Constants.pn_pname);
 		sb.append("&vkey=" + vKey);
 		sb.append("&ptime=" + ptime);
 		sb.append("&phone=" + phone);
@@ -643,7 +637,7 @@ public class ExternalServiceImpl implements ExternalService{
 		
 		String ptime = String.valueOf(System.currentTimeMillis());
 		
-		String vKey = StringUtil.string2MD5(pn_pkey + "_" + ptime + "_" + pn_pkey);
+		String vKey = StringUtil.string2MD5(Constants.pn_pkey + "_" + ptime + "_" + Constants.pn_pkey);
 		
 		String uid = StringUtil.MD5Encoder(name + idCard, "utf-8");
 		
@@ -653,7 +647,7 @@ public class ExternalServiceImpl implements ExternalService{
 		
 		StringBuilder sb = new StringBuilder("https://jrapi.pacra.cn");
 		sb.append("/b/blacklist?");
-		sb.append("pname=" + pn_pname);
+		sb.append("pname=" + Constants.pn_pname);
 		sb.append("&vkey=" + vKey);
 		sb.append("&ptime=" + ptime);
 		sb.append("&phone=" + phone);
@@ -763,7 +757,7 @@ public class ExternalServiceImpl implements ExternalService{
 		
 		String ptime = String.valueOf(System.currentTimeMillis());
 		
-		String vKey = StringUtil.string2MD5(pn_pkey + "_" + ptime + "_" + pn_pkey);
+		String vKey = StringUtil.string2MD5(Constants.pn_pkey + "_" + ptime + "_" + Constants.pn_pkey);
 		
 		String uid = StringUtil.MD5Encoder(name + idCard, "utf-8");
 		
@@ -773,7 +767,7 @@ public class ExternalServiceImpl implements ExternalService{
 		
 		StringBuilder sb = new StringBuilder("https://jrapi.pacra.cn");
 		sb.append("/biz/phkjModelerScore?");
-		sb.append("pname=" + pn_pname);
+		sb.append("pname=" + Constants.pn_pname);
 		sb.append("&vkey=" + vKey);
 		sb.append("&ptime=" + ptime);
 		sb.append("&phone=" + phone);
@@ -891,7 +885,7 @@ public class ExternalServiceImpl implements ExternalService{
 		
 		// 基本调用数据初始化
 		String ptime = String.valueOf(System.currentTimeMillis());
-		String vKey = StringUtil.string2MD5(pn_pkey + "_" + ptime + "_" + pn_pkey);
+		String vKey = StringUtil.string2MD5(Constants.pn_pkey + "_" + ptime + "_" + Constants.pn_pkey);
 		String uid = StringUtil.MD5Encoder(name + idCard, "utf-8");
 		// 查询时间初始化
 		String apiQueryDate = format.format(new Date());
@@ -909,7 +903,7 @@ public class ExternalServiceImpl implements ExternalService{
         boolean isSuccess = false;
 		
 		/** 凭安电话号码查询 */
-		resource = client.resource("https://jrapi.pacra.cn/phonetag?pname=" + pn_pname + "&vkey=" + vKey + "&ptime=" + ptime + "&phone=" + phone);
+		resource = client.resource("https://jrapi.pacra.cn/phonetag?pname=" + Constants.pn_pname + "&vkey=" + vKey + "&ptime=" + ptime + "&phone=" + phone);
 		result = resource.accept(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE).get(String.class);
 		result = StringUtil.decodeUnicode(result);
 		JSONObject resultObject = (JSONObject)JSONObject.parse(result);
@@ -931,7 +925,7 @@ public class ExternalServiceImpl implements ExternalService{
         /** 凭安失信被执行人查询 */
         StringBuilder sb = new StringBuilder("https://jrapi.pacra.cn");
 		sb.append("/b/shixin?");
-		sb.append("pname=" + pn_pname);
+		sb.append("pname=" + Constants.pn_pname);
 		sb.append("&vkey=" + vKey);
 		sb.append("&ptime=" + ptime);
 		sb.append("&uid=" + uid);
@@ -964,7 +958,7 @@ public class ExternalServiceImpl implements ExternalService{
 		/** 凭安逾期查询 */
 		sb = new StringBuilder("https://jrapi.pacra.cn");
 		sb.append("/b/overdueClassify?");
-		sb.append("pname=" + pn_pname);
+		sb.append("pname=" + Constants.pn_pname);
 		sb.append("&vkey=" + vKey);
 		sb.append("&ptime=" + ptime);
 		sb.append("&phone=" + phone);
@@ -1020,7 +1014,7 @@ public class ExternalServiceImpl implements ExternalService{
         /** 凭安借贷查询 */
         sb = new StringBuilder("https://jrapi.pacra.cn");
 		sb.append("/b/loanClassify?");
-		sb.append("pname=" + pn_pname);
+		sb.append("pname=" + Constants.pn_pname);
 		sb.append("&vkey=" + vKey);
 		sb.append("&ptime=" + ptime);
 		sb.append("&phone=" + phone);
@@ -1076,7 +1070,7 @@ public class ExternalServiceImpl implements ExternalService{
         /** 凭安黑名单查询 */
         sb = new StringBuilder("https://jrapi.pacra.cn");
 		sb.append("/b/blacklist?");
-		sb.append("pname=" + pn_pname);
+		sb.append("pname=" + Constants.pn_pname);
 		sb.append("&vkey=" + vKey);
 		sb.append("&ptime=" + ptime);
 		sb.append("&phone=" + phone);
@@ -1127,7 +1121,7 @@ public class ExternalServiceImpl implements ExternalService{
         /** 凭安个人属性查询 */
         sb = new StringBuilder("https://jrapi.pacra.cn");
 		sb.append("/biz/phkjModelerScore?");
-		sb.append("pname=" + pn_pname);
+		sb.append("pname=" + Constants.pn_pname);
 		sb.append("&vkey=" + vKey);
 		sb.append("&ptime=" + ptime);
 		sb.append("&phone=" + phone);

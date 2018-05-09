@@ -5,8 +5,9 @@
 
 	<insert id="addPaBlackList" parameterType="org.pbccrc.api.base.bean.TblPaBlackList">
 		insert into tbl_pa_blacklist(id, name, idCard, phone, imsi, imei, orgName, apiQueryDate, returnValue) 
-			values(seq_tbl_pa_blacklist.nextval, #{name}, #{idCard}, #{phone}, #{imsi}, #{imei}, #{orgName}, 
-			 #{apiQueryDate}, #{returnValue})
+			values(seq_tbl_pa_blacklist.nextval, #{name}, #{idCard}, #{phone}, 
+			#{imsi, jdbcType=VARCHAR}, #{imei, jdbcType=VARCHAR}, #{orgName, jdbcType=VARCHAR}, 
+			#{apiQueryDate}, #{returnValue})
 	</insert>
 	
 	<insert id="addPaBlackListZh" parameterType="org.pbccrc.api.base.bean.TblPaBlackList">

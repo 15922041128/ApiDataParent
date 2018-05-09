@@ -5,8 +5,9 @@
 
 	<insert id="addPaScore" parameterType="org.pbccrc.api.base.bean.TblPaScore">
 		insert into tbl_pa_score(id, name, idCard, phone, imsi, imei, orgName, queryDate, apiQueryDate, returnValue) 
-			values(seq_tbl_pa_score.nextval, #{name}, #{idCard}, #{phone}, #{imsi}, #{imei}, #{orgName}, 
-			#{queryDate}, #{apiQueryDate}, #{returnValue})
+			values(seq_tbl_pa_score.nextval, #{name}, #{idCard}, #{phone}, 
+			#{imsi, jdbcType=VARCHAR}, #{imei, jdbcType=VARCHAR}, #{orgName, jdbcType=VARCHAR}, 
+			#{queryDate, jdbcType=VARCHAR}, #{apiQueryDate}, #{returnValue})
 	</insert>
 	
 	<insert id="addPaScoreZh" parameterType="org.pbccrc.api.base.bean.TblPaScore">
