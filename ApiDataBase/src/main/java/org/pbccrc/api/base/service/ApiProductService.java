@@ -15,4 +15,17 @@ public interface ApiProductService {
 	 * @throws Exception
 	 */
 	public JSONObject fraud(String phone, String name, String idCard, String userID, String uuid) throws Exception;
+	
+	/**
+	 * 信用卡申请风控
+	 * @param phone    电话号码
+	 * @param phonepassword  电话服务密码
+	 * @param name     姓名 
+	 * @param idCard   身份证号码
+	 * @param userID   用户ID
+	 * @param uuid     UUID
+	 * @return
+	 * @throws Exception
+	 */
+	public JSONObject reditCardApplyRiskControl(String phone, String phonePassword, String name, String idCard, String userID, String uuid) throws Exception;
 }

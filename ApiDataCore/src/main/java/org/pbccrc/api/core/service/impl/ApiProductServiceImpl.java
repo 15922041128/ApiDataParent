@@ -1,5 +1,7 @@
 package org.pbccrc.api.core.service.impl;
 
+import java.net.URLEncoder;
+import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,24 +11,30 @@ import java.util.Map;
 import javax.ws.rs.core.MediaType;
 
 import org.pbccrc.api.base.bean.ApiLog;
+import org.pbccrc.api.base.bean.TblHuluPhoneDetail;
 import org.pbccrc.api.base.bean.TblPaBlackList;
 import org.pbccrc.api.base.bean.TblPaLoan;
 import org.pbccrc.api.base.bean.TblPaOverdue;
 import org.pbccrc.api.base.bean.TblPaPhoneTag;
 import org.pbccrc.api.base.bean.TblPaScore;
 import org.pbccrc.api.base.bean.TblPaShixin;
+import org.pbccrc.api.base.bean.TblXzsFx006;
+import org.pbccrc.api.base.external.huludata.HuluImplementationClass;
+import org.pbccrc.api.base.external.xinzhishang.XzsImplementationClass;
 import org.pbccrc.api.base.service.ApiProductService;
 import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.base.util.StringUtil;
 import org.pbccrc.api.core.dao.ApiLogDao;
 import org.pbccrc.api.core.dao.BlackListDao;
 import org.pbccrc.api.core.dao.ScoreDao;
+import org.pbccrc.api.core.dao.TblHuluPhoneDetailDao;
 import org.pbccrc.api.core.dao.TblPaBlackListDao;
 import org.pbccrc.api.core.dao.TblPaLoanDao;
 import org.pbccrc.api.core.dao.TblPaOverdueDao;
 import org.pbccrc.api.core.dao.TblPaPhoneTagDao;
 import org.pbccrc.api.core.dao.TblPaScoreDao;
 import org.pbccrc.api.core.dao.TblPaShixinDao;
+import org.pbccrc.api.core.dao.TblXzsFx006Dao;
 import org.pbccrc.api.core.dao.ZhIdentificationDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -70,6 +78,12 @@ public class ApiProductServiceImpl implements ApiProductService {
 	
 	@Autowired
 	private ScoreDao scoreDao;
+	
+	@Autowired
+	private TblXzsFx006Dao tblXzsFx006Dao;
+	
+	@Autowired
+	private TblHuluPhoneDetailDao tblHuluPhoneDetailDao; 
 	
 	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -421,6 +435,12 @@ public class ApiProductServiceImpl implements ApiProductService {
 		return returnJson;
 	}
 	
+	/**
+	 * 反欺诈服务用
+	 * @param object
+	 * @param level
+	 * @return
+	 */
 	private int calcOverdueLevel(JSONObject object, int level) {
 		
 		JSONObject bankLoan = object.getJSONObject("bankLoan");
@@ -480,6 +500,11 @@ public class ApiProductServiceImpl implements ApiProductService {
 		return level;
 	}
 	
+	/**
+	 * 反欺诈服务用
+	 * @param level
+	 * @return
+	 */
 	private String changeLevel(int level) {
 		
 		String returnValue = Constants.BLANK;
@@ -511,6 +536,7 @@ public class ApiProductServiceImpl implements ApiProductService {
 	}
 	
 	/**
+	 * 反欺诈服务用
 	 * 无分数→71分
 	 * A →0
 	 * B C →0+原分×0.2取整
@@ -552,6 +578,7 @@ public class ApiProductServiceImpl implements ApiProductService {
 	}
 	
 	/**
+	 * 反欺诈服务用
 	 * 计算额度
 	 * 额度80→A，65~80→B，45~65~C，0~45→D
 	 * @param score
@@ -573,4 +600,97 @@ public class ApiProductServiceImpl implements ApiProductService {
 		
 		return quota;
 	}
+	
+	/**
+	 * 信用卡申请风控
+	 * @param phone    电话号码
+	 * @param phonepassword  电话服务密码
+	 * @param name     姓名 
+	 * @param idCard   身份证号码
+	 * @param userID   用户ID
+	 * @param uuid     UUID
+	 * @return
+	 * @throws Exception
+	 */
+	public JSONObject reditCardApplyRiskControl(String phone, String phonePassword, String name, String idCard, String userID, String uuid) throws Exception {
+		
+		// 查询时间初始化
+		String apiQueryDate = format.format(new Date());
+		// 返回数据初始化
+		String result = Constants.BLANK;
+		JSONObject returnObject = new JSONObject();
+		boolean isSuccess = false;
+		JSONObject resultObject = null;
+		
+		/** 1.风险涉诉 */
+		String sign =  XzsImplementationClass.getSign(name, idCard);
+		String fxResult = XzsImplementationClass.getFX006(name, idCard, sign);
+		resultObject = (JSONObject)JSONObject.parse(fxResult);
+		String resCode = resultObject.getString("resCode");
+		if ("0000".equals(resCode)) {
+			isSuccess = true;
+			// 插入数据库
+			TblXzsFx006 xzsFx006 = new TblXzsFx006();
+			xzsFx006.setIdCard(idCard);
+			xzsFx006.setName(name);
+			xzsFx006.setApiQueryDate(apiQueryDate);
+			xzsFx006.setReturnValue(resultObject.getString("data"));
+			tblXzsFx006Dao.addFx006(xzsFx006);
+			returnObject.put("fxss", resultObject.getString("data"));
+		}
+		
+		/** 电话详单 */
+		String phoneResult = HuluImplementationClass.getRawdata(name, idCard, phone, phonePassword);
+		// 判断返回结果是否正常
+		if (!StringUtil.isNull(phoneResult)) {
+			resultObject = (JSONObject)JSONObject.parse(phoneResult);
+			String code = resultObject.getString("code");
+			String code_description = resultObject.getString("code_description");
+			
+			if ("16387".equals(code) && "DATA_RAW_ACCESS_SUCCESS".equals(code_description)) {
+				isSuccess = true;
+				// 插入数据库
+				TblHuluPhoneDetail huluPhoneDetail = new TblHuluPhoneDetail();
+				huluPhoneDetail.setIdCard(idCard);
+				huluPhoneDetail.setName(name);
+				huluPhoneDetail.setPhone(phone);
+				huluPhoneDetail.setPhonePassword(phonePassword);
+				huluPhoneDetail.setApiQueryDate(apiQueryDate);
+				huluPhoneDetail.setReturnValue(resultObject.getString("data"));
+				tblHuluPhoneDetailDao.addPhoneDetail(huluPhoneDetail);
+				returnObject.put("phoneDetail", resultObject.getString("data"));
+			}
+		} 
+		
+		/** 唯品会 */
+		// TODO
+		returnObject.put("blackList", Constants.BLANK);
+		
+		JSONObject returnJson = new JSONObject();
+  		returnJson.put("result", returnObject);
+  		returnJson.put("isSuccess", isSuccess);
+  		
+  		
+  		// 记录日志
+		ApiLog apiLog = new ApiLog();
+		// uuid
+		apiLog.setUuid(uuid);
+		apiLog.setUserID(userID);
+		apiLog.setLocalApiID(Constants.API_ID_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL);
+		// 参数
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("name", name);
+		param.put("idCard", idCard);
+		param.put("phone", phone);
+		apiLog.setParams(JSON.toJSONString(param));
+		apiLog.setDataFrom(Constants.DATA_FROM_HULU 
+				+ Constants.COMMA + Constants.DATA_FROM_XINZHISHANG 
+				+ Constants.COMMA + Constants.DATA_FROM_VIP);
+		apiLog.setIsSuccess(String.valueOf(isSuccess));
+		apiLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FROMAT_APILOG).format(new Date()));
+		apiLogDao.addLog(apiLog);
+  		
+		return returnJson;
+	}
+	
 }

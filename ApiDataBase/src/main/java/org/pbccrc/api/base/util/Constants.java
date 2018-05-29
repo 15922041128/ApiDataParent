@@ -311,6 +311,10 @@ public class Constants {
 	public static final String DATA_FROM_VIP = "vip";
 	// 数据来源-凭安
 	public static final String DATA_FROM_PA = "pa";
+	// 数据来源-葫芦数据
+	public static final String DATA_FROM_HULU = "hulu";
+	// 数据来源-信智上
+	public static final String DATA_FROM_XINZHISHANG = "xinzhishang";
 	// 数据库类型-oracle
 //	public static final String DATABASE_TYPE_ORACLE = "oracle";
 	
@@ -372,6 +376,9 @@ public class Constants {
 	
 	// 产品-反欺诈服务接口
 	public static final String API_ID_PRODUCT_ANTI_FRAUD = "99999999977";
+	
+	// 产品-信用卡申请风控接口
+	public static final String API_ID_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL = "99999999976";
 	
 	/** productID */
 	// 页面pdf
