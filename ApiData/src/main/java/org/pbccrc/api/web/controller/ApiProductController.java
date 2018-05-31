@@ -170,14 +170,168 @@ public class ApiProductController {
 	@GET
 	@CrossOrigin
 	@ResponseBody
-	@RequestMapping(value="/getPhonePassword", produces={"application/json;charset=UTF-8"})
-	public Object getPhonePassword(String requestStr, HttpServletRequest request) throws Exception {
+	@RequestMapping(value="/rcarc_getDynamicCode", produces={"application/json;charset=UTF-8"})
+	public Object getDynamicCode(String requestStr, HttpServletRequest request) throws Exception {
 		
-		return null;
+		long startTime = System.currentTimeMillis();
+		
+		ResultContent resultContent = new ResultContent();
+		resultContent.setCode(Constants.CODE_ERR_SUCCESS);
+		resultContent.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);
+		
+		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
+		
+		// 获取ip地址
+		String ipAddress = SystemUtil.getIpAddress(request);
+		// 获取apiKey
+		String apiKey = request.getHeader(Constants.HEAD_APIKEY);
+		// 获得用ID
+		String userID = request.getHeader(Constants.HEAD_USER_ID);
+		
+		JSONObject json = null;
+		// 验证json格式
+		try {
+			json = JSONObject.parseObject(requestStr);
+		} catch (Exception e) {
+			resultContent.setCode(Constants.CODE_ERR_PARAM_FORMAT);
+			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_FORMAT_MSG);
+			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
+		}
+		
+		String phone = json.getString("phone");
+		String name = json.getString("name");
+		String idCard = json.getString("idCard");
+		
+		JSONObject resultObject = apiProductService.getDynamicCode(phone, name, idCard);
+		
+		resultContent.setRetData(resultObject);
+		
+		long endTime = System.currentTimeMillis();
+        
+        // 记录日志
+ 		SystemLog systemLog = new SystemLog();
+ 		// uuid
+ 		systemLog.setUuid(Constants.BLANK);
+ 		// ip地址
+ 		systemLog.setIpAddress(ipAddress);
+ 		// apiKey
+ 		systemLog.setApiKey(apiKey);
+ 		// 产品ID
+ 		// 从缓存中获取relation对象
+ 		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
+ 		systemLog.setProductID(relation.getString("productID"));
+ 		// localApiID
+ 		systemLog.setLocalApiID(Constants.API_ID_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL_GET_CODE);
+ 		// 参数
+ 		Map<String, String> param = new HashMap<String, String>();
+ 		param.put("phone", phone);
+		param.put("name", name);
+		param.put("idCard", idCard);
+ 		systemLog.setParams(JSON.toJSONString(param));
+ 		// 用户ID
+ 		systemLog.setUserID(userID);
+ 		// 是否成功
+ 		systemLog.setIsSuccess("true");
+ 		// 是否计费
+ 		systemLog.setIsCount("false");
+ 		// 查询时间
+ 		systemLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FORMAT_SYSTEMLOG).format(new Date()));
+ 		// 查询用时
+ 		systemLog.setQueryTime(endTime - startTime);
+ 		// 返回数据
+ 		systemLog.setReturnData(resultObject.toJSONString().replace("\\", ""));
+ 		systemLogService.addLog(systemLog);
+		
+		return JSONObject.toJSON(resultContent);
 	}
 	
 	/**
-	 * step2-信用卡申请风控
+	 * step2-重置密码
+	 * @param requestStr
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@GET
+	@CrossOrigin
+	@ResponseBody
+	@RequestMapping(value="/rcarc_resetPassword", produces={"application/json;charset=UTF-8"})
+	public Object resetPassword(String requestStr, HttpServletRequest request) throws Exception {
+		
+		long startTime = System.currentTimeMillis();
+		
+		ResultContent resultContent = new ResultContent();
+		resultContent.setCode(Constants.CODE_ERR_SUCCESS);
+		resultContent.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);
+		
+		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
+		
+		// 获取ip地址
+		String ipAddress = SystemUtil.getIpAddress(request);
+		// 获取apiKey
+		String apiKey = request.getHeader(Constants.HEAD_APIKEY);
+		// 获得用ID
+		String userID = request.getHeader(Constants.HEAD_USER_ID);
+		
+		JSONObject json = null;
+		// 验证json格式
+		try {
+			json = JSONObject.parseObject(requestStr);
+		} catch (Exception e) {
+			resultContent.setCode(Constants.CODE_ERR_PARAM_FORMAT);
+			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_FORMAT_MSG);
+			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
+		}
+		
+		String token = json.getString("token");
+		String password = json.getString("password");
+		String captcha = json.getString("captcha");
+		
+		JSONObject resultObject = apiProductService.resetPassword(token, password, captcha);
+		
+		resultContent.setRetData(resultObject);
+		
+		long endTime = System.currentTimeMillis();
+        
+        // 记录日志
+ 		SystemLog systemLog = new SystemLog();
+ 		// uuid
+ 		systemLog.setUuid(Constants.BLANK);
+ 		// ip地址
+ 		systemLog.setIpAddress(ipAddress);
+ 		// apiKey
+ 		systemLog.setApiKey(apiKey);
+ 		// 产品ID
+ 		// 从缓存中获取relation对象
+ 		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
+ 		systemLog.setProductID(relation.getString("productID"));
+ 		// localApiID
+ 		systemLog.setLocalApiID(Constants.API_ID_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL_RESET_PASSWORD);
+ 		// 参数
+ 		Map<String, String> param = new HashMap<String, String>();
+ 		param.put("token", token);
+		param.put("password", password);
+		param.put("captcha", captcha);
+ 		systemLog.setParams(JSON.toJSONString(param));
+ 		// 用户ID
+ 		systemLog.setUserID(userID);
+ 		// 是否成功
+ 		systemLog.setIsSuccess(resultObject.getString("isSuccess"));
+ 		// 是否计费
+ 		systemLog.setIsCount("false");
+ 		// 查询时间
+ 		systemLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FORMAT_SYSTEMLOG).format(new Date()));
+ 		// 查询用时
+ 		systemLog.setQueryTime(endTime - startTime);
+ 		// 返回数据
+ 		systemLog.setReturnData(resultObject.toJSONString().replace("\\", ""));
+ 		systemLogService.addLog(systemLog);
+		
+		return JSONObject.toJSON(resultContent);
+	}
+	
+	/**
+	 * step3-信用卡申请风控
 	 * @param requestStr
 	 * @param request
 	 * @return

@@ -28,4 +28,24 @@ public interface ApiProductService {
 	 * @throws Exception
 	 */
 	public JSONObject reditCardApplyRiskControl(String phone, String phonePassword, String name, String idCard, String userID, String uuid) throws Exception;
+	
+	/**
+	 * 获取动态码(信用卡申请风控-电话详情用)
+	 * @param phone    电话号码
+	 * @param name     姓名 
+	 * @param idCard   身份证号码
+	 * @return
+	 * @throws Exception
+	 */
+	public JSONObject getDynamicCode(String phone, String name, String idCard) throws Exception;
+	
+	/**
+	 * 重置密码(信用卡申请风控-电话详情用)
+	 * @param token     获取动态码时返回的token
+	 * @param password  要重置的密码 
+	 * @param captcha   动态码
+	 * @return
+	 * @throws Exception
+	 */
+	public JSONObject resetPassword(String token, String password, String captcha) throws Exception;
 }

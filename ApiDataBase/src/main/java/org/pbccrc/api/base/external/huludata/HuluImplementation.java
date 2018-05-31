@@ -12,7 +12,7 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 
-public class HuluImplementationClass {
+public class HuluImplementation {
 	
 	// 【运营商数据源采集接口】和 【主动获取原始数据和报告接口】
 	private static String companyAccount = "xlk_CRAWLER";
@@ -41,10 +41,10 @@ public class HuluImplementationClass {
 		
 		// 【运营商数据源采集接口】2.2提交登陆
 		// 556750为15922041128服务密码
-		collect(collectToken, "556750", null);
+		collect(collectToken, "556750", null, null);
 		
 		// 【运营商数据源采集接口】2.3 提交短信验证码
-//		collect(collectToken, null, "695171");
+//		collect(collectToken, null, "695171", null);
 		
 		/** 【主动获取原始数据和报告接口】部分 */
 		// 【主动获取原始数据和报告接口】2.1获取数据令牌access_token接口
@@ -58,7 +58,7 @@ public class HuluImplementationClass {
 	}
 	
 	/** service-获取动态码 */
-	public static String getDynamicCode(String name, String idCard, String phone) {
+	public static String service_getDynamicCode(String name, String idCard, String phone) {
 		
 		/** 【运营商数据源采集接口】部分 */
 		// 【运营商数据源采集接口】2.1获取token
@@ -70,8 +70,19 @@ public class HuluImplementationClass {
 		return collectToken;
 	}
 	
+	/**
+	 * service-重置密码
+	 * @param token      service-获取动态码返回的token
+	 * @param password   要修改的密码
+	 * @param captcha    手机动态验证码
+	 * @return
+	 */
+	public static String service_resetPassword(String token, String password, String captcha) {
+		return resetPassword(token, password, captcha);
+	}
+	
 	/** service-获取原始数据 */
-	public static String getRawdata(String name, String idCard, String phone, String phonePassword) throws Exception {
+	public static String service_getRawdata(String name, String idCard, String phone, String phonePassword) throws Exception {
 		
 		/** 【运营商数据源采集接口】部分 */
 		// 【运营商数据源采集接口】2.1获取token
@@ -82,7 +93,7 @@ public class HuluImplementationClass {
 		}
 		
 		// 【运营商数据源采集接口】2.2提交登陆
-		collect(collectToken, phonePassword, null);
+		collect(collectToken, phonePassword, null, null);
 		
 		/** 【主动获取原始数据和报告接口】部分 */
 		// 【主动获取原始数据和报告接口】2.1获取数据令牌access_token接口
@@ -135,8 +146,9 @@ public class HuluImplementationClass {
 	// 【运营商数据源采集接口】
 	// 2.2提交登陆
 	// 2.3提交短信验证码
-	// 当password不为空时为2.2,当captcha不为空时为2.3
-	private static void collect(String collectToken, String password, String captcha) {
+	// 2.4提交查询密码
+	// 当password不为空时为2.2,当captcha不为空时为2.3,当queryPassword不为空时为2.4
+	private static void collect(String collectToken, String password, String captcha, String queryPassword) {
 		
 		ClientConfig config = new DefaultClientConfig();
 		config.getProperties().put(ClientConfig.PROPERTY_CONNECT_TIMEOUT, 10 * 1000);
@@ -148,9 +160,12 @@ public class HuluImplementationClass {
         params.put("token", collectToken);
         if (null != password) {
         	params.put("password", password);
-        } 
+        }
         if (null != captcha) {
         	params.put("captcha", captcha);
+        }
+        if (null != queryPassword) {
+        	params.put("query_password", queryPassword);
         }
         
 		WebResource resource = client.resource(url);
@@ -162,8 +177,11 @@ public class HuluImplementationClass {
 	
 	// 【运营商数据源采集接口】
 	// 3.1 申请重置密码
-	// 3.2 重置密码 
-	// 当password和captcha不为空时为3.2,为空为3.1
+	// 3.2 重置密码申请
+	// 3.3 重置密码
+	// 当password和captcha均为空时为3.1
+	// 当password和captcha均不为空时为3.2
+	// 当password为空,captcha不为空时为3.3
 	private static String resetPassword(String collectToken, String password, String captcha) {
 		
 		ClientConfig config = new DefaultClientConfig();
@@ -177,8 +195,12 @@ public class HuluImplementationClass {
         
         // 判断密码和动态码是否为空
         if (null != password && null != captcha) {
-        	 params.put("password", password);
-             params.put("captcha", captcha);
+        	// 3.2
+        	params.put("password", password);
+            params.put("captcha", captcha);
+        } else if (null == password && null!= captcha) {
+       	 	// 3.3
+       	 	params.put("captcha", captcha);
         }
         
 		WebResource resource = client.resource(url);

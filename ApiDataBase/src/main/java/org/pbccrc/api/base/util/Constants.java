@@ -380,6 +380,12 @@ public class Constants {
 	// 产品-信用卡申请风控接口
 	public static final String API_ID_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL = "99999999976";
 	
+	// 产品-信用卡申请风控接口-获取动态码
+	public static final String API_ID_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL_GET_CODE = "99999999975";
+		
+	// 产品-信用卡申请风控接口-充值密码
+	public static final String API_ID_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL_RESET_PASSWORD = "99999999974";
+	
 	/** productID */
 	// 页面pdf
 	public static final String PRODUCT_ID_PAGE_PDF = "99999999999";

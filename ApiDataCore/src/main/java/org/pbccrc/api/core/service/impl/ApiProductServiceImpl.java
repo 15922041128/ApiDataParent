@@ -1,7 +1,5 @@
 package org.pbccrc.api.core.service.impl;
 
-import java.net.URLEncoder;
-import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,8 +17,8 @@ import org.pbccrc.api.base.bean.TblPaPhoneTag;
 import org.pbccrc.api.base.bean.TblPaScore;
 import org.pbccrc.api.base.bean.TblPaShixin;
 import org.pbccrc.api.base.bean.TblXzsFx006;
-import org.pbccrc.api.base.external.huludata.HuluImplementationClass;
-import org.pbccrc.api.base.external.xinzhishang.XzsImplementationClass;
+import org.pbccrc.api.base.external.huludata.HuluImplementation;
+import org.pbccrc.api.base.external.xinzhishang.XzsImplementation;
 import org.pbccrc.api.base.service.ApiProductService;
 import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.base.util.StringUtil;
@@ -617,14 +615,13 @@ public class ApiProductServiceImpl implements ApiProductService {
 		// 查询时间初始化
 		String apiQueryDate = format.format(new Date());
 		// 返回数据初始化
-		String result = Constants.BLANK;
 		JSONObject returnObject = new JSONObject();
 		boolean isSuccess = false;
 		JSONObject resultObject = null;
 		
 		/** 1.风险涉诉 */
-		String sign =  XzsImplementationClass.getSign(name, idCard);
-		String fxResult = XzsImplementationClass.getFX006(name, idCard, sign);
+		String sign =  XzsImplementation.getSign(name, idCard);
+		String fxResult = XzsImplementation.getFX006(name, idCard, sign);
 		resultObject = (JSONObject)JSONObject.parse(fxResult);
 		String resCode = resultObject.getString("resCode");
 		if ("0000".equals(resCode)) {
@@ -640,7 +637,7 @@ public class ApiProductServiceImpl implements ApiProductService {
 		}
 		
 		/** 电话详单 */
-		String phoneResult = HuluImplementationClass.getRawdata(name, idCard, phone, phonePassword);
+		String phoneResult = HuluImplementation.service_getRawdata(name, idCard, phone, phonePassword);
 		// 判断返回结果是否正常
 		if (!StringUtil.isNull(phoneResult)) {
 			resultObject = (JSONObject)JSONObject.parse(phoneResult);
@@ -691,6 +688,51 @@ public class ApiProductServiceImpl implements ApiProductService {
 		apiLogDao.addLog(apiLog);
   		
 		return returnJson;
+	}
+	
+	/**
+	 * 获取动态码(信用卡申请风控-电话详情用)
+	 * @param phone    电话号码
+	 * @param name     姓名 
+	 * @param idCard   身份证号码
+	 * @return
+	 * @throws Exception
+	 */
+	public JSONObject getDynamicCode(String phone, String name, String idCard) throws Exception {
+	
+		String token = HuluImplementation.service_getDynamicCode(name, idCard, phone);
+		
+		JSONObject object = new JSONObject();
+		object.put("token", token);
+		
+		return object;
+	}
+	
+	/**
+	 * 重置密码(信用卡申请风控-电话详情用)
+	 * @param token     获取动态码时返回的token
+	 * @param password  要重置的密码 
+	 * @param captcha   动态码
+	 * @return
+	 * @throws Exception
+	 */
+	public JSONObject resetPassword(String token, String password, String captcha) throws Exception {
+	
+		String result = HuluImplementation.service_resetPassword(token, password, captcha);
+		
+		JSONObject resultObject = JSON.parseObject(result);
+		
+		String code_description = resultObject.getString("code_description");
+		
+		JSONObject object = new JSONObject();
+		
+		if ("RESET_PASSWORD_SUCCESS".equals(code_description)) {
+			object.put("isSuccess", true);
+		} else {
+			object.put("isSuccess", false);
+		}
+		
+		return object;
 	}
 	
 }
