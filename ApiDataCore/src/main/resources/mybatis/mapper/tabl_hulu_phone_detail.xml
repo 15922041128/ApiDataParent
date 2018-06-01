@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pbccrc.api.core.mapper.TblHuluPhoneDetailMapper">
+
+	<insert id="addPhoneDetail" parameterType="org.pbccrc.api.base.bean.TblHuluPhoneDetail">
+		insert into tbl_hulu_phone_detail(id, name, idCard, phone, phonePassword, apiQueryDate, returnValue) 
+			values(seq_tbl_hulu_phone_detail.nextval, #{name}, #{idCard}, #{phone}, 
+			#{phonePassword}, #{apiQueryDate}, #{returnValue,jdbcType=CLOB})
+	</insert>
+
+</mapper>

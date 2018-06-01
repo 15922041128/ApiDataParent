@@ -27,4 +27,5 @@ public interface RelationService {
 	 * @return
 	 */
 	JSONArray getRelation(String userID);
+	
 }

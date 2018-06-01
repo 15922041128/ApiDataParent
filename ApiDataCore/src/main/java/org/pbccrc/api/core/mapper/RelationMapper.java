@@ -11,4 +11,5 @@ public interface RelationMapper {
 	List<Relation> queryAll();
 	
 	void addRelation(Relation relation);
+	
 }

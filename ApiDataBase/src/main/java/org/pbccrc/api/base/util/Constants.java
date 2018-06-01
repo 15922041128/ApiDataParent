@@ -123,6 +123,10 @@ public class Constants {
 	public static final String ERR_CNT = "100105";
 	public static final String RET_MSG_CNT = "查询次数达到上限";
 	
+	// 每日查询次数达到上限
+	public static final String ERR_DAY_CNT = "100112";
+	public static final String RET_MSG_DAY_CNT = "每日查询次数达到上限";
+	
 	// 服务器内部错误
 	public static final String ERR_SERVER = "100106";
 	public static final String RET_MSG_SERVER = "服务器内部错误";
@@ -305,6 +309,12 @@ public class Constants {
 	public static final String DATA_FROM_QL = "ql";
 	// 数据来源-唯品会
 	public static final String DATA_FROM_VIP = "vip";
+	// 数据来源-凭安
+	public static final String DATA_FROM_PA = "pa";
+	// 数据来源-葫芦数据
+	public static final String DATA_FROM_HULU = "hulu";
+	// 数据来源-信智上
+	public static final String DATA_FROM_XINZHISHANG = "xinzhishang";
 	// 数据库类型-oracle
 //	public static final String DATABASE_TYPE_ORACLE = "oracle";
 	
@@ -342,6 +352,39 @@ public class Constants {
 	
 	// 唯品会个人风险查询接口
 	public static final String API_ID_VIP_QUERYBLACKLIST = "99999999986";
+	
+	// 凭安电话号码标记查询接口
+	public static final String API_ID_PA_PHONE_TAG = "99999999985";
+	
+	// 凭安失信被执行人查询接口
+	public static final String API_ID_PA_SHIXIN = "99999999983";
+	
+	// 凭安逾期查询接口
+	public static final String API_ID_PA_OVERDUE = "99999999982";
+	
+	// 凭安借贷查询接口
+	public static final String API_ID_PA_LOAN = "99999999981";
+	
+	// 凭安黑名单查询接口
+	public static final String API_ID_PA_BLACK_LIST = "99999999980";
+	
+	// 凭安申请人属性查询接口
+	public static final String API_ID_PA_PHKJ_MODELER_SCORE = "99999999979";
+	
+	// 凭安综合查询接口
+	public static final String API_ID_PA_ZH = "99999999978";
+	
+	// 产品-反欺诈服务接口
+	public static final String API_ID_PRODUCT_ANTI_FRAUD = "99999999977";
+	
+	// 产品-信用卡申请风控接口
+	public static final String API_ID_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL = "99999999976";
+	
+	// 产品-信用卡申请风控接口-获取动态码
+	public static final String API_ID_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL_GET_CODE = "99999999975";
+		
+	// 产品-信用卡申请风控接口-充值密码
+	public static final String API_ID_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL_RESET_PASSWORD = "99999999974";
 	
 	/** productID */
 	// 页面pdf
@@ -446,5 +489,12 @@ public class Constants {
 	public static final String OPERATOR_TYPE_QUERYALL = "4";
 	// 批量报送
 	public static final String OPERATOR_TYPE_ADDALL = "5";
+	
+	/** 调后外部参数 */
+	/** 凭安 */
+	// 凭安pname
+	public static String pn_pname = "120180424002";
+	// 凭安pkey
+	public static String pn_pkey = "4ce9548728a2aa4220af150be5bb162a";
 	
 }

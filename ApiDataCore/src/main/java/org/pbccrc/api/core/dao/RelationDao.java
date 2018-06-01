@@ -22,4 +22,5 @@ public class RelationDao {
 		relationMapper.addRelation(relation);
 		return relation.getId();
 	}
+	
 }

@@ -65,10 +65,10 @@ public class SendMessageDinghanServiceImpl implements SendMessageCoreService{
 	
 	private  Map<String, Object> send(String telNos, String msgContent, String sign) throws IOException{
 		String host = "112.74.179.106:8080";
-//		String userCode = "xzs001";
-//		String userPwd = "xzs001cxx";
 		String userCode = "lingxiao001";
 		String userPwd = "lingxiao001";
+//		String userCode = "xzs001";
+//		String userPwd = "xzs001cxx";
 //		String userCode = object.getString("userName");
 //	    String userPwd = object.getString("password");
         String numbers = telNos;

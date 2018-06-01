@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pbccrc.api.core.mapper.TblXzsFx006Mapper">
+
+	<insert id="addFx006" parameterType="org.pbccrc.api.base.bean.TblXzsFx006">
+		insert into TBL_XZS_FX006(id, name, idCard, apiQueryDate, returnValue) 
+			values(seq_tbl_xzs_fx006.nextval, #{name}, #{idCard}, #{apiQueryDate}, #{returnValue,jdbcType=CLOB})
+	</insert>
+
+</mapper>

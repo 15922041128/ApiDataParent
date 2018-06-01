@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pbccrc.api.core.mapper.TblPaLoanMapper">
+
+	<insert id="addPaLoan" parameterType="org.pbccrc.api.base.bean.TblPaLoan">
+		insert into tbl_pa_loan(id, name, idCard, phone, imsi, imei, orgName, queryDate, apiQueryDate, returnValue) 
+			values(seq_tbl_pa_loan.nextval, #{name}, #{idCard}, #{phone}, 
+			#{imsi, jdbcType=VARCHAR}, #{imei, jdbcType=VARCHAR}, #{orgName, jdbcType=VARCHAR}, 
+			#{queryDate, jdbcType=VARCHAR}, #{apiQueryDate}, #{returnValue})
+	</insert>
+
+	<insert id="addPaLoanZh" parameterType="org.pbccrc.api.base.bean.TblPaLoan">
+		insert into tbl_pa_loan_zh(id, name, idCard, phone, imsi, imei, orgName, queryDate, apiQueryDate, returnValue) 
+			values(seq_tbl_pa_loan_zh.nextval, #{name}, #{idCard}, #{phone}, #{imsi}, #{imei}, #{orgName}, 
+			#{queryDate}, #{apiQueryDate}, #{returnValue})
+	</insert>
+	
+</mapper>

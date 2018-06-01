@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pbccrc.api.core.mapper.TblPaBlackListMapper">
+
+	<insert id="addPaBlackList" parameterType="org.pbccrc.api.base.bean.TblPaBlackList">
+		insert into tbl_pa_blacklist(id, name, idCard, phone, imsi, imei, orgName, apiQueryDate, returnValue) 
+			values(seq_tbl_pa_blacklist.nextval, #{name}, #{idCard}, #{phone}, 
+			#{imsi, jdbcType=VARCHAR}, #{imei, jdbcType=VARCHAR}, #{orgName, jdbcType=VARCHAR}, 
+			#{apiQueryDate}, #{returnValue})
+	</insert>
+	
+	<insert id="addPaBlackListZh" parameterType="org.pbccrc.api.base.bean.TblPaBlackList">
+		insert into tbl_pa_blacklist_zh(id, name, idCard, phone, imsi, imei, orgName, apiQueryDate, returnValue) 
+			values(seq_tbl_pa_blacklist_zh.nextval, #{name}, #{idCard}, #{phone}, #{imsi}, #{imei}, #{orgName}, 
+			 #{apiQueryDate}, #{returnValue})
+	</insert>
+	
+</mapper>

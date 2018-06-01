@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pbccrc.api.core.mapper.TblPaShixinMapper">
+
+	<insert id="addPaShixin" parameterType="org.pbccrc.api.base.bean.TblPaShixin">
+		insert into tbl_pa_shixin(id, name, idCard, apiQueryDate, returnValue) 
+			values(seq_tbl_pa_shixin.nextval, #{name}, #{idCard}, #{apiQueryDate}, #{returnValue})
+	</insert>
+	
+	<insert id="addPaShixinZh" parameterType="org.pbccrc.api.base.bean.TblPaShixin">
+		insert into tbl_pa_shixin_zh(id, name, idCard, apiQueryDate, returnValue) 
+			values(seq_tbl_pa_shixin_zh.nextval, #{name}, #{idCard}, #{apiQueryDate}, #{returnValue})
+	</insert>
+	
+</mapper>
