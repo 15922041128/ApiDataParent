@@ -10,6 +10,7 @@ import org.pbccrc.api.base.bean.ProductType;
 import org.pbccrc.api.base.service.ProductService;
 import org.pbccrc.api.base.service.ProductTypeService;
 import org.pbccrc.api.base.util.Constants;
+import org.pbccrc.api.base.util.RedisClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -36,6 +37,17 @@ public class MyDataController {
 		
 		return productService.queryByUser(userID);
 	}
+	
+	@GET
+	@CrossOrigin
+	@ResponseBody
+	@RequestMapping(value="/getRelation", produces={"application/json;charset=UTF-8"})
+	public JSONObject getRelation(String userID, String apiKey){
+		JSONObject relationObj = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + "_" + apiKey)));
+		return relationObj;
+	}
+	
+	
 	
 	@GET
 	@CrossOrigin
