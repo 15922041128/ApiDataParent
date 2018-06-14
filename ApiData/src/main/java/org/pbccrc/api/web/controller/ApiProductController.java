@@ -49,6 +49,240 @@ public class ApiProductController {
 	
 	@Autowired
 	private ApiProductService apiProductService;
+	
+	/**
+	 * bhyh
+	 * @param requestStr
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("deprecation")
+	@GET
+	@CrossOrigin
+	@ResponseBody
+	@RequestMapping(value="/bhyh", produces={"application/json;charset=UTF-8"})
+	public Object bhyh(String requestStr, HttpServletRequest request) throws Exception {
+		
+		
+		long startTime = System.currentTimeMillis();
+		
+		ResultContent resultContent = new ResultContent();
+		resultContent.setCode(Constants.CODE_ERR_SUCCESS);
+		resultContent.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);
+		
+		// 获取ip地址
+		String ipAddress = SystemUtil.getIpAddress(request);
+		// 获取apiKey
+		String apiKey = request.getHeader(Constants.HEAD_APIKEY);
+		// 获得用ID
+		String userID = request.getHeader(Constants.HEAD_USER_ID);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_PRODUCT_BHYH, ipAddress, resultContent)) {
+			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
+		}
+		
+		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
+		
+		JSONObject json = null;
+		// 验证json格式
+		try {
+			json = JSONObject.parseObject(requestStr);
+		} catch (Exception e) {
+			resultContent.setCode(Constants.CODE_ERR_PARAM_FORMAT);
+			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_FORMAT_MSG);
+			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
+		}
+		
+		String idCard = json.getString("idCard");
+		String name = json.getString("name");
+		
+		// 生成UUID
+     	String uuid = StringUtil.createUUID();
+		
+		JSONObject resultJson = apiProductService.bhyh(name, idCard, userID, uuid);
+     	
+     	JSONObject resultObject = resultJson.getJSONObject("result");
+     	
+     	boolean isSuccess = resultJson.getBoolean("isSuccess");
+     	
+        resultContent.setRetData(resultObject);
+        
+        if (!isSuccess) {
+        	resultContent.setCode(Constants.CODE_ERR_FAIL);
+			resultContent.setRetMsg(Constants.CODE_ERR_FAIL_MSG);
+        } else {
+        	// 计费
+			Map<String, Object> costRetMap = costService.cost(userID, apiKey);
+			String queryCount = String.valueOf(costRetMap.get("queryCount"));
+			// 查询次数
+			resultContent.setQueryCount(queryCount);
+        }
+        
+        long endTime = System.currentTimeMillis();
+        
+        // 记录日志
+ 		SystemLog systemLog = new SystemLog();
+ 		// uuid
+ 		systemLog.setUuid(uuid);
+ 		// ip地址
+ 		systemLog.setIpAddress(ipAddress);
+ 		// apiKey
+ 		systemLog.setApiKey(apiKey);
+ 		// 产品ID
+ 		// 从缓存中获取relation对象
+ 		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
+ 		systemLog.setProductID(relation.getString("productID"));
+ 		// localApiID
+ 		systemLog.setLocalApiID(Constants.API_ID_PRODUCT_BHYH);
+ 		// 参数
+ 		Map<String, String> param = new HashMap<String, String>();
+ 		param.put("name", name);
+ 		param.put("idCard", idCard);
+ 		systemLog.setParams(JSON.toJSONString(param));
+ 		// 用户ID
+ 		systemLog.setUserID(userID);
+ 		// 是否成功
+ 		systemLog.setIsSuccess(String.valueOf(isSuccess));
+ 		// 是否计费
+ 		systemLog.setIsCount(String.valueOf(isSuccess));
+ 		// 查询时间
+ 		systemLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FORMAT_SYSTEMLOG).format(new Date()));
+ 		// 查询用时
+ 		systemLog.setQueryTime(endTime - startTime);
+ 		// 返回数据
+ 		systemLog.setReturnData(resultObject.toJSONString().replace("\\", ""));
+ 		systemLogService.addLog(systemLog);
+ 		
+ 		return JSONObject.toJSON(resultContent);
+	}
+	
+	/**
+	 * 新反欺诈服务
+	 * @param requestStr
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("deprecation")
+	@GET
+	@CrossOrigin
+	@ResponseBody
+	@RequestMapping(value="/fraud2", produces={"application/json;charset=UTF-8"})
+	public Object fraud2(String requestStr, HttpServletRequest request) throws Exception {
+		
+		
+		long startTime = System.currentTimeMillis();
+		
+		ResultContent resultContent = new ResultContent();
+		resultContent.setCode(Constants.CODE_ERR_SUCCESS);
+		resultContent.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);
+		
+		// 获取ip地址
+		String ipAddress = SystemUtil.getIpAddress(request);
+		// 获取apiKey
+		String apiKey = request.getHeader(Constants.HEAD_APIKEY);
+		// 获得用ID
+		String userID = request.getHeader(Constants.HEAD_USER_ID);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_PRODUCT_ANTI_NEW_FRAUD, ipAddress, resultContent)) {
+			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
+		}
+		
+		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
+		
+		JSONObject json = null;
+		// 验证json格式
+		try {
+			json = JSONObject.parseObject(requestStr);
+		} catch (Exception e) {
+			resultContent.setCode(Constants.CODE_ERR_PARAM_FORMAT);
+			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_FORMAT_MSG);
+			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
+		}
+		
+		String phone = json.getString("phone");
+		String idCard = json.getString("idCard");
+		String name = json.getString("name");
+		
+		// 记录日志用参数
+		String logIdCard = Constants.BLANK;
+		String logName = Constants.BLANK;
+		
+		if (StringUtil.isNull((idCard))) {
+			idCard = "152201196504049370";
+		} else {
+			logIdCard = idCard;
+		}
+		
+		if (StringUtil.isNull(name)) {
+			name = "钢铁侠";
+		} else {
+			logName = name;
+		}
+		
+		// 生成UUID
+     	String uuid = StringUtil.createUUID();
+		
+		JSONObject resultJson = apiProductService.fraud2(phone, name, idCard, userID, uuid);
+     	
+     	JSONObject resultObject = resultJson.getJSONObject("result");
+     	
+     	boolean isSuccess = resultJson.getBoolean("isSuccess");
+     	
+        resultContent.setRetData(resultObject);
+        
+        if (!isSuccess) {
+        	resultContent.setCode(Constants.CODE_ERR_FAIL);
+			resultContent.setRetMsg(Constants.CODE_ERR_FAIL_MSG);
+        } else {
+        	// 计费
+			Map<String, Object> costRetMap = costService.cost(userID, apiKey);
+			String queryCount = String.valueOf(costRetMap.get("queryCount"));
+			// 查询次数
+			resultContent.setQueryCount(queryCount);
+        }
+        
+        long endTime = System.currentTimeMillis();
+        
+        // 记录日志
+ 		SystemLog systemLog = new SystemLog();
+ 		// uuid
+ 		systemLog.setUuid(uuid);
+ 		// ip地址
+ 		systemLog.setIpAddress(ipAddress);
+ 		// apiKey
+ 		systemLog.setApiKey(apiKey);
+ 		// 产品ID
+ 		// 从缓存中获取relation对象
+ 		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
+ 		systemLog.setProductID(relation.getString("productID"));
+ 		// localApiID
+ 		systemLog.setLocalApiID(Constants.API_ID_PRODUCT_ANTI_NEW_FRAUD);
+ 		// 参数
+ 		Map<String, String> param = new HashMap<String, String>();
+ 		param.put("phone", phone);
+ 		param.put("name", logName);
+ 		param.put("idCard", logIdCard);
+ 		systemLog.setParams(JSON.toJSONString(param));
+ 		// 用户ID
+ 		systemLog.setUserID(userID);
+ 		// 是否成功
+ 		systemLog.setIsSuccess(String.valueOf(isSuccess));
+ 		// 是否计费
+ 		systemLog.setIsCount(String.valueOf(isSuccess));
+ 		// 查询时间
+ 		systemLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FORMAT_SYSTEMLOG).format(new Date()));
+ 		// 查询用时
+ 		systemLog.setQueryTime(endTime - startTime);
+ 		// 返回数据
+ 		systemLog.setReturnData(resultObject.toJSONString().replace("\\", ""));
+ 		systemLogService.addLog(systemLog);
+ 		
+ 		return JSONObject.toJSON(resultContent);
+	}
 
 	
 	/**
@@ -58,6 +292,7 @@ public class ApiProductController {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("deprecation")
 	@GET
 	@CrossOrigin
 	@ResponseBody
@@ -167,6 +402,7 @@ public class ApiProductController {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("deprecation")
 	@GET
 	@CrossOrigin
 	@ResponseBody
@@ -252,6 +488,7 @@ public class ApiProductController {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("deprecation")
 	@GET
 	@CrossOrigin
 	@ResponseBody
@@ -337,6 +574,7 @@ public class ApiProductController {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("deprecation")
 	@GET
 	@CrossOrigin
 	@ResponseBody

@@ -23,6 +23,7 @@ import org.pbccrc.api.base.service.ApiProductService;
 import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.base.util.StringUtil;
 import org.pbccrc.api.core.dao.ApiLogDao;
+import org.pbccrc.api.core.dao.BhyhDao;
 import org.pbccrc.api.core.dao.BlackListDao;
 import org.pbccrc.api.core.dao.ScoreDao;
 import org.pbccrc.api.core.dao.TblHuluPhoneDetailDao;
@@ -83,7 +84,335 @@ public class ApiProductServiceImpl implements ApiProductService {
 	@Autowired
 	private TblHuluPhoneDetailDao tblHuluPhoneDetailDao; 
 	
+	@Autowired
+	private BhyhDao bhyhDao;
+	
 	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	
+	/**
+	 * bhyh
+	 * @param name     姓名 
+	 * @param idCard   身份证号码
+	 * @param userID   用户ID
+	 * @param uuid     UUID
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public JSONObject bhyh(String name, String idCard, String userID, String uuid) throws Exception {
+		
+		boolean isSuccess = false;
+		
+		JSONObject returnJson = new JSONObject();
+		
+		JSONObject resultJson = new JSONObject();
+		
+		// 查询内码是否存在
+     	Map<String, Object> insideCodeMap = null;
+        // 根据两标进行查询
+     	insideCodeMap =  zhIdentificationDao.getInnerID(name, idCard);
+     	// 判断内码是否为空
+ 		if (null != insideCodeMap) {
+ 			// 获取内码
+ 	 		String innerId = String.valueOf(insideCodeMap.get("INNERID"));
+ 	 		// 查询bhyh
+ 			Map<String, Object> bhyh = null;
+ 			bhyh = bhyhDao.getList(innerId);
+ 			// 判断bhyh是否为空
+ 			if (null != bhyh) {
+ 				isSuccess = true;
+ 				for (Map.Entry<String, Object> entry : bhyh.entrySet()) { 
+ 					resultJson.put(entry.getKey(), entry.getValue());
+ 				}
+ 				resultJson.remove("INNERID");
+ 			}
+ 		}
+ 		
+ 		// 记录日志
+		ApiLog apiLog = new ApiLog();
+		// uuid
+		apiLog.setUuid(uuid);
+		apiLog.setUserID(userID);
+		apiLog.setLocalApiID(Constants.API_ID_PRODUCT_BHYH);
+		// 参数
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("name", name);
+		param.put("idCard", idCard);
+		apiLog.setParams(JSON.toJSONString(param));
+		apiLog.setDataFrom(Constants.DATA_FROM_PA);
+		apiLog.setIsSuccess(String.valueOf(isSuccess));
+		apiLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FROMAT_APILOG).format(new Date()));
+		apiLogDao.addLog(apiLog);
+ 		
+   		returnJson.put("result", resultJson);
+   		returnJson.put("isSuccess", isSuccess);
+ 		
+ 		return returnJson;
+	}
+	
+	/**
+	 * 新反欺诈服务
+	 * @param phone    电话号码
+	 * @param name     姓名 
+	 * @param idCard   身份证号码
+	 * @param userID   用户ID
+	 * @param uuid     UUID
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public JSONObject fraud2(String phone, String name, String idCard, String userID, String uuid) throws Exception {
+		
+		// 等级初始化
+		int level = 6;
+		// 基本调用数据初始化
+		String ptime = String.valueOf(System.currentTimeMillis());
+		String vKey = StringUtil.string2MD5(Constants.pn_pkey + "_" + ptime + "_" + Constants.pn_pkey);
+		String uid = StringUtil.MD5Encoder(name + idCard, "utf-8");
+		// 查询时间初始化
+		String apiQueryDate = format.format(new Date());
+		// 返回数据初始化
+		String result = Constants.BLANK;
+		JSONObject returnObject = new JSONObject();
+		// 客户端初始化
+		ClientConfig config = new DefaultClientConfig();
+		config.getProperties().put(ClientConfig.PROPERTY_CONNECT_TIMEOUT, 10 * 1000);
+		Client client = Client.create(config);
+		WebResource resource = null;
+		int api_result = 0;
+		
+		 // 查询成功标识
+        boolean isSuccess = false;
+		
+        /** 1.反欺诈识别 */
+		/** 凭安电话号码查询 */
+		resource = client.resource("https://jrapi.pacra.cn/phonetag?pname=" + Constants.pn_pname + "&vkey=" + vKey + "&ptime=" + ptime + "&phone=" + phone);
+		result = resource.accept(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE).get(String.class);
+		result = StringUtil.decodeUnicode(result);
+		JSONObject resultObject = (JSONObject)JSONObject.parse(result);
+        api_result = resultObject.getInteger("result");
+        
+        // 判断result
+        if (0 == api_result) {
+        	isSuccess = true;
+        	// 只返回欺诈电话
+        	JSONObject returnData = resultObject.getJSONObject("data");
+        	String tag = returnData.getString("tag");
+        	if (tag.indexOf("欺诈") > 0) {
+        		level = 3;
+            	// 插入数据库
+            	TblPaPhoneTag phoneTag = new TblPaPhoneTag();
+            	phoneTag.setPhone(phone);
+            	phoneTag.setApiQueryDate(apiQueryDate);
+            	phoneTag.setReturnValue(returnData.toJSONString());
+            	tblPaPhoneTagDao.addPaPhoneTag(phoneTag);
+        	}
+        	
+        	returnObject.put("phoneTag", returnData);
+        }
+        
+        /** 凭安逾期查询 */
+		StringBuilder sb = new StringBuilder("https://jrapi.pacra.cn");
+		sb.append("/b/overdueClassify?");
+		sb.append("pname=" + Constants.pn_pname);
+		sb.append("&vkey=" + vKey);
+		sb.append("&ptime=" + ptime);
+		sb.append("&phone=" + phone);
+		sb.append("&uid=" + uid);
+		
+		resource = client.resource(sb.toString());
+		result = resource.accept(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE).get(String.class);
+		result = StringUtil.decodeUnicode(result);
+		resultObject = (JSONObject)JSONObject.parse(result);
+		
+		// get result
+        api_result = resultObject.getInteger("result");
+        
+        // 判断result
+        if (0 == api_result) {
+        	isSuccess = true;
+        	
+        	JSONObject returnData = resultObject.getJSONObject("data");
+        	
+        	// 计算逾期等级
+        	JSONObject record = returnData.getJSONArray("record").getJSONObject(0);
+        	JSONObject classification = record.getJSONArray("classification").getJSONObject(0);
+        	
+        	// m3
+        	JSONObject m3 =  classification.getJSONObject("M3");
+        	if (null != m3) {
+        		level = this.calcOverdueLevel(m3, level);
+        	}
+        	
+        	// m6
+        	JSONObject m6 =  classification.getJSONObject("M6");
+        	if (null != m6) {
+        		level = this.calcOverdueLevel(m6, level);
+        	}
+        	
+        	// m9
+        	JSONObject m9 =  classification.getJSONObject("M9");
+        	if (null != m9) {
+        		level = this.calcOverdueLevel(m9, level);
+        	}
+        	
+        	// m12
+        	JSONObject m12 =  classification.getJSONObject("M12");
+        	if (null != m12) {
+        		level = this.calcOverdueLevel(m12, level);
+        	}
+        	
+        	// m24
+        	JSONObject m24 =  classification.getJSONObject("M24");
+        	if (null != m24) {
+        		level = this.calcOverdueLevel(m24, level);
+        	}
+        	
+        	// 插入数据库
+        	TblPaOverdue overdue = new TblPaOverdue();
+        	overdue.setPhone(phone);
+        	overdue.setApiQueryDate(apiQueryDate);
+        	overdue.setReturnValue(returnData.toJSONString());
+        	tblPaOverdueDao.addPaOverdue(overdue);
+        	
+        	returnObject.put("overdue", returnData);
+        }
+        
+        /** 凭安借贷查询 */
+        sb = new StringBuilder("https://jrapi.pacra.cn");
+		sb.append("/b/loanClassify?");
+		sb.append("pname=" + Constants.pn_pname);
+		sb.append("&vkey=" + vKey);
+		sb.append("&ptime=" + ptime);
+		sb.append("&phone=" + phone);
+		sb.append("&uid=" + uid);
+		
+		resource = client.resource(sb.toString());
+		result = resource.accept(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE).get(String.class);
+		result = StringUtil.decodeUnicode(result);
+		resultObject = (JSONObject)JSONObject.parse(result);
+		
+		// get result
+        api_result = resultObject.getInteger("result");
+        
+        // 判断result
+        if (0 == api_result) {
+        	isSuccess = true;
+        	// 插入数据库
+        	TblPaLoan loan = new TblPaLoan();
+        	loan.setPhone(phone);
+        	loan.setApiQueryDate(apiQueryDate);
+        	loan.setReturnValue(resultObject.getString("data"));
+        	tblPaLoanDao.addPaLoan(loan);
+        	
+        	returnObject.put("loan", resultObject.getString("data"));
+        }
+        
+        /** 凭安黑名单查询 */
+        sb = new StringBuilder("https://jrapi.pacra.cn");
+		sb.append("/b/blacklist?");
+		sb.append("pname=" + Constants.pn_pname);
+		sb.append("&vkey=" + vKey);
+		sb.append("&ptime=" + ptime);
+		sb.append("&phone=" + phone);
+		sb.append("&uid=" + uid);
+		
+		resource = client.resource(sb.toString());
+		result = resource.accept(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE).get(String.class);
+		result = StringUtil.decodeUnicode(result);
+		resultObject = (JSONObject)JSONObject.parse(result);
+		
+		// get result
+        api_result = resultObject.getInteger("result");
+        
+        // 判断result
+        if (0 == api_result) {
+        	isSuccess = true;
+        	
+        	if (level > 2) {
+        		level = 2;
+        	}
+        	
+        	// 插入数据库
+        	TblPaBlackList blackList = new TblPaBlackList();
+        	blackList.setPhone(phone);
+        	blackList.setApiQueryDate(apiQueryDate);
+        	blackList.setReturnValue(resultObject.getString("data"));
+        	tblPaBlackListDao.addPaBlackList(blackList);
+        	
+        	returnObject.put("blackList", resultObject.getString("data"));
+        }
+        
+        
+        /** 凭安个人属性查询 */
+        sb = new StringBuilder("https://jrapi.pacra.cn");
+		sb.append("/biz/phkjModelerScore?");
+		sb.append("pname=" + Constants.pn_pname);
+		sb.append("&vkey=" + vKey);
+		sb.append("&ptime=" + ptime);
+		sb.append("&phone=" + phone);
+		sb.append("&uid=" + uid);
+		
+		resource = client.resource(sb.toString());
+		result = resource.accept(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE).get(String.class);
+		result = StringUtil.decodeUnicode(result);
+		resultObject = (JSONObject)JSONObject.parse(result);
+		
+		// get result
+        api_result = resultObject.getInteger("result");
+        
+        // 判断result
+        if (0 == api_result) {
+        	isSuccess = true;
+        	// 插入数据库
+        	TblPaScore score = new TblPaScore();
+        	score.setPhone(phone);
+        	score.setApiQueryDate(apiQueryDate);
+        	score.setReturnValue(resultObject.getString("data"));
+        	tblPaScoreDao.addPaScore(score);
+        	
+        	JSONObject sqrsx = resultObject.getJSONObject("data");
+        	
+        	JSONObject generalRecord = sqrsx.getJSONObject("generalRecord");
+        	generalRecord.remove("CR_DC_OGO02_LM12");
+        	generalRecord.remove("CD_EX_EP_LM06");
+        	generalRecord.remove("CR_TR_TR_LM24");
+        	generalRecord.remove("CR_PS_MC_LM24");
+        	generalRecord.remove("CD_AL_IS_LM24");
+        	
+        	returnObject.put("score", sqrsx.toJSONString());
+        }
+		
+        // 如果全未命中,level置为7
+        if (!isSuccess) {
+        	level = 7;
+        }
+        
+  		
+        JSONObject returnJson = new JSONObject();
+  		returnJson.put("result", returnObject);
+  		returnJson.put("isSuccess", isSuccess);
+  		
+  		
+  		// 记录日志
+		ApiLog apiLog = new ApiLog();
+		// uuid
+		apiLog.setUuid(uuid);
+		apiLog.setUserID(userID);
+		apiLog.setLocalApiID(Constants.API_ID_PRODUCT_ANTI_NEW_FRAUD);
+		// 参数
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("phone", phone);
+		param.put("name", name);
+		param.put("idCard", idCard);
+		apiLog.setParams(JSON.toJSONString(param));
+		apiLog.setDataFrom(Constants.DATA_FROM_PA);
+		apiLog.setIsSuccess(String.valueOf(isSuccess));
+		apiLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FROMAT_APILOG).format(new Date()));
+		apiLogDao.addLog(apiLog);
+  		
+		return returnJson;
+	}
 
 	/**
 	 * 反欺诈服务

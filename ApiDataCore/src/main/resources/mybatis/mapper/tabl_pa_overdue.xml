@@ -5,14 +5,14 @@
 
 	<insert id="addPaOverdue" parameterType="org.pbccrc.api.base.bean.TblPaOverdue">
 		insert into tbl_pa_overdue(id, name, idCard, phone, imsi, imei, orgName, queryDate, apiQueryDate, returnValue) 
-			values(seq_tbl_pa_overdue.nextval, #{name}, #{idCard}, #{phone}, 
+			values(seq_tbl_pa_overdue.nextval, #{name, jdbcType=VARCHAR}, #{idCard, jdbcType=VARCHAR}, #{phone}, 
 			#{imsi, jdbcType=VARCHAR}, #{imei, jdbcType=VARCHAR}, #{orgName, jdbcType=VARCHAR}, 
 			#{queryDate, jdbcType=VARCHAR}, #{apiQueryDate}, #{returnValue})
 	</insert>
 	
 	<insert id="addPaOverdueZh" parameterType="org.pbccrc.api.base.bean.TblPaOverdue">
 		insert into tbl_pa_overdue_zh(id, name, idCard, phone, imsi, imei, orgName, queryDate, apiQueryDate, returnValue) 
-			values(seq_tbl_pa_overdue_zh.nextval, #{name}, #{idCard}, #{phone}, #{imsi}, #{imei}, #{orgName}, 
+			values(seq_tbl_pa_overdue_zh.nextval, #{name, jdbcType=VARCHAR}, #{idCard, jdbcType=VARCHAR}, #{phone}, #{imsi}, #{imei}, #{orgName}, 
 			#{queryDate}, #{apiQueryDate}, #{returnValue})
 	</insert>
 	

@@ -5,14 +5,14 @@
 
 	<insert id="addPaLoan" parameterType="org.pbccrc.api.base.bean.TblPaLoan">
 		insert into tbl_pa_loan(id, name, idCard, phone, imsi, imei, orgName, queryDate, apiQueryDate, returnValue) 
-			values(seq_tbl_pa_loan.nextval, #{name}, #{idCard}, #{phone}, 
+			values(seq_tbl_pa_loan.nextval, #{name, jdbcType=VARCHAR}, #{idCard, jdbcType=VARCHAR}, #{phone}, 
 			#{imsi, jdbcType=VARCHAR}, #{imei, jdbcType=VARCHAR}, #{orgName, jdbcType=VARCHAR}, 
 			#{queryDate, jdbcType=VARCHAR}, #{apiQueryDate}, #{returnValue})
 	</insert>
 
 	<insert id="addPaLoanZh" parameterType="org.pbccrc.api.base.bean.TblPaLoan">
 		insert into tbl_pa_loan_zh(id, name, idCard, phone, imsi, imei, orgName, queryDate, apiQueryDate, returnValue) 
-			values(seq_tbl_pa_loan_zh.nextval, #{name}, #{idCard}, #{phone}, #{imsi}, #{imei}, #{orgName}, 
+			values(seq_tbl_pa_loan_zh.nextval, #{name, jdbcType=VARCHAR}, #{idCard, jdbcType=VARCHAR}, #{phone}, #{imsi}, #{imei}, #{orgName}, 
 			#{queryDate}, #{apiQueryDate}, #{returnValue})
 	</insert>
 	

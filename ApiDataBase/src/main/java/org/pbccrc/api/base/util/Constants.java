@@ -386,6 +386,12 @@ public class Constants {
 	// 产品-信用卡申请风控接口-充值密码
 	public static final String API_ID_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL_RESET_PASSWORD = "99999999974";
 	
+	// 产品-新反欺诈服务接口
+	public static final String API_ID_PRODUCT_ANTI_NEW_FRAUD = "99999999973";
+	
+	// 产品-百行信息服务接口
+	public static final String API_ID_PRODUCT_BHYH = "99999999972";
+	
 	/** productID */
 	// 页面pdf
 	public static final String PRODUCT_ID_PAGE_PDF = "99999999999";
