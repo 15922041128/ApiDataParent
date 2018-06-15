@@ -145,9 +145,28 @@ public class SendMessageController {
 		returnJson.put("retMsg", retMsg);
 		returnJson.put("code", code);
 		returnJson.put("sendNum", sendNum);
-		
+		//短信的计费和查询不同，短信按发送量计费。共用relation中的计费字段
 		if (isSuccess) {
-			costService.cost(userID, apiKey);
+			StringBuilder relationKey = new StringBuilder("relation");
+			relationKey.append(Constants.UNDERLINE + userID);
+			relationKey.append(Constants.UNDERLINE + apiKey);
+			
+			JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get(relationKey.toString())));
+			// 按次数计费
+			// 获得剩余查询次数,-1为免费查询
+			int count = Integer.parseInt(String.valueOf(relation.get("count")));
+			
+			// 每日查询次数-1
+			int dailyQueryCount = Integer.parseInt(String.valueOf(relation.get("dailyQueryCount")));
+			relation.put("dailyQueryCount", dailyQueryCount - sendNum);
+			if (-1 == count) {
+				// -1为免费查询,不减少count直接保存
+				RedisClient.set(relationKey.toString(), relation);
+			} else {
+				// 不为-1为计次数查询,剩余查询次数-1并提交
+				relation.put("count", count - sendNum);
+				RedisClient.set(relationKey.toString(), relation);
+			}
 		}
 		
 		long endTime = System.currentTimeMillis();

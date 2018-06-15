@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 @Controller
@@ -235,6 +236,31 @@ public class UserController {
 	public JSONObject getApiUser(@QueryParam("userID") String userID){
 		
 		return JSONObject.parseObject(String.valueOf(RedisClient.get("apiUser_" + userID)));
+	}
+	
+	@GET
+	@CrossOrigin
+	@ResponseBody
+	@RequestMapping(value="/r/user/getMsgAuth", produces={"application/json;charset=UTF-8"})
+	public JSONObject getMsgAuth(@QueryParam("userID") String userID){
+		JSONObject resultObj = new JSONObject();
+		resultObj.put("isAuth", false);
+		// 根据用户ID获取当前用户已购买的产品关系
+		List<Map<String, Object>> relationList = RedisClient.fuzzyQuery("relation_" + userID + "_");
+		for (Map<String, Object> relation : relationList) {
+			// 获取当前用户产品ID
+			Set<String> keySet = relation.keySet();
+			for (String key : keySet) {
+				JSONObject object = JSONObject.parseObject(String.valueOf(relation.get(key)));
+				// 获取产品ID
+				String productID = String.valueOf(object.get("productID"));
+				if (productID.equals("27")){
+					resultObj.put("isAuth", true);
+					return resultObj;
+				}
+			}
+		}
+		return resultObj;
 	}
 	
 	/**
