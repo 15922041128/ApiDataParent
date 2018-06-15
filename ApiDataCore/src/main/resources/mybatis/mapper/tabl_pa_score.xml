@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
@@ -16,4 +17,24 @@
 			#{queryDate}, #{apiQueryDate}, #{returnValue})
 	</insert>
 	
+=======
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pbccrc.api.core.mapper.TblPaScoreMapper">
+
+	<insert id="addPaScore" parameterType="org.pbccrc.api.base.bean.TblPaScore">
+		insert into tbl_pa_score(id, name, idCard, phone, imsi, imei, orgName, queryDate, apiQueryDate, returnValue) 
+			values(seq_tbl_pa_score.nextval, #{name, jdbcType=VARCHAR}, #{idCard, jdbcType=VARCHAR}, #{phone}, 
+			#{imsi, jdbcType=VARCHAR}, #{imei, jdbcType=VARCHAR}, #{orgName, jdbcType=VARCHAR}, 
+			#{queryDate, jdbcType=VARCHAR}, #{apiQueryDate}, #{returnValue})
+	</insert>
+	
+	<insert id="addPaScoreZh" parameterType="org.pbccrc.api.base.bean.TblPaScore">
+		insert into tbl_pa_score_zh(id, name, idCard, phone, imsi, imei, orgName, queryDate, apiQueryDate, returnValue) 
+			values(seq_tbl_pa_score_zh.nextval, #{name, jdbcType=VARCHAR}, #{idCard, jdbcType=VARCHAR}, #{phone}, #{imsi}, #{imei}, #{orgName}, 
+			#{queryDate}, #{apiQueryDate}, #{returnValue})
+	</insert>
+	
+>>>>>>> 7a7aa72ad07a1b6a04191d1bae345bf95570339e
 </mapper>
