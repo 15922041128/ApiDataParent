@@ -72,6 +72,7 @@ public class ApplyServiceImpl implements ApplyService {
 		dbRelation.setProductID(productID);
 		dbRelation.setCount(String.valueOf(initCount));
 		dbRelation.setVisitCount("1000");
+		dbRelation.setDailyQueryCount("1000");//新增每日查询次数 charlesZhang 2018/06/19
 		dbRelation.setCostType(Constants.COST_TYPE_COUNT);
 		dbRelation.setPrice(String.valueOf(price));
 		dbRelation.setCreateDate(createDate);
@@ -85,6 +86,7 @@ public class ApplyServiceImpl implements ApplyService {
 		relation.put("costType", Constants.COST_TYPE_COUNT);
 		relation.put("count", initCount);
 		relation.put("visitCount", "1000");
+		relation.put("dailyQueryCount", "1000");//新增每日查询次数 charlesZhang 2018/06/19
 		relation.put("id", relationID);
 		relation.put("userID", userID);
 		relation.put("createDate", createDate);
