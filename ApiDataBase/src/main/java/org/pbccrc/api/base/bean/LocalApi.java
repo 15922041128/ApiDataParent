@@ -53,7 +53,10 @@ public class LocalApi implements Serializable{
 	
 	/** 停用时间 */
 	private String stopDate;
-
+	
+	/** 逻辑删除(0已删除/1未删除) */
+	private int isDelete;
+	
 	public int getId() {
 		return id;
 	}
@@ -166,4 +169,11 @@ public class LocalApi implements Serializable{
 		this.queryType = queryType;
 	}
 	
+	public int getIsDelete() {
+		return isDelete;
+	}
+
+	public void setIsDelete(int isDelete) {
+		this.isDelete = isDelete;
+	}
 }

@@ -2,6 +2,10 @@ package org.pbccrc.api.base.bean;
 
 import java.io.Serializable;
 
+/**
+ * @author Administrator
+ *
+ */
 public class Product implements Serializable{
 	
 	private static final long serialVersionUID = -6228787629678154122L;
@@ -35,6 +39,9 @@ public class Product implements Serializable{
 	
 	/** 初始赠送描述 */
 	private String initNote;
+	
+	/** 逻辑删除(0已删除/1未删除) */
+	private int isDelete;
 	
 	public int getId() {
 		return id;
@@ -114,5 +121,13 @@ public class Product implements Serializable{
 
 	public void setInitNote(String initNote) {
 		this.initNote = initNote;
+	}
+	
+	public int getIsDelete() {
+		return isDelete;
+	}
+
+	public void setIsDelete(int isDelete) {
+		this.isDelete = isDelete;
 	}
 }

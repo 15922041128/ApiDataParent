@@ -39,6 +39,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
@@ -110,7 +111,7 @@ public class ApiProductServiceImpl implements ApiProductService {
 		// 查询内码是否存在
      	Map<String, Object> insideCodeMap = null;
         // 根据两标进行查询
-     	insideCodeMap =  zhIdentificationDao.getInnerID(name, idCard);
+     	insideCodeMap =  zhIdentificationDao.getInnerIDWithoutMD5(name, idCard);
      	// 判断内码是否为空
  		if (null != insideCodeMap) {
  			// 获取内码
@@ -163,6 +164,8 @@ public class ApiProductServiceImpl implements ApiProductService {
 	@Override
 	public JSONObject fraud2(String phone, String name, String idCard, String userID, String uuid) throws Exception {
 		
+		// TODO 根据phone(md5)查询phone
+		
 		// 等级初始化
 		int level = 6;
 		// 基本调用数据初始化
@@ -196,19 +199,25 @@ public class ApiProductServiceImpl implements ApiProductService {
         if (0 == api_result) {
         	isSuccess = true;
         	// 只返回欺诈电话
-        	JSONObject returnData = resultObject.getJSONObject("data");
-        	String tag = returnData.getString("tag");
-        	if (tag.indexOf("欺诈") > 0) {
-        		level = 3;
-            	// 插入数据库
-            	TblPaPhoneTag phoneTag = new TblPaPhoneTag();
-            	phoneTag.setPhone(phone);
-            	phoneTag.setApiQueryDate(apiQueryDate);
-            	phoneTag.setReturnValue(returnData.toJSONString());
-            	tblPaPhoneTagDao.addPaPhoneTag(phoneTag);
+        	JSONArray array = resultObject.getJSONArray("data");
+        	
+        	for (Object object : array) {
+        		JSONObject returnData = (JSONObject) JSON.toJSON(object);
+        		String tag = returnData.getString("tag");
+            	if (tag.indexOf("欺诈") > 0) {
+            		level = 3;
+                	// 插入数据库
+                	TblPaPhoneTag phoneTag = new TblPaPhoneTag();
+                	phoneTag.setPhone(phone);
+                	phoneTag.setApiQueryDate(apiQueryDate);
+                	phoneTag.setReturnValue(returnData.toJSONString());
+                	tblPaPhoneTagDao.addPaPhoneTag(phoneTag);
+                	
+                	returnObject.put("phoneTag", returnData);
+                	break;
+            	}
         	}
         	
-        	returnObject.put("phoneTag", returnData);
         }
         
         /** 凭安逾期查询 */
@@ -460,19 +469,25 @@ public class ApiProductServiceImpl implements ApiProductService {
         if (0 == api_result) {
         	isSuccess = true;
         	// 只返回欺诈电话
-        	JSONObject returnData = resultObject.getJSONObject("data");
-        	String tag = returnData.getString("tag");
-        	if (tag.indexOf("欺诈") > 0) {
-        		level = 3;
-            	// 插入数据库
-            	TblPaPhoneTag phoneTag = new TblPaPhoneTag();
-            	phoneTag.setPhone(phone);
-            	phoneTag.setApiQueryDate(apiQueryDate);
-            	phoneTag.setReturnValue(returnData.toJSONString());
-            	tblPaPhoneTagDao.addPaPhoneTag(phoneTag);
+        	JSONArray array = resultObject.getJSONArray("data");
+        	
+        	for (Object object : array) {
+        		JSONObject returnData = (JSONObject) JSON.toJSON(object);
+        		String tag = returnData.getString("tag");
+            	if (tag.indexOf("欺诈") > 0) {
+            		level = 3;
+                	// 插入数据库
+                	TblPaPhoneTag phoneTag = new TblPaPhoneTag();
+                	phoneTag.setPhone(phone);
+                	phoneTag.setApiQueryDate(apiQueryDate);
+                	phoneTag.setReturnValue(returnData.toJSONString());
+                	tblPaPhoneTagDao.addPaPhoneTag(phoneTag);
+                	
+                	returnObject.put("phoneTag", returnData);
+                	break;
+            	}
         	}
         	
-        	returnObject.put("phoneTag", returnData);
         }
         
         /** 凭安失信被执行人查询 */

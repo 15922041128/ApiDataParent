@@ -16,6 +16,18 @@ public class ZhIdentificationDao {
 	@Resource
 	private ZhIdentificationMapper zhIdentificationMapper;
 	
+	public Map<String, Object> getInnerIDWithoutMD5(String name, String identifier){
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("name", name);
+		map.put("identifier", identifier);
+		
+		List<Map<String, Object>> mapList = zhIdentificationMapper.getInnerID(map);
+		if (null == mapList || mapList.size() == 0) {
+			return null;
+		}
+		return mapList.get(0);
+	}
+	
 	public Map<String, Object> getInnerID(String name, String identifier){
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("name", StringUtil.MD5Encoder(name).toUpperCase());

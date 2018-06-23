@@ -34,8 +34,10 @@
 		<selectKey resultType="INTEGER" order="BEFORE" keyProperty="productId">  
 	       SELECT seq_product.NEXTVAL as productId from DUAL
 	   </selectKey>
-		insert into Product(id, name, image, type, price, apis, status, initCount, initNote, isShow) 
-			values(#{productId, jdbcType=INTEGER}, #{name, jdbcType=VARCHAR}, #{image, jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{price, jdbcType=VARCHAR}, #{apis, jdbcType=VARCHAR}, #{status, jdbcType=VARCHAR}, #{initCount, jdbcType=INTEGER}, #{initNote, jdbcType=VARCHAR}, #{isShow, jdbcType=INTEGER})
+		insert into Product(id, name, image, type, price, apis, status, initCount, initNote, isShow, isDelete) 
+			values(#{productId, jdbcType=INTEGER}, #{name, jdbcType=VARCHAR}, #{image, jdbcType=VARCHAR}, 
+			#{type,jdbcType=INTEGER}, #{price, jdbcType=VARCHAR}, #{apis, jdbcType=VARCHAR}, #{status, jdbcType=VARCHAR}, 
+			#{initCount, jdbcType=INTEGER}, #{initNote, jdbcType=VARCHAR}, #{isShow, jdbcType=INTEGER}, #{isDelete, jdbcType=INTEGER})
 	</insert>
 	
 	<update id="updateProduct" parameterType="org.pbccrc.api.base.bean.Product">
@@ -67,6 +69,9 @@
         	</if>
         	<if test="status !=null and status != '' ">
             	isShow = #{isShow},
+        	</if>
+        	<if test="status !=null and status != '' ">
+            	isDelete = #{isDelete},
         	</if>
         </set>
         <where>
