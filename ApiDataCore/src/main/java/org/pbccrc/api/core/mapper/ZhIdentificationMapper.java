@@ -8,7 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ZhIdentificationMapper {
 
-	List<Map<String, Object>> queryByIdentifier(String innerID);
-	
 	List<Map<String, Object>> getInnerID(Map<String, String> map);
 }
