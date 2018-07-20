@@ -71,4 +71,15 @@ public interface ApiProductService {
 	 * @throws Exception
 	 */
 	public JSONObject resetPassword(String token, String password, String captcha) throws Exception;
+	
+	/**
+	 * 一致性验证(身份证与电话号码 )
+	 * @param phone    电话号码
+	 * @param idCard   身份证号码
+	 * @param userID   用户ID
+	 * @param uuid     UUID
+	 * @return
+	 * @throws Exception
+	 */
+	public JSONObject checkConsistency(String phone, String idCard, String userID, String uuid) throws Exception;
 }

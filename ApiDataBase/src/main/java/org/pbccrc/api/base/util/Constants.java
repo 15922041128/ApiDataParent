@@ -392,6 +392,9 @@ public class Constants {
 	// 产品-百行信息服务接口
 	public static final String API_ID_PRODUCT_BHYH = "99999999972";
 	
+	// 产品-一致性验证服务接口
+	public static final String API_ID_PRODUCT_CHECK_CONSISTENCY = "99999999971";
+	
 	/** productID */
 	// 页面pdf
 	public static final String PRODUCT_ID_PAGE_PDF = "99999999999";

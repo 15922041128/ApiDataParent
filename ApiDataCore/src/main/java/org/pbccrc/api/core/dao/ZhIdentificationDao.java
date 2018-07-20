@@ -33,7 +33,16 @@ public class ZhIdentificationDao {
 	
 	public Map<String, Object> getInnerID(String name, String identifier){
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("name", StringUtil.MD5Encoder(name).toUpperCase());
+		
+		// 判断name是否为空
+		if(StringUtil.isNull(name)) {
+			// 若为空则赋为null(sqlmap判断用)
+			name = null;
+		} else {
+			name = StringUtil.MD5Encoder(name).toUpperCase();
+		}
+		
+		map.put("name", name);
 		map.put("identifier", StringUtil.MD5Encoder(identifier).toUpperCase());
 		
 		List<Map<String, Object>> mapList = zhIdentificationMapper.getInnerID(map);

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pbccrc.api.core.mapper.TblPaLoanDetailMapper">
+
+	<insert id="addPaLoanDetail" parameterType="org.pbccrc.api.base.bean.TblPaLoanDetail">
+		insert into tbl_pa_loan_detail(phone, m12OtherOrgNums, m12OtherLoanAmount, 
+			m12OtherLatestLoanTime, m12OtherRepayAmount, m12OtherTotalAmount,
+			m12BankOrgNums, m12BankLoanAmount, m12BankLatestLoanTime,
+			m12BankRepayAmount, m12BankTotalAmount,
+			m24OtherOrgNums, m24OtherLoanAmount, m24OtherLatestLoanTime,
+			m24OtherRepayAmount, m24OtherTotalAmount,
+			m24BankOrgNums, m24BankLoanAmount, m24BankLatestLoanTime,
+			m24BankRepayAmount, m24BankTotalAmount,
+			m3OtherOrgNums, m3OtherLoanAmount, m3OtherLatestLoanTime,
+			m3OtherRepayAmount, m3OtherTotalAmount, 
+			m3BankOrgNums, m3BankLoanAmount, m3BankLatestLoanTime,
+			m3BankRepayAmount, m3BankTotalAmount,
+			m6OtherOrgNums, m6OtherLoanAmount, m6OtherLatestLoanTime,
+			m6OtherRepayAmount, m6OtherTotalAmount,
+			m6BankOrgNums, m6BankLoanAmount, m6BankLatestLoanTime,
+			m6BankRepayAmount, m6BankTotalAmount,
+			m9OtherOrgNums, m9OtherLoanAmount, m9OtherLatestLoanTime,
+			m9OtherRepayAmount, m9OtherTotalAmount,
+			m9BankOrgNums, m9BankLoanAmount, m9BankLatestLoanTime,
+			m9BankRepayAmount, m9BankTotalAmount) 
+		values(#{phone, jdbcType=VARCHAR}, #{m12OtherOrgNums, jdbcType=VARCHAR}, #{m12OtherLoanAmount, jdbcType=VARCHAR},
+			#{m12OtherLatestLoanTime, jdbcType=VARCHAR}, #{m12OtherRepayAmount, jdbcType=VARCHAR}, #{m12OtherTotalAmount, jdbcType=VARCHAR},
+			#{m12BankOrgNums, jdbcType=VARCHAR}, #{m12BankLoanAmount, jdbcType=VARCHAR}, #{m12BankLatestLoanTime, jdbcType=VARCHAR},
+			#{m12BankRepayAmount, jdbcType=VARCHAR}, #{m12BankTotalAmount, jdbcType=VARCHAR},
+			#{m24OtherOrgNums, jdbcType=VARCHAR}, #{m24OtherLoanAmount, jdbcType=VARCHAR}, #{m24OtherLatestLoanTime, jdbcType=VARCHAR},
+			#{m24OtherRepayAmount, jdbcType=VARCHAR}, #{m24OtherTotalAmount, jdbcType=VARCHAR},
+			#{m24BankOrgNums, jdbcType=VARCHAR}, #{m24BankLoanAmount, jdbcType=VARCHAR}, #{m24BankLatestLoanTime, jdbcType=VARCHAR},
+			#{m24BankRepayAmount, jdbcType=VARCHAR}, #{m24BankTotalAmount, jdbcType=VARCHAR},
+			#{m3OtherOrgNums, jdbcType=VARCHAR}, #{m3OtherLoanAmount, jdbcType=VARCHAR}, #{m3OtherLatestLoanTime, jdbcType=VARCHAR},
+			#{m3OtherRepayAmount, jdbcType=VARCHAR}, #{m3OtherTotalAmount, jdbcType=VARCHAR},
+			#{m3BankOrgNums, jdbcType=VARCHAR}, #{m3BankLoanAmount, jdbcType=VARCHAR}, #{m3BankLatestLoanTime, jdbcType=VARCHAR},
+			#{m3BankRepayAmount, jdbcType=VARCHAR}, #{m3BankTotalAmount, jdbcType=VARCHAR},
+			#{m6OtherOrgNums, jdbcType=VARCHAR}, #{m6OtherLoanAmount, jdbcType=VARCHAR}, #{m6OtherLatestLoanTime, jdbcType=VARCHAR},
+			#{m6OtherRepayAmount, jdbcType=VARCHAR}, #{m6OtherTotalAmount, jdbcType=VARCHAR},
+			#{m6BankOrgNums, jdbcType=VARCHAR}, #{m6BankLoanAmount, jdbcType=VARCHAR}, #{m6BankLatestLoanTime, jdbcType=VARCHAR},
+			#{m6BankRepayAmount, jdbcType=VARCHAR}, #{m6BankTotalAmount, jdbcType=VARCHAR},
+			#{m9OtherOrgNums, jdbcType=VARCHAR}, #{m9OtherLoanAmount, jdbcType=VARCHAR}, #{m9OtherLatestLoanTime, jdbcType=VARCHAR},
+			#{m9OtherRepayAmount, jdbcType=VARCHAR}, #{m9OtherTotalAmount, jdbcType=VARCHAR},
+			#{m9BankOrgNums, jdbcType=VARCHAR}, #{m9BankLoanAmount, jdbcType=VARCHAR}, #{m9BankLatestLoanTime, jdbcType=VARCHAR},
+			#{m9BankRepayAmount, jdbcType=VARCHAR}, #{m9BankTotalAmount, jdbcType=VARCHAR})
+	</insert>
+
+</mapper>

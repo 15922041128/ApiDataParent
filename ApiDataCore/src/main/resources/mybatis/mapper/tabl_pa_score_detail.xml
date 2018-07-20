@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pbccrc.api.core.mapper.TblPaScoreDetailMapper">
+
+	<insert id="addPaScoreDetail" parameterType="org.pbccrc.api.base.bean.TblPaScoreDetail">
+		insert into tbl_pa_score_detail(phone, CR_TR_TR_LM24, CR_CC_CS_LM03, CR_PS_MC_LM24, CD_CC_AL_LM12,
+		CR_DC_OGO2_LM12, CD_AL_IS_LM24, CR_EX_EP_LM06) 
+			values(#{phone, jdbcType=VARCHAR}, #{cr_tr_tr_lm24, jdbcType=VARCHAR}, #{cr_cc_cs_lm03, jdbcType=VARCHAR}, 
+			#{cr_ps_mc_lm24, jdbcType=VARCHAR}, #{cd_cc_al_lm12, jdbcType=VARCHAR}, #{cr_dc_ogo2_lm12, jdbcType=VARCHAR}, 
+			#{cd_al_is_lm24, jdbcType=VARCHAR}, #{cr_ex_ep_lm06, jdbcType=VARCHAR})
+	</insert>
+	
+	
+</mapper>
