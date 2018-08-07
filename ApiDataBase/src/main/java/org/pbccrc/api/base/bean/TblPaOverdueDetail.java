@@ -314,7 +314,7 @@ public class TblPaOverdueDetail implements Serializable {
 
 	/** M24_OtherCredit_最大逾期金额 */
 	private String m24OtherCreditMaxAmount;
-
+	
 	public String getPhone() {
 		return phone;
 	}

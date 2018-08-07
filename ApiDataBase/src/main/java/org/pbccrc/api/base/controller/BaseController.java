@@ -20,8 +20,8 @@ public class BaseController {
 		JSONObject object = new JSONObject();
 		object.put("success", false);
 		object.put("data", null);
-		object.put("errorCode", "100106");
-		object.put("errorMsg", errMessage);
+		object.put("code", "100106");
+		object.put("retMsg", errMessage);
 		
 		ex.printStackTrace();
 		

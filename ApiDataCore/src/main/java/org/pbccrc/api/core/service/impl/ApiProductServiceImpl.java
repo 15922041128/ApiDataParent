@@ -231,7 +231,7 @@ public class ApiProductServiceImpl implements ApiProductService {
         		TblPaPhoneTagDetail tblPaPhoneTagDetail = new TblPaPhoneTagDetail();
         		tblPaPhoneTagDetail.setPhone(phone);
         		tblPaPhoneTagDetail.setTag(returnData.getString("tag"));
-        		tblPaPhoneTagDetail.setTag(returnData.getString("tagTimes"));
+        		tblPaPhoneTagDetail.setTagTimes(returnData.getString("times"));
         		tblPaPhoneTagDetailDao.addPaPhoneTagDetail(tblPaPhoneTagDetail);
         		
         		returnArray.add(tblPaPhoneTagDetail);

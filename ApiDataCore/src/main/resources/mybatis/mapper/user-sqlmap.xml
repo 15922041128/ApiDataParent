@@ -107,7 +107,7 @@
 	</select>
 	
 	<update id="resetPassword" parameterType="org.pbccrc.api.base.bean.User">
-		update iuser password = #{password} where id = #{id}
+		update iuser set password = #{password} where id = #{id}
 	</update>
 	
 </mapper>

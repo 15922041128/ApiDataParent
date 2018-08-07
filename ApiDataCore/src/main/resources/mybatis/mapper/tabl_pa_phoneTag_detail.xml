@@ -4,8 +4,9 @@
 <mapper namespace="org.pbccrc.api.core.mapper.TblPaPhoneTagDetailMapper">
 
 	<insert id="addPaPhoneTagDetail" parameterType="org.pbccrc.api.base.bean.TblPaPhoneTagDetail">
-		insert into tbl_pa_phonetag_Detail(phone, tag, tagTimes) 
-			values(#{phone, jdbcType=VARCHAR}, #{tag, jdbcType=VARCHAR}, #{tagTimes, jdbcType=VARCHAR})
+		insert into tbl_pa_phonetag_Detail(phone, tag, tagTimes, createTime) 
+			values(#{phone, jdbcType=VARCHAR}, #{tag, jdbcType=VARCHAR}, 
+				#{tagTimes, jdbcType=VARCHAR}, to_char(sysdate, 'yyyy-MM-dd hh24:mm:ss'))
 	</insert>
 	
 </mapper>

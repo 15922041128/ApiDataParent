@@ -23,7 +23,7 @@
 			m9OtherOrgNums, m9OtherLoanAmount, m9OtherLatestLoanTime,
 			m9OtherRepayAmount, m9OtherTotalAmount,
 			m9BankOrgNums, m9BankLoanAmount, m9BankLatestLoanTime,
-			m9BankRepayAmount, m9BankTotalAmount) 
+			m9BankRepayAmount, m9BankTotalAmount, createTime) 
 		values(#{phone, jdbcType=VARCHAR}, #{m12OtherOrgNums, jdbcType=VARCHAR}, #{m12OtherLoanAmount, jdbcType=VARCHAR},
 			#{m12OtherLatestLoanTime, jdbcType=VARCHAR}, #{m12OtherRepayAmount, jdbcType=VARCHAR}, #{m12OtherTotalAmount, jdbcType=VARCHAR},
 			#{m12BankOrgNums, jdbcType=VARCHAR}, #{m12BankLoanAmount, jdbcType=VARCHAR}, #{m12BankLatestLoanTime, jdbcType=VARCHAR},
@@ -43,7 +43,7 @@
 			#{m9OtherOrgNums, jdbcType=VARCHAR}, #{m9OtherLoanAmount, jdbcType=VARCHAR}, #{m9OtherLatestLoanTime, jdbcType=VARCHAR},
 			#{m9OtherRepayAmount, jdbcType=VARCHAR}, #{m9OtherTotalAmount, jdbcType=VARCHAR},
 			#{m9BankOrgNums, jdbcType=VARCHAR}, #{m9BankLoanAmount, jdbcType=VARCHAR}, #{m9BankLatestLoanTime, jdbcType=VARCHAR},
-			#{m9BankRepayAmount, jdbcType=VARCHAR}, #{m9BankTotalAmount, jdbcType=VARCHAR})
+			#{m9BankRepayAmount, jdbcType=VARCHAR}, #{m9BankTotalAmount, jdbcType=VARCHAR}, to_char(sysdate, 'yyyy-MM-dd hh24:mm:ss'))
 	</insert>
 
 </mapper>

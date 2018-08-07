@@ -6,11 +6,11 @@
 	<insert id="addPaBlackListDetail" parameterType="org.pbccrc.api.base.bean.TblPaBlackListDetail">
 		insert into tbl_pa_blacklist_detail(phone, bankLostContact, orgLostContact, orgOverduePeriod, 
 			seriousOverdueTime, bankOverduePeriod, orgLitigation, bankLitigation, duntelCallTime,
-			orgOneMonthOvedue, orgBlackNum) 
+			orgOneMonthOvedue, orgBlackNum, createTime) 
 		values(#{phone, jdbcType=VARCHAR}, #{bankLostContact, jdbcType=VARCHAR}, #{orgLostContact, jdbcType=VARCHAR}, 
 			#{orgOverduePeriod, jdbcType=VARCHAR}, #{seriousOverdueTime, jdbcType=VARCHAR}, #{bankOverduePeriod, jdbcType=VARCHAR},
 			#{orgLitigation, jdbcType=VARCHAR}, #{bankLitigation, jdbcType=VARCHAR}, #{duntelCallTime, jdbcType=VARCHAR}, 
-			#{orgOneMonthOvedue, jdbcType=VARCHAR}, #{orgBlackNum, jdbcType=VARCHAR}
+			#{orgOneMonthOvedue, jdbcType=VARCHAR}, #{orgBlackNum, jdbcType=VARCHAR}, to_char(sysdate, 'yyyy-MM-dd hh24:mm:ss')
 		)
 	</insert>
 	

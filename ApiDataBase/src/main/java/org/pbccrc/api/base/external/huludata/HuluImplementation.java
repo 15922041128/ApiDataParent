@@ -29,7 +29,7 @@ public class HuluImplementation {
 		/** 【运营商数据源采集接口】部分 */
 		
 		// 【运营商数据源采集接口】2.1获取token
-		String collectToken = getCollectToken(name, identity_card_number, cell_phone_number);
+//		String collectToken = getCollectToken(name, identity_card_number, cell_phone_number);
 //		System.out.println(collectToken);
 		
 	    // 【运营商数据源采集接口】3.1申请重置密码 ,返回验证码
@@ -40,20 +40,21 @@ public class HuluImplementation {
 //		resetPassword(collectToken, "jay790118", "809267");
 		
 		// 【运营商数据源采集接口】2.2提交登陆
-		// 556750为15922041128服务密码
-		collect(collectToken, "556750", null, null);
+		// 536369为15922041128服务密码
+//		collect(collectToken, "536369", null, null);
 		
 		// 【运营商数据源采集接口】2.3 提交短信验证码
 //		collect(collectToken, null, "695171", null);
 		
 		/** 【主动获取原始数据和报告接口】部分 */
 		// 【主动获取原始数据和报告接口】2.1获取数据令牌access_token接口
-		String accessToken = getAccessToken();
+//		String accessToken = getAccessToken();
 		
 		// 【主动获取原始数据和报告接口】3.1获取原始数据
-		String result = getRawdatas(accessToken, collectToken);
+//		String collectToken = "03d6e1b7089d42f0bd81796fc049b5bd";
+//		String result = getRawdatas(accessToken, collectToken);
 		
-//		String result = getRawdata(name, identity_card_number, cell_phone_number, "556750");
+		String result = service_getRawdata(name, identity_card_number, cell_phone_number, "536369");
 		System.out.println(result);
 	}
 	
@@ -255,4 +256,29 @@ public class HuluImplementation {
 		
 		return result;
 	}
+	
+	/** service-登陆 获取token,并提交登陆*/
+	public static String service_getLoadCollectToken(String name, String idCard, String phone,String password) {
+		
+		/** 【运营商数据源采集接口】部分 */
+		// 【运营商数据源采集接口】2.1获取token
+		String collectToken = getCollectToken(name, idCard, phone);	
+		//数据验证码，发送短信
+		collect(collectToken, password, null, null);
+		return collectToken;
+	}
+	
+	/** service-第一次登陆，需要提交短信验证码授权*/
+	public static String service_getLoadResult(String collectToken, String captcha) {
+		
+		// 【运营商数据源采集接口】2.3 提交短信验证码
+		collect(collectToken, null, captcha, null);
+		/** 【主动获取原始数据和报告接口】部分 */
+		// 【主动获取原始数据和报告接口】2.1获取数据令牌access_token接口
+		String accessToken = getAccessToken();
+		
+		// 【主动获取原始数据和报告接口】3.1获取原始数据
+		return getRawdatas(accessToken, collectToken);
+	}
+	
 }

@@ -43,7 +43,7 @@
 			m12OtherCreditOrgNums, m12OtherCreditLongestDaysTime, m12OtherCreditLongestDays,
 			m12OtherCreditRecordNums, m12OtherCreditMaxAmount,
 			m24OtherCreditOrgNums, m24OtherCreditLongestDaysTime, m24OtherCreditLongestDays,
-			m24OtherCreditRecordNums, m24OtherCreditMaxAmount) 
+			m24OtherCreditRecordNums, m24OtherCreditMaxAmount, createTime) 
 		values(#{phone, jdbcType=VARCHAR}, #{m3BankCreditOrgNums, jdbcType=VARCHAR}, #{m3BankCreditLongestDaysTime, jdbcType=VARCHAR},
 			#{m3BankCreditLongestDays, jdbcType=VARCHAR}, #{m3BankCreditRecordNums, jdbcType=VARCHAR}, #{m3BankCreditMaxAmount, jdbcType=VARCHAR},
 			#{m6BankCreditOrgNums, jdbcType=VARCHAR}, #{m6BankCreditLongestDaysTime, jdbcType=VARCHAR}, #{m6BankCreditLongestDays, jdbcType=VARCHAR},
@@ -83,7 +83,7 @@
 			#{m12OtherCreditOrgNums, jdbcType=VARCHAR}, #{m12OtherCreditLongestDaysTime, jdbcType=VARCHAR}, #{m12OtherCreditLongestDays, jdbcType=VARCHAR},
 			#{m12OtherCreditRecordNums, jdbcType=VARCHAR}, #{m12OtherCreditMaxAmount, jdbcType=VARCHAR},
 			#{m24OtherCreditOrgNums, jdbcType=VARCHAR}, #{m24OtherCreditLongestDaysTime, jdbcType=VARCHAR}, #{m24OtherCreditLongestDays, jdbcType=VARCHAR},
-			#{m24OtherCreditRecordNums, jdbcType=VARCHAR}, #{m24OtherCreditMaxAmount, jdbcType=VARCHAR})
+			#{m24OtherCreditRecordNums, jdbcType=VARCHAR}, #{m24OtherCreditMaxAmount, jdbcType=VARCHAR}, to_char(sysdate, 'yyyy-MM-dd hh24:mm:ss'))
 	</insert>
 	
 </mapper>

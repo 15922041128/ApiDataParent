@@ -43,7 +43,7 @@ public class TblPaBlackListDetail implements Serializable {
 	
 	/** orgBlackList.size */
 	private String orgBlackNum;
-
+	
 	public String getPhone() {
 		return phone;
 	}
