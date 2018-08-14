@@ -203,7 +203,7 @@ public class QueryApiServiceImpl implements QueryApiService{
 //			DynamicDataSourceHolder.change2mysql();
 //		}
 		
-		insideCodeMapList = zhIdentificationDao.getInnerIDByMd5(identifier);
+		insideCodeMapList = zhIdentificationDao.getInnerID(identifier);
 		
 		if (null == insideCodeMapList) {
 			isSuccess = "false";

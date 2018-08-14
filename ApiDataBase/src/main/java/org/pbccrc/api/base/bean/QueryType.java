@@ -6,7 +6,7 @@ public class QueryType implements Serializable {
 
 	/** serialVersionUID */
 	private static final long serialVersionUID = -4933508227358166530L;
-
+	
 	/** 主键 */
 	private int id;
 	
