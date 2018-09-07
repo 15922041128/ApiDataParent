@@ -148,7 +148,18 @@ public class MyProductController {
 		} else {
 			hasData = true;
 			retData = jsonAdapter.change2Ch(service, retData);
-			returnJson.put("retData", JSONObject.parse(retData));
+			Object retObj = null;
+			try {
+				retObj = JSONObject.parse(retData);
+			} catch(Exception e) {}
+			if (null != retObj) {
+				returnJson.put("retData", JSONObject.parse(retData));	
+			} else {
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("返回结果", retData);
+				returnJson.put("retData", jsonObject);
+			}
+			
 		}
 		
 		// 返回类型

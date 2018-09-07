@@ -1,5 +1,6 @@
 package org.pbccrc.api.web.controller;
 
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -252,6 +253,9 @@ public class QueryApiController {
 		ResultContent resultContent = new ResultContent();
 		
 		Object result = null;
+		
+		name = URLDecoder.decode(name, "utf-8");
+		identifier = URLDecoder.decode(identifier);
 		
 		// 获取apiKey
 		String apiKey = request.getHeader(Constants.HEAD_APIKEY);
