@@ -9,14 +9,15 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 
+import org.pbccrc.api.base.bean.LocalApi;
 import org.pbccrc.api.base.bean.ResultContent;
 import org.pbccrc.api.base.bean.SystemLog;
 import org.pbccrc.api.base.service.CostService;
+import org.pbccrc.api.base.service.LocalApiService;
 import org.pbccrc.api.base.service.SystemLogService;
 import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.base.util.DesUtils;
 import org.pbccrc.api.base.util.RedisClient;
-import org.pbccrc.api.base.util.StringUtil;
 import org.pbccrc.api.base.util.SystemUtil;
 import org.pbccrc.api.base.util.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,9 @@ public class EntScoreController {
 	@Autowired
 	private CostService costService;
 	
+	@Autowired
+	private LocalApiService localApiService;
+	
 	/** 
 	 * 企业评分
 	 * @param requestStr
@@ -47,6 +51,7 @@ public class EntScoreController {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("deprecation")
 	@GET
 	@CrossOrigin
 	@ResponseBody
@@ -66,11 +71,6 @@ public class EntScoreController {
 		// 获得用ID
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
-		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_ENT_SCORE, ipAddress, resultContent)) {
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
-		
 		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
 		
 		JSONObject json = null;
@@ -83,21 +83,19 @@ public class EntScoreController {
 			return (JSONObject)JSONObject.toJSON(resultContent);
 		}
 		
-		// 验证type是否为空
-		String type = json.getString("type");
-		if (StringUtil.isNull(type)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "type");
+		// 获取本地api
+		LocalApi localApi = localApiService.queryByService(Constants.API_SERVICE_ENT_SCORE);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, localApi, json, ipAddress, resultContent)) {
 			return (JSONObject)JSONObject.toJSON(resultContent);
 		}
 		
-		// 验证ls是否为空
+		// 获取type
+		String type = json.getString("type");
+		
+		// 获取ls,并进行数字判断
 		String lsStr = json.getString("ls");
-		if (StringUtil.isNull(lsStr)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "ls");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		if (!(isDecimal(lsStr) || isNumber(lsStr))) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_NUMBER);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_NUMBER_MSG + "ls");
@@ -105,13 +103,8 @@ public class EntScoreController {
 		}
 		double ls = Double.parseDouble(lsStr);
 		
-		// 验证ld是否为空
+		// 获取ld,并进行数字判断
 		String ldStr = json.getString("ld");
-		if (StringUtil.isNull(ldStr)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "ld");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		if (!(isDecimal(ldStr) || isNumber(ldStr))) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_NUMBER);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_NUMBER_MSG + "ld");
@@ -125,13 +118,8 @@ public class EntScoreController {
 			return (JSONObject)JSONObject.toJSON(resultContent);
 		}
 		
-		// 验证li是否为空
+		// 获取li,并进行数字判断
 		String liStr = json.getString("li");
-		if (StringUtil.isNull(liStr)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "li");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		if (!(isDecimal(liStr) || isNumber(liStr))) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_NUMBER);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_NUMBER_MSG + "li");
@@ -139,13 +127,8 @@ public class EntScoreController {
 		}
 		double li = Double.parseDouble(liStr);
 		
-		// 验证sa是否为空
+		// 获取sa,并进行数字判断
 		String saStr = json.getString("sa");
-		if (StringUtil.isNull(saStr)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "sa");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		if (!(isDecimal(saStr) || isNumber(saStr))) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_NUMBER);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_NUMBER_MSG + "sa");
@@ -153,13 +136,8 @@ public class EntScoreController {
 		}
 		double sa = Double.parseDouble(saStr);
 		
-		// 验证re是否为空
+		// 获取re,并进行数字判断
 		String reStr = json.getString("re");
-		if (StringUtil.isNull(reStr)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "re");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		if (!(isDecimal(reStr) || isNumber(reStr))) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_NUMBER);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_NUMBER_MSG + "re");
@@ -167,13 +145,8 @@ public class EntScoreController {
 		}
 		double re = Double.parseDouble(reStr);
 		
-		// 验证no是否为空
+		// 获取no,并进行数字判断
 		String noStr = json.getString("no");
-		if (StringUtil.isNull(noStr)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "no");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		if (!(isDecimal(noStr) || isNumber(noStr))) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_NUMBER);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_NUMBER_MSG + "no");
@@ -181,13 +154,8 @@ public class EntScoreController {
 		}
 		double no = Double.parseDouble(noStr);
 		
-		// 验证pr是否为空
+		// 获取pr,并进行数字判断
 		String prStr = json.getString("pr");
-		if (StringUtil.isNull(prStr)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "pr");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		if (!(isDecimal(prStr) || isNumber(prStr))) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_NUMBER);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_NUMBER_MSG + "pr");
@@ -195,13 +163,8 @@ public class EntScoreController {
 		}
 		double pr = Double.parseDouble(prStr);
 		
-		// 验证de是否为空
+		// 获取de,并进行数字判断
 		String deStr = json.getString("de");
-		if (StringUtil.isNull(deStr)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "de");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		if (!(isDecimal(deStr) || isNumber(deStr))) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_NUMBER);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_NUMBER_MSG + "de");
@@ -209,13 +172,8 @@ public class EntScoreController {
 		}
 		double de = Double.parseDouble(deStr);
 		
-		// 验证am是否为空
+		// 获取am,并进行数字判断
 		String amStr = json.getString("am");
-		if (StringUtil.isNull(amStr)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "am");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		if (!(isDecimal(amStr) || isNumber(amStr))) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_NUMBER);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_NUMBER_MSG + "am");
@@ -223,13 +181,8 @@ public class EntScoreController {
 		}
 		double am = Double.parseDouble(amStr);
 		
-		// 验证fi是否为空
+		// 获取fi,并进行数字判断
 		String fiStr = json.getString("fi");
-		if (StringUtil.isNull(fiStr)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "fi");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		if (!(isDecimal(fiStr) || isNumber(fiStr))) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_NUMBER);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_NUMBER_MSG + "fi");
@@ -237,13 +190,8 @@ public class EntScoreController {
 		}
 		double fi = Double.parseDouble(fiStr);
 		
-		// 验证tr是否为空
+		// 获取tr,并进行数字判断
 		String trStr = json.getString("tr");
-		if (StringUtil.isNull(trStr)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "tr");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		if (!(isDecimal(trStr) || isNumber(trStr))) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_NUMBER);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_NUMBER_MSG + "tr");
@@ -251,13 +199,8 @@ public class EntScoreController {
 		}
 		double tr = Double.parseDouble(trStr);
 		
-		// 验证di是否为空
+		// 获取di,并进行数字判断
 		String diStr = json.getString("di");
-		if (StringUtil.isNull(diStr)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "di");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		if (!(isDecimal(diStr) || isNumber(diStr))) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_NUMBER);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_NUMBER_MSG + "di");
@@ -265,13 +208,8 @@ public class EntScoreController {
 		}
 		double di = Double.parseDouble(diStr);
 		
-		// 验证ac是否为空
+		// 获取ac,并进行数字判断
 		String acStr = json.getString("ac");
-		if (StringUtil.isNull(acStr)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "ac");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		if (!(isDecimal(acStr) || isNumber(acStr))) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_NUMBER);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_NUMBER_MSG + "ac");
@@ -279,13 +217,8 @@ public class EntScoreController {
 		}
 		double ac = Double.parseDouble(acStr);
 		
-		// 验证pa是否为空
+		// 获取pa,并进行数字判断
 		String paStr = json.getString("pa");
-		if (StringUtil.isNull(paStr)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "pa");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		if (!(isDecimal(paStr) || isNumber(paStr))) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_NUMBER);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_NUMBER_MSG + "pa");
@@ -293,13 +226,8 @@ public class EntScoreController {
 		}
 		double pa = Double.parseDouble(paStr);
 		
-		// 验证bo是否为空
+		// 获取bo,并进行数字判断
 		String boStr = json.getString("bo");
-		if (StringUtil.isNull(boStr)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "bo");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		if (!(isDecimal(boStr) || isNumber(boStr))) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_NUMBER);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_NUMBER_MSG + "bo");
@@ -307,13 +235,8 @@ public class EntScoreController {
 		}
 		double bo = Double.parseDouble(boStr);
 		
-		// 验证ts是否为空
+		// 获取ts,并进行数字判断
 		String tsStr = json.getString("ts");
-		if (StringUtil.isNull(tsStr)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "ts");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		if (!(isDecimal(tsStr) || isNumber(tsStr))) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_NUMBER);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_NUMBER_MSG + "ts");
@@ -327,13 +250,8 @@ public class EntScoreController {
 			return (JSONObject)JSONObject.toJSON(resultContent);
 		}
 		
-		// 验证lo是否为空
+		// 获取lo,并进行数字判断
 		String loStr = json.getString("lo");
-		if (StringUtil.isNull(loStr)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "lo");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		if (!(isDecimal(loStr) || isNumber(loStr))) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_NUMBER);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_NUMBER_MSG + "lo");
@@ -341,13 +259,8 @@ public class EntScoreController {
 		}
 		double lo = Double.parseDouble(loStr);
 		
-		// 验证la是否为空
+		// 获取la,并进行数字判断
 		String laStr = json.getString("la");
-		if (StringUtil.isNull(laStr)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "la");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		if (!(isDecimal(laStr) || isNumber(laStr))) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_NUMBER);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_NUMBER_MSG + "la");
@@ -361,13 +274,8 @@ public class EntScoreController {
 			return (JSONObject)JSONObject.toJSON(resultContent);
 		}
 		
-		// 验证ow是否为空
+		// 获取ow,并进行数字判断
 		String owStr = json.getString("ow");
-		if (StringUtil.isNull(owStr)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "ow");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		if (!(isDecimal(owStr) || isNumber(owStr))) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_NUMBER);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_NUMBER_MSG + "ow");
@@ -375,13 +283,8 @@ public class EntScoreController {
 		}
 		double ow = Double.parseDouble(owStr);
 		
-		// 验证aa是否为空
+		// 获取aa,并进行数字判断
 		String aaStr = json.getString("aa");
-		if (StringUtil.isNull(aaStr)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "aa");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		if (!(isDecimal(aaStr) || isNumber(aaStr))) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_NUMBER);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_NUMBER_MSG + "aa");
@@ -467,7 +370,7 @@ public class EntScoreController {
 		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
 		systemLog.setProductID(relation.getString("productID"));
 		// localApiID
-		systemLog.setLocalApiID(Constants.API_ID_ENT_SCORE);
+		systemLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		JSONObject paramJson = new JSONObject();
 		paramJson.put("type", type);

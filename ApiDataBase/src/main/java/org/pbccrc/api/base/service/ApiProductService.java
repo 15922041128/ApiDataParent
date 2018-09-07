@@ -1,5 +1,7 @@
 package org.pbccrc.api.base.service;
 
+import org.pbccrc.api.base.bean.LocalApi;
+
 import com.alibaba.fastjson.JSONObject;
 
 public interface ApiProductService {
@@ -13,7 +15,7 @@ public interface ApiProductService {
 	 * @return
 	 * @throws Exception
 	 */
-	public JSONObject bhyh(String name, String idCard, String userID, String uuid) throws Exception;
+	public JSONObject bhyh(String name, String idCard, String userID, String uuid, LocalApi localApi) throws Exception;
 
 	/**
 	 * 反欺诈服务
@@ -25,7 +27,7 @@ public interface ApiProductService {
 	 * @return
 	 * @throws Exception
 	 */
-	public JSONObject fraud(String phone, String name, String idCard, String userID, String uuid) throws Exception;
+	public JSONObject fraud(String phone, String name, String idCard, String userID, String uuid, LocalApi localApi) throws Exception;
 	
 	/**
 	 * 新反欺诈服务
@@ -37,7 +39,7 @@ public interface ApiProductService {
 	 * @return
 	 * @throws Exception
 	 */
-	public JSONObject fraud2(String phone, String name, String idCard, String userID, String uuid) throws Exception;
+	public JSONObject fraud2(String phone, String name, String idCard, String userID, String uuid, LocalApi localApi) throws Exception;
 	
 	/**
 	 * 信用卡申请风控
@@ -50,7 +52,7 @@ public interface ApiProductService {
 	 * @return
 	 * @throws Exception
 	 */
-	public JSONObject reditCardApplyRiskControl(String phone, String phonePassword, String name, String idCard, String userID, String uuid) throws Exception;
+	public JSONObject reditCardApplyRiskControl(String phone, String phonePassword, String name, String idCard, String userID, String uuid, LocalApi localApi) throws Exception;
 	
 	/**
 	 * 获取动态码(信用卡申请风控-电话详情用)
@@ -81,5 +83,5 @@ public interface ApiProductService {
 	 * @return
 	 * @throws Exception
 	 */
-	public JSONObject checkConsistency(String phone, String idCard, String userID, String uuid) throws Exception;
+	public JSONObject checkConsistency(String phone, String idCard, String userID, String uuid, LocalApi localApi) throws Exception;
 }

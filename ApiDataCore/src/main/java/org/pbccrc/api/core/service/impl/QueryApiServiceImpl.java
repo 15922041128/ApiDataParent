@@ -176,7 +176,7 @@ public class QueryApiServiceImpl implements QueryApiService{
 		return map;
 	}
 	
-	public Map<String, Object> querySfz(String uuid, String userID, String name, String identifier) throws Exception {
+	public Map<String, Object> querySfz(String uuid, String userID, String name, String identifier, LocalApi localApi) throws Exception {
 		
 		// 返回map
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -233,7 +233,7 @@ public class QueryApiServiceImpl implements QueryApiService{
 		// uuid
 		apiLog.setUuid(uuid);
 		apiLog.setUserID(userID);
-		apiLog.setLocalApiID(Constants.API_ID_SFZRZ);
+		apiLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		JSONObject params = new JSONObject();
 		params.put("name", name);

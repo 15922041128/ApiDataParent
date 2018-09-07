@@ -18,6 +18,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.pbccrc.api.base.bean.ApiLog;
+import org.pbccrc.api.base.bean.LocalApi;
 import org.pbccrc.api.base.bean.TblPaBlackList;
 import org.pbccrc.api.base.bean.TblPaLoan;
 import org.pbccrc.api.base.bean.TblPaOverdue;
@@ -84,7 +85,7 @@ public class ExternalServiceImpl implements ExternalService{
 	 * @throws Exception
 	 */
 	@Override
-	public JSONObject vipQueryBlackList(String idNo, String cardName, String phone, String cardNo, String userId, String uuid)
+	public JSONObject vipQueryBlackList(String idNo, String cardName, String phone, String cardNo, String userId, String uuid, LocalApi localApi)
 			throws Exception {
 		
 		String result = Constants.BLANK;
@@ -176,7 +177,7 @@ public class ExternalServiceImpl implements ExternalService{
 		// uuid
 		apiLog.setUuid(uuid);
 		apiLog.setUserID(userId);
-		apiLog.setLocalApiID(Constants.API_ID_VIP_QUERYBLACKLIST);
+		apiLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		apiLog.setParams(JSON.toJSONString(sortedMap));
 		apiLog.setDataFrom(Constants.DATA_FROM_VIP);
@@ -199,7 +200,7 @@ public class ExternalServiceImpl implements ExternalService{
 	 * @return
 	 * @throws Exception
 	 */
-	public JSONObject paPhoneTag(String phone, String userId, String uuid) throws Exception {
+	public JSONObject paPhoneTag(String phone, String userId, String uuid, LocalApi localApi) throws Exception {
 		
 		String result = Constants.BLANK;
 		
@@ -252,7 +253,7 @@ public class ExternalServiceImpl implements ExternalService{
 		// uuid
 		apiLog.setUuid(uuid);
 		apiLog.setUserID(userId);
-		apiLog.setLocalApiID(Constants.API_ID_PA_PHONE_TAG);
+		apiLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		Map<String, String> param = new HashMap<String, String>();
 		param.put("phone", phone);
@@ -278,7 +279,7 @@ public class ExternalServiceImpl implements ExternalService{
 	 * @return
 	 * @throws Exception
 	 */
-	public JSONObject paShixin(String name, String idCard, String orgName, String userId, String uuid) throws Exception {
+	public JSONObject paShixin(String name, String idCard, String orgName, String userId, String uuid, LocalApi localApi) throws Exception {
 		
 		String result = Constants.BLANK;
 		
@@ -339,7 +340,7 @@ public class ExternalServiceImpl implements ExternalService{
 		// uuid
 		apiLog.setUuid(uuid);
 		apiLog.setUserID(userId);
-		apiLog.setLocalApiID(Constants.API_ID_PA_SHIXIN);
+		apiLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		Map<String, String> param = new HashMap<String, String>();
 		param.put("name", name);
@@ -374,7 +375,8 @@ public class ExternalServiceImpl implements ExternalService{
 	 * @return
 	 * @throws Exception
 	 */
-	public JSONObject paOverdue(String phone, String name, String idCard, String orgName, String imsi, String imei, String queryDate, String userId, String uuid) throws Exception {
+	public JSONObject paOverdue(String phone, String name, String idCard, String orgName, String imsi, String imei, 
+			String queryDate, String userId, String uuid, LocalApi localApi) throws Exception {
 		
 		String result = Constants.BLANK;
 		
@@ -458,7 +460,7 @@ public class ExternalServiceImpl implements ExternalService{
 		// uuid
 		apiLog.setUuid(uuid);
 		apiLog.setUserID(userId);
-		apiLog.setLocalApiID(Constants.API_ID_PA_OVERDUE);
+		apiLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		Map<String, String> param = new HashMap<String, String>();
 		param.put("name", name);
@@ -503,7 +505,8 @@ public class ExternalServiceImpl implements ExternalService{
 	 * @return
 	 * @throws Exception
 	 */
-	public JSONObject paLoan(String phone, String name, String idCard, String orgName, String imsi, String imei, String queryDate, String userId, String uuid) throws Exception {
+	public JSONObject paLoan(String phone, String name, String idCard, String orgName, String imsi, String imei, 
+			String queryDate, String userId, String uuid, LocalApi localApi) throws Exception {
 		
 		String result = Constants.BLANK;
 		
@@ -587,7 +590,7 @@ public class ExternalServiceImpl implements ExternalService{
 		// uuid
 		apiLog.setUuid(uuid);
 		apiLog.setUserID(userId);
-		apiLog.setLocalApiID(Constants.API_ID_PA_LOAN);
+		apiLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		Map<String, String> param = new HashMap<String, String>();
 		param.put("name", name);
@@ -631,7 +634,8 @@ public class ExternalServiceImpl implements ExternalService{
 	 * @return
 	 * @throws Exception
 	 */
-	public JSONObject paBlackList(String phone, String name, String idCard, String orgName, String imsi, String imei, String userId, String uuid) throws Exception {
+	public JSONObject paBlackList(String phone, String name, String idCard, String orgName, String imsi, String imei, 
+			String userId, String uuid, LocalApi localApi) throws Exception {
 		
 		String result = Constants.BLANK;
 		
@@ -709,7 +713,7 @@ public class ExternalServiceImpl implements ExternalService{
 		// uuid
 		apiLog.setUuid(uuid);
 		apiLog.setUserID(userId);
-		apiLog.setLocalApiID(Constants.API_ID_PA_BLACK_LIST);
+		apiLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		Map<String, String> param = new HashMap<String, String>();
 		param.put("name", name);
@@ -751,7 +755,8 @@ public class ExternalServiceImpl implements ExternalService{
 	 * @return
 	 * @throws Exception
 	 */
-	public JSONObject paPhkjModelerScore(String phone, String name, String idCard, String orgName, String imsi, String imei, String queryDate, String userId, String uuid) throws Exception {
+	public JSONObject paPhkjModelerScore(String phone, String name, String idCard, String orgName, String imsi, String imei, 
+			String queryDate, String userId, String uuid, LocalApi localApi) throws Exception {
 		
 		String result = Constants.BLANK;
 		
@@ -835,7 +840,7 @@ public class ExternalServiceImpl implements ExternalService{
 		// uuid
 		apiLog.setUuid(uuid);
 		apiLog.setUserID(userId);
-		apiLog.setLocalApiID(Constants.API_ID_PA_PHKJ_MODELER_SCORE);
+		apiLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		Map<String, String> param = new HashMap<String, String>();
 		param.put("name", name);
@@ -881,7 +886,8 @@ public class ExternalServiceImpl implements ExternalService{
 	 * @return
 	 * @throws Exception
 	 */
-	public JSONObject paZh(String phone, String name, String idCard, String orgName, String imsi, String imei, String queryDate, String userId, String uuid) throws Exception {
+	public JSONObject paZh(String phone, String name, String idCard, String orgName, String imsi, String imei, String queryDate, 
+			String userId, String uuid, LocalApi localApi) throws Exception {
 		
 		// 基本调用数据初始化
 		String ptime = String.valueOf(System.currentTimeMillis());
@@ -1179,7 +1185,7 @@ public class ExternalServiceImpl implements ExternalService{
  		// uuid
  		apiLog.setUuid(uuid);
  		apiLog.setUserID(userId);
- 		apiLog.setLocalApiID(Constants.API_ID_PA_ZH);
+ 		apiLog.setLocalApiID(String.valueOf(localApi.getId()));
  		// 参数
  		Map<String, String> param = new HashMap<String, String>();
  		param.put("name", name);

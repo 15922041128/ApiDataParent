@@ -9,10 +9,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 
+import org.pbccrc.api.base.bean.LocalApi;
 import org.pbccrc.api.base.bean.ResultContent;
 import org.pbccrc.api.base.bean.SystemLog;
 import org.pbccrc.api.base.service.ApiProductService;
 import org.pbccrc.api.base.service.CostService;
+import org.pbccrc.api.base.service.LocalApiService;
 import org.pbccrc.api.base.service.SystemLogService;
 import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.base.util.DesUtils;
@@ -50,6 +52,9 @@ public class ApiProductController {
 	@Autowired
 	private ApiProductService apiProductService;
 	
+	@Autowired
+	private LocalApiService localApiService;
+	
 	/**
 	 * bhyh
 	 * @param requestStr
@@ -78,11 +83,6 @@ public class ApiProductController {
 		// 获得用ID
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
-		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_PRODUCT_BHYH, ipAddress, resultContent)) {
-			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
-		}
-		
 		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
 		
 		JSONObject json = null;
@@ -98,10 +98,22 @@ public class ApiProductController {
 		String idCard = json.getString("idCard");
 		String name = json.getString("name");
 		
+		Map<String, String> urlParams = new HashMap<String, String>();
+		urlParams.put("name", name);
+		urlParams.put("idCard", idCard);
+		
+		// 获取本地api
+		LocalApi localApi = localApiService.queryByService(Constants.API_SERVICE_PRODUCT_BHYH);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, localApi, urlParams, ipAddress, resultContent)) {
+			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
+		}
+		
 		// 生成UUID
      	String uuid = StringUtil.createUUID();
 		
-		JSONObject resultJson = apiProductService.bhyh(name, idCard, userID, uuid);
+		JSONObject resultJson = apiProductService.bhyh(name, idCard, userID, uuid, localApi);
      	
      	JSONObject resultObject = resultJson.getJSONObject("result");
      	
@@ -135,7 +147,7 @@ public class ApiProductController {
  		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
  		systemLog.setProductID(relation.getString("productID"));
  		// localApiID
- 		systemLog.setLocalApiID(Constants.API_ID_PRODUCT_BHYH);
+ 		systemLog.setLocalApiID(String.valueOf(localApi.getId()));
  		// 参数
  		Map<String, String> param = new HashMap<String, String>();
  		param.put("name", name);
@@ -185,11 +197,6 @@ public class ApiProductController {
 		// 获得用ID
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
-		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_PRODUCT_ANTI_NEW_FRAUD, ipAddress, resultContent)) {
-			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
-		}
-		
 		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
 		
 		JSONObject json = null;
@@ -222,10 +229,23 @@ public class ApiProductController {
 			logName = name;
 		}
 		
+		Map<String, String> urlParams = new HashMap<String, String>();
+		urlParams.put("name", name);
+		urlParams.put("idCard", idCard);
+		urlParams.put("phone", phone);
+		
+		// 获取本地api
+		LocalApi localApi = localApiService.queryByService(Constants.API_SERVICE_PRODUCT_ANTI_NEW_FRAUD);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, localApi, urlParams, ipAddress, resultContent)) {
+			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
+		}
+		
 		// 生成UUID
      	String uuid = StringUtil.createUUID();
 		
-		JSONObject resultJson = apiProductService.fraud2(phone, name, idCard, userID, uuid);
+		JSONObject resultJson = apiProductService.fraud2(phone, name, idCard, userID, uuid, localApi);
      	
      	JSONObject resultObject = resultJson.getJSONObject("result");
      	
@@ -259,7 +279,7 @@ public class ApiProductController {
  		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
  		systemLog.setProductID(relation.getString("productID"));
  		// localApiID
- 		systemLog.setLocalApiID(Constants.API_ID_PRODUCT_ANTI_NEW_FRAUD);
+ 		systemLog.setLocalApiID(String.valueOf(localApi.getId()));
  		// 参数
  		Map<String, String> param = new HashMap<String, String>();
  		param.put("phone", phone);
@@ -312,11 +332,6 @@ public class ApiProductController {
 		// 获得用ID
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
-		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_PRODUCT_ANTI_FRAUD, ipAddress, resultContent)) {
-			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
-		}
-		
 		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
 		
 		JSONObject json = null;
@@ -333,10 +348,23 @@ public class ApiProductController {
 		String name = json.getString("name");
 		String idCard = json.getString("idCard");
 		
+		Map<String, String> urlParams = new HashMap<String, String>();
+		urlParams.put("name", name);
+		urlParams.put("idCard", idCard);
+		urlParams.put("phone", phone);
+		
+		// 获取本地api
+		LocalApi localApi = localApiService.queryByService(Constants.API_SERVICE_PRODUCT_ANTI_FRAUD);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, localApi, urlParams, ipAddress, resultContent)) {
+			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
+		}
+		
 		// 生成UUID
      	String uuid = StringUtil.createUUID();
 		
-		JSONObject resultJson = apiProductService.fraud(phone, name, idCard, userID, uuid);
+		JSONObject resultJson = apiProductService.fraud(phone, name, idCard, userID, uuid, localApi);
      	
      	JSONObject resultObject = resultJson.getJSONObject("result");
      	
@@ -370,7 +398,7 @@ public class ApiProductController {
  		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
  		systemLog.setProductID(relation.getString("productID"));
  		// localApiID
- 		systemLog.setLocalApiID(Constants.API_ID_PRODUCT_ANTI_FRAUD);
+ 		systemLog.setLocalApiID(String.valueOf(localApi.getId()));
  		// 参数
  		Map<String, String> param = new HashMap<String, String>();
  		param.put("phone", phone);
@@ -593,11 +621,6 @@ public class ApiProductController {
 		// 获得用ID
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
-		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL, ipAddress, resultContent)) {
-			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
-		}
-		
 		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
 		
 		JSONObject json = null;
@@ -615,10 +638,24 @@ public class ApiProductController {
 		String idCard = json.getString("idCard");
 		String phonePassword = json.getString("phonePassword");
 		
+		Map<String, String> urlParams = new HashMap<String, String>();
+		urlParams.put("name", name);
+		urlParams.put("idCard", idCard);
+		urlParams.put("phone", phone);
+		urlParams.put("phonePassword", phonePassword);
+		
+		// 获取本地api
+		LocalApi localApi = localApiService.queryByService(Constants.API_SERVICE_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, localApi, urlParams, ipAddress, resultContent)) {
+			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
+		}
+		
 		// 生成UUID
      	String uuid = StringUtil.createUUID();
      	
-     	JSONObject resultJson = apiProductService.reditCardApplyRiskControl(phone, phonePassword, name, idCard, userID, uuid);
+     	JSONObject resultJson = apiProductService.reditCardApplyRiskControl(phone, phonePassword, name, idCard, userID, uuid, localApi);
      	
      	JSONObject resultObject = resultJson.getJSONObject("result");
      	
@@ -652,7 +689,7 @@ public class ApiProductController {
  		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
  		systemLog.setProductID(relation.getString("productID"));
  		// localApiID
- 		systemLog.setLocalApiID(Constants.API_ID_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL);
+ 		systemLog.setLocalApiID(String.valueOf(localApi.getId()));
  		// 参数
  		Map<String, String> param = new HashMap<String, String>();
  		param.put("phone", phone);
@@ -704,11 +741,6 @@ public class ApiProductController {
 		// 获得用ID
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
-		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_PRODUCT_CHECK_CONSISTENCY, ipAddress, resultContent)) {
-			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
-		}
-		
 		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
 		
 		JSONObject json = null;
@@ -724,10 +756,22 @@ public class ApiProductController {
 		String phone = json.getString("phone");
 		String idCard = json.getString("idCard");
 		
+		Map<String, String> urlParams = new HashMap<String, String>();
+		urlParams.put("phone", phone);
+		urlParams.put("idCard", idCard);
+		
+		// 获取本地api
+		LocalApi localApi = localApiService.queryByService(Constants.API_SERVICE_PRODUCT_CHECK_CONSISTENCY);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, localApi, urlParams, ipAddress, resultContent)) {
+			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
+		}
+		
 		// 生成UUID
      	String uuid = StringUtil.createUUID();
      	
-     	JSONObject resultJson = apiProductService.checkConsistency(phone, idCard, userID, uuid);
+     	JSONObject resultJson = apiProductService.checkConsistency(phone, idCard, userID, uuid, localApi);
      	
      	String resultObject = resultJson.getString("result");
      	
@@ -761,7 +805,7 @@ public class ApiProductController {
  		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
  		systemLog.setProductID(relation.getString("productID"));
  		// localApiID
- 		systemLog.setLocalApiID(Constants.API_ID_PRODUCT_CHECK_CONSISTENCY);
+ 		systemLog.setLocalApiID(String.valueOf(localApi.getId()));
  		// 参数
  		Map<String, String> param = new HashMap<String, String>();
  		param.put("phone", phone);

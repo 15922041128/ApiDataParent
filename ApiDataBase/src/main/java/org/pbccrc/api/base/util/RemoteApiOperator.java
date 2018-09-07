@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
@@ -92,14 +94,23 @@ public class RemoteApiOperator {
 		config.getProperties().put(ClientConfig.PROPERTY_CONNECT_TIMEOUT, 10 * 1000);
 		Client client = Client.create(config);
 		
+		JSONObject json = new JSONObject();
 		StringBuffer requestUrl = new StringBuffer(url);
 		requestUrl.append("?service=" + service);
 		requestUrl.append("&ipAddress=" + ipAddress);
 		for (Map.Entry<String, String> param : paramMap.entrySet()) {  
 			requestUrl.append("&" + param.getKey() + "=" + java.net.URLEncoder.encode(param.getValue(), "utf-8"));
-		}  
+			json.put(param.getKey(), param.getValue());
+		}
 		
-		WebResource resource = client.resource(requestUrl.toString());
+		String requestStr = DesUtils.Base64Encode(json.toJSONString());
+		
+		requestUrl.append("&requestStr=" + java.net.URLEncoder.encode(requestStr, "utf-8"));
+		
+		URL u = new URL(requestUrl.toString());
+		URI uri = new URI(u.getProtocol(), u.getHost() + ":" + u.getPort(), u.getPath(), u.getQuery(), null);
+		
+		WebResource resource = client.resource(uri);
 		
 		String result = Constants.BLANK;
 		try {

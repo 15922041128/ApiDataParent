@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.pbccrc.api.base.bean.ApiLog;
+import org.pbccrc.api.base.bean.LocalApi;
 import org.pbccrc.api.base.service.BorrowDetailService;
 import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.core.dao.ApiLogDao;
@@ -30,10 +31,11 @@ public class BorrowDetailServiceImpl implements BorrowDetailService{
 	 * @param idCard	    身份证号
 	 * @param userID	   用户ID
 	 * @param uuid	      uuid
+	 * @param localApi	  localApi
 	 * @return
 	 * @throws Exception
 	 */
-	public JSONObject getBorrowDetail(String realName, String idCard, String userID, String uuid) throws Exception {
+	public JSONObject getBorrowDetail(String realName, String idCard, String userID, String uuid, LocalApi localApi) throws Exception {
 		
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("realName", realName);
@@ -67,7 +69,7 @@ public class BorrowDetailServiceImpl implements BorrowDetailService{
 		// uuid
 		apiLog.setUuid(uuid);
 		apiLog.setUserID(userID);
-		apiLog.setLocalApiID(Constants.API_ID_GET_WHITE_LIST);
+		apiLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		JSONObject params = new JSONObject();
 		params.put("realName", realName);

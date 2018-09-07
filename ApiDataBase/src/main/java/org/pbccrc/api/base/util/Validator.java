@@ -2,6 +2,7 @@ package org.pbccrc.api.base.util;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -90,7 +91,7 @@ public class Validator {
 		
 		// 验证apiKey所属产品是否包含查询api
 		// 获取productID
-		String productID = relation.getString("PRODUCTID");
+		String productID = relation.getString("productID");
 		// 获取product信息
 		StringBuilder productKey = new StringBuilder("product");
 		productKey.append(Constants.UNDERLINE + productID);
@@ -163,6 +164,55 @@ public class Validator {
 		// 验证参数是否与api匹配
 		String params = localApi.getParams();
 		JSONArray array = JSONArray.parseArray(params);
+//		for (Object o : array) {
+//			
+//			JSONObject object = (JSONObject)o;
+//			
+//			String paramName = String.valueOf(object.get("paramName"));
+//			String paramType = String.valueOf(object.get("paramType"));
+//			String notNull = String.valueOf(object.get("notNull"));
+//			
+//			if ((Constants.PARAM_TYPE_URL.equals(paramType) || Constants.PARAM_TYPE_JSON.equals(paramType)) && Constants.PARAM_REQUIRED_Y.equals(notNull)) {
+//				if (null == urlParams.get(paramName)) {
+//					resultContent.setCode(Constants.ERR_URL_INVALID);
+//					resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + paramName);
+//					return false;
+//				}
+//			}
+//		}
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = validateParameter(resultMap, array, urlParams);
+		resultContent.setCode(String.valueOf(resultMap.get("code")));
+		resultContent.setRetMsg(String.valueOf(resultMap.get("retMsg")));
+		boolean result = (boolean)resultMap.get("result");
+		
+		return result;
+	}
+	
+	/**
+	 * 参数验证
+	 * @param resultMap   返回用resultMap
+	 * @param array       localApi.getParams.toJsonArray
+	 * @param urlParams   访问接口url
+	 * @return
+	 */
+	@SuppressWarnings("rawtypes")
+	private Map<String, Object> validateParameter(Map<String, Object> resultMap, JSONArray array, Object paramObject) {
+		
+		boolean result = true;
+		
+		Map urlParams = null;
+		JSONObject jsonObjectParams = null;
+		JSONArray jsonArrayParams = null;
+		
+		if (paramObject instanceof JSONObject) {
+			jsonObjectParams = (JSONObject) paramObject;
+		} else if (paramObject instanceof JSONArray) {
+			jsonArrayParams = (JSONArray) paramObject;
+		} else {
+			urlParams = (Map) paramObject;
+		}
+
 		for (Object o : array) {
 			
 			JSONObject object = (JSONObject)o;
@@ -171,16 +221,194 @@ public class Validator {
 			String paramType = String.valueOf(object.get("paramType"));
 			String notNull = String.valueOf(object.get("notNull"));
 			
-			if (Constants.PARAM_TYPE_URL.equals(paramType) && Constants.PARAM_REQUIRED_Y.equals(notNull)) {
-				if (null == urlParams.get(paramName)) {
-					resultContent.setCode(Constants.ERR_URL_INVALID);
-					resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + paramName);
-					return false;
+			// url参数
+			if (null != urlParams) {
+				if (Constants.PARAM_REQUIRED_Y.equals(notNull)) {
+					if (null == urlParams.get(paramName)) {
+						result = false;
+						resultMap.put("result", result);
+						resultMap.put("code", Constants.ERR_URL_INVALID);
+						resultMap.put("retMsg", Constants.RET_MSG_URL_INVALID + paramName);
+						return resultMap;
+					}
+					// 若参数类型为jsonArray,则判断长度
+					if (Constants.PARAM_TYPE_JSON_ARRAY.equals(paramType)) {
+						JSONArray jsonArray = null;
+						try {
+							jsonArray = JSONArray.parseArray(String.valueOf(urlParams.get(paramName)));
+						} catch (Exception e) {
+							result = false;
+							resultMap.put("result", result);
+							resultMap.put("code", Constants.CODE_ERR_PARAM_FORMAT);
+							resultMap.put("retMsg", Constants.CODE_ERR_PARAM_FORMAT_MSG + Constants.COLON + paramName);
+							return resultMap;
+						}
+						if (0 == jsonArray.size()) {
+							result = false;
+							resultMap.put("result", result);
+							resultMap.put("code", Constants.ERR_PARAM_LENGTH_ZERO);
+							resultMap.put("retMsg", Constants.RET_MSG_PARAM_LENGTH_ZERO + paramName);
+							return resultMap;
+						}
+					}
+				}
+			} else if (null != jsonObjectParams) {
+				// jsonObject
+				// 1.判断非空
+				if (Constants.PARAM_REQUIRED_Y.equals(notNull) && null == jsonObjectParams.get(paramName)) {
+					result = false;
+					resultMap.put("result", result);
+					resultMap.put("code", Constants.ERR_URL_INVALID);
+					resultMap.put("retMsg", Constants.RET_MSG_URL_INVALID + paramName);
+					return resultMap;
+				}
+				// 若参数类型为jsonArray,则判断长度
+				if (Constants.PARAM_TYPE_JSON_ARRAY.equals(paramType)) {
+					JSONArray jsonArray = null;
+					try {
+						jsonArray = JSONArray.parseArray(String.valueOf(jsonObjectParams.get(paramName)));
+					} catch (Exception e) {
+						result = false;
+						resultMap.put("result", result);
+						resultMap.put("code", Constants.CODE_ERR_PARAM_FORMAT);
+						resultMap.put("retMsg", Constants.CODE_ERR_PARAM_FORMAT_MSG + Constants.COLON + paramName);
+						return resultMap;
+					}
+					if (0 == jsonArray.size()) {
+						result = false;
+						resultMap.put("result", result);
+						resultMap.put("code", Constants.ERR_PARAM_LENGTH_ZERO);
+						resultMap.put("retMsg", Constants.RET_MSG_PARAM_LENGTH_ZERO + paramName);
+						return resultMap;
+					}
+				}
+				// 2.判断subParam是否为空,若不为空,则递归查询下一级
+				Object subParamObj = object.get("subParam");
+				String subParam = Constants.BLANK;
+				boolean subParamIsNull = false;
+				if (null != subParamObj) {
+					subParam = String.valueOf(subParamObj);
+				} else {
+					subParamIsNull = true;
+				}
+				if (StringUtil.isNull(subParam)) {
+					subParamIsNull = true;
+				}
+				// 3.递归判断非空
+				if (!subParamIsNull) {
+					JSONObject subObject = null;
+					JSONArray subArray = null;
+					// 判断是否为jsonObject
+					try {
+						subObject = JSONObject.parseObject(String.valueOf(jsonObjectParams.get(paramName)));
+						jsonObjectParams = subObject;
+					} catch (Exception e) {
+						// none
+					}
+					// 若subObject为空,判断是否为jsonArray
+					if (null == subObject) {
+						try {
+							subArray = JSONArray.parseArray(String.valueOf(jsonObjectParams.get(paramName)));
+							jsonArrayParams = subArray;
+						} catch (Exception e) {
+							result = false;
+							resultMap.put("result", result);
+							resultMap.put("code", Constants.ERR_PARAM_TYPE_JSON_SUBPARAM_FORMAT);
+							resultMap.put("retMsg", Constants.RET_MSG_PARAM_TYPE_JSON_SUBPARAM_FORMAT);
+							return resultMap;
+						}
+					}
+					resultMap = validateParameter(resultMap, JSONArray.parseArray(subParam), null == jsonObjectParams ? jsonArrayParams : jsonObjectParams);
+					if (!Boolean.getBoolean(String.valueOf(resultMap.get("result")))) {
+						return resultMap;
+					}
+				}
+			} else {
+				// jsonArray
+				for (Object jap : jsonArrayParams) {
+					
+					JSONObject jsonArrayParam = (JSONObject)jap;
+					
+					String jsonArray_paramName = String.valueOf(jsonArrayParam.get("paramName"));
+					String jsonArray_paramType = String.valueOf(jsonArrayParam.get("paramType"));
+					String jsonArray_notNull = String.valueOf(object.get("notNull"));
+					
+					// 1.判断非空
+					if (null == jsonArrayParam.get(jsonArray_paramName) && Constants.PARAM_REQUIRED_Y.equals(jsonArray_notNull)) {
+						result = false;
+						resultMap.put("result", result);
+						resultMap.put("code", Constants.ERR_URL_INVALID);
+						resultMap.put("retMsg", Constants.RET_MSG_URL_INVALID + jsonArray_paramName);
+						return resultMap;
+					}
+					// 若参数类型为jsonArray,则判断长度
+					if (Constants.PARAM_TYPE_JSON_ARRAY.equals(jsonArray_paramType)) {
+						JSONArray jsonArray = null;
+						try {
+							jsonArray = JSONArray.parseArray(String.valueOf(jsonArrayParam.get(jsonArray_paramName)));
+						} catch (Exception e) {
+							result = false;
+							resultMap.put("result", result);
+							resultMap.put("code", Constants.CODE_ERR_PARAM_FORMAT);
+							resultMap.put("retMsg", Constants.CODE_ERR_PARAM_FORMAT_MSG + Constants.COLON + jsonArray_paramName);
+							return resultMap;
+						}
+						if (0 == jsonArray.size()) {
+							result = false;
+							resultMap.put("result", result);
+							resultMap.put("code", Constants.ERR_PARAM_LENGTH_ZERO);
+							resultMap.put("retMsg", Constants.RET_MSG_PARAM_LENGTH_ZERO + jsonArray_paramName);
+							return resultMap;
+						}
+					}
+					
+					// 2.判断subParam是否为空,若不为空,则递归查询下一级
+					Object subParamObj = object.get("subParam");
+					String subParam = Constants.BLANK;
+					boolean subParamIsNull = false;
+					if (null != subParamObj) {
+						subParam = String.valueOf(subParamObj);
+					} else {
+						subParamIsNull = true;
+					}
+					if (StringUtil.isNull(subParam)) {
+						subParamIsNull = true;
+					}
+					// 3.递归判断非空
+					if (!subParamIsNull) {
+						JSONObject subObject = null;
+						JSONArray subArray = null;
+						// 判断是否为jsonObject
+						try {
+							subObject = JSONObject.parseObject(String.valueOf(jsonArrayParam.get(jsonArray_paramName)));
+							jsonObjectParams = subObject;
+						} catch (Exception e) {
+							// none
+						}
+						// 若subObject为空,判断是否为jsonArray
+						if (null == subObject) {
+							try {
+								subArray = JSONArray.parseArray(String.valueOf(jsonArrayParam.get(jsonArray_paramName)));
+								jsonArrayParams = subArray;
+							} catch (Exception e) {
+								result = false;
+								resultMap.put("result", result);
+								resultMap.put("code", Constants.ERR_PARAM_TYPE_JSON_SUBPARAM_FORMAT);
+								resultMap.put("retMsg", Constants.RET_MSG_PARAM_TYPE_JSON_SUBPARAM_FORMAT);
+								return resultMap;
+							}
+						}
+						resultMap = validateParameter(resultMap, JSONArray.parseArray(subParam), null == jsonObjectParams ? jsonArrayParams : jsonObjectParams);
+						if (!Boolean.getBoolean(String.valueOf(resultMap.get("result")))) {
+							return resultMap;
+						}
+					}
 				}
 			}
 		}
 		
-		return true;
+		resultMap.put("result", result);
+		return resultMap;
 	}
 	
 	/**	api验证
@@ -190,7 +418,7 @@ public class Validator {
 	 * @param resultContent     查询返回对象
 	 * @return           		是否通过验证
 	 */
-	public boolean validateRequest(String userID, String apiKey, String localApiID, String ipAddress, ResultContent resultContent) {
+	public boolean validateRequest1(String userID, String apiKey, String localApiID, String ipAddress, ResultContent resultContent) {
 		
 		// 验证userID是否存在
 		if (StringUtil.isNull(userID)) {
@@ -322,7 +550,7 @@ public class Validator {
 	 * @param resultContent     查询返回对象
 	 * @return           		是否通过验证
 	 */
-	public boolean validateRequest(String userID, String apiKey, LocalApi localApi, 
+	/*public boolean validateRequest(String userID, String apiKey, LocalApi localApi, 
 			String name, String identifier, String telNum, String ipAddress, ResultContent resultContent) {
 		
 		// 验证userID是否存在
@@ -480,7 +708,7 @@ public class Validator {
 		}
 		
 		return true;
-	}
+	}*/
 	
 	/**
 	 * 验证姓名

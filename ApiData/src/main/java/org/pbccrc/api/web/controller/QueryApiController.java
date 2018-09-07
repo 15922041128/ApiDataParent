@@ -2,6 +2,7 @@ package org.pbccrc.api.web.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -257,15 +258,22 @@ public class QueryApiController {
 		// 获得用ID
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
+		Map<String, String> urlParams = new HashMap<String, String>();
+		urlParams.put("name", name);
+		urlParams.put("identifier", identifier);
+		
+		// 获取本地api
+		LocalApi localApi = localApiService.queryByService(Constants.API_SERVICE_SFZRZ);
+		
 		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_SFZRZ, ipAddress, resultContent)) {
+		if (!validator.validateRequest(userID, apiKey, localApi, urlParams, ipAddress, resultContent)) {
 			return JSONObject.toJSONString(resultContent);
 		}
 		
 		// 生成UUID
 		String uuid = StringUtil.createUUID();
 		
-		Map<String, Object> map = queryApiService.querySfz(uuid, userID, name, identifier);
+		Map<String, Object> map = queryApiService.querySfz(uuid, userID, name, identifier, localApi);
 		result = map.get("result");
 //		JSONObject resultJson = (JSONObject) JSONObject.toJSON(result);
 		
@@ -287,7 +295,7 @@ public class QueryApiController {
 		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
 		systemLog.setProductID(relation.getString("productID"));
 		// localApiID
-		systemLog.setLocalApiID(Constants.API_ID_SFZRZ);
+		systemLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		JSONObject params = new JSONObject();
 		params.put("name", name);

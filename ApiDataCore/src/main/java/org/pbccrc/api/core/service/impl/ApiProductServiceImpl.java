@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.ws.rs.core.MediaType;
 
 import org.pbccrc.api.base.bean.ApiLog;
+import org.pbccrc.api.base.bean.LocalApi;
 import org.pbccrc.api.base.bean.TblHuluPhoneDetail;
 import org.pbccrc.api.base.bean.TblPaBlackList;
 import org.pbccrc.api.base.bean.TblPaBlackListDetail;
@@ -129,7 +130,7 @@ public class ApiProductServiceImpl implements ApiProductService {
 	 * @throws Exception
 	 */
 	@Override
-	public JSONObject bhyh(String name, String idCard, String userID, String uuid) throws Exception {
+	public JSONObject bhyh(String name, String idCard, String userID, String uuid, LocalApi localApi) throws Exception {
 		
 		boolean isSuccess = false;
 		
@@ -163,7 +164,7 @@ public class ApiProductServiceImpl implements ApiProductService {
 		// uuid
 		apiLog.setUuid(uuid);
 		apiLog.setUserID(userID);
-		apiLog.setLocalApiID(Constants.API_ID_PRODUCT_BHYH);
+		apiLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		Map<String, String> param = new HashMap<String, String>();
 		param.put("name", name);
@@ -191,7 +192,7 @@ public class ApiProductServiceImpl implements ApiProductService {
 	 * @throws Exception
 	 */
 	@Override
-	public JSONObject fraud2(String phone, String name, String idCard, String userID, String uuid) throws Exception {
+	public JSONObject fraud2(String phone, String name, String idCard, String userID, String uuid, LocalApi localApi) throws Exception {
 		
 		// 基本调用数据初始化
 		String ptime = String.valueOf(System.currentTimeMillis());
@@ -1039,7 +1040,7 @@ public class ApiProductServiceImpl implements ApiProductService {
 		// uuid
 		apiLog.setUuid(uuid);
 		apiLog.setUserID(userID);
-		apiLog.setLocalApiID(Constants.API_ID_PRODUCT_ANTI_NEW_FRAUD);
+		apiLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		Map<String, String> param = new HashMap<String, String>();
 		param.put("phone", phone);
@@ -1065,7 +1066,7 @@ public class ApiProductServiceImpl implements ApiProductService {
 	 * @throws Exception
 	 */
 	@Override
-	public JSONObject fraud(String phone, String name, String idCard, String userID, String uuid) throws Exception {
+	public JSONObject fraud(String phone, String name, String idCard, String userID, String uuid, LocalApi localApi) throws Exception {
 		
 		// 等级初始化
 		int level = 6;
@@ -1393,7 +1394,7 @@ public class ApiProductServiceImpl implements ApiProductService {
 		// uuid
 		apiLog.setUuid(uuid);
 		apiLog.setUserID(userID);
-		apiLog.setLocalApiID(Constants.API_ID_PRODUCT_ANTI_FRAUD);
+		apiLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		Map<String, String> param = new HashMap<String, String>();
 		param.put("name", name);
@@ -1585,7 +1586,8 @@ public class ApiProductServiceImpl implements ApiProductService {
 	 * @return
 	 * @throws Exception
 	 */
-	public JSONObject reditCardApplyRiskControl(String phone, String phonePassword, String name, String idCard, String userID, String uuid) throws Exception {
+	public JSONObject reditCardApplyRiskControl(String phone, String phonePassword, 
+			String name, String idCard, String userID, String uuid, LocalApi localApi) throws Exception {
 		
 		// 查询时间初始化
 		String apiQueryDate = format.format(new Date());
@@ -1648,7 +1650,7 @@ public class ApiProductServiceImpl implements ApiProductService {
 		// uuid
 		apiLog.setUuid(uuid);
 		apiLog.setUserID(userID);
-		apiLog.setLocalApiID(Constants.API_ID_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL);
+		apiLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		Map<String, String> param = new HashMap<String, String>();
 		param.put("name", name);
@@ -1719,7 +1721,7 @@ public class ApiProductServiceImpl implements ApiProductService {
 	 * @return
 	 * @throws Exception
 	 */
-	public JSONObject checkConsistency(String phone, String idCard, String userID, String uuid) throws Exception {
+	public JSONObject checkConsistency(String phone, String idCard, String userID, String uuid, LocalApi localApi) throws Exception {
 		
 		JSONObject returnObject = new JSONObject();
 		
@@ -1763,7 +1765,7 @@ public class ApiProductServiceImpl implements ApiProductService {
 		// uuid
 		apiLog.setUuid(uuid);
 		apiLog.setUserID(userID);
-		apiLog.setLocalApiID(Constants.API_ID_PRODUCT_CHECK_CONSISTENCY);
+		apiLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		Map<String, String> param = new HashMap<String, String>();
 		param.put("phone", phone);

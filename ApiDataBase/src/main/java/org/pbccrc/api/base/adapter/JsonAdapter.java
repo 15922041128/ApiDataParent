@@ -22,6 +22,11 @@ public class JsonAdapter {
 		LocalApi localApi = localApiService.queryByService(service);
 		// 获得返回值信息
 		String returnParam = localApi.getReturnParam();
+		
+		if (StringUtil.isNull(returnParam)) {
+			return jsonStr;
+		}
+		
 		JSONArray paramArray = JSONArray.parseArray(returnParam);
 		
 		String returnStr = Constants.BLANK;

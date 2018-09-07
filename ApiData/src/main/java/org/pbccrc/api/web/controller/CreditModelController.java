@@ -11,12 +11,14 @@ import javax.ws.rs.GET;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 
+import org.pbccrc.api.base.bean.LocalApi;
 import org.pbccrc.api.base.bean.ResultContent;
 import org.pbccrc.api.base.bean.SystemLog;
 import org.pbccrc.api.base.service.BorrowDetailService;
 import org.pbccrc.api.base.service.BorrowService;
 import org.pbccrc.api.base.service.CostService;
 import org.pbccrc.api.base.service.CreditModelService;
+import org.pbccrc.api.base.service.LocalApiService;
 import org.pbccrc.api.base.service.SystemLogService;
 import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.base.util.DesUtils;
@@ -60,6 +62,9 @@ public class CreditModelController {
 	@Autowired
 	private BorrowDetailService borrowDetailService;
 	
+	@Autowired
+	private LocalApiService localApiService;
+	
 	/** 
 	 * 非现金贷
 	 * @param requestStr
@@ -87,11 +92,6 @@ public class CreditModelController {
 		// 获得用ID
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
-		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_YINGZE_SCORE, ipAddress, resultContent)) {
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
-		
 		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
 		
 		JSONObject json = null;
@@ -104,30 +104,31 @@ public class CreditModelController {
 			return (JSONObject)JSONObject.toJSON(resultContent);
 		}
 		
-		// 验证realName是否为空
+		// realName
 		String realName = json.getString("realName");
-		if (StringUtil.isNull(realName)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "realName");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		
-		// 验证idCard是否为空
+		// idCard
 		String idCard = json.getString("idCard");
-		if (StringUtil.isNull(idCard)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "idCard");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		
-		// 验证loanInfos是否为空
+		// loanInfos
 		String loanInfos = json.getString("loanInfos");
-		if (StringUtil.isNull(loanInfos)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "loanInfos");
+		
+		// trxNo
+		String trxNo = json.getString("trxNo");
+		
+		Map<String, String> urlParams = new HashMap<String, String>();
+		urlParams.put("realName", realName);
+		urlParams.put("idCard", idCard);
+		urlParams.put("loanInfos", loanInfos);
+		urlParams.put("trxNo", trxNo);
+		
+		// 获取本地api
+		LocalApi localApi = localApiService.queryByService(Constants.API_SERVICE_YINGZE_SCORE);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, localApi, urlParams, ipAddress, resultContent)) {
 			return (JSONObject)JSONObject.toJSON(resultContent);
 		}
-		String trxNo = json.getString("trxNo");
 		
 		// 验证loanInfos格式是否正确
 		try {
@@ -179,7 +180,7 @@ public class CreditModelController {
 		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
 		systemLog.setProductID(relation.getString("productID"));
 		// localApiID
-		systemLog.setLocalApiID(Constants.API_ID_YINGZE_SCORE);
+		systemLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		JSONObject paramJson = new JSONObject();
 		paramJson.put("realName", realName);
@@ -238,11 +239,6 @@ public class CreditModelController {
 		// 获得用ID
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
-		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_YINGZE_SCORE_TRI, ipAddress, resultContent)) {
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
-		
 		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
 		
 		JSONObject json = null;
@@ -255,30 +251,31 @@ public class CreditModelController {
 			return (JSONObject)JSONObject.toJSON(resultContent);
 		}
 		
-		// 验证realName是否为空
+		// realName
 		String realName = json.getString("realName");
-		if (StringUtil.isNull(realName)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "realName");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		
-		// 验证idCard是否为空
+		// idCard
 		String idCard = json.getString("idCard");
-		if (StringUtil.isNull(idCard)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "idCard");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		
-		// 验证loanInfos是否为空
+		// loanInfos
 		String loanInfos = json.getString("loanInfos");
-		if (StringUtil.isNull(loanInfos)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "loanInfos");
+		
+		// trxNo
+		String trxNo = json.getString("trxNo");
+		
+		Map<String, String> urlParams = new HashMap<String, String>();
+		urlParams.put("realName", realName);
+		urlParams.put("idCard", idCard);
+		urlParams.put("loanInfos", loanInfos);
+		urlParams.put("trxNo", trxNo);
+		
+		// 获取本地api
+		LocalApi localApi = localApiService.queryByService(Constants.API_SERVICE_YINGZE_SCORE_TRI);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, localApi, urlParams, ipAddress, resultContent)) {
 			return (JSONObject)JSONObject.toJSON(resultContent);
 		}
-		String trxNo = json.getString("trxNo");
 		
 		// 验证loanInfos格式是否正确
 		try {
@@ -330,7 +327,7 @@ public class CreditModelController {
 		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
 		systemLog.setProductID(relation.getString("productID"));
 		// localApiID
-		systemLog.setLocalApiID(Constants.API_ID_YINGZE_SCORE_TRI);
+		systemLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		JSONObject paramJson = new JSONObject();
 		paramJson.put("realName", realName);
@@ -413,7 +410,7 @@ public class CreditModelController {
 		}
 		
 		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_YINGZE_DATA_QUERY, ipAddress, resultContent)) {
+		if (!validator.validateRequest1(userID, apiKey, Constants.API_ID_YINGZE_DATA_QUERY, ipAddress, resultContent)) {
 			return (JSONObject)JSONObject.toJSON(resultContent);
 		}
 		
@@ -448,7 +445,7 @@ public class CreditModelController {
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
 		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_CREDIT_MODEL, ipAddress, resultContent)) {
+		if (!validator.validateRequest1(userID, apiKey, Constants.API_ID_CREDIT_MODEL, ipAddress, resultContent)) {
 			return JSONObject.toJSONString(resultContent);
 		}
 		
@@ -533,11 +530,6 @@ public class CreditModelController {
 		// 获得用ID
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
-		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_YINGZE_SCORE_PARAM, ipAddress, resultContent)) {
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
-		
 		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
 		
 		JSONObject json = null;
@@ -550,44 +542,32 @@ public class CreditModelController {
 			return (JSONObject)JSONObject.toJSON(resultContent);
 		}
 		
-		// 验证realName是否为空
+		
+		// realName
 		String realName = json.getString("realName");
-		if (StringUtil.isNull(realName)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "realName");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		
-		// 验证idCard是否为空
+		// idCard
 		String idCard = json.getString("idCard");
-		if (StringUtil.isNull(idCard)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "idCard");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		
-		// 验证loanInfos是否为空
+		// loanInfos
 		String loanInfos = json.getString("loanInfos");
-		if (StringUtil.isNull(loanInfos)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "loanInfos");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
-		// 验证json格式
-		try {
-			JSONArray loanInfoArray = JSONArray.parseArray(loanInfos);
-			if (loanInfoArray.size() == 0) {
-				resultContent.setCode(Constants.ERR_URL_INVALID);
-				resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "loanInfos");
-				return (JSONObject)JSONObject.toJSON(resultContent);
-			}
-		} catch (Exception e) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "loanInfos");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		
+		// trxNo
 		String trxNo = json.getString("trxNo");
+		
+		Map<String, String> urlParams = new HashMap<String, String>();
+		urlParams.put("realName", realName);
+		urlParams.put("idCard", idCard);
+		urlParams.put("loanInfos", loanInfos);
+		urlParams.put("trxNo", trxNo);
+		
+		// 获取本地api
+		LocalApi localApi = localApiService.queryByService(Constants.API_SERVICE_YINGZE_SCORE_PARAM);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, localApi, urlParams, ipAddress, resultContent)) {
+			return (JSONObject)JSONObject.toJSON(resultContent);
+		}
 		
 		// 验证loanInfos格式是否正确
 		try {
@@ -638,7 +618,7 @@ public class CreditModelController {
 		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
 		systemLog.setProductID(relation.getString("productID"));
 		// localApiID
-		systemLog.setLocalApiID(Constants.API_ID_YINGZE_SCORE_PARAM);
+		systemLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		JSONObject paramJson = new JSONObject();
 		paramJson.put("realName", realName);
@@ -696,11 +676,6 @@ public class CreditModelController {
 		// 获得用ID
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
-		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_GET_WHITE_LIST, ipAddress, resultContent)) {
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
-		
 		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
 		
 		JSONObject json = null;
@@ -713,26 +688,28 @@ public class CreditModelController {
 			return (JSONObject)JSONObject.toJSON(resultContent);
 		}
 		
-		// 验证realName是否为空
+		// realName
 		String realName = json.getString("realName");
-		if (StringUtil.isNull(realName)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "realName");
-			return (JSONObject)JSONObject.toJSON(resultContent);
-		}
 		
-		// 验证idCard是否为空
+		// idCard
 		String idCard = json.getString("idCard");
-		if (StringUtil.isNull(idCard)) {
-			resultContent.setCode(Constants.ERR_URL_INVALID);
-			resultContent.setRetMsg(Constants.RET_MSG_URL_INVALID + "idCard");
+		
+		Map<String, String> urlParams = new HashMap<String, String>();
+		urlParams.put("realName", realName);
+		urlParams.put("idCard", idCard);
+		
+		// 获取本地api
+		LocalApi localApi = localApiService.queryByService(Constants.API_SERVICE_GET_WHITE_LIST);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, localApi, urlParams, ipAddress, resultContent)) {
 			return (JSONObject)JSONObject.toJSON(resultContent);
 		}
 		
 		// 生成UUID
 		String uuid = StringUtil.createUUID();
 		
-		JSONObject returnJson = borrowDetailService.getBorrowDetail(realName, idCard, userID, uuid);
+		JSONObject returnJson = borrowDetailService.getBorrowDetail(realName, idCard, userID, uuid, localApi);
 		
 		String retMsg = Constants.CODE_ERR_SUCCESS_MSG;
 		String code = Constants.CODE_ERR_SUCCESS;
@@ -767,7 +744,7 @@ public class CreditModelController {
 		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
 		systemLog.setProductID(relation.getString("productID"));
 		// localApiID
-		systemLog.setLocalApiID(Constants.API_ID_GET_WHITE_LIST);
+		systemLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		JSONObject paramJson = new JSONObject();
 		paramJson.put("realName", realName);

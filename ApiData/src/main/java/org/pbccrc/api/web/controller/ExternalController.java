@@ -11,11 +11,13 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 
+import org.pbccrc.api.base.bean.LocalApi;
 import org.pbccrc.api.base.bean.ResultContent;
 import org.pbccrc.api.base.bean.SystemLog;
 import org.pbccrc.api.base.external.vip.grcredit.Conts;
 import org.pbccrc.api.base.service.CostService;
 import org.pbccrc.api.base.service.ExternalService;
+import org.pbccrc.api.base.service.LocalApiService;
 import org.pbccrc.api.base.service.SystemLogService;
 import org.pbccrc.api.base.util.Constants;
 import org.pbccrc.api.base.util.DesUtils;
@@ -47,6 +49,9 @@ public class ExternalController {
 	
 	@Autowired
 	private ExternalService externalService;
+	
+	@Autowired
+	private LocalApiService localApiService;
 
 	/**
 	 * 唯品会个人风险查询
@@ -55,6 +60,7 @@ public class ExternalController {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("deprecation")
 	@GET
 	@CrossOrigin
 	@ResponseBody
@@ -74,11 +80,6 @@ public class ExternalController {
 		// 获得用ID
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
-		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_VIP_QUERYBLACKLIST, ipAddress, resultContent)) {
-			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
-		}
-		
 		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
 		
 		JSONObject json = null;
@@ -91,6 +92,14 @@ public class ExternalController {
 			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
 		}
 		
+		// 获取本地api
+		LocalApi localApi = localApiService.queryByService(Constants.API_SERVICE_GET_TEL);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, localApi, json, ipAddress, resultContent)) {
+			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
+		}
+		
 		String idNo = json.getString("idNo");
 		String cardName = json.getString("cardName");
 		String phone = json.getString("phone");
@@ -100,23 +109,15 @@ public class ExternalController {
         SortedMap<String, Object> sortedMap = new TreeMap<String, Object>();
         sortedMap.put("innerreqId", Conts.appid + timestamp);
         
-		if (!StringUtil.isNull(idNo)) {
-			sortedMap.put("idNo", idNo);
-		}
-		if (!StringUtil.isNull(cardName)) {
-			sortedMap.put("cardName", cardName);
-		}
-		if (!StringUtil.isNull(phone)) {
-			sortedMap.put("phone", phone);
-		}
-		if (!StringUtil.isNull(cardNo)) {
-			sortedMap.put("cardNo", cardNo);
-		}
+        sortedMap.put("idNo", idNo);
+        sortedMap.put("cardName", cardName);
+        sortedMap.put("phone", phone);
+        sortedMap.put("cardNo", cardNo);
         
         // 生成UUID
      	String uuid = StringUtil.createUUID();
         
-     	JSONObject resultJson = externalService.vipQueryBlackList(idNo, cardName, phone, cardNo, userID, uuid);
+     	JSONObject resultJson = externalService.vipQueryBlackList(idNo, cardName, phone, cardNo, userID, uuid, localApi);
      	
      	JSONObject resultObject = JSONObject.parseObject(resultJson.getString("result"));
      	
@@ -155,7 +156,7 @@ public class ExternalController {
  		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
  		systemLog.setProductID(relation.getString("productID"));
  		// localApiID
- 		systemLog.setLocalApiID(Constants.API_ID_VIP_QUERYBLACKLIST);
+ 		systemLog.setLocalApiID(String.valueOf(localApi.getId()));
  		// 参数
  		systemLog.setParams(JSON.toJSONString(sortedMap));
  		// 用户ID
@@ -183,6 +184,7 @@ public class ExternalController {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("deprecation")
 	@GET
 	@CrossOrigin
 	@ResponseBody
@@ -202,11 +204,6 @@ public class ExternalController {
 		// 获得用ID
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
-		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_PA_PHONE_TAG, ipAddress, resultContent)) {
-			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
-		}
-		
 		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
 		
 		JSONObject json = null;
@@ -219,12 +216,20 @@ public class ExternalController {
 			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
 		}
 		
+		// 获取本地api
+		LocalApi localApi = localApiService.queryByService(Constants.API_SERVICE_PA_PHONE_TAG);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, localApi, json, ipAddress, resultContent)) {
+			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
+		}
+		
 		String phone = json.getString("phone");
 		
 		// 生成UUID
      	String uuid = StringUtil.createUUID();
 		
-		JSONObject resultJson = externalService.paPhoneTag(phone, userID, uuid);
+		JSONObject resultJson = externalService.paPhoneTag(phone, userID, uuid, localApi);
      	
      	JSONObject resultObject = JSONObject.parseObject(resultJson.getString("result"));
      	
@@ -271,7 +276,7 @@ public class ExternalController {
  		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
  		systemLog.setProductID(relation.getString("productID"));
  		// localApiID
- 		systemLog.setLocalApiID(Constants.API_ID_PA_PHONE_TAG);
+ 		systemLog.setLocalApiID(String.valueOf(localApi.getId()));
  		// 参数
  		Map<String, String> param = new HashMap<String, String>();
 		param.put("phone", phone);
@@ -319,11 +324,6 @@ public class ExternalController {
 		// 获得用ID
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
-		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_PA_SHIXIN, ipAddress, resultContent)) {
-			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
-		}
-		
 		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr, "utf-8"));
 		
 		JSONObject json = null;
@@ -336,6 +336,14 @@ public class ExternalController {
 			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
 		}
 		
+		// 获取本地api
+		LocalApi localApi = localApiService.queryByService(Constants.API_SERVICE_PA_SHIXIN);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, localApi, json, ipAddress, resultContent)) {
+			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
+		}
+		
 		String name = json.getString("name");
 		
 		String idCard = json.getString("idCard");
@@ -345,7 +353,7 @@ public class ExternalController {
 		// 生成UUID
      	String uuid = StringUtil.createUUID();
 		
-		JSONObject resultJson = externalService.paShixin(name, idCard, orgName, userID, uuid);
+		JSONObject resultJson = externalService.paShixin(name, idCard, orgName, userID, uuid, localApi);
      	
      	JSONObject resultObject = JSONObject.parseObject(resultJson.getString("result"));
      	
@@ -392,7 +400,7 @@ public class ExternalController {
  		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
  		systemLog.setProductID(relation.getString("productID"));
  		// localApiID
- 		systemLog.setLocalApiID(Constants.API_ID_PA_SHIXIN);
+ 		systemLog.setLocalApiID(String.valueOf(localApi.getId()));
  		// 参数
  		Map<String, String> param = new HashMap<String, String>();
 		param.put("name", name);
@@ -425,6 +433,7 @@ public class ExternalController {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("deprecation")
 	@GET
 	@CrossOrigin
 	@ResponseBody
@@ -444,11 +453,6 @@ public class ExternalController {
 		// 获得用ID
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
-		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_PA_OVERDUE, ipAddress, resultContent)) {
-			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
-		}
-		
 		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
 		
 		JSONObject json = null;
@@ -458,6 +462,14 @@ public class ExternalController {
 		} catch (Exception e) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_FORMAT);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_FORMAT_MSG);
+			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
+		}
+		
+		// 获取本地api
+		LocalApi localApi = localApiService.queryByService(Constants.API_SERVICE_PA_OVERDUE);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, localApi, json, ipAddress, resultContent)) {
 			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
 		}
 		
@@ -473,7 +485,7 @@ public class ExternalController {
 		// 生成UUID
      	String uuid = StringUtil.createUUID();
 		
-		JSONObject resultJson = externalService.paOverdue(phone, name, idCard, orgName, imsi, imei, queryDate, userID, uuid);
+		JSONObject resultJson = externalService.paOverdue(phone, name, idCard, orgName, imsi, imei, queryDate, userID, uuid, localApi);
      	
      	JSONObject resultObject = JSONObject.parseObject(resultJson.getString("result"));
      	
@@ -520,7 +532,7 @@ public class ExternalController {
  		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
  		systemLog.setProductID(relation.getString("productID"));
  		// localApiID
- 		systemLog.setLocalApiID(Constants.API_ID_PA_OVERDUE);
+ 		systemLog.setLocalApiID(String.valueOf(localApi.getId()));
  		// 参数
  		Map<String, String> param = new HashMap<String, String>();
  		param.put("phone", phone);
@@ -563,6 +575,7 @@ public class ExternalController {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("deprecation")
 	@GET
 	@CrossOrigin
 	@ResponseBody
@@ -582,11 +595,6 @@ public class ExternalController {
 		// 获得用ID
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
-		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_PA_LOAN, ipAddress, resultContent)) {
-			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
-		}
-		
 		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
 		
 		JSONObject json = null;
@@ -596,6 +604,14 @@ public class ExternalController {
 		} catch (Exception e) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_FORMAT);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_FORMAT_MSG);
+			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
+		}
+		
+		// 获取本地api
+		LocalApi localApi = localApiService.queryByService(Constants.API_SERVICE_PA_LOAN);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, localApi, json, ipAddress, resultContent)) {
 			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
 		}
 		
@@ -611,7 +627,7 @@ public class ExternalController {
 		// 生成UUID
      	String uuid = StringUtil.createUUID();
 		
-		JSONObject resultJson = externalService.paLoan(phone, name, idCard, orgName, imsi, imei, queryDate, userID, uuid);
+		JSONObject resultJson = externalService.paLoan(phone, name, idCard, orgName, imsi, imei, queryDate, userID, uuid, localApi);
      	
      	JSONObject resultObject = JSONObject.parseObject(resultJson.getString("result"));
      	
@@ -658,7 +674,7 @@ public class ExternalController {
  		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
  		systemLog.setProductID(relation.getString("productID"));
  		// localApiID
- 		systemLog.setLocalApiID(Constants.API_ID_PA_LOAN);
+ 		systemLog.setLocalApiID(String.valueOf(localApi.getId()));
  		// 参数
  		Map<String, String> param = new HashMap<String, String>();
  		param.put("phone", phone);
@@ -701,6 +717,7 @@ public class ExternalController {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("deprecation")
 	@GET
 	@CrossOrigin
 	@ResponseBody
@@ -720,11 +737,6 @@ public class ExternalController {
 		// 获得用ID
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
-		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_PA_BLACK_LIST, ipAddress, resultContent)) {
-			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
-		}
-		
 		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
 		
 		JSONObject json = null;
@@ -734,6 +746,14 @@ public class ExternalController {
 		} catch (Exception e) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_FORMAT);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_FORMAT_MSG);
+			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
+		}
+		
+		// 获取本地api
+		LocalApi localApi = localApiService.queryByService(Constants.API_SERVICE_PA_BLACK_LIST);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, localApi, json, ipAddress, resultContent)) {
 			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
 		}
 		
@@ -748,7 +768,7 @@ public class ExternalController {
 		// 生成UUID
      	String uuid = StringUtil.createUUID();
 		
-		JSONObject resultJson = externalService.paBlackList(phone, name, idCard, orgName, imsi, imei, userID, uuid);
+		JSONObject resultJson = externalService.paBlackList(phone, name, idCard, orgName, imsi, imei, userID, uuid, localApi);
      	
      	JSONObject resultObject = JSONObject.parseObject(resultJson.getString("result"));
      	
@@ -795,7 +815,7 @@ public class ExternalController {
  		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
  		systemLog.setProductID(relation.getString("productID"));
  		// localApiID
- 		systemLog.setLocalApiID(Constants.API_ID_PA_BLACK_LIST);
+ 		systemLog.setLocalApiID(String.valueOf(localApi.getId()));
  		// 参数
  		Map<String, String> param = new HashMap<String, String>();
  		param.put("phone", phone);
@@ -837,6 +857,7 @@ public class ExternalController {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("deprecation")
 	@GET
 	@CrossOrigin
 	@ResponseBody
@@ -856,11 +877,6 @@ public class ExternalController {
 		// 获得用ID
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
-		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_PA_PHKJ_MODELER_SCORE, ipAddress, resultContent)) {
-			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
-		}
-		
 		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
 		
 		JSONObject json = null;
@@ -870,6 +886,14 @@ public class ExternalController {
 		} catch (Exception e) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_FORMAT);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_FORMAT_MSG);
+			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
+		}
+		
+		// 获取本地api
+		LocalApi localApi = localApiService.queryByService(Constants.API_SERVICE_PA_PHKJ_MODELER_SCORE);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, localApi, json, ipAddress, resultContent)) {
 			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
 		}
 		
@@ -885,7 +909,7 @@ public class ExternalController {
 		// 生成UUID
      	String uuid = StringUtil.createUUID();
 		
-		JSONObject resultJson = externalService.paPhkjModelerScore(phone, name, idCard, orgName, imsi, imei, queryDate, userID, uuid);
+		JSONObject resultJson = externalService.paPhkjModelerScore(phone, name, idCard, orgName, imsi, imei, queryDate, userID, uuid, localApi);
      	
      	JSONObject resultObject = JSONObject.parseObject(resultJson.getString("result"));
      	
@@ -932,7 +956,7 @@ public class ExternalController {
  		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
  		systemLog.setProductID(relation.getString("productID"));
  		// localApiID
- 		systemLog.setLocalApiID(Constants.API_ID_PA_PHKJ_MODELER_SCORE);
+ 		systemLog.setLocalApiID(String.valueOf(localApi.getId()));
  		// 参数
  		Map<String, String> param = new HashMap<String, String>();
  		param.put("phone", phone);
@@ -975,6 +999,7 @@ public class ExternalController {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("deprecation")
 	@GET
 	@CrossOrigin
 	@ResponseBody
@@ -994,11 +1019,6 @@ public class ExternalController {
 		// 获得用ID
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
-		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_PA_ZH, ipAddress, resultContent)) {
-			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
-		}
-		
 		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
 		
 		JSONObject json = null;
@@ -1008,6 +1028,14 @@ public class ExternalController {
 		} catch (Exception e) {
 			resultContent.setCode(Constants.CODE_ERR_PARAM_FORMAT);
 			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_FORMAT_MSG);
+			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
+		}
+		
+		// 获取本地api
+		LocalApi localApi = localApiService.queryByService(Constants.API_SERVICE_PA_ZH);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, localApi, json, ipAddress, resultContent)) {
 			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
 		}
 		
@@ -1023,7 +1051,7 @@ public class ExternalController {
 		// 生成UUID
      	String uuid = StringUtil.createUUID();
 		
-		JSONObject resultJson = externalService.paZh(phone, name, idCard, orgName, imsi, imei, queryDate, userID, uuid);
+		JSONObject resultJson = externalService.paZh(phone, name, idCard, orgName, imsi, imei, queryDate, userID, uuid, localApi);
      	
      	JSONObject resultObject = resultJson.getJSONObject("result");
      	
@@ -1057,7 +1085,7 @@ public class ExternalController {
  		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
  		systemLog.setProductID(relation.getString("productID"));
  		// localApiID
- 		systemLog.setLocalApiID(Constants.API_ID_PA_ZH);
+ 		systemLog.setLocalApiID(String.valueOf(localApi.getId()));
  		// 参数
  		Map<String, String> param = new HashMap<String, String>();
  		param.put("phone", phone);

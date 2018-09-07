@@ -3,6 +3,8 @@ package org.pbccrc.api.base.service;
 import java.util.List;
 import java.util.Map;
 
+import org.pbccrc.api.base.bean.LocalApi;
+
 import com.alibaba.fastjson.JSONObject;
 
 public interface LocalDBService {
@@ -32,7 +34,7 @@ public interface LocalDBService {
 	 * @return
 	 * @throws Exception
 	 */
-	public Map<String, Object> getTel(String uuid, String userID, String name, String identifier) throws Exception;
+	public Map<String, Object> getTel(String uuid, String userID, String name, String identifier, LocalApi localApi) throws Exception;
 	
 	/**
 	 * 查询本地api

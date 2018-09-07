@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
@@ -108,8 +109,9 @@ public class MyProductController {
 	@GET
 	@CrossOrigin
 	@ResponseBody
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/myProduct/getResult", produces={"application/json;charset=UTF-8"})
-	public JSONObject getResult(String apiIds, HttpServletRequest request) throws Exception{
+	public JSONObject getResult(String apiId, String params, HttpServletRequest request) throws Exception{
 		
 		// 返回对象
 		JSONObject resultObject = new JSONObject();
@@ -123,61 +125,41 @@ public class MyProductController {
 		// 获得用ID
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
-		// 获取参数
-		// 两标
-		String name = request.getParameter("name");
-		String identifier = request.getParameter("identifier");
-		// 电话号码
-		String telNum = request.getParameter("telNum");
-		
-		
-		// 查询参数(记录日志用)
-		// 查询参数(查询用)
-		Map<String, String> paramMap = new HashMap<String, String>();
-		// 判断查询方式
-		if (!StringUtil.isNull(telNum)) {
-			paramMap.put("telNum", telNum);
-		} else {
-			paramMap.put("name", name);
-			paramMap.put("identifier", identifier);
-		}
+		// 查询参数
+		Map<String, String> paramMap = JSON.parseObject(params, Map.class);
 		
 		// 获取ip
 		String ipAddress = SystemUtil.getIpAddress(request);
 		
-		// 遍历service
-		String[] apiIdArray = apiIds.split(Constants.COMMA);
 		boolean hasData = false;
-		for (String apiId : apiIdArray) {
-			// 从缓存中读取localApi
-			JSONObject localApi = JSONObject.parseObject(String.valueOf(RedisClient.get("localApi_" + apiId)));
-			// 获取service
-			String service = localApi.getString("service");
-			String url = Constants.WEB_URL + String.valueOf(localApi.get("url"));
-			JSONObject returnJson = null;
-			returnJson = JSONObject.parseObject(remoteApiOperator.insideAccess(userID, apiKey, url, service, ipAddress, paramMap));
-			// 返回参数英文转中文
-			String retData = returnJson.getString("retData");
-			
-			if (StringUtil.isNull(retData)) {
-				returnJson.put("retData", new JSONArray());
-				resultMessage = returnJson.getString("retMsg");
-			} else {
-				hasData = true;
-				retData = jsonAdapter.change2Ch(service, retData);
-				returnJson.put("retData", JSONObject.parse(retData));
-			}
-			
-			// 返回类型
-			String queryType = String.valueOf(localApi.get("returnType"));
-			returnJson.put("returnType", queryType);
-			
-			// table名称
-			String apiName = String.valueOf(localApi.get("apiName"));
-			returnJson.put("tableName", apiName);
-			
-			resultArray.add(returnJson);
+		// 从缓存中读取localApi
+		JSONObject localApi = JSONObject.parseObject(String.valueOf(RedisClient.get("localApi_" + apiId)));
+		// 获取service
+		String service = localApi.getString("service");
+		String url = Constants.WEB_URL + String.valueOf(localApi.get("url"));
+		JSONObject returnJson = null;
+		returnJson = JSONObject.parseObject(remoteApiOperator.insideAccess(userID, apiKey, url, service, ipAddress, paramMap));
+		// 返回参数英文转中文
+		String retData = returnJson.getString("retData");
+		
+		if (StringUtil.isNull(retData)) {
+			returnJson.put("retData", new JSONArray());
+			resultMessage = returnJson.getString("retMsg");
+		} else {
+			hasData = true;
+			retData = jsonAdapter.change2Ch(service, retData);
+			returnJson.put("retData", JSONObject.parse(retData));
 		}
+		
+		// 返回类型
+		String queryType = String.valueOf(localApi.get("returnType"));
+		returnJson.put("returnType", queryType);
+		
+		// table名称
+		String apiName = String.valueOf(localApi.get("apiName"));
+		returnJson.put("tableName", apiName);
+		
+		resultArray.add(returnJson);
 		if (!hasData) {
 			resultObject.put("resultMessage", resultMessage);
 		}

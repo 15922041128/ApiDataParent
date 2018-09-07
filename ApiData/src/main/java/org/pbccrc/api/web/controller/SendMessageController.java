@@ -44,7 +44,7 @@ public class SendMessageController {
 	private CostService costService;
 
 	/** 
-	 * 非现金贷
+	 * 发送短信
 	 * @param requestStr
 	 * @param request
 	 * @return
@@ -71,7 +71,7 @@ public class SendMessageController {
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
 		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_SEND_MESSAGE, ipAddress, resultContent)) {
+		if (!validator.validateRequest1(userID, apiKey, Constants.API_ID_SEND_MESSAGE, ipAddress, resultContent)) {
 			return (JSONObject)JSONObject.toJSON(resultContent);
 		}
 		

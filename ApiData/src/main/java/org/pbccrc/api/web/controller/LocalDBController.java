@@ -2,6 +2,7 @@ package org.pbccrc.api.web.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -172,8 +173,13 @@ public class LocalDBController {
 			return (JSONObject) JSONObject.toJSON(resultContent);
 		}
 		
+		Map<String, String> urlParams = new HashMap<String, String>();
+		urlParams.put("name", name);
+		urlParams.put("identifier", identifier);
+		urlParams.put("telNum", telNum);
+		
 		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, localApi, name, identifier, telNum, ipAddress, resultContent)) {
+		if (!validator.validateRequest(userID, apiKey, localApi, urlParams, ipAddress, resultContent)) {
 			return (JSONObject) JSONObject.toJSON(resultContent);
 		}
 		
@@ -283,15 +289,22 @@ public class LocalDBController {
 		// 获得用ID
 		String userID = request.getHeader(Constants.HEAD_USER_ID);
 		
+		Map<String, String> urlParams = new HashMap<String, String>();
+		urlParams.put("name", name);
+		urlParams.put("identifier", identifier);
+		
+		// 获取本地api
+		LocalApi localApi = localApiService.queryByService(Constants.API_SERVICE_GET_TEL);
+		
 		// 请求参数验证
-		if (!validator.validateRequest(userID, apiKey, Constants.API_ID_GET_TEL, ipAddress, resultContent)) {
+		if (!validator.validateRequest(userID, apiKey, localApi, urlParams, ipAddress, resultContent)) {
 			return (JSONObject)JSONObject.toJSON(resultContent);
 		}
 		
 		// 生成UUID
 		String uuid = StringUtil.createUUID();
 		
-		Map<String, Object> telPerson = localDBService.getTel(uuid, userID, name, identifier);
+		Map<String, Object> telPerson = localDBService.getTel(uuid, userID, name, identifier, localApi);
 		
 		if (null == telPerson || telPerson.size() == 0) {
 			resultContent.setCode(Constants.ERR_NO_RESULT);
@@ -318,7 +331,7 @@ public class LocalDBController {
 		JSONObject relation = JSONObject.parseObject(String.valueOf(RedisClient.get("relation_" + userID + Constants.UNDERLINE + apiKey)));
 		systemLog.setProductID(relation.getString("productID"));
 		// localApiID
-		systemLog.setLocalApiID(Constants.API_ID_GET_TEL);
+		systemLog.setLocalApiID(String.valueOf(localApi.getId()));
 		// 参数
 		JSONObject paramJson = new JSONObject();
 		paramJson.put("name", name);

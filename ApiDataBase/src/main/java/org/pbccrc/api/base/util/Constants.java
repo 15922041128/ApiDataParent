@@ -26,6 +26,7 @@ public class Constants {
 	public static final String SINGLE_QUOTES = "'";
 	public static final String SPACE = " ";
 	public static final String ENTER = "\n";
+	public static final String COLON = ":";
 	
 	public static final String STR_NULL = "null";
 	
@@ -79,6 +80,8 @@ public class Constants {
 	// 参数类型
 	public static final String PARAM_TYPE_HEAD = "head";
 	public static final String PARAM_TYPE_URL = "url";
+	public static final String PARAM_TYPE_JSON = "json";
+	public static final String PARAM_TYPE_JSON_ARRAY = "jsonArray";
 	public static final String PARAM_TYPE_CONSTANT = "constant";
 	public static final String PARAM_TYPE_SERVICE = "service";
 	public static final String PARAM_TYPE_APIKEY = "apiKey";
@@ -150,6 +153,14 @@ public class Constants {
 	// IP受限
 	public static final String ERR_RESTRICTED_IP = "100111";
 	public static final String RET_MSG_RESTRICTED_IP = "IP受限,请联系管理员";
+	
+	// subParam格式必须为jsonArray
+	public static final String ERR_PARAM_TYPE_JSON_SUBPARAM_FORMAT = "100113";
+	public static final String RET_MSG_PARAM_TYPE_JSON_SUBPARAM_FORMAT = "subParam格式必须为json或jsonArray";
+	
+	// subParam格式必须为jsonArray
+	public static final String ERR_PARAM_LENGTH_ZERO = "100114";
+	public static final String RET_MSG_PARAM_LENGTH_ZERO = "参数长度不能为0 ： ";
 	
 	// 缺少service或service格式不正确
 	public static final String ERR_SERVICE = "101001";
@@ -320,7 +331,8 @@ public class Constants {
 	
 	/** apiID */
 	// 身份证认证
-	public static final String API_ID_SFZRZ = "9999";
+//	public static final String API_ID_SFZRZ = "9999";
+	public static final String API_SERVICE_SFZRZ = "sf-sfz";
 	// 页面pdf
 	public static final String API_ID_PAGE_PDF = "99999999999";
 	// 银行卡三/四要素认证
@@ -328,20 +340,26 @@ public class Constants {
 	// 信贷模型
 	public static final String API_ID_CREDIT_MODEL = "99999999997";
 	// 鹰泽个人信用评分
-	public static final String API_ID_YINGZE_SCORE = "99999999996";
+//	public static final String API_ID_YINGZE_SCORE = "99999999996";
+	public static final String API_SERVICE_YINGZE_SCORE = "yzScore";
 	// 鹰泽个人信用评分TRI
-	public static final String API_ID_YINGZE_SCORE_TRI = "99999999995";
+//	public static final String API_ID_YINGZE_SCORE_TRI = "99999999995";
+	public static final String API_SERVICE_YINGZE_SCORE_TRI = "yzScoreTri";
 	// 借贷需求用户查询
 	public static final String API_ID_YINGZE_DATA_QUERY = "99999999994";
 	// 根据两标查询电话号码
-	public static final String API_ID_GET_TEL = "99999999993";
+//	public static final String API_ID_GET_TEL = "99999999993";
+	public static final String API_SERVICE_GET_TEL = "l-getTel";
 	// 鹰泽个人信用评分(param)
-	public static final String API_ID_YINGZE_SCORE_PARAM = "99999999992";
+//	public static final String API_ID_YINGZE_SCORE_PARAM = "99999999992";
+	public static final String API_SERVICE_YINGZE_SCORE_PARAM = "yzScoreParam";
 	// 查询白名单(955钱包)
-	public static final String API_ID_GET_WHITE_LIST = "99999999991";
+//	public static final String API_ID_GET_WHITE_LIST = "99999999991";
+	public static final String API_SERVICE_GET_WHITE_LIST = "whiteList";
 	
 	// 企业评分
-	public static final String API_ID_ENT_SCORE = "99999999987";
+//	public static final String API_ID_ENT_SCORE = "99999999987";
+	public static final String API_SERVICE_ENT_SCORE = "entScore";
 
 	// 短信营销接口(查询符合条件营销对象数量)
 	public static final String API_ID_GET_MARKETEE_COUNT = "99999999989";
@@ -351,49 +369,64 @@ public class Constants {
 	public static final String API_ID_SEND_MESSAGE = "99999999990";
 	
 	// 唯品会个人风险查询接口
-	public static final String API_ID_VIP_QUERYBLACKLIST = "99999999986";
+//	public static final String API_ID_VIP_QUERYBLACKLIST = "99999999986";
+	public static final String API_SERVICE_VIP_QUERYBLACKLIST = "vipQueryBlackList";
 	
 	// 凭安电话号码标记查询接口
-	public static final String API_ID_PA_PHONE_TAG = "99999999985";
+//	public static final String API_ID_PA_PHONE_TAG = "99999999985";
+	public static final String API_SERVICE_PA_PHONE_TAG = "paPhoneTag";
 	
 	// 凭安失信被执行人查询接口
-	public static final String API_ID_PA_SHIXIN = "99999999983";
+//	public static final String API_ID_PA_SHIXIN = "99999999983";
+	public static final String API_SERVICE_PA_SHIXIN = "paShixin";
 	
 	// 凭安逾期查询接口
-	public static final String API_ID_PA_OVERDUE = "99999999982";
+//	public static final String API_ID_PA_OVERDUE = "99999999982";
+	public static final String API_SERVICE_PA_OVERDUE = "paOverdue";
 	
 	// 凭安借贷查询接口
-	public static final String API_ID_PA_LOAN = "99999999981";
+//	public static final String API_ID_PA_LOAN = "99999999981";
+	public static final String API_SERVICE_PA_LOAN = "paLoan";
 	
 	// 凭安黑名单查询接口
-	public static final String API_ID_PA_BLACK_LIST = "99999999980";
+//	public static final String API_ID_PA_BLACK_LIST = "99999999980";
+	public static final String API_SERVICE_PA_BLACK_LIST = "paBlackList";
 	
 	// 凭安申请人属性查询接口
-	public static final String API_ID_PA_PHKJ_MODELER_SCORE = "99999999979";
+//	public static final String API_ID_PA_PHKJ_MODELER_SCORE = "99999999979";
+	public static final String API_SERVICE_PA_PHKJ_MODELER_SCORE = "paScore";
 	
 	// 凭安综合查询接口
-	public static final String API_ID_PA_ZH = "99999999978";
+//	public static final String API_ID_PA_ZH = "99999999978";
+	public static final String API_SERVICE_PA_ZH = "paZh";
 	
 	// 产品-反欺诈服务接口
-	public static final String API_ID_PRODUCT_ANTI_FRAUD = "99999999977";
+//	public static final String API_ID_PRODUCT_ANTI_FRAUD = "99999999977";
+	public static final String API_SERVICE_PRODUCT_ANTI_FRAUD = "fraud";
 	
 	// 产品-信用卡申请风控接口
-	public static final String API_ID_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL = "99999999976";
+//	public static final String API_ID_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL = "99999999976";
+	public static final String API_SERVICE_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL = "rcarc";
 	
 	// 产品-信用卡申请风控接口-获取动态码
-	public static final String API_ID_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL_GET_CODE = "99999999975";
+//	public static final String API_ID_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL_GET_CODE = "99999999975";
+	public static final String API_ID_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL_GET_CODE = "20025";
 		
-	// 产品-信用卡申请风控接口-充值密码
-	public static final String API_ID_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL_RESET_PASSWORD = "99999999974";
+	// 产品-信用卡申请风控接口-重置密码
+//	public static final String API_ID_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL_RESET_PASSWORD = "99999999974";
+	public static final String API_ID_PRODUCT_REDIT_CARD_APPLY_RISK_CONTROL_RESET_PASSWORD = "20024";
 	
 	// 产品-新反欺诈服务接口
-	public static final String API_ID_PRODUCT_ANTI_NEW_FRAUD = "99999999973";
+//	public static final String API_ID_PRODUCT_ANTI_NEW_FRAUD = "99999999973";
+	public static final String API_SERVICE_PRODUCT_ANTI_NEW_FRAUD = "fraud2";
 	
 	// 产品-百行信息服务接口
-	public static final String API_ID_PRODUCT_BHYH = "99999999972";
+//	public static final String API_ID_PRODUCT_BHYH = "99999999972";
+	public static final String API_SERVICE_PRODUCT_BHYH = "bhyh";
 	
 	// 产品-一致性验证服务接口
-	public static final String API_ID_PRODUCT_CHECK_CONSISTENCY = "99999999971";
+//	public static final String API_ID_PRODUCT_CHECK_CONSISTENCY = "99999999971";
+	public static final String API_SERVICE_PRODUCT_CHECK_CONSISTENCY = "checkConsistency";
 	
 	/** productID */
 	// 页面pdf

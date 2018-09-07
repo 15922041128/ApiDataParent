@@ -493,7 +493,7 @@ public class LocalDBServiceImpl implements LocalDBService {
 	 * @return
 	 * @throws Exception
 	 */
-	public Map<String, Object> getTel(String uuid, String userID, String name, String identifier) throws Exception {
+	public Map<String, Object> getTel(String uuid, String userID, String name, String identifier, LocalApi localApi) throws Exception {
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
@@ -511,7 +511,7 @@ public class LocalDBServiceImpl implements LocalDBService {
 		// uuid
 		apiLog.setUuid(uuid);
 		apiLog.setUserID(userID);
-		apiLog.setLocalApiID(Constants.API_ID_GET_TEL);
+		apiLog.setLocalApiID(String.valueOf(localApi.getId()));
 		apiLog.setParams(params.toJSONString());
 		apiLog.setDataFrom(Constants.DATA_FROM_LOCAL);
 		apiLog.setIsSuccess(String.valueOf(!(null == returnMap || returnMap.isEmpty())));
