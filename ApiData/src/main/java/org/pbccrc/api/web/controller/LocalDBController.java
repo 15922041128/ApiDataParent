@@ -1,5 +1,6 @@
 package org.pbccrc.api.web.controller;
 
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -145,6 +146,17 @@ public class LocalDBController {
 		if (StringUtil.isNull(ipAddress)) {
 			ipAddress = SystemUtil.getIpAddress(request);
 		}
+		
+		if (!StringUtil.isNull(identifier)) {
+			identifier = URLDecoder.decode(identifier, "utf-8");
+		}
+		if (!StringUtil.isNull(name)) {
+			name = URLDecoder.decode(name, "utf-8");
+		}
+		if (!StringUtil.isNull(telNum)) {
+			telNum = URLDecoder.decode(telNum, "utf-8");
+		}
+		
 		
 		ResultContent resultContent = new ResultContent();
 		resultContent.setCode(Constants.CODE_ERR_SUCCESS);

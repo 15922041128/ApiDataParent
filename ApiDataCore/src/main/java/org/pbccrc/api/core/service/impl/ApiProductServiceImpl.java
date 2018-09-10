@@ -1361,7 +1361,7 @@ public class ApiProductServiceImpl implements ApiProductService {
         
         /** 2.计算分数 */
         // 信用分初始化
-	 	int score = 71;
+	 	double score = 71;
         // 判断内码是否为空
   		if (null != insideCodeMap) {
   			// 获取内码
@@ -1371,7 +1371,7 @@ public class ApiProductServiceImpl implements ApiProductService {
   			if (null != scoreList && 0 != scoreList.size()) {
   				Map<String, Object> scoreMap = scoreList.get(0);
   				if (null != scoreMap.get("SCORE")) {
-  					score = Integer.parseInt(String.valueOf(scoreMap.get("SCORE")));
+  					score = Double.parseDouble(String.valueOf(scoreMap.get("SCORE")));
   				}
   			}
   		}
@@ -1521,7 +1521,7 @@ public class ApiProductServiceImpl implements ApiProductService {
 	 * @param level
 	 * @return
 	 */
-	private int calcScore(int score, String level) {
+	private double calcScore(double score, String level) {
 		
 		switch (level) {
 			case "A" : 
@@ -1558,7 +1558,7 @@ public class ApiProductServiceImpl implements ApiProductService {
 	 * @param score
 	 * @return
 	 */
-	private String calcQuota(int score) {
+	private String calcQuota(double score) {
 		
 		String quota = Constants.BLANK;
 		
