@@ -130,7 +130,7 @@ public class ZhIdentificationDao {
 					} else {
 						// 如果不为空,则进行比较
 						// 如果当前innerID大于maxInnerID,则将innerID赋为maxInnerID
-						if (Integer.parseInt(currentInnerID) > Integer.parseInt(maxInnerID)) {
+						if (Long.parseLong(currentInnerID) > Long.parseLong(maxInnerID)) {
 							maxInnerID = currentInnerID;
 							maxMap = tMap;
 						}
