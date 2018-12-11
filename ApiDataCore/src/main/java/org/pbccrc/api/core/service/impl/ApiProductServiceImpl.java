@@ -1752,7 +1752,8 @@ public class ApiProductServiceImpl implements ApiProductService {
 // 	 				isSuccess = true;
  	 			} else {
  	 				// 不一致
- 	 				result = "不一致,电话号码为: " + telNum;
+// 	 				result = "不一致,电话号码为: " + telNum;
+ 	 				result = "不一致";
  	 			}
  	 		}
  		} else {
