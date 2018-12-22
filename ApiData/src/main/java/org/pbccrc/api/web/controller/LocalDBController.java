@@ -20,6 +20,7 @@ import org.pbccrc.api.base.service.LocalApiService;
 import org.pbccrc.api.base.service.LocalDBService;
 import org.pbccrc.api.base.service.SystemLogService;
 import org.pbccrc.api.base.util.Constants;
+import org.pbccrc.api.base.util.DesUtils;
 import org.pbccrc.api.base.util.RedisClient;
 import org.pbccrc.api.base.util.StringUtil;
 import org.pbccrc.api.base.util.SystemUtil;
@@ -51,6 +52,73 @@ public class LocalDBController {
 	
 	@Autowired
 	private SystemLogService systemLogService;
+	
+	/**
+	 * 根据md5身份证查询身份证明文
+	 * @param name
+	 * @param idCardMd5
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@GET
+	@ResponseBody
+	@RequestMapping("/getIdCard")
+	public Object getIdCard(String requestStr, @Context HttpServletRequest request) throws Exception {
+		
+		ResultContent resultContent = new ResultContent();
+		resultContent.setCode(Constants.CODE_ERR_SUCCESS);
+		resultContent.setRetMsg(Constants.CODE_ERR_SUCCESS_MSG);
+		resultContent.setRetData(Constants.BLANK);
+		
+		// 获取ip地址
+		String ipAddress = SystemUtil.getIpAddress(request);
+		// 获取apiKey
+		String apiKey = request.getHeader(Constants.HEAD_APIKEY);
+		// 获得用ID
+		String userID = request.getHeader(Constants.HEAD_USER_ID);
+		
+		// 获取本地api
+		LocalApi localApi = localApiService.queryByService(Constants.API_SERVICE_PRODUCT_GET_IDCARD);
+		
+		requestStr = DesUtils.Base64Decode(URLDecoder.decode(requestStr));
+		
+		JSONObject json = null;
+		// 验证json格式
+		try {
+			json = JSONObject.parseObject(requestStr);
+		} catch (Exception e) {
+			resultContent.setCode(Constants.CODE_ERR_PARAM_FORMAT);
+			resultContent.setRetMsg(Constants.CODE_ERR_PARAM_FORMAT_MSG);
+			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
+		}
+		
+		String idCardMd5 = json.getString("idCardMd5");
+		
+		Map<String, String> urlParams = new HashMap<String, String>();
+		urlParams.put("idCardMd5", idCardMd5);
+		
+		// 请求参数验证
+		if (!validator.validateRequest(userID, apiKey, localApi, urlParams, ipAddress, resultContent)) {
+			return ((JSONObject)JSONObject.toJSON(resultContent)).toJSONString();
+		}
+		
+		// 生成UUID
+     	String uuid = StringUtil.createUUID();
+		
+		Map<String, Object> resultMap = localDBService.getIdCard(idCardMd5, userID, uuid, localApi);
+		
+		boolean isSuccess = (boolean) resultMap.get("isSuccess");
+		
+		if (!isSuccess) {
+			resultContent.setCode(Constants.CODE_ERR_FAIL);
+			resultContent.setRetMsg(Constants.CODE_ERR_FAIL_MSG);
+		} else {
+			resultContent.setRetData(resultMap.get("idCard"));
+		}
+		
+		return JSONObject.toJSON(resultContent);
+	}
 
 	/**
 	 * 根据身份证和姓名查询信贷信息

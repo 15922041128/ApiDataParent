@@ -10,6 +10,14 @@ import com.alibaba.fastjson.JSONObject;
 public interface LocalDBService {
 	
 	/***
+	 * 根据md5身份证查询身份证明文
+	 * @param idCardMd5		身份证号
+	 * @return
+	 * @throws Exception
+	 */
+	public Map<String, Object> getIdCard(String idCardMd5, String userID, String uuid, LocalApi localApi) throws Exception;
+	
+	/***
 	 * 根据身份证和姓名查询信贷信息
 	 * @param name			姓名
 	 * @param idCardNo		身份证号

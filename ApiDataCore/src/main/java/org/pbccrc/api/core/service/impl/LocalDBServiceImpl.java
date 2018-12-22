@@ -13,8 +13,10 @@ import org.pbccrc.api.base.bean.LocalApi;
 import org.pbccrc.api.base.bean.ResultContent;
 import org.pbccrc.api.base.service.LocalDBService;
 import org.pbccrc.api.base.util.Constants;
+import org.pbccrc.api.base.util.StringUtil;
 import org.pbccrc.api.core.dao.ApiLogDao;
 import org.pbccrc.api.core.dao.DBOperatorDao;
+import org.pbccrc.api.core.dao.IdCardRefDao;
 import org.pbccrc.api.core.dao.LdbApiDao;
 import org.pbccrc.api.core.dao.LocalApiDao;
 import org.pbccrc.api.core.dao.ScoreTriDao;
@@ -75,6 +77,9 @@ public class LocalDBServiceImpl implements LocalDBService {
 	
 	@Autowired
 	private ScoreTriDao scoreTriDao;
+	
+	@Autowired
+	private IdCardRefDao idCardRefDao;
 	
 	/***
 	 * 根据身份证和姓名查询信贷信息
@@ -519,5 +524,45 @@ public class LocalDBServiceImpl implements LocalDBService {
 		apiLogDao.addLog(apiLog);
 		
 		return returnMap;
+	}
+
+
+	/***
+	 * 根据md5身份证查询身份证明文
+	 * @param idCardMd5		身份证号
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public Map<String, Object> getIdCard(String idCardMd5, String userID, String uuid, LocalApi localApi) throws Exception {
+		
+		String idCard = idCardRefDao.getIdCard(idCardMd5);
+		
+		boolean isSuccess = true;
+		
+		if (StringUtil.isNull(idCard)) {
+			isSuccess = false;
+		}
+		
+		// 记录日志
+		ApiLog apiLog = new ApiLog();
+		// uuid
+		apiLog.setUuid(uuid);
+		apiLog.setUserID(userID);
+		apiLog.setLocalApiID(String.valueOf(localApi.getId()));
+		// 参数
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("idCardMd5", idCardMd5);
+		apiLog.setParams(JSON.toJSONString(param));
+		apiLog.setDataFrom(Constants.DATA_FROM_LOCAL);
+		apiLog.setIsSuccess(String.valueOf(isSuccess));
+		apiLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FROMAT_APILOG).format(new Date()));
+		apiLogDao.addLog(apiLog);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("idCard", idCard);
+		map.put("isSuccess", isSuccess);
+		
+		return map;
 	}
 }

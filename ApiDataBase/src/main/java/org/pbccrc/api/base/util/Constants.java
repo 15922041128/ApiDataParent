@@ -428,6 +428,9 @@ public class Constants {
 //	public static final String API_ID_PRODUCT_CHECK_CONSISTENCY = "99999999971";
 	public static final String API_SERVICE_PRODUCT_CHECK_CONSISTENCY = "checkConsistency";
 	
+	// 产品-本地查询身份证
+	public static final String API_SERVICE_PRODUCT_GET_IDCARD = "getIdCard";
+	
 	/** productID */
 	// 页面pdf
 	public static final String PRODUCT_ID_PAGE_PDF = "99999999999";
