@@ -326,6 +326,8 @@ public class Constants {
 	public static final String DATA_FROM_HULU = "hulu";
 	// 数据来源-信智上
 	public static final String DATA_FROM_XINZHISHANG = "xinzhishang";
+	// 数据来源-创蓝
+	public static final String DATA_FROM_CL = "cl";
 	// 数据库类型-oracle
 //	public static final String DATABASE_TYPE_ORACLE = "oracle";
 	
@@ -430,6 +432,9 @@ public class Constants {
 	
 	// 产品-本地查询身份证
 	public static final String API_SERVICE_PRODUCT_GET_IDCARD = "getIdCard";
+	
+	// 产品-空号检测
+	public static final String API_SERVICE_PRODUCT_BATCH_CHECK_MOBILE = "batchCheckMobile";
 	
 	/** productID */
 	// 页面pdf

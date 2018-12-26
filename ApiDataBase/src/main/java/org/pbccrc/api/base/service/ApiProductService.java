@@ -84,4 +84,15 @@ public interface ApiProductService {
 	 * @throws Exception
 	 */
 	public JSONObject checkConsistency(String phone, String idCard, String userID, String uuid, LocalApi localApi) throws Exception;
+	
+	/**
+	 * 空号检测
+	 * @param mobiles
+	 * @param userID
+	 * @param uuid
+	 * @param localApi
+	 * @return
+	 * @throws Exception
+	 */
+	public JSONObject batchCheckMobile(String mobiles, String userID, String uuid, LocalApi localApi) throws Exception;
 }

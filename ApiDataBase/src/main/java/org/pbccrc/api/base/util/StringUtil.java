@@ -166,7 +166,7 @@ public class StringUtil {
     public static String createApiKey() {
     	return UUID.randomUUID().toString().replaceAll(Constants.CONNECTOR_LINE, Constants.BLANK); 
     }
-      
+    
     public static void main(String[] args) {
     	String str = "130105198310192128";
     	String md5Str = MD5Encoder(str);

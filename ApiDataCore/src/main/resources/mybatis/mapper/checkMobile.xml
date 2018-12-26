@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pbccrc.api.core.mapper.CheckMobileMapper">
+
+	<insert id="addCheckMobile" parameterType="org.pbccrc.api.base.bean.CheckMobile">
+		insert into checkMobile(id, mobile, lastTime, area, numberType, status, chargesStatus) 
+			values(seq_checkMobile.nextval, #{mobile}, #{lastTime}, #{area}, #{numberType}, #{status}, #{chargesStatus})
+	</insert>
+	
+	<select id="queryCheckMobile" parameterType="java.util.List" resultType="org.pbccrc.api.base.bean.CheckMobile">
+		select * from checkMobile where 1 = 1 and mobile in
+		<foreach collection="list" item="item" open="(" separator="," close=")">  
+            ${item}
+        </foreach>
+	</select>
+	
+	<select id="queryCheckMobileOne" parameterType="java.lang.String" resultType="org.pbccrc.api.base.bean.CheckMobile">
+		select * from checkMobile where 1 = 1 and mobile = #{mobile}
+	</select>
+	
+</mapper>

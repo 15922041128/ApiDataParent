@@ -1,6 +1,8 @@
 package org.pbccrc.api.core.service.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +10,9 @@ import java.util.Map;
 
 import javax.ws.rs.core.MediaType;
 
+import org.apache.commons.lang3.StringUtils;
 import org.pbccrc.api.base.bean.ApiLog;
+import org.pbccrc.api.base.bean.CheckMobile;
 import org.pbccrc.api.base.bean.LocalApi;
 import org.pbccrc.api.base.bean.TblHuluPhoneDetail;
 import org.pbccrc.api.base.bean.TblPaBlackList;
@@ -31,6 +35,7 @@ import org.pbccrc.api.base.util.StringUtil;
 import org.pbccrc.api.core.dao.ApiLogDao;
 import org.pbccrc.api.core.dao.BhyhDao;
 import org.pbccrc.api.core.dao.BlackListDao;
+import org.pbccrc.api.core.dao.CheckMobileDao;
 import org.pbccrc.api.core.dao.ScoreDao;
 import org.pbccrc.api.core.dao.TblHuluPhoneDetailDao;
 import org.pbccrc.api.core.dao.TblPaBlackListDao;
@@ -117,6 +122,9 @@ public class ApiProductServiceImpl implements ApiProductService {
 	
 	@Autowired
 	private TelPersonDao telPersonDao;
+	
+	@Autowired
+	private CheckMobileDao checkMobileDao;
 	
 	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
@@ -1779,6 +1787,167 @@ public class ApiProductServiceImpl implements ApiProductService {
 		
 		returnObject.put("isSuccess", isSuccess);
 		returnObject.put("result", result);
+		
+		return returnObject;
+	}
+	
+	/**
+	 * 空号检测
+	 * @param mobile
+	 * @param userID
+	 * @param uuid
+	 * @param localApi
+	 * @return
+	 * @throws Exception
+	 */
+	public JSONObject batchCheckMobile(String mobiles, String userID, String uuid, LocalApi localApi) {
+		
+		// 返回对象
+		JSONObject returnObject = new JSONObject();
+		// 查询是否成功
+		boolean isSuccess = false;
+		
+		// 远程接口参数
+		String appid = "sumZOHMV";
+		String appKey = "o6EwoJYs";
+		StringBuffer url = new StringBuffer("https://api.253.com/open/unn/batch-ucheck");
+		url.append("?appId=" + appid);
+		url.append("&appKey=" + appKey);
+		
+		// 调用本地查看是否有数据
+		String[] mobileArray = mobiles.split(",");
+		List<CheckMobile> mobileList = checkMobileDao.queryLog(Arrays.asList(mobileArray));
+		
+		// 查询数据存放用array
+		JSONArray array = new JSONArray();
+		
+		// 判断本地是否存在数据
+		if (mobileList.size() != 0) {
+			isSuccess = true;
+			// 判断返回数据是否与查询数据相等
+			if (mobileArray.length == mobileList.size()) {
+				// 若相等则直接返回
+				for (int i = 0; i < mobileList.size(); i++) {
+					array.add(mobileList.get(i).toJson());
+				}
+			} else {
+				// 若不相等,则调用远程接口
+				// 存放需要调用远程接口电话号码集合
+				List<String> tempList = new ArrayList<String>();
+				// 遍历参数电话号码集合
+				for (int i = 0; i < mobileArray.length; i++) {
+					String mobile = mobileArray[i];
+					boolean hasMobile = false;
+					for (int j = 0; j < mobileList.size(); j++) {
+						CheckMobile checkmobile = mobileList.get(j);
+						// 判断本地数据是否包含查询参数中数据
+						if (mobile.equals(checkmobile.getMobile())) {
+							// 若包含,将该数据放入返回结果,并跳转至下一次循环
+							array.add(checkmobile.toJson());
+							hasMobile = true;
+							break;
+						}
+					}
+					// 若不包含,则将该数据放入调用远程接口用的list中
+					if (!hasMobile) {
+						tempList.add(mobile);
+					}
+				}
+				if (tempList.size() != 0) {
+					// 调用远程接口
+					url.append("&mobiles=" + StringUtils.join(tempList, ","));
+					ClientConfig config = new DefaultClientConfig();
+					config.getProperties().put(ClientConfig.PROPERTY_CONNECT_TIMEOUT, 10 * 1000);
+					Client client = Client.create(config);
+					
+					WebResource resource = client.resource(url.toString());
+					// 调用远程
+					String result = resource.accept(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE).post(String.class);
+					// 获取返回结果
+					JSONObject resultObject = JSONObject.parseObject(result);
+					// 判断是否成功
+					String code = resultObject.getString("code");
+					if ("200000".equals(code)) {
+						// 成功
+						// 将返回数据存入返回array中
+						JSONArray array1 = resultObject.getJSONArray("data");
+						array.addAll(array1);
+						for (int j = 0; j < array1.size(); j++) {
+							JSONObject object = array1.getJSONObject(j);
+							CheckMobile checkMobile = new CheckMobile();
+							checkMobile.setArea(StringUtil.null2Blank(object.getString("area")));
+							checkMobile.setLastTime(StringUtil.null2Blank(object.getString("lastTime")));
+							checkMobile.setMobile(StringUtil.null2Blank(object.getString("mobile")));
+							checkMobile.setNumberType(StringUtil.null2Blank(object.getString("numberType")));
+							checkMobile.setStatus(StringUtil.null2Blank(object.getString("status")));
+							checkMobile.setChargesStatus(StringUtil.null2Blank(object.getString("chargesStatus")));
+							checkMobileDao.addCheckMobile(checkMobile);
+						}
+					}
+				}
+				if (array.size() == 0) {
+					isSuccess = false;
+				} else {
+					isSuccess = true;
+				}
+			}
+		} else {
+			url.append("&mobiles=" + mobiles);
+			// 本地无数据,查询远程并将远程保存至本地	
+			ClientConfig config = new DefaultClientConfig();
+			config.getProperties().put(ClientConfig.PROPERTY_CONNECT_TIMEOUT, 10 * 1000);
+			Client client = Client.create(config);
+			
+			WebResource resource = client.resource(url.toString());
+			// 调用远程
+			String result = resource.accept(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE).post(String.class);
+			// 获取返回结果
+			JSONObject resultObject = JSONObject.parseObject(result);
+			// 判断是否成功
+			String code = resultObject.getString("code");
+			if ("200000".equals(code)) {
+				// 成功
+				isSuccess = true;
+				array = resultObject.getJSONArray("data");
+				// 保存至本地
+				JSONArray insertArray = JSONArray.parseArray(resultObject.getString("data"));
+				for (int i = 0; i < insertArray.size(); i++) {
+					JSONObject object = insertArray.getJSONObject(i);
+					CheckMobile checkMobile = new CheckMobile();
+					checkMobile.setArea(StringUtil.null2Blank(object.getString("area")));
+					checkMobile.setLastTime(StringUtil.null2Blank(object.getString("lastTime")));
+					checkMobile.setMobile(StringUtil.null2Blank(object.getString("mobile")));
+					checkMobile.setNumberType(StringUtil.null2Blank(object.getString("numberType")));
+					checkMobile.setStatus(StringUtil.null2Blank(object.getString("status")));
+					checkMobile.setChargesStatus(StringUtil.null2Blank(object.getString("chargesStatus")));
+					checkMobileDao.addCheckMobile(checkMobile);
+				}
+			} else {
+				// 失败
+				isSuccess = false;
+				returnObject.put("data", Constants.BLANK);
+			}
+		}
+		
+		returnObject.put("isSuccess", isSuccess);
+		
+		// 记录日志
+		ApiLog apiLog = new ApiLog();
+		// uuid
+		apiLog.setUuid(uuid);
+		apiLog.setUserID(userID);
+		apiLog.setLocalApiID(String.valueOf(localApi.getId()));
+		// 参数
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("mobiles", mobiles);
+		apiLog.setParams(JSON.toJSONString(param));
+		apiLog.setDataFrom(Constants.DATA_FROM_CL);
+		apiLog.setIsSuccess(String.valueOf(isSuccess));
+		apiLog.setQueryDate(new SimpleDateFormat(Constants.DATE_FROMAT_APILOG).format(new Date()));
+		apiLogDao.addLog(apiLog);
+		
+		returnObject.put("isSuccess", isSuccess);
+		returnObject.put("result", array);
 		
 		return returnObject;
 	}

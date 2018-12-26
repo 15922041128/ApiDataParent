@@ -184,7 +184,7 @@ public class Validator {
 		resultMap = validateParameter(resultMap, array, urlParams);
 		resultContent.setCode(String.valueOf(resultMap.get("code")));
 		resultContent.setRetMsg(String.valueOf(resultMap.get("retMsg")));
-		boolean result = (boolean)resultMap.get("result");
+		boolean result = Boolean.parseBoolean(String.valueOf(resultMap.get("result")));
 		
 		return result;
 	}
@@ -200,6 +200,9 @@ public class Validator {
 	private Map<String, Object> validateParameter(Map<String, Object> resultMap, JSONArray array, Object paramObject) {
 		
 		boolean result = true;
+		
+		resultMap.put("code", Constants.CODE_ERR_SUCCESS);
+		resultMap.put("retMsg", Constants.CODE_ERR_SUCCESS_MSG);
 		
 		Map urlParams = null;
 		JSONObject jsonObjectParams = null;
